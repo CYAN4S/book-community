@@ -1,5 +1,6 @@
-import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import { Auth } from "firebase/auth";
 
 export default function Sign() {
 
@@ -8,7 +9,7 @@ export default function Sign() {
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
 
-  async function onSubmit (event) {
+  async function onSubmit(event) {
     event.preventDefault();
     try{
         if(newAccount){
@@ -22,7 +23,7 @@ export default function Sign() {
         setError(error.message);
     }
 }
-const toggleAccount = () => setNewAccount(!newAccount);
+  const toggleAccount = () => setNewAccount(!newAccount);
 
   return (
     <>
@@ -56,6 +57,8 @@ const toggleAccount = () => setNewAccount(!newAccount);
     <div onClick = {toggleAccount} className="authSwitch">
             {newAccount ? "Sign In" : "CreateAccount"}
     </div>
+
+    {/* <Auth/> */}
   </>
   );
 }
