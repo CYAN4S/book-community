@@ -1,4 +1,8 @@
+import { getAuth } from "firebase/auth";
+
 export default function Sign() {
+  console.log(getAuth);
+
   return (
     <form>
       <label htmlFor="email">이메일</label>
