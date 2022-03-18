@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(()=>{
     authService.onAuthStateChanged((user) => {
-      console.log(user);
+      console.log(authService.currentUser);
       if(user){
         // 로그인 되어 있다면
         setIsSigned(true);
