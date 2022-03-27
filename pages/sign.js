@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 import { useState } from "react";
 import { Auth } from "firebase/auth";
 import { authService } from "../firebaseConfig";
+import { useRouter } from "next/router";
 
 export default function Sign() {
 
@@ -9,7 +10,8 @@ export default function Sign() {
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
-
+  const router = useRouter();
+  
   async function onSubmit(event) {
     event.preventDefault();
     try{
@@ -19,6 +21,8 @@ export default function Sign() {
         }else{
             // sign
             const data = await signInWithEmailAndPassword(authService, email, password);
+            console.log(data);
+            router.push('/home');
         }
     } catch(error){
         setError(error.message);

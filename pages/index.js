@@ -5,12 +5,11 @@ import Sign from "./sign";
 
 export default function Home() {
   const [isSigned, setIsSigned] = useState(false);
-  const [init, setInit] = useState(true);
+  const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
 
   useEffect(()=>{
     authService.onAuthStateChanged((user) => {
-      console.log(authService.currentUser);
       if(user){
         // 로그인 되어 있다면
         setIsSigned(true);
@@ -24,7 +23,7 @@ export default function Home() {
 
   return (
    <>
-    {init ? <Sign/> : "Initializing.."}
+    {init ? <Sign/> : "Loading..."}
    </>
   )
 }
