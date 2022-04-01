@@ -29,6 +29,7 @@ export default function Profile() {
       displayName: newName,
     })
       .then(() => {
+        setDisplayName(newName);
         alert("Name Changed!");
       })
       .catch((error) => {
