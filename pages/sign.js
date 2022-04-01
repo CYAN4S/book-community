@@ -1,11 +1,29 @@
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import AuthForm from "../Components/AuthForm";
+import { authService } from "../firebaseConfig";
+
 export default function Sign() {
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
+
+    let provider;
+    if (name === "google") {
+      //google login
+      provider = new GoogleAuthProvider();
+      await signInWithPopup(authService, provider);
+    }
+  };
+
   return (
-    <form>
-      <label htmlFor="email">이메일</label>
-      <input type="email" name="email" id="email" />
-      <label htmlFor="password">비밀번호</label>
-      <input type="password" name="password" id="password" />
-      <button>로그인</button>
-    </form>
+    <div>
+      <AuthForm />
+      <div className="authBtns">
+        <button name="google" onClick={onSocialClick} className="authBtn">
+          Continue with Google
+        </button>
+      </div>
+    </div>
   );
 }
