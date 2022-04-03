@@ -3,7 +3,8 @@ import React from "react";
 import { Button, Header } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Search from "../Components/Search";
+import Search from "../../Components/Search";
+import Link from "next/link";
 
 export default function explorer() {
 
@@ -25,12 +26,12 @@ export default function explorer() {
       {
         isSearch ? 
         <>
-          <Search/>
+          <Search keyword={keyword}/>
         </> : 
         <>
           <div className="ui fluid icon input">
             <input type="text" placeholder="책 이름, 글쓴이, 출판사 등.." onChange = {(e)=>{e.preventDefault(); setKeyword(e.target.value)}}></input>
-            <Button color="grey" onClick={searchBook}>검색</Button>
+            <Link href={`/explore/${keyword}`}><a>검색</a></Link>
           </div>
           <Header as="h3" color="black">
             읽고 있는 책
