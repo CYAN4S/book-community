@@ -86,8 +86,8 @@ export const getServerSideProps = async () => {
       "&display=20",
     {
       headers: {
-        "X-Naver-Client-Id": "Zd5ZJu3YKXwcK0Lx4885",
-        "X-Naver-Client-Secret": "VInjcz5JIp",
+        "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+        "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
       },
     }
   );
