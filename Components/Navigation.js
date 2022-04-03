@@ -1,8 +1,22 @@
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { Menu } from "semantic-ui-react";
+import { authService } from "../firebaseConfig";
 
 export default function Navigation() {
-  const router = useRouter(); // useRouter는 nextjs에서 사용하는거
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(()=>{
+    authService.onAuthStateChanged((user) =>{
+      if(user){
+        setIsSignedIn(true);
+      }else{
+        setIsSignedIn(false);
+      }
+    });
+  }, [])
+
+  const router = useRouter(); 
   let activeItem = {};
 
   if (router.pathname === "/") {
@@ -23,18 +37,28 @@ export default function Navigation() {
     }
   }
   return (
-    <Menu inverted color={"black"} widths={3}>
-      <Menu.Item name="home" active={activeItem === "home"} onClick={goLink} />
-      <Menu.Item
-        name="about"
-        active={activeItem === "about"}
-        onClick={goLink}
-      />
-      <Menu.Item
-        name="books"
-        active={activeItem === "books"}
-        onClick={goLink}
-      />
-    </Menu>
+    <>
+    {
+      isSignedIn ? 
+      <>
+        <Menu inverted color={"black"} widths={3}>
+          <Menu.Item name="home" active={activeItem === "home"} onClick={goLink} />
+          <Menu.Item
+            name="about"
+            active={activeItem === "about"}
+            onClick={goLink}
+          />
+          <Menu.Item
+            name="books"
+            active={activeItem === "books"}
+            onClick={goLink}
+          />
+        </Menu>
+      </> : 
+      <>
+
+      </>
+    }
+    </>
   );
 }

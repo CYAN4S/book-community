@@ -12,12 +12,12 @@ export default function About() {
   return (
     <div style={{ marginLeft: 10, marginRight: 10 }}>
       <Header as="h3" style={{ paddingTop: 40 }} color="blue">
-        편집자 정보 : OOO,OOO,OOO
+        편집자 정보
       </Header>
       <Divider />
       <List>
         <List.Item>KIT</List.Item>
-        <List.Item>학년 : ?</List.Item>
+        <List.Item>학년</List.Item>
       </List>
 
       <Header as="h3" style={{ paddingTop: 40 }} color="blue">
@@ -35,7 +35,7 @@ export default function About() {
           <TextArea />
         </Form.Field>
 
-        <Button color="orange">보내기</Button>
+        <Button color="blue">보내기</Button>
       </Form>
 
       <Header as="h3" style={{ paddingTop: 40 }} color="black">

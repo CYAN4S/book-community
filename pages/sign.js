@@ -1,13 +1,18 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import AuthForm from "../Components/AuthForm";
 import { authService } from "../firebaseConfig";
+import { useRouter } from "next/router";
 
 export default function Sign() {
+  
+  const router = useRouter();
+
   const onSocialClick = async (event) => {
     const {
       target: { name },
     } = event;
 
+    
     let provider;
     if (name === "google") {
       //google login

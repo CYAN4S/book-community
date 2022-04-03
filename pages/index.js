@@ -23,5 +23,9 @@ export default function Home() {
     }, []);
   });
 
-  return <>{init ? <Sign /> : "Loading..."}</>;
+  return (
+  <>
+    {init ? <Sign /> : "Loading..."}
+  </>
+  );
 }
