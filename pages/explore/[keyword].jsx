@@ -1,11 +1,68 @@
 import { useRouter } from "next/router";
+import { Button, Grid } from "semantic-ui-react";
+import Link from "next/link";
+import { useState,useEffect } from "react";
 
 export default function SearchKeyword({ books }) {
-    const router = useRouter()
-    const keyword = router.query.keyword;
+    const router = useRouter();
+    const [lens, setLens] = useState(0);
 
-  console.log(books);
-  return <>{keyword} 검색 결과</>;
+    useEffect(()=>{
+      setLens(books.items.length);
+      console.log(lens);
+    },[])
+
+    function onClick(){
+      router.push('/explore');
+    }
+
+    return (
+    <div>
+      {
+        lens?
+        <>
+          <div className="wrap">
+        <Grid columns={4}>
+          <Grid.Row>
+            {books.items.map((book) => (
+              <Grid.Column key={book.isbn}>
+                <div>
+                  <img
+                    src={book.image}
+                    alt="DON'T HAVE IMAGE"
+                    className="img_book"
+                  />
+                  <strong className="book_item">
+                    {book.title.replace(
+                      /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+                      ""
+                    )}
+                  </strong>
+                  <span className="txt_info">
+                    {book.publisher},{book.pubdate}
+                  </span>
+                  <strong className="num_price">${book.price}</strong>
+                </div>
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+        </Grid>
+        <Link href={`/explore`}>
+          <Button>돌아가기</Button>
+        </Link>
+      </div>
+        </>
+        :
+        <>
+          검색결과가 없습니다.
+          <Link href={`/explore`}>
+            <Button>돌아가기</Button>
+          </Link>
+        </>
+        
+      }
+    </div>
+    );
 }
 
 export async function getServerSideProps({ query }) {
