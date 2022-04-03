@@ -25,6 +25,10 @@ export default function Navigation() {
     activeItem = "about";
   } else if (router.pathname === "/books/books") {
     activeItem = "books";
+  } else if (router.pathname === "/explore") {
+    activeItem = "explore";
+  } else if (router.pathname === "/profile") {
+    activeItem = "profile";
   }
 
   function goLink(e, data) {
@@ -34,6 +38,10 @@ export default function Navigation() {
       router.push("/about");
     } else if (data.name === "books") {
       router.push("/books/books");
+    } else if (data.name === "explore") {
+      router.push("/explore");
+    } else if (data.name === "profile") {
+      router.push("/profile");
     }
   }
   return (
@@ -41,7 +49,7 @@ export default function Navigation() {
     {
       isSignedIn ? 
       <>
-        <Menu inverted color={"black"} widths={3}>
+        <Menu inverted color={"black"} widths={5}>
           <Menu.Item name="home" active={activeItem === "home"} onClick={goLink} />
           <Menu.Item
             name="about"
@@ -51,6 +59,16 @@ export default function Navigation() {
           <Menu.Item
             name="books"
             active={activeItem === "books"}
+            onClick={goLink}
+          />
+          <Menu.Item
+            name="explore"
+            active={activeItem === "explore"}
+            onClick={goLink}
+          />
+          <Menu.Item
+            name="profile"
+            active={activeItem === "profile"}
             onClick={goLink}
           />
         </Menu>
