@@ -9,12 +9,9 @@ export default function SearchKeyword({ books }) {
 
     useEffect(()=>{
       setLens(books.items.length);
-      console.log(lens);
+      // console.log(lens);
+      // console.log(books.items[0].isbn.split(" ")[1]);
     },[])
-
-    function onClick(){
-      router.push('/explore');
-    }
 
     return (
     <div>
