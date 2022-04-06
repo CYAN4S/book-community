@@ -44,7 +44,6 @@ export default function Profile() {
     const q = query(profileRef, where("uid", "==", user.uid));
 
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       setStatusMsg(doc.data().statusMsg);
     });
@@ -64,7 +63,7 @@ export default function Profile() {
   };
 
   const updateStatusMsg = async (newMsg) => {
-    let target;
+    let target = null;
     const profileRef = collection(dbService, "profile");
     const q = query(profileRef, where("uid", "==", user.uid));
 
@@ -72,6 +71,22 @@ export default function Profile() {
     querySnapshot.forEach((doc) => {
       target = doc.ref;
     });
+    console.log(target);
+
+    if (!target) {
+      await addDoc(collection(dbService, "profile"), {
+        uid: user.uid,
+        statusMsg: newMsg,
+      })
+        .then(() => {
+          setStatusMsg(newMsg);
+          alert("Status Message Changed!");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+      return;
+    }
 
     await updateDoc(target, {
       statusMsg: newMsg,
@@ -83,19 +98,6 @@ export default function Profile() {
       .catch((error) => {
         alert(error);
       });
-  };
-
-  const addNewDoc = async () => {
-    try {
-      const docRef = await addDoc(collection(dbService, "profile"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
   };
 
   return (
@@ -119,14 +121,6 @@ export default function Profile() {
           }}
         >
           Update Display Name
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            addNewDoc();
-          }}
-        >
-          Add New Doc
         </button>
       </form>
 
