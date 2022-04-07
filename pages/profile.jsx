@@ -103,7 +103,7 @@ export default function Profile() {
 
   return (
     <div id="profile">
-      <h1>{displayName}</h1>
+      <h1>{displayName?(displayName):("닉네임을 설정해주세요")}</h1>
       <h2>{userId}</h2>
       <form>
         <input
