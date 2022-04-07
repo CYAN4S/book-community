@@ -23,6 +23,7 @@ export default function Profile() {
   const [newStatusMsg, setNewStatusMsg] = useState("");
 
   onAuthStateChanged(authService, (user) => {
+
     if (user) {
       setUser(user);
       setIsSignedIn(true);
