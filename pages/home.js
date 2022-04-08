@@ -51,11 +51,11 @@ export default function Book_home() {
         <Divider />
         <Header as="h2">올라온 채팅</Header>
         <div>
-          {chats.map((chat) => (
+          {chats.length? chats.map((chat) => (
             <div className="chat_space">
               <Chats chat={chat} key={chat.id} isOwner={chat.createrId === userId} />
             </div>
-          ))}
+          )) : <p>채팅목록이 없습니다</p>}
         </div>
 
         <Divider />
