@@ -34,7 +34,9 @@ export default function ChatFactory() {
           text : chat, 
           createdAt : Date.now(),
           createrId : userObj.uid,
-          nickName : userObj.displayName
+          nickName : userObj.displayName,
+          date : `${new Date().getFullYear().toString().padStart(2,"0")}/${new Date().getMonth().toString().padStart(2,"0")}/${new Date().getDate().toString().padStart(2,"0")},
+           ${new Date().getHours().toString().padStart(2,"0")} : ${new Date().getMinutes().toString().padStart(2,"0")} : ${new Date().getSeconds().toString().padStart(2,"0")}`
       }
       await addDoc(collection(dbService, "chat"), chatObj)
       .then(() => {

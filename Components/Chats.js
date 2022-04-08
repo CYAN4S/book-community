@@ -9,6 +9,7 @@ export default function Chats({ chat, isOwner }) {
     const [newChat, setNewChat] = useState(chat.text);
     const [username,setUserName] = useState(chat.nickName ? chat.nickName : "guest");
     const [editing, setEditing] = useState(false);
+    const [time, setTime] = useState(chat.date);
 
     const onDeleteClick = async() =>{
         const ok = window.confirm("채팅을 삭제하시겠습니까?");
@@ -62,7 +63,7 @@ export default function Chats({ chat, isOwner }) {
                 :
             <div>
                 <div>
-                {username} : <strong> {chat.text}</strong>
+                {username} : <strong> {chat.text}</strong> <p> - 등록시간 : {time}</p>
                     {isOwner ? 
                     <span className="btn_span">
                         <Button onClick={onDeleteClick}>삭제</Button>
