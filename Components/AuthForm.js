@@ -5,6 +5,7 @@ import {
 import { useState } from "react";
 import { authService } from "../firebaseConfig";
 import { useRouter } from "next/router";
+import { Button, Form } from "semantic-ui-react";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ export default function AuthForm() {
 
   return (
     <>
-      <form onSubmit={onSubmit} className="container">
+      <Form onSubmit={onSubmit} className="container" style={{marginBottom:10}}>
         <input
           type="email"
           placeholder="Email"
@@ -55,18 +56,19 @@ export default function AuthForm() {
           required
         />
 
-        <input
-          type="submit"
-          value={newAccount ? "Create Account" : "Log in"}
-          className="authInput authSubmit"
-        />
-      </form>
+        <span style={{display:"flex", alignItems:"center"}}>
+          <Button
+            type="submit"
+            value={newAccount ? "Create Account" : "Log in"}
+            style={{ marginTop: 10, marginBottom: 10 }}
+            className="authInput authSubmit">
+            시작하기
+          </Button>
+          <p onClick={toggleAccount} style={{marginLeft:5, borderBottom:"1px solid black", cursor : "pointer"}}> {newAccount ? "로그인으로" : "회원가입으로"} </p>
+        </span>
+      </Form>
 
-      {error && <span className="authError">{error}</span>}
-
-      <div onClick={toggleAccount} className="authSwitch">
-        {newAccount ? "Sign In" : "CreateAccount"}
-      </div>
+      {error && <><strong style={{color: "red"}}>오류발생!</strong> <p style={{marginLeft:10}}>{error}</p></>}
     </>
   );
 }
