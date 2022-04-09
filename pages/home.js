@@ -52,8 +52,8 @@ export default function Book_home() {
         <Header as="h2">올라온 채팅</Header>
         <div>
           {chats.length? chats.map((chat) => (
-            <div className="chat_space">
-              <Chats chat={chat} key={chat.createrId} isOwner={chat.createrId === userId} />
+            <div className="chat_space" key={chat.id}>
+              <Chats chat={chat} isOwner={chat.createrId === userId} />
             </div>
           )) : <p>채팅목록이 없습니다</p>}
         </div>

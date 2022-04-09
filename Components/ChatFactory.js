@@ -15,113 +15,100 @@ export default function ChatFactory() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        // setUserObj(user);
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
           updateProfile: (args) => updateProfile(args),
-
         });
       } else {
         setUserObj(null);
       }
     });
-  }, [])
+  }, []);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onNewPostSubmit = async (e) => {
+    e.preventDefault();
     let fileUrl = "";
-    if (chat === "") { return }
+    if (chat === "") {
+      return;
+    }
     if (imgFileString !== "") {
       const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
-      const response = await uploadString(fileRef, imgFileString, 'data_url');
+      const response = await uploadString(fileRef, imgFileString, "data_url");
       fileUrl = await getDownloadURL(response.ref);
     }
-      
-    const week = ['일', '월', '화', '수', '목', '금', '토'];
+
     const chatObj = {
       text: chat,
       createdAt: Date.now(),
       createrId: userObj.uid,
       nickName: userObj.displayName,
-      date: `${new Date().getFullYear().toString().padStart(2, "0")}/${(new Date().getMonth()+1).toString().padStart(2, "0")}/${new Date().getDate().toString().padStart(2, "0")}
-      ${week[new Date().getDay()]}요일${new Date().getHours()<12?" 오전" : " 오후"}
-           ${((new Date().getHours()+ 11) % 12 + 1).toString().padStart(2, "0")} : ${new Date().getMinutes().toString().padStart(2, "0")} : ${new Date().getSeconds().toString().padStart(2, "0")}`,
-      fileUrl
-    }
+      fileUrl,
+    };
+
     await addDoc(collection(dbService, "chat"), chatObj)
-      .then(() => {
-        console.log("전송완료");
-      })
-      .catch((error) => {
-        alert(error);
-      });
+      .then(() => console.log("전송완료"))
+      .catch((error) => alert(error));
+
     setChat("");
     setImgFileString("");
-
-  }
+  };
 
   const onFileChange = (event) => {
-    const { target: { files } } = event;
+    const {
+      target: { files },
+    } = event;
     const file = files[0];
 
     const reader = new FileReader();
     reader.onloadend = (finishedEvent) => {
       const result = finishedEvent.currentTarget.result;
       setImgFileString(result);
-    }
-    if(file){
+    };
+    if (file) {
       reader.readAsDataURL(file);
     }
-
-  }
+  };
 
   const onClearPhotoClick = () => setImgFileString(""); // 위 onFileChange에서 들고온 result을 무효화
-
-  const onChange = (event) => {
-    const {
-      target: { value }
-    } = event; //event로부터 event 안에있는 target의 value를 반환
-
-    setChat(value);
-  }
 
 
   return (
     <div>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onNewPostSubmit}>
         <Form.Field>
           <label>의견남기기</label>
-          <TextArea value={chat} onChange={onChange} required />
+          <TextArea value={chat} onChange={(e) => setChat(e.target.value)} required />
         </Form.Field>
 
         <label htmlFor="attach-file">
-                <span>Add photos</span>
+          <span>Add photos</span>
         </label>
-        <input 
-            type="file" 
-            accept="image/*" 
-            onChange={onFileChange}
-            id="attach-file"/>
-        
+        <input
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          id="attach-file"
+        />
+
         {imgFileString && (
           <>
             <div>
-              <img src={imgFileString}
+              <img
+                src={imgFileString}
                 style={{
                   backgroundImage: imgFileString,
-                  width : "30%",
-                  height : "30%",
-                }} />
+                  width: "30%",
+                  height: "30%",
+                }}
+              />
 
               <div onClick={onClearPhotoClick}>
                 <span>Remove</span>
               </div>
             </div>
           </>
-
-        )
-        }
+        )}
         <Button color="blue">보내기</Button>
       </Form>
     </div>
