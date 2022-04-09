@@ -5,7 +5,7 @@ import {
 import { useState } from "react";
 import { authService } from "../firebaseConfig";
 import { useRouter } from "next/router";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Header } from "semantic-ui-react";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
@@ -31,6 +31,7 @@ export default function AuthForm() {
 
   return (
     <>
+      <Header as="h3" style={{color:"white", background : "black", borderRadius:10}}>{newAccount ? "CreateAccount" : "Login"}</Header>
       <Form onSubmit={onSubmit} className="container" style={{marginBottom:10}}>
         <input
           type="email"
