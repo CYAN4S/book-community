@@ -37,13 +37,15 @@ export default function ChatFactory() {
       const response = await uploadString(fileRef, imgFileString, 'data_url');
       fileUrl = await getDownloadURL(response.ref);
     }
-
+      
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
     const chatObj = {
       text: chat,
       createdAt: Date.now(),
       createrId: userObj.uid,
       nickName: userObj.displayName,
-      date: `${new Date().getFullYear().toString().padStart(2, "0")}/${new Date().getMonth().toString().padStart(2, "0")}/${new Date().getDate().toString().padStart(2, "0")},
+      date: `${new Date().getFullYear().toString().padStart(2, "0")}/${(new Date().getMonth()+1).toString().padStart(2, "0")}/${new Date().getDate().toString().padStart(2, "0")}
+      ${week[new Date().getDay()]}요일${new Date().getHours()<12?" 오전" : " 오후"}
            ${new Date().getHours().toString().padStart(2, "0")} : ${new Date().getMinutes().toString().padStart(2, "0")} : ${new Date().getSeconds().toString().padStart(2, "0")}`,
       fileUrl
     }

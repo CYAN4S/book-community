@@ -127,7 +127,7 @@ export default function Chats({ chat, isOwner }) {
             <>
                 <div>
                     <div style={{ marginBottom: 10 }}>
-                        {username} : <strong> {chat.text}</strong> <p> - 등록시간 : {time}</p>
+                        {username} : <strong> {chat.text}</strong> <p>[등록시간] {time}</p>
                         {chat.fileUrl &&
                             <img src={chat.fileUrl} style={{ width: "100%", height: "100%" }} />}
                     </div>
