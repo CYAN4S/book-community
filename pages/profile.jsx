@@ -102,46 +102,62 @@ export default function Profile() {
 
   return (
     <div id="profile">
-      <h1>{displayName ? displayName : "닉네임을 설정해주세요"}</h1>
-      <h2>{userId}</h2>
-      <form>
-        <input
-          type="text"
-          name="newName"
-          id="newName"
-          value={newName}
-          onChange={(e) => {
-            setNewName(e.target.value);
-          }}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            updateDisplayName(newName);
-          }}
-        >
-          Update Display Name
-        </button>
+      <h1>
+        {displayName ? `${displayName}님의 프로필` : "닉네임을 설정해주세요"}
+      </h1>
+      <form
+        className="ui form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          updateDisplayName(newName);
+        }}
+      >
+        <div className="field">
+          <label>닉네임 바꾸기</label>
+          <div class="fields">
+            <div className="field">
+              <input
+                type="text"
+                placeholder="새로운 닉네임"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <button className="ui button" type="submit">
+                바꾸기
+              </button>
+            </div>
+          </div>
+        </div>
       </form>
 
-      <form>
-        <label htmlFor="">상태 메시지</label>
-        <p>{statusMsg}</p>
-        <input
-          type="text"
-          value={newStatusMsg}
-          onChange={(e) => {
-            setNewStatusMsg(e.target.value);
-          }}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            updateStatusMsg(newStatusMsg);
-          }}
-        >
-          Update Status Message
-        </button>
+      <form
+        className="ui form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          updateStatusMsg(newStatusMsg);
+        }}
+      >
+        <div className="field">
+          <label>상태 메시지</label>
+          <p>{statusMsg}</p>
+          <div class="fields">
+            <div class="field">
+              <input
+                type="text"
+                placeholder="새로운 상태 메시지"
+                value={newStatusMsg}
+                onChange={(e) => setNewStatusMsg(e.target.value)}
+              />
+            </div>
+            <div class="field">
+              <button className="ui button" type="submit">
+                바꾸기
+              </button>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   );
