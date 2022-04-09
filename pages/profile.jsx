@@ -114,7 +114,7 @@ export default function Profile() {
       >
         <div className="field">
           <label>닉네임 바꾸기</label>
-          <div class="fields">
+          <div className="fields">
             <div className="field">
               <input
                 type="text"
@@ -142,8 +142,8 @@ export default function Profile() {
         <div className="field">
           <label>상태 메시지</label>
           <p>{statusMsg}</p>
-          <div class="fields">
-            <div class="field">
+          <div className="fields">
+            <div className="field">
               <input
                 type="text"
                 placeholder="새로운 상태 메시지"
@@ -151,7 +151,7 @@ export default function Profile() {
                 onChange={(e) => setNewStatusMsg(e.target.value)}
               />
             </div>
-            <div class="field">
+            <div className="field">
               <button className="ui button" type="submit">
                 바꾸기
               </button>
