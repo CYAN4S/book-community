@@ -2,6 +2,8 @@ import { Button, Divider, Header, List } from "semantic-ui-react";
 import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { decode } from "he";
+
 export default function Title({ books }) {
   const {
     title,
@@ -58,7 +60,9 @@ export default function Title({ books }) {
             <Header as="h2" color="blue">
               Description
             </Header>
-            <p style={{ paddingBottom: 20, fontSize: 15 }}>{description}</p>
+            <p style={{ paddingBottom: 20, fontSize: 15 }}>
+              {decode(description)}
+            </p>
           </div>
         </Segment>
         <Button onClick={onClick} style={{ marginTop: 10 }}>
