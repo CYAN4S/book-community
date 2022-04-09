@@ -31,7 +31,7 @@ export default function AuthForm() {
 
   return (
     <>
-      <Form onSubmit={onSubmit} className="container">
+      <Form onSubmit={onSubmit} className="container" style={{marginBottom:10}}>
         <input
           type="email"
           placeholder="Email"
@@ -67,7 +67,8 @@ export default function AuthForm() {
           <p onClick={toggleAccount} style={{marginLeft:5, borderBottom:"1px solid black", cursor : "pointer"}}> {newAccount ? "로그인으로" : "회원가입으로"} </p>
         </span>
       </Form>
-      <strong>오류발생! </strong> {error && <span className="authError">{error}</span>}
+
+      {error && <><strong style={{color: "red"}}>오류발생!</strong> <p style={{marginLeft:10}}>{error}</p></>}
     </>
   );
 }
