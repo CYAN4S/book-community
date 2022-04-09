@@ -7,7 +7,6 @@ export default function Home() {
   const router = useRouter();
   const [isSigned, setIsSigned] = useState(false);
   const [init, setInit] = useState(false);
-  const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {

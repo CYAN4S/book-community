@@ -6,17 +6,17 @@ import { authService } from "../firebaseConfig";
 export default function Navigation() {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-  useEffect(()=>{
-    authService.onAuthStateChanged((user) =>{
-      if(user){
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
         setIsSignedIn(true);
-      }else{
+      } else {
         setIsSignedIn(false);
       }
     });
-  }, [])
+  }, []);
 
-  const router = useRouter(); 
+  const router = useRouter();
   let activeItem = {};
 
   if (router.pathname === "/") {
@@ -46,37 +46,39 @@ export default function Navigation() {
   }
   return (
     <>
-    {
-      isSignedIn ? 
-      <>
-        <Menu inverted color={"black"} widths={5}>
-          <Menu.Item name="home" active={activeItem === "home"} onClick={goLink} />
-          <Menu.Item
-            name="about"
-            active={activeItem === "about"}
-            onClick={goLink}
-          />
-          <Menu.Item
-            name="books"
-            active={activeItem === "books"}
-            onClick={goLink}
-          />
-          <Menu.Item
-            name="explore"
-            active={activeItem === "explore"}
-            onClick={goLink}
-          />
-          <Menu.Item
-            name="profile"
-            active={activeItem === "profile"}
-            onClick={goLink}
-          />
-        </Menu>
-      </> : 
-      <>
-
-      </>
-    }
+      {isSignedIn ? (
+        <>
+          <Menu inverted color={"black"} widths={5}>
+            <Menu.Item
+              name="home"
+              active={activeItem === "home"}
+              onClick={goLink}
+            />
+            <Menu.Item
+              name="about"
+              active={activeItem === "about"}
+              onClick={goLink}
+            />
+            <Menu.Item
+              name="books"
+              active={activeItem === "books"}
+              onClick={goLink}
+            />
+            <Menu.Item
+              name="explore"
+              active={activeItem === "explore"}
+              onClick={goLink}
+            />
+            <Menu.Item
+              name="profile"
+              active={activeItem === "profile"}
+              onClick={goLink}
+            />
+          </Menu>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
