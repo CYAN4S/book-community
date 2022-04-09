@@ -30,13 +30,12 @@ export default function Chats({ chat, isOwner }) {
             }
         });
     }, [])
-
     const onDeleteClick = async () => {
         const ok = window.confirm("채팅을 삭제하시겠습니까?");
         if (ok) {
             await deleteDoc(doc(dbService, "chat", `${chat.id}`));
             if (chat.fileUrl !== "") {
-                deleteObject(ref(storageService, chat.fileUrl));
+                await deleteObject(ref(storageService, chat.fileUrl));
             }
         }
     }
