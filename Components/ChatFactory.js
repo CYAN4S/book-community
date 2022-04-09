@@ -115,10 +115,32 @@ export default function ChatFactory() {
                   height : "30%",
                 }} />
 
-              <div onClick={onClearPhotoClick}>
+              <div className="span_btn" onClick={onClearPhotoClick}>
                 <span>Remove</span>
               </div>
             </div>
+            <style jsx>{`
+
+                .span_btn{
+                    width : 70px;
+                    height : 25px;
+                    color : black;
+                    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                    cursor: pointer;
+                    text-align : center;
+                    border-top: 2px solid black;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom : 2px solid black;
+                    transition : 400ms;
+                }  
+
+                .span_btn:hover{
+                    color : white;
+                    background-color: black;
+                }  
+
+                `}</style>
           </>
 
         )

@@ -16,7 +16,6 @@ export default function Chats({ chat, isOwner }) {
     const [userObj, setUserObj] = useState(null);
     const [imgFileString, setImgFileString] = useState("");
     const [imgEdit,setImgEdit] = useState(false);
-    const [imgDown, setImgDown] = useState(false);
 
     useEffect(() => {
         authService.onAuthStateChanged((user) => {
@@ -34,7 +33,13 @@ export default function Chats({ chat, isOwner }) {
     const onDeleteClick = async () => {
         const ok = window.confirm("채팅을 삭제하시겠습니까?");
         if (ok) {
-            await deleteDoc(doc(dbService, "chat", `${chat.id}`));
+            await deleteDoc(doc(dbService, "chat", `${chat.id}`)).then(() => {
+                alert("채팅이 삭제되었습니다!");
+            })
+                .catch((error) => {
+                    alert(error);
+                });
+
             if (chat.fileUrl !== "") {
                 await deleteObject(ref(storageService, chat.fileUrl));
             }
@@ -57,18 +62,6 @@ export default function Chats({ chat, isOwner }) {
                 .catch((error) => {
                     alert(error);
                 });
-        }else if(imgDown){
-            if (chat.fileUrl!==""){
-                await deleteObject(ref(storageService, chat.fileUrl)).then(
-                    updateDoc(doc(dbService, "chat", `${chat.id}`), {
-                        text: newChat,
-                        fileUrl : "",
-                    }).then(alert("수정되었습니다!"))).catch((error) => {
-                        alert(error);
-                    }).catch((error) => {
-                        alert(error);
-                    });
-            }            
         }
         else{
             updateDoc(doc(dbService, "chat", `${chat.id}`), {
@@ -80,10 +73,8 @@ export default function Chats({ chat, isOwner }) {
                     alert(error);
                 });
         }
-
         setImgEdit(false);
         setEditing(false);
-        setImgDown(false);
         setImgFileString("");
 
     }
@@ -104,15 +95,27 @@ export default function Chats({ chat, isOwner }) {
             setImgEdit(false);
         }
     }
-    const imgDeleteing = () => {
-        
-        if(chat.fileUrl===""){
-            alert("채팅에 올려놓은 이미지가 없습니다.");
-            setImgDown(false);
 
-        }else{
-            setImgDown(true);
+    const imgDeleteing = async() => {
+        
+        const ok = window.confirm("등록된 이미지를 삭제하시겠습니까? (삭제과정은 되돌릴 수 없습니다.)");
+        if (ok) {
+            if(chat.fileUrl===""){
+                alert("채팅에 올려놓은 이미지가 없습니다.");
+            }else{
+                await deleteObject(ref(storageService, chat.fileUrl)).then(()=>{
+                    updateDoc(doc(dbService, "chat", `${chat.id}`), {
+                        text: newChat,
+                        fileUrl : "",
+                    }).then(alert("삭제되었습니다!")).catch((error) => {
+                        alert(error);
+                    });
+                });
+                
+            }
         }
+
+        
         
     }
     const onFileChange = async (event) => {
@@ -144,13 +147,13 @@ export default function Chats({ chat, isOwner }) {
                                     onChange={onChange}
                                     autoFocus
                                     required />
-                                    
-                            <input
+                            {!chat.fileUrl ? <input
                                 type="file"
                                 accept="image/*"
                                 onChange={onFileChange}
                                 id="attach-file" 
-                            />
+                            /> : <></>}        
+                            
                         </Form.Field>
                         {imgFileString && (
                         <>
@@ -165,7 +168,9 @@ export default function Chats({ chat, isOwner }) {
                             </div>
                             
                         </>)}
-                        <div className = "downImg" onClick = {imgDeleteing}>Del Img</div>
+                        {
+                            chat.fileUrl ? <div className = "downImg" onClick = {imgDeleteing}>Del Img</div> : <></>
+                        }
                         <Button type="submit" value="update"> 수정 완료 </Button>
                     </Form>
                 </div>           
