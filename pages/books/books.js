@@ -36,7 +36,12 @@ export default function Books({ books }) {
                   <span className="txt_info">
                     {book.publisher},{book.pubdate}
                   </span>
-                  <strong className="num_price">${book.price}</strong>
+                  <strong className="num_price">
+                    {new Intl.NumberFormat("ko", {
+                      style: "currency",
+                      currency: "KRW",
+                    }).format(book.price)}
+                  </strong>
                 </div>
               </Grid.Column>
             ))}
@@ -86,8 +91,8 @@ export const getServerSideProps = async () => {
       "&display=20",
     {
       headers: {
-        "X-Naver-Client-Id": "Zd5ZJu3YKXwcK0Lx4885",
-        "X-Naver-Client-Secret": "VInjcz5JIp",
+        "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+        "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
       },
     }
   );
