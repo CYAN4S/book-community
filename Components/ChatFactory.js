@@ -45,8 +45,8 @@ export default function ChatFactory() {
       createrId: userObj.uid,
       nickName: userObj.displayName,
       date: `${new Date().getFullYear().toString().padStart(2, "0")}/${(new Date().getMonth()+1).toString().padStart(2, "0")}/${new Date().getDate().toString().padStart(2, "0")}
-      ${week[new Date().getDay()]}요일${new Date().getHours()<12?" 오전" : " 오후"}
-           ${((new Date().getHours()+ 11) % 12 + 1).toString().padStart(2, "0")} : ${new Date().getMinutes().toString().padStart(2, "0")} : ${new Date().getSeconds().toString().padStart(2, "0")}`,
+      ${week[new Date().getDay()]}요일
+           ${new Date().getHours().toString().padStart(2, "0")} : ${new Date().getMinutes().toString().padStart(2, "0")} : ${new Date().getSeconds().toString().padStart(2, "0")}`,
       fileUrl
     }
     await addDoc(collection(dbService, "chat"), chatObj)
@@ -102,7 +102,8 @@ export default function ChatFactory() {
             type="file" 
             accept="image/*" 
             onChange={onFileChange}
-            id="attach-file"/>
+            id="attach-file"
+            style={{marginBottom : 10}}/>
         
         {imgFileString && (
           <>
@@ -122,7 +123,7 @@ export default function ChatFactory() {
 
         )
         }
-        <Button color="blue">보내기</Button>
+        <Button color="blue" style={{marginTop : 15}}>보내기</Button>
       </Form>
     </div>
   );

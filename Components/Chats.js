@@ -2,7 +2,7 @@
 import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, query, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadString } from "firebase/storage";
 import React, { useState, useEffect } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Form, TextArea } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
@@ -16,6 +16,7 @@ export default function Chats({ chat, isOwner }) {
     const [userObj, setUserObj] = useState(null);
     const [imgFileString, setImgFileString] = useState("");
     const [imgEdit,setImgEdit] = useState(false);
+    const [imgDown, setImgDown] = useState(false);
 
     useEffect(() => {
         authService.onAuthStateChanged((user) => {
@@ -56,7 +57,20 @@ export default function Chats({ chat, isOwner }) {
                 .catch((error) => {
                     alert(error);
                 });
-        }else{
+        }else if(imgDown){
+            if (chat.fileUrl!==""){
+                await deleteObject(ref(storageService, chat.fileUrl)).then(
+                    updateDoc(doc(dbService, "chat", `${chat.id}`), {
+                        text: newChat,
+                        fileUrl : "",
+                    }).then(alert("수정되었습니다!"))).catch((error) => {
+                        alert(error);
+                    }).catch((error) => {
+                        alert(error);
+                    });
+            }            
+        }
+        else{
             updateDoc(doc(dbService, "chat", `${chat.id}`), {
                 text: newChat,
             }).then(() => {
@@ -66,10 +80,11 @@ export default function Chats({ chat, isOwner }) {
                     alert(error);
                 });
         }
+
         setImgEdit(false);
         setEditing(false);
-
-        
+        setImgDown(false);
+        setImgFileString("");
 
     }
 
@@ -83,6 +98,23 @@ export default function Chats({ chat, isOwner }) {
 
     const toggleEditing = () => setEditing((prev) => !prev);
 
+    const temp_imgDeleteing=()=>{
+        if (imgFileString !== "") {
+            setImgFileString("");
+            setImgEdit(false);
+        }
+    }
+    const imgDeleteing = () => {
+        
+        if(chat.fileUrl===""){
+            alert("채팅에 올려놓은 이미지가 없습니다.");
+            setImgDown(false);
+
+        }else{
+            setImgDown(true);
+        }
+        
+    }
     const onFileChange = async (event) => {
         setImgEdit(true);
         const { target: { files } } = event;
@@ -101,27 +133,99 @@ export default function Chats({ chat, isOwner }) {
 
     return (
         editing ? (
-            <div>
-                <form onSubmit={onSubmit} >
-                    <input
-                        value={newChat}
-                        type="text"
-                        placeholder="수정하기"
-                        onChange={onChange}
-                        autoFocus
-                        required />
-
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={onFileChange}
-                        id="attach-file" />
-                    <Button type="submit" value="update"> 수정 완료 </Button>
-                </form>
+            <>
+                <div>
+                    <Form onSubmit={onSubmit} >
+                        <Form.Field>
+                            <TextArea
+                                    value={newChat}
+                                    type="text"
+                                    placeholder="수정하기"
+                                    onChange={onChange}
+                                    autoFocus
+                                    required />
+                                    
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={onFileChange}
+                                id="attach-file" 
+                            />
+                        </Form.Field>
+                        {imgFileString && (
+                        <>
+                            <div className="temp">
+                                <img src={imgFileString}
+                                    style={{
+                                    backgroundImage: imgFileString,
+                                    width : "30%",
+                                    height : "30%",
+                                    }} />
+                                <span className = "downTempImg" onClick = {temp_imgDeleteing}>Del TempImg</span>
+                            </div>
+                            
+                        </>)}
+                        <div className = "downImg" onClick = {imgDeleteing}>Del Img</div>
+                        <Button type="submit" value="update"> 수정 완료 </Button>
+                    </Form>
+                </div>           
                 <Button onClick={toggleEditing}>
-                    cancel
+                        cancel
                 </Button>
-            </div>)
+                <style jsx>{`
+
+                div{
+                    margin-bottom : 10px;
+                }
+
+                .temp{
+                    display : flex;
+                }
+
+                .downImg{
+                    width : 80px;
+                    color : black;
+                    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                    cursor: pointer;
+                    text-align : center;
+                    border-top: 2px solid black;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom : 2px solid black;
+                    transition : 400ms;
+                }  
+
+                .downTempImg{
+                    width : 100px;
+                    height : 24px;
+                    color : black;
+                    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                    cursor: pointer;
+                    text-align : center;
+                    border-top: 2px solid black;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom : 2px solid black;
+                    transition : 400ms;
+                    margin-left : 10px;
+                }  
+
+                .downImg:hover{
+                    color : white;
+                    background-color: black;
+                }   
+
+                .downTempImg:hover{
+                    color : white;
+                    background-color: black;
+                }      
+                
+                input{
+                    margin : 5px auto;
+                }
+
+                `}</style>
+            </>)
             :
             <>
                 <div>
@@ -146,9 +250,7 @@ export default function Chats({ chat, isOwner }) {
 
                     strong{
                         font-size:15px;
-                    }
-
-                    
+                    }                   
                 `}</style>
             </>
 
