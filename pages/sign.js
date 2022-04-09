@@ -28,7 +28,7 @@ export default function Sign() {
       <Divider />
 
       <AuthForm />
-      <div className="authBtns" style={{ marginTop:10 }}>
+      <div className="authBtns" style={{ marginTop:10, textAlign:"center" }}>
         <Button name="google" onClick={onSocialClick} className="authBtn">
           Continue with Google
         </Button>
