@@ -1,33 +1,44 @@
-
-import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, query, updateDoc } from "firebase/firestore";
-import { deleteObject, getDownloadURL, ref, uploadString } from "firebase/storage";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadString,
+} from "firebase/storage";
 import React, { useState, useEffect } from "react";
 import { Button, Form, TextArea } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
+import toNativeString from "../utils/functions"
 
 export default function Chats({ chat, isOwner }) {
+  const [newChat, setNewChat] = useState(chat.text);
+  const [username, setUserName] = useState(
+    chat.nickName ? chat.nickName : "guest"
+  );
+  const [editing, setEditing] = useState(false);
+  const [time, setTime] = useState(chat.date);
+  const [userObj, setUserObj] = useState(null);
+  const [imgFileString, setImgFileString] = useState("");
+  const [imgEdit, setImgEdit] = useState(false);
 
-    const [newChat, setNewChat] = useState(chat.text);
-    const [username, setUserName] = useState(chat.nickName ? chat.nickName : "guest");
-    const [editing, setEditing] = useState(false);
-    const [time, setTime] = useState(chat.date);
-    const [userObj, setUserObj] = useState(null);
-    const [imgFileString, setImgFileString] = useState("");
-    const [imgEdit,setImgEdit] = useState(false);
-
-    useEffect(() => {
-        authService.onAuthStateChanged((user) => {
-            if (user) {
-                setUserObj({
-                    displayName: user.displayName,
-                    uid: user.uid,
-                    updateProfile: (args) => updateProfile(args),
-                });
-            } else {
-                setUserObj(null);
-            }
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) => updateProfile(args),
         });
     }, [])
     const onDeleteClick = async () => {
@@ -76,17 +87,35 @@ export default function Chats({ chat, isOwner }) {
         setImgEdit(false);
         setEditing(false);
         setImgFileString("");
-
     }
+    setImgEdit(false);
+    setEditing(false);
+  };
 
-    const onChange = (event) => {
-        const {
-            target: { value }
-        } = event;
-        setNewChat(value);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewChat(value);
+  };
+
+  const toggleEditing = () => setEditing((prev) => !prev);
+
+  const onFileChange = async (event) => {
+    setImgEdit(true);
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setImgFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
     }
-
-
     const toggleEditing = () => setEditing((prev) => !prev);
 
     const temp_imgDeleteing=()=>{
@@ -261,5 +290,10 @@ export default function Chats({ chat, isOwner }) {
 
     );
 
+        strong {
+          font-size: 15px;
+        }
+      `}</style>
+    </>
+  );
 }
-
