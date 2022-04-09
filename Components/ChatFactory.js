@@ -45,7 +45,6 @@ export default function ChatFactory() {
       nickName: userObj.displayName,
       fileUrl,
     };
-
     await addDoc(collection(dbService, "chat"), chatObj)
       .then(() => console.log("전송완료"))
       .catch((error) => alert(error));
@@ -84,13 +83,12 @@ export default function ChatFactory() {
         <label htmlFor="attach-file">
           <span>Add photos</span>
         </label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={onFileChange}
-          id="attach-file"
-        />
-
+        <input 
+            type="file" 
+            accept="image/*" 
+            onChange={onFileChange}
+            id="attach-file"
+            style={{marginBottom : 10}}/>
         {imgFileString && (
           <>
             <div>
@@ -103,13 +101,36 @@ export default function ChatFactory() {
                 }}
               />
 
-              <div onClick={onClearPhotoClick}>
+              <div className="span_btn" onClick={onClearPhotoClick}>
                 <span>Remove</span>
               </div>
             </div>
+            <style jsx>{`
+
+                .span_btn{
+                    width : 70px;
+                    height : 25px;
+                    color : black;
+                    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                    cursor: pointer;
+                    text-align : center;
+                    border-top: 2px solid black;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom : 2px solid black;
+                    transition : 400ms;
+                }  
+
+                .span_btn:hover{
+                    color : white;
+                    background-color: black;
+                }  
+
+                `}</style>
           </>
-        )}
-        <Button color="blue">보내기</Button>
+        )
+        }
+        <Button color="blue" style={{marginTop : 15}}>보내기</Button>
       </Form>
     </div>
   );
