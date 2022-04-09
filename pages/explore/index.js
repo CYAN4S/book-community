@@ -6,17 +6,25 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function explorer() {
-
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     setKeyword("");
-  }, [])
+  }, []);
   return (
     <>
       <div className="ui fluid icon input">
-        <input type="text" placeholder="책 이름, 글쓴이, 출판사 등.." onChange={(e) => { e.preventDefault(); setKeyword(e.target.value) }}></input>
-        <Link href={`/explore/${keyword}`}><a>검색</a></Link>
+        <input
+          type="text"
+          placeholder="책 이름, 글쓴이, 출판사 등.."
+          onChange={(e) => {
+            e.preventDefault();
+            setKeyword(e.target.value);
+          }}
+        ></input>
+        <Link href={`/explore/${keyword}`}>
+          <a>검색</a>
+        </Link>
       </div>
       <Header as="h3" color="black">
         읽고 있는 책
@@ -105,8 +113,6 @@ export default function explorer() {
           </div>
         </div>
       </div>
-
-
     </>
   );
 }

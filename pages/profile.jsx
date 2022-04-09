@@ -23,7 +23,6 @@ export default function Profile() {
   const [newStatusMsg, setNewStatusMsg] = useState("");
 
   onAuthStateChanged(authService, (user) => {
-
     if (user) {
       setUser(user);
       setIsSignedIn(true);
@@ -103,7 +102,7 @@ export default function Profile() {
 
   return (
     <div id="profile">
-      <h1>{displayName?(displayName):("닉네임을 설정해주세요")}</h1>
+      <h1>{displayName ? displayName : "닉네임을 설정해주세요"}</h1>
       <h2>{userId}</h2>
       <form>
         <input

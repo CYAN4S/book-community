@@ -4,7 +4,6 @@ import { authService } from "../firebaseConfig";
 import { useRouter } from "next/router";
 
 export default function Sign() {
-  
   const router = useRouter();
 
   const onSocialClick = async (event) => {
@@ -12,7 +11,6 @@ export default function Sign() {
       target: { name },
     } = event;
 
-    
     let provider;
     if (name === "google") {
       //google login
