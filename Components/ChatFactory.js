@@ -46,7 +46,7 @@ export default function ChatFactory() {
       nickName: userObj.displayName,
       date: `${new Date().getFullYear().toString().padStart(2, "0")}/${(new Date().getMonth()+1).toString().padStart(2, "0")}/${new Date().getDate().toString().padStart(2, "0")}
       ${week[new Date().getDay()]}요일${new Date().getHours()<12?" 오전" : " 오후"}
-           ${new Date().getHours().toString().padStart(2, "0")} : ${new Date().getMinutes().toString().padStart(2, "0")} : ${new Date().getSeconds().toString().padStart(2, "0")}`,
+           ${((new Date().getHours()+ 11) % 12 + 1).toString().padStart(2, "0")} : ${new Date().getMinutes().toString().padStart(2, "0")} : ${new Date().getSeconds().toString().padStart(2, "0")}`,
       fileUrl
     }
     await addDoc(collection(dbService, "chat"), chatObj)
