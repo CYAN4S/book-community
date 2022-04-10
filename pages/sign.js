@@ -34,7 +34,7 @@ export default function Sign() {
           Continue with Google
         </Button>
       </div>
-      <div className = "ui segment">
+      <div>
         <img className= "ui centered medium image" src="logo.gif" />
       </div>
       
