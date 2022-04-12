@@ -261,7 +261,10 @@ export default function Chats({ chat, isOwner }) {
     <>
       <div>
         <div style={{ marginBottom: 10 }}>
-          {username} : <strong> {chat.text}</strong> <p>[등록시간] {new Date(chat.createdAt).toLocaleString()}</p>
+          [등록시간] {new Date(chat.createdAt).toLocaleString()}
+          <p>[닉네임] {username}</p>
+          <strong> {chat.text}</strong> 
+          
           {chat.fileUrl && (
             <img src={chat.fileUrl} style={{ width: "100%", height: "100%" }} />
           )}
