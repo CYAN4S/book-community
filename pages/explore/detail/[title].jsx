@@ -64,7 +64,7 @@ export default function Title({ books }) {
               {decode(description)}
             </p>
             <Divider inverted />
-            <Link href={`../naru/${title}`}>
+            <Link href={`../naru/${isbn}`}>
               <a>
                 <div>
                   확인하기
