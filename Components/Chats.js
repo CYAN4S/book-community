@@ -22,11 +22,11 @@ import { async } from "@firebase/util";
 
 export default function Chats({ chat, isOwner }) {
   const [newChat, setNewChat] = useState(chat.text);
+  const [likeNum, setLikeNum] = useState(chat.likeNum);
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
   const [editing, setEditing] = useState(false);
-  const [time, setTime] = useState(chat.date);
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
@@ -37,6 +37,8 @@ export default function Chats({ chat, isOwner }) {
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
+          likeNum : likeNum,
+          doLike : false,
           updateProfile: (args) => updateProfile(args),
         });
       }
@@ -101,7 +103,48 @@ export default function Chats({ chat, isOwner }) {
   };
 
   const toggleEditing = () => setEditing((prev) => !prev);
+  const toggleLike = () => {
 
+    const filter = chat.users.filter((item)=>{
+      return item === userObj.uid
+    })
+
+    console.log(chat.users);
+    console.log(filter);
+
+    // 오늘 할 것 : userObj.doLike가 초기화되지않는 뭔가가 되면
+    if(!filter.length && (userObj.uid!==chat.createrId)){
+      console.log("제발?");
+      setLikeNum((prev)=>prev+1);
+      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+        likeNum: chat.likeNum+1,
+        users : chat.users.concat(userObj.uid),
+      })
+        .then(() => {
+          userObj.doLike = true;
+         })
+        .catch((error) => {
+          alert(error);
+        });
+    }else{
+      console.log("제발");
+      setLikeNum((prev)=>prev-1);
+      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+        likeNum: chat.likeNum-1,
+        users : chat.users.filter((item)=>item !== userObj.uid)
+      })
+        .then(() => {
+          userObj.doLike = false;
+          
+         })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+
+    
+  }
+  
   const temp_imgDeleteing = () => {
     if (imgFileString !== "") {
       setImgFileString("");
@@ -268,21 +311,29 @@ export default function Chats({ chat, isOwner }) {
         </div>
 
         {isOwner ? (
-          <div className="btn_span">
+          <div className="btn_Span">
             <Button onClick={onDeleteClick}>삭제</Button>
             <Button onClick={toggleEditing}>편집</Button>
+            <span style={{marginLeft: 10}}> 좋아요 수 : {chat.likeNum ? "💗" : "🤍"} : {chat.likeNum}</span> 
           </div>
         ) : (
-          <></>
+          <>
+            <span className ="btn_Like" onClick={toggleLike}>좋아요 수 : {chat.likeNum ? "💗" : "🤍"} {chat.likeNum}</span>
+          </>
         )}
       </div>
       <style jsx>{`
-        .btn_span {
+        .btn_Span {
           margin-left: 10px;
+          width : 100%;
         }
 
         strong {
           font-size: 15px;
+        }
+
+        .btn_Like{
+          cursor:pointer;
         }
       `}</style>
     </>

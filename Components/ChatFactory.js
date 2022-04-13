@@ -1,6 +1,5 @@
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { Button, Form, TextArea } from "semantic-ui-react";
-import { async } from "@firebase/util";
 import React, { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { v4 } from "uuid";
@@ -11,7 +10,8 @@ export default function ChatFactory() {
   const [chat, setChat] = useState("");
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
-
+  const [likeNum, setLikeNum] = useState(0);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -44,6 +44,8 @@ export default function ChatFactory() {
       createrId: userObj.uid,
       nickName: userObj.displayName,
       fileUrl,
+      likeNum,
+      users,
     };
     await addDoc(collection(dbService, "chat"), chatObj)
       .then(() => console.log("전송완료"))

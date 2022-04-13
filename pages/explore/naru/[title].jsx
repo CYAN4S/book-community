@@ -64,10 +64,19 @@ export default function Title({ books }) {
               {decode(description)}
             </p>
             <Divider inverted />
-            <Link href={`../naru/${title}`}>
+            <Link href={`./detail/${book.title}`}>
               <a>
                 <div>
-                  확인하기
+                  <img
+                    src={book.image}
+                    alt="DON'T HAVE IMAGE"
+                    className="img_book"
+                  />
+                  <strong className="book_item">{book.title}</strong>
+                  <span className="txt_info">
+                    {book.publisher},{book.pubdate}
+                  </span>
+                  <strong className="num_price">${book.price}</strong>
                 </div>
               </a>
             </Link>
