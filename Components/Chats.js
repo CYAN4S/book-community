@@ -6,6 +6,7 @@ import {
   getDocs,
   onSnapshot,
   query,
+  deleteField,
   updateDoc,
 } from "firebase/firestore";
 import {
@@ -20,14 +21,16 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
 
-export default function Chats({ chat, isOwner,following }) {
+export default function Chats({ chat, isOwner}) {
   const [newChat, setNewChat] = useState(chat.text);
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
   const [newfollowing, setNewFollowing] = useState(false);
+  const [followings, setFollowings] = useState([]);
+
   const [editing, setEditing] = useState(false);
-  const [time, setTime] = useState(chat.date);
+
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
@@ -43,13 +46,14 @@ export default function Chats({ chat, isOwner,following }) {
       }
     });
   }, []);
+
   const onFollowing = async () => {
     setNewFollowing((prev) => !prev);
-    if(!following){
-      const followingObj = {
-        followId: userObj.uid,
-        createrId: chat.createrId,
-      };
+    const followingObj = {
+      followId: userObj.uid,
+      createrId: chat.createrId,
+    };
+    if(!newfollowing){
       await addDoc(collection(dbService, "following"), followingObj)
       .then(() => {
         alert("구독되었습니다!");
@@ -57,7 +61,8 @@ export default function Chats({ chat, isOwner,following }) {
       .catch((error) => alert(error));
     }
     else{
-      await deleteDoc(doc(dbService, "following", `${followingObj.followId}`))
+      await deleteDoc(doc(dbService,'following',`${followingObj.followId}`))
+     
         .then(() => {
           alert("구독이 취소되었습니다.");
         })
