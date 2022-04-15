@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { authService, dbService } from "../firebaseConfig";
+import { authService, dbService } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -25,6 +25,8 @@ export default function Profile() {
   const [statusMsg, setStatusMsg] = useState("");
   const [newStatusMsg, setNewStatusMsg] = useState("");
 
+  const profileRef = collection(dbService, "profile");
+
   onAuthStateChanged(authService, (user) => {
     if (user) {
       setUser(user);
@@ -42,12 +44,25 @@ export default function Profile() {
     }
   }, [isSignedIn]);
 
-  
   function onLogOutClick() {
     authService.signOut();
     router.push("/");
   }
-  
+
+  const updateUserDoc = async (doc) => {
+    let ref = null;
+    const q = query(profileRef, where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => (ref = doc.ref));
+
+    return ref
+      ? updateDoc(ref, doc)
+      : addDoc(profileRef, {
+          uid: user.uid,
+          ...doc,
+        });
+  };
+
   const getStatusMsg = async () => {
     const profileRef = collection(dbService, "profile");
     const q = query(profileRef, where("uid", "==", user.uid));
@@ -59,47 +74,22 @@ export default function Profile() {
   };
 
   const updateDisplayName = (newName) => {
-    updateProfile(authService.currentUser, {
-      displayName: newName,
-    })
+    Promise.all([
+      updateProfile(authService.currentUser, { displayName: newName }),
+      updateUserDoc({ displayName: newName }),
+    ])
       .then(() => {
         setDisplayName(newName);
         alert("Name Changed!");
       })
       .catch((error) => {
         alert(error);
+        console.log(error);
       });
   };
 
   const updateStatusMsg = async (newMsg) => {
-    let target = null;
-    const profileRef = collection(dbService, "profile");
-    const q = query(profileRef, where("uid", "==", user.uid));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      target = doc.ref;
-    });
-    console.log(target);
-
-    if (!target) {
-      await addDoc(collection(dbService, "profile"), {
-        uid: user.uid,
-        statusMsg: newMsg,
-      })
-        .then(() => {
-          setStatusMsg(newMsg);
-          alert("Status Message Changed!");
-        })
-        .catch((error) => {
-          alert(error);
-        });
-      return;
-    }
-
-    await updateDoc(target, {
-      statusMsg: newMsg,
-    })
+    updateUserDoc({ statusMsg: newMsg })
       .then(() => {
         setStatusMsg(newMsg);
         alert("Status Message Changed!");
