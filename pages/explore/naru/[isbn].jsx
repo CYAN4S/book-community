@@ -3,16 +3,35 @@ import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { decode } from "he";
+import Head from "next/head";
 
-export default function Title() {
-  // const {
-  //   title,
-  // } = books.items[0];
+export default function Title({data, data2}) {
 
+  const libName = data.response.libs.map((lib)=>lib.lib.libName);
+  const loanData = data2.response.result;
+  console.log(loanData);
   return (
     <>
       <div className="wrap">
-        책
+        <Header>보유 도서관</Header>
+        <div>
+          <List>
+            <List.Item>{libName.map((item)=><div className="libName" key = {item}>{item}</div>)}</List.Item>
+          </List>
+        </div>
+        <div style={{marginTop : 30}}>
+          <List>
+            <List.Item>
+              {data.response.libs[0].lib.libName}
+            </List.Item>
+            <List.Item style={{fontSize: 10}}>소장여부 : {loanData.hasBook}</List.Item>
+            <List.Item style={{fontSize: 10}}>대출가능여부 : {loanData.loanAvailable}</List.Item>
+          </List>
+        </div>
+        
+        <div>
+
+        </div>
       </div>
 
       <style jsx>{`
@@ -20,42 +39,13 @@ export default function Title() {
           text-align: center;
           margin: 30px 10px 20px 10px;
         }
-
-        .book_item {
-          display: block;
-          font-size: 16px;
-          margin-top: 25px;
+        
+        .libName{
+          margin-top : 10px;
+          margin-bottom : 10px;
+          font-size : 12px;
         }
 
-        .txt_info {
-          display: block;
-          font-size: 15px;
-          color: red;
-        }
-
-        .book_item {
-          display: block;
-          font-size: 19px;
-        }
-
-        .num_price {
-          display: block;
-          font-size: 15px;
-          margin-top: 10px;
-          margin-bottom: 12px;
-        }
-
-        img {
-          width: auto;
-          height: 250px;
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          image-rendering: -webkit-optimize-contrast;
-        }
-
-        p {
-          margin-bottom: 0.1em;
-        }
       `}</style>
     </>
   );
@@ -63,30 +53,31 @@ export default function Title() {
 
 export async function getServerSideProps(props) {
   const isbn = props.params.isbn.split(" ")[1];
+  const region = "370200"; // 경기도. 
+
   const res = await fetch(
-    "http://data4library.kr/api/libSrchByBook?authKey=0358217be40b069fd831e0761da84765d8a072fa43055687cf94579e744060f9"+ "&isbn=" + isbn
-  );
+    "http://data4library.kr/api/libSrchByBook?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d" +
+      "&isbn=" +
+      isbn +
+      "&region=31" +
+      "&format=json"
+  ); // 보유도서관 검색
+  let data = await res.json();
+  const libCode = data.response.libs.map((lib)=>lib.lib.libCode);
+  console.log(libCode); //code
 
-  console.log(res);
-  // const books = await res.json();
-
-  // books.items.title = books.items.map((book) => {
-  //   book.title = book.title.replace(
-  //     /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
-  //     ""
-  //   );
-  // });
-
-  // books.items.description = books.items.map((book) => {
-  //   book.description = book.description.replace(
-  //     /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
-  //     ""
-  //   );
-  // });
-
+  const res2 = await fetch(
+    `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[1]}
+    &isbn13=${isbn}&format=json`
+  ); // 소장여부, 대출가능여부
+  let data2 = await res2.json();
+  // console.log(data.response.libs[0].lib.libName, data2.response.result.loanAvailable);
+  // console.log(data.response.libs.map((lib)=>lib.lib.libName));
   return {
     props: {
-      // title,
+      data : data,
+      data2 : data2,
+
     },
   };
 }
