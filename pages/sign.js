@@ -5,8 +5,6 @@ import { useRouter } from "next/router";
 import { Button, Divider, Header } from "semantic-ui-react";
 
 export default function Sign() {
-  const router = useRouter();
-
   const onSocialClick = async (event) => {
     const {
       target: { name },

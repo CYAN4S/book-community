@@ -34,12 +34,7 @@ export default function SearchKeyword({ books }) {
                           <span className="txt_info">
                             {book.publisher},{book.pubdate}
                           </span>
-                          <strong className="num_price">
-                            {new Intl.NumberFormat("ko", {
-                              style: "currency",
-                              currency: "KRW",
-                            }).format(book.price)}
-                          </strong>
+                          <strong className="num_price">${book.price}</strong>
                         </div>
                       </a>
                     </Link>
@@ -51,36 +46,6 @@ export default function SearchKeyword({ books }) {
               <Button>돌아가기</Button>
             </Link>
           </div>
-          <style jsx>{`
-        .wrap {
-          text-align: center;
-          margin: 30px 10px 20px 10px;
-        }
-
-        .book_item {
-          display: block;
-          font-size: 16px;
-          margin-top: 25px;
-        }
-
-        .txt_info {
-          display: block;
-          font-size: 13px;
-          margin: 5px 0 15px;
-        }
-
-        .num_price {
-          display: block;
-          font-size: 16px;
-          margin-top: 10px;
-          margin-bottom: 25px;
-          color: #000000;
-        }
-
-        .img_book {
-          flex: 200px 0 0;
-        }
-      `}</style>
         </>
       ) : (
         <>

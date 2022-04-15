@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { authService, dbService } from "../firebaseConfig";
-import { useRouter } from "next/router";
+
 import { Button, Divider, Header } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import {
@@ -16,7 +16,7 @@ import { async } from "@firebase/util";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Book_home() {
-  const router = useRouter();
+
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
   onAuthStateChanged(authService, (user) => {
@@ -25,10 +25,6 @@ export default function Book_home() {
     }
   });
 
-  function onLogOutClick() {
-    authService.signOut();
-    router.push("/");
-  }
 
   const q = query(collection(dbService, "chat"), orderBy("createdAt", "desc"));
   useEffect(() => {
@@ -67,8 +63,7 @@ export default function Book_home() {
           </div>
 
           <Divider />
-          <Header as="h2">로그아웃 하기</Header>
-          <Button onClick={onLogOutClick}> Logout </Button>
+
         </div>
       </div>
       <style jsx>{`
