@@ -64,13 +64,13 @@ export default function Title({ books }) {
               {decode(description)}
             </p>
             <Divider inverted />
-            <Link href={`../naru/${title}`}>
+            {/* <Link href={`../naru/${title}`}>
               <a>
                 <div>
                   확인하기
                 </div>
               </a>
-            </Link>
+            </Link> */}
             
           </div>
         </Segment>
