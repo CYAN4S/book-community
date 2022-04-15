@@ -20,11 +20,12 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
 
-export default function Chats({ chat, isOwner }) {
+export default function Chats({ chat, isOwner,following }) {
   const [newChat, setNewChat] = useState(chat.text);
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
+  const [newfollowing, setNewFollowing] = useState(false);
   const [editing, setEditing] = useState(false);
   const [time, setTime] = useState(chat.date);
   const [userObj, setUserObj] = useState(null);
@@ -42,6 +43,29 @@ export default function Chats({ chat, isOwner }) {
       }
     });
   }, []);
+  const onFollowing = async () => {
+    setNewFollowing((prev) => !prev);
+    if(!following){
+      const followingObj = {
+        followId: userObj.uid,
+        createrId: chat.createrId,
+      };
+      await addDoc(collection(dbService, "following"), followingObj)
+      .then(() => {
+        alert("구독되었습니다!");
+      })
+      .catch((error) => alert(error));
+    }
+    else{
+      await deleteDoc(doc(dbService, "following", `${followingObj.followId}`))
+        .then(() => {
+          alert("구독이 취소되었습니다.");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
 
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
@@ -261,7 +285,19 @@ export default function Chats({ chat, isOwner }) {
     <>
       <div>
         <div style={{ marginBottom: 10 }}>
-          {username} : <strong> {chat.text}</strong> <p>[등록시간] {new Date(chat.createdAt).toLocaleString()}</p>
+          [등록시간] {new Date(chat.createdAt).toLocaleString()}
+          <p>
+            [닉네임] {username}
+            {isOwner ? (
+              <></>
+            ) : (
+              <Button onClick={onFollowing}>
+                {newfollowing ? "구독 중" : "구독"}
+              </Button>
+            )}
+          </p>
+          <p>[글쓴이 고유ID] {chat.createrId}</p>
+          <strong> {chat.text}</strong>
           {chat.fileUrl && (
             <img src={chat.fileUrl} style={{ width: "100%", height: "100%" }} />
           )}

@@ -54,7 +54,9 @@ export default function Book_home() {
             {chats.length ? (
               chats.map((chat) => (
                 <div className="chat_space" key={chat.id}>
-                  <Chats chat={chat} isOwner={chat.createrId === userId} />
+                  <Chats chat={chat} 
+                  
+                  isOwner={chat.createrId === userId} />
                 </div>
               ))
             ) : (
