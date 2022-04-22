@@ -19,7 +19,7 @@ export default function Sign() {
   };
 
   return (
-    <div style={{ marginLeft: 10, marginRight: 10, textAlign:"center" }}>
+    <div>
       <Header as="h3" style={{ paddingTop: 40 }} color="blue">
         북스탬프
       </Header>
@@ -27,11 +27,6 @@ export default function Sign() {
       <Divider />
 
       <AuthForm />
-      <div className="authBtns" style={{ marginTop:10, marginBottom:20, textAlign:"center" }}>
-        <Button name="google" onClick={onSocialClick} className="authBtn">
-          Continue with Google
-        </Button>
-      </div>
       <div>
         <img className= "ui centered medium image" src="logo.gif" />
       </div>

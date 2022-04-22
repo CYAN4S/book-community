@@ -1,108 +1,142 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { useState } from "react";
 import { authService } from "../firebaseConfig";
 import { useRouter } from "next/router";
-import { Button, Form, Header } from "semantic-ui-react";
+import { Button, Form, Header, Message, Divider } from "semantic-ui-react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
+  const [progress, setProgress] = useState("email"); // email, password, link, signup, both
 
-  async function onSubmit(event) {
+  const getTitle = () =>
+    progress == "email"
+      ? "더 넓은 세상이 기다리고 있습니다."
+      : progress == "signup"
+      ? "새로 오셨군요! 환영합니다."
+      : "돌아오셨군요! 환영합니다.";
+
+  const getButtonText = () =>
+    progress == "email"
+      ? "로그인 또는 회원가입"
+      : progress == "signup"
+      ? "회원가입"
+      : "로그인";
+
+  const getErrorText = (error) => {
+    const { code } = error;
+    if (code == "auth/invalid-email")
+      return ["이메일 오류!", "올바른 이메일 형식이 아닙니다."];
+    if (code == "auth/wrong-password")
+      return ["비밀번호 오류!", "비밀번호가 올바르지 않습니다."];
+    return ["치명적인 오류!", error.message];
+  };
+
+  const showPasswordForm = () =>
+    progress == "password" || progress == "signup" || progress == "both";
+
+  const goPrev = (e) => {
+    e.preventDefault();
+    setPassword("");
+    setProgress("email");
+    setError(null);
+  };
+
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
     event.preventDefault();
-    try {
-      if (newAccount) {
-        // create Account
-        await createUserWithEmailAndPassword(authService, email, password);
-      } else {
-        // sign
-        await signInWithEmailAndPassword(authService, email, password);
-      }
-    } catch (error) {
-      setError(error.message);
+
+    let provider;
+    if (name === "google") {
+      provider = new GoogleAuthProvider();
+      await signInWithPopup(authService, provider);
     }
-  }
-  const toggleAccount = () => setNewAccount(!newAccount);
+  };
+
+  const tmp = (e) => {
+    e.preventDefault();
+    setError(null);
+
+    console.log(progress);
+
+    if (progress == "email") {
+      fetchSignInMethodsForEmail(authService, email)
+        .then((methods) => {
+          if (methods.length == 0) setProgress("signup");
+          else setProgress("password");
+        })
+        .catch((error) => {
+          console.log(error.code);
+          setError(getErrorText(error));
+        });
+
+      return;
+    }
+
+    if (progress == "password") {
+      signInWithEmailAndPassword(authService, email, password).catch((error) =>
+      setError(getErrorText(error))
+      );
+      return;
+    }
+
+    if (progress == "signup") {
+      createUserWithEmailAndPassword(authService, email, password).catch(
+        (error) => setError(getErrorText(error))
+      );
+      return;
+    }
+  };
 
   return (
-  
     <>
-      <div>
-        <Header
-          as="h3"
-          style={{ color: "white", background: "black", borderRadius: 10 }}
-        >
-          {newAccount ? "CreateAccount" : "Login"}
-        </Header>
-        <Form
-          onSubmit={onSubmit}
-          className="container"
-          style={{ marginBottom: 10 }}
-        >
+      <Header>{getTitle()}</Header>
+      <Form onSubmit={tmp}>
+        <Form.Field>
+          <label>이메일</label>
           <input
             type="email"
-            placeholder="Email"
             value={email}
-            name="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            className="authInput"
-            required
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={progress != "email"}
           />
+        </Form.Field>
 
+        <Form.Field style={showPasswordForm() ? {} : { display: "none" }}>
+          <label>비밀번호</label>
           <input
             type="password"
-            placeholder="Password"
             value={password}
-            name="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            className="authInput"
-            required
+            onChange={(e) => setPassword(e.target.value)}
           />
+        </Form.Field>
 
-          <span style={{ display: "flex", alignItems: "center" }}>
-            <Button
-              type="submit"
-              value={newAccount ? "Create Account" : "Log in"}
-              style={{ marginTop: 10, marginBottom: 10 }}
-              className="authInput authSubmit"
-            >
-              시작하기
-            </Button>
-            <p onClick={toggleAccount} className="changeBtn">
-              {newAccount ? "로그인으로" : "회원가입으로"}{" "}
-            </p>
-          </span>
-        </Form>
+        {progress == "signup" && <p>회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>}
 
-        {error && (
-          <>
-            <strong style={{ color: "red" }}>오류발생!</strong>{" "}
-            <p style={{ marginLeft: 10 }}>{error}</p>
-          </>
+        <Button type="submit">{getButtonText()}</Button>
+
+        {showPasswordForm() && (
+          <Button onClick={goPrev}>다른 이메일로 시작</Button>
         )}
-      </div>
-      <style jsx>{`
-              .changeBtn {
-                margin-left : 5px;
-                border-Bottom : 1px solid black;
-                cursor : pointer;
-                font-size : 15px;
-              }
-
-              .changeBtn:hover {
-                font-weight : bold;
-              }
-            `}</style>
+      </Form>
       
+
+      <Divider horizontal>또는</Divider>
+
+      <Button name="google" onClick={onSocialClick}>
+        Continue with Google
+      </Button>
+
+      {error && <Message error header={error[0]} content={error[1]} />}
     </>
   );
 }
