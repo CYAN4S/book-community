@@ -27,12 +27,12 @@ export default function Chats({ chat, isOwner,profile}) {
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
+  const [newfollowing, setNewFollowing] = useState(false);
   const [editing, setEditing] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
 
-  const [newfollowing, setNewFollowing] = useState(false);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -48,24 +48,35 @@ export default function Chats({ chat, isOwner,profile}) {
       }
     });
   }, []);
-  const onFollowing = async () => {
+  const onFollowing = () => {
+    const getSubscriberfilter = profile.getSubscriberNum.filter((item)=>{ // 
+      console.log("테스트-item === userObj.uid 문장 ^ 구독 취소 시 발동",item === userObj.uid);
+      console.log("반환된 아이템:",item);
+      return item === userObj.uid
+    })
     setNewFollowing((prev) => !prev);
-    if(!newfollowing){
-      await addDoc(collection(dbService, "following"), followingObj)
+  
+    if(!filter.length && (userObj.uid!==chat.createrId)){
+      updateDoc(doc(dbService, "profile", `${profile.id}`), {
+        likeNum: profile.getSubscriberNum+1,
+        users : profile.users.concat(userObj.uid),
+        })
       .then(() => {
+        userObj.doSubscribe = true;
         alert("구독되었습니다!");
       })
       .catch((error) => alert(error));
     }
     else{
-      await deleteDoc(doc(dbService,'following',`${followingObj.followId}`))
-     
-        .then(() => {
-          alert("구독이 취소되었습니다.");
+      updateDoc(doc(dbService, "profile", `${profile.id}`), {
+        likeNum: profile.getSubscriberNum-1,
+        users : chat.users.filter((item)=>item !== userObj.uid)
         })
-        .catch((error) => {
-          alert(error);
-        });
+      .then(() => {
+        userObj.doSubscribe = false;
+        alert("구독이 취소되었습니다!");
+      })
+      .catch((error) => alert(error));
     }
   };
   /* 테스트용
