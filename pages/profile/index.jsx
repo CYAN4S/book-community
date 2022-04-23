@@ -62,7 +62,7 @@ export default function Profile() {
       ? updateDoc(ref, doc)
       : addDoc(profileRef, {
           uid: user.uid,
-          
+          getSubscriberNum: user.getSubscriberNum ,
           ...doc,
         });
   };
