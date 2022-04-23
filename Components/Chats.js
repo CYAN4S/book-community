@@ -20,7 +20,7 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
 
-export default function Chats({ chat, isOwner,profile}) {
+export default function Chats({ chat, isOwner,ref}) {
   const [newChat, setNewChat] = useState(chat.text);
   const [likeNum, setLikeNum] = useState(chat.likeNum);
   const [getSubscriberNum, setgetSubscriberNum] = useState(chat.getSubscriberNum);
@@ -48,52 +48,7 @@ export default function Chats({ chat, isOwner,profile}) {
       }
     });
   }, []);
-  const onFollowing = () => {
-    const getSubscriberfilter = chat.getSubscriberNum.filter((item)=>{ // 
-      console.log("테스트-item === userObj.uid 문장 ^ 구독 취소 시 발동",item === userObj.uid);
-      console.log("반환된 아이템:",item);
-      return item === userObj.uid
-    })
-    setNewFollowing((prev) => !prev);
   
-    if(!filter.length && (userObj.uid!==chat.createrId)){
-      updateDoc(doc(dbService, "profile", `${profile.id}`), {
-        likeNum: profile.getSubscriberNum+1,
-        users : profile.users.concat(userObj.uid),
-        })
-      .then(() => {
-        userObj.doSubscribe = true;
-        alert("구독되었습니다!");
-      })
-      .catch((error) => alert(error));
-    }
-    else{
-      updateDoc(doc(dbService, "profile", `${profile.id}`), {
-        likeNum: profile.getSubscriberNum-1,
-        users : profile.users.filter((item)=>item !== userObj.uid)
-        })
-      .then(() => {
-        userObj.doSubscribe = false;
-        alert("구독이 취소되었습니다!");
-      })
-      .catch((error) => alert(error));
-    }
-  };
-  /* 테스트용
-  const updateUserDoc = async (doc) => {
-    let ref = null;
-    const q = query(profileRef, where("uid", "==", user.uid));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => (ref = doc.ref));
-
-    return ref
-      ? updateDoc(ref, doc)
-      : addDoc(profileRef, {
-          uid: user.uid,
-          ...doc,
-        });
-  };
-  */
 
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
@@ -194,10 +149,54 @@ export default function Chats({ chat, isOwner,profile}) {
           alert(error);
         });
     }
-
-    
   }
+  const onFollowing = () => {
+    const getSubscriberfilter = ref.users.filter((item)=>{ // 
+      console.log("테스트-item === userObj.uid 문장 ^ 구독 취소 시 발동",item === userObj.uid);
+      console.log("반환된 아이템:",item);
+      return item === userObj.uid
+    })
+    setNewFollowing((prev) => !prev);
   
+    if(!getSubscriberfilter.length && (userObj.uid!==chat.createrId)){
+      updateDoc(doc(dbService, "profile", `${ref.id}`), {
+        getSubscriberNum: ref.getSubscriberNum+1,
+        users : ref.users.concat(userObj.uid),
+        })
+      .then(() => {
+        userObj.doSubscribe = true;
+        alert("구독되었습니다!");
+      })
+      .catch((error) => alert(error));
+    }
+    else{
+      updateDoc(doc(dbService, "profile", `${ref.id}`), {
+        getSubscriberNum: ref.getSubscriberNum-1,
+        users : ref.users.filter((item)=>item !== userObj.uid)
+        })
+      .then(() => {
+        userObj.doSubscribe = false;
+        alert("구독이 취소되었습니다!");
+      })
+      .catch((error) => alert(error));
+    }
+  };
+  /* 테스트용
+  const updateUserDoc = async (doc) => {
+    let ref = null;
+    const q = query(profileRef, where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => (ref = doc.ref));
+
+    return ref
+      ? updateDoc(ref, doc)
+      : addDoc(profileRef, {
+          uid: user.uid,
+          ...doc,
+        });
+  };
+  */
+
   const temp_imgDeleteing = () => {
     if (imgFileString !== "") {
       setImgFileString("");

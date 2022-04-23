@@ -25,7 +25,7 @@ export default function Profile() {
   const [statusMsg, setStatusMsg] = useState("");
   const [newStatusMsg, setNewStatusMsg] = useState("");
   const [getSubscriberNum,setgetSubscriberNum] = useState(0);
-
+  const [users, setUsers] = useState([]);
 
   const profileRef = collection(dbService, "profile");
 
@@ -62,9 +62,11 @@ export default function Profile() {
       ? updateDoc(ref, doc)
       : addDoc(profileRef, {
           uid: user.uid,
-          getSubscriberNum: user.getSubscriberNum ,
+          getSubscriberNum: user.getSubscriberNum,
+          users,
           ...doc,
         });
+        
   };
 
   const getStatusMsg = async () => {
