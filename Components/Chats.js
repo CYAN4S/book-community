@@ -20,9 +20,10 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
 
-export default function Chats({ chat, isOwner }) {
+export default function Chats({ chat, isOwner,profile}) {
   const [newChat, setNewChat] = useState(chat.text);
   const [likeNum, setLikeNum] = useState(chat.likeNum);
+  const [getSubscriberNum, setgetSubscriberNum] = useState(profile.getSubscriberNum);
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
@@ -31,6 +32,7 @@ export default function Chats({ chat, isOwner }) {
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
 
+  const [newfollowing, setNewFollowing] = useState(false);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -38,12 +40,49 @@ export default function Chats({ chat, isOwner }) {
           displayName: user.displayName,
           uid: user.uid,
           likeNum : likeNum,
+          getSubscriberNum : getSubscriberNum,
           doLike : false,
+          doSubscribe : false,
           updateProfile: (args) => updateProfile(args),
         });
       }
     });
   }, []);
+  const onFollowing = async () => {
+    setNewFollowing((prev) => !prev);
+    if(!newfollowing){
+      await addDoc(collection(dbService, "following"), followingObj)
+      .then(() => {
+        alert("구독되었습니다!");
+      })
+      .catch((error) => alert(error));
+    }
+    else{
+      await deleteDoc(doc(dbService,'following',`${followingObj.followId}`))
+     
+        .then(() => {
+          alert("구독이 취소되었습니다.");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
+  /* 테스트용
+  const updateUserDoc = async (doc) => {
+    let ref = null;
+    const q = query(profileRef, where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => (ref = doc.ref));
+
+    return ref
+      ? updateDoc(ref, doc)
+      : addDoc(profileRef, {
+          uid: user.uid,
+          ...doc,
+        });
+  };
+  */
 
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
@@ -105,29 +144,32 @@ export default function Chats({ chat, isOwner }) {
   const toggleEditing = () => setEditing((prev) => !prev);
   const toggleLike = () => {
 
-    const filter = chat.users.filter((item)=>{
+    const filter = chat.users.filter((item)=>{ // 
+      console.log("테스트-item === userObj.uid 문장 ^좋아요 취소 시 발동",item === userObj.uid);
+      console.log("반환된 아이템:",item);
       return item === userObj.uid
     })
-
-    console.log(chat.users);
-    console.log(filter);
+    // 좋아요 취소 시 아래의 값이 반환된다. 
+    console.log("chat.users 값", chat.users);
+    console.log("filter 값", filter);
 
     // 오늘 할 것 : userObj.doLike가 초기화되지않는 뭔가가 되면
     if(!filter.length && (userObj.uid!==chat.createrId)){
-      console.log("제발?");
+      console.log("테스트-toggleLike: if문^좋아요 +1 할 경우 발동");
       setLikeNum((prev)=>prev+1);
       updateDoc(doc(dbService, "chat", `${chat.id}`), {
         likeNum: chat.likeNum+1,
         users : chat.users.concat(userObj.uid),
       })
         .then(() => {
+          console.log("concat(문자열 합치기)/chat.users.concat(userObj.uid)결과 :", chat.users.concat(userObj.uid));
           userObj.doLike = true;
          })
         .catch((error) => {
           alert(error);
         });
     }else{
-      console.log("제발");
+      console.log("테스트-toggleLike: else문^좋아요 -1 할 경우 발동");
       setLikeNum((prev)=>prev-1);
       updateDoc(doc(dbService, "chat", `${chat.id}`), {
         likeNum: chat.likeNum-1,
@@ -319,6 +361,9 @@ export default function Chats({ chat, isOwner }) {
         ) : (
           <>
             <span className ="btn_Like" onClick={toggleLike}>좋아요 수 : {chat.likeNum ? "💗" : "🤍"} {chat.likeNum}</span>
+            <Button onClick={onFollowing}>
+                {newfollowing ? "구독 중" : "구독"}
+              </Button>
           </>
         )}
       </div>

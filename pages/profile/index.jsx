@@ -24,6 +24,8 @@ export default function Profile() {
   const [newName, setNewName] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
   const [newStatusMsg, setNewStatusMsg] = useState("");
+  const [getSubscriberNum,setgetSubscriberNum] = useState(0);
+
 
   const profileRef = collection(dbService, "profile");
 
@@ -40,6 +42,7 @@ export default function Profile() {
     if (isSignedIn) {
       setDisplayName(user.displayName);
       setUserId(user.uid);
+      setgetSubscriberNum(user.getSubscriberNum);
       getStatusMsg();
     }
   }, [isSignedIn]);
@@ -54,11 +57,12 @@ export default function Profile() {
     const q = query(profileRef, where("uid", "==", user.uid));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => (ref = doc.ref));
-
+    console.log("updateUserDoc 함수 발동");
     return ref
       ? updateDoc(ref, doc)
       : addDoc(profileRef, {
           uid: user.uid,
+          
           ...doc,
         });
   };
@@ -70,11 +74,14 @@ export default function Profile() {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       setStatusMsg(doc.data().statusMsg);
+      console.log("getStatus 함수 발동", doc.data().statusMsg);
     });
+    
   };
 
   const updateDisplayName = (newName) => {
     Promise.all([
+      // Promise 내용 https://jongbeom-dev.tistory.com/201
       updateProfile(authService.currentUser, { displayName: newName }),
       updateUserDoc({ displayName: newName }),
     ])
