@@ -23,7 +23,7 @@ import { async } from "@firebase/util";
 export default function Chats({ chat, isOwner,profile}) {
   const [newChat, setNewChat] = useState(chat.text);
   const [likeNum, setLikeNum] = useState(chat.likeNum);
-  const [getSubscriberNum, setgetSubscriberNum] = useState(profile.getSubscriberNum);
+  const [getSubscriberNum, setgetSubscriberNum] = useState(chat.getSubscriberNum);
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
@@ -49,7 +49,7 @@ export default function Chats({ chat, isOwner,profile}) {
     });
   }, []);
   const onFollowing = () => {
-    const getSubscriberfilter = profile.getSubscriberNum.filter((item)=>{ // 
+    const getSubscriberfilter = chat.getSubscriberNum.filter((item)=>{ // 
       console.log("테스트-item === userObj.uid 문장 ^ 구독 취소 시 발동",item === userObj.uid);
       console.log("반환된 아이템:",item);
       return item === userObj.uid
@@ -70,7 +70,7 @@ export default function Chats({ chat, isOwner,profile}) {
     else{
       updateDoc(doc(dbService, "profile", `${profile.id}`), {
         likeNum: profile.getSubscriberNum-1,
-        users : chat.users.filter((item)=>item !== userObj.uid)
+        users : profile.users.filter((item)=>item !== userObj.uid)
         })
       .then(() => {
         userObj.doSubscribe = false;
