@@ -20,10 +20,10 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
 
-export default function Chats({ chat, isOwner,ref}) {
+export default function Chats({ chat, isOwner,profileRef}) {
   const [newChat, setNewChat] = useState(chat.text);
   const [likeNum, setLikeNum] = useState(chat.likeNum);
-  const [getSubscriberNum, setgetSubscriberNum] = useState(chat.getSubscriberNum);
+  const [getSubscriberNum, setgetSubscriberNum] = useState(chat.likeNum); // 수정해야 함
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
@@ -128,6 +128,7 @@ export default function Chats({ chat, isOwner,ref}) {
         users : chat.users.concat(userObj.uid),
       })
         .then(() => {
+          console.log("chat.id의 값 :", `${chat.id}`);
           console.log("concat(문자열 합치기)/chat.users.concat(userObj.uid)결과 :", chat.users.concat(userObj.uid));
           userObj.doLike = true;
          })
