@@ -4,15 +4,13 @@ import {
   fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { useState } from "react";
-import { authService } from "../firebaseConfig";
-import { useRouter } from "next/router";
+import { authService as auth } from "../firebaseConfig";
 import { Button, Form, Header, Message, Divider } from "semantic-ui-react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState();
   const [progress, setProgress] = useState("email"); // email, password, link, signup, both
 
@@ -36,7 +34,7 @@ export default function AuthForm() {
       return ["이메일 오류!", "올바른 이메일 형식이 아닙니다."];
     if (code == "auth/wrong-password")
       return ["비밀번호 오류!", "비밀번호가 올바르지 않습니다."];
-    return ["치명적인 오류!", error.message];
+    return [`치명적인 오류! (${error.code})`, error.message];
   };
 
   const showPasswordForm = () =>
@@ -44,54 +42,46 @@ export default function AuthForm() {
 
   const goPrev = (e) => {
     e.preventDefault();
-    setPassword("");
     setProgress("email");
+    setPassword("");
     setError(null);
   };
 
-  const onSocialClick = async (event) => {
-    const {
-      target: { name },
-    } = event;
-    event.preventDefault();
+  const onSocialClick = async (e) => {
+    e.preventDefault();
 
-    let provider;
+    const name = e.target.name;
     if (name === "google") {
-      provider = new GoogleAuthProvider();
-      await signInWithPopup(authService, provider);
+      await signInWithPopup(auth, new GoogleAuthProvider());
     }
   };
 
-  const tmp = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
 
-    console.log(progress);
-
     if (progress == "email") {
-      fetchSignInMethodsForEmail(authService, email)
+      fetchSignInMethodsForEmail(auth, email)
         .then((methods) => {
+          console.log(methods);
           if (methods.length == 0) setProgress("signup");
-          else setProgress("password");
+          else if (methods.includes("password")) setProgress("password");
+          else setError(["소셜 로그인을 통해 로그인해주세요.", `사용할 수 있는 방법은 다음과 같습니다: ${methods}`])
         })
-        .catch((error) => {
-          console.log(error.code);
-          setError(getErrorText(error));
-        });
-
+        .catch((error) => setError(getErrorText(error)));
       return;
     }
 
     if (progress == "password") {
-      signInWithEmailAndPassword(authService, email, password).catch((error) =>
-      setError(getErrorText(error))
+      signInWithEmailAndPassword(auth, email, password).catch((error) =>
+        setError(getErrorText(error))
       );
       return;
     }
 
     if (progress == "signup") {
-      createUserWithEmailAndPassword(authService, email, password).catch(
-        (error) => setError(getErrorText(error))
+      createUserWithEmailAndPassword(auth, email, password).catch((error) =>
+        setError(getErrorText(error))
       );
       return;
     }
@@ -100,7 +90,7 @@ export default function AuthForm() {
   return (
     <>
       <Header>{getTitle()}</Header>
-      <Form onSubmit={tmp}>
+      <Form onSubmit={onSubmit}>
         <Form.Field>
           <label>이메일</label>
           <input
@@ -120,7 +110,9 @@ export default function AuthForm() {
           />
         </Form.Field>
 
-        {progress == "signup" && <p>회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>}
+        {progress == "signup" && (
+          <p>회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>
+        )}
 
         <Button type="submit">{getButtonText()}</Button>
 
@@ -128,7 +120,6 @@ export default function AuthForm() {
           <Button onClick={goPrev}>다른 이메일로 시작</Button>
         )}
       </Form>
-      
 
       <Divider horizontal>또는</Divider>
 
