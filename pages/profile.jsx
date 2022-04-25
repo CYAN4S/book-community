@@ -1,31 +1,28 @@
 import Image from "next/image";
-import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { authService, dbService } from "../firebaseConfig";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { authService as auth, dbService as db } from "../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { Button, Header } from "semantic-ui-react";
 
 export default function Profile() {
   const router = useRouter();
+
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [displayName, setDisplayName] = useState("");
+
+  // User
   const [user, setUser] = useState(null);
-  const [userId, setUserId] = useState("");
-  const [newName, setNewName] = useState("");
+  const [uid, setUid] = useState("");
+  const [displayName, setDisplayName] = useState(null);
   const [statusMsg, setStatusMsg] = useState("");
+
+  // Form Input
+  const [newName, setNewName] = useState("");
   const [newStatusMsg, setNewStatusMsg] = useState("");
 
-  onAuthStateChanged(authService, (user) => {
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       setUser(user);
       setIsSignedIn(true);
@@ -36,32 +33,27 @@ export default function Profile() {
 
   useEffect(() => {
     if (isSignedIn) {
-      setDisplayName(user.displayName);
-      setUserId(user.uid);
-      getStatusMsg();
+      setUid(user.uid);
+      getStatusMsg(user.uid);
     }
   }, [isSignedIn]);
 
-  
-  function onLogOutClick() {
-    authService.signOut();
+  const onLogOutClick = () => {
+    auth.signOut();
     router.push("/");
-  }
-  
-  const getStatusMsg = async () => {
-    const profileRef = collection(dbService, "profile");
-    const q = query(profileRef, where("uid", "==", user.uid));
+  };
 
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      setStatusMsg(doc.data().statusMsg);
-    });
+  const getStatusMsg = async (uid) => {
+    const docRef = doc(db, "profile", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setDisplayName(docSnap.data().displayName);
+      setStatusMsg(docSnap.data().statusMsg);
+    }
   };
 
   const updateDisplayName = (newName) => {
-    updateProfile(authService.currentUser, {
-      displayName: newName,
-    })
+    updateUserDoc({ displayName: newName })
       .then(() => {
         setDisplayName(newName);
         alert("Name Changed!");
@@ -72,34 +64,7 @@ export default function Profile() {
   };
 
   const updateStatusMsg = async (newMsg) => {
-    let target = null;
-    const profileRef = collection(dbService, "profile");
-    const q = query(profileRef, where("uid", "==", user.uid));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      target = doc.ref;
-    });
-    console.log(target);
-
-    if (!target) {
-      await addDoc(collection(dbService, "profile"), {
-        uid: user.uid,
-        statusMsg: newMsg,
-      })
-        .then(() => {
-          setStatusMsg(newMsg);
-          alert("Status Message Changed!");
-        })
-        .catch((error) => {
-          alert(error);
-        });
-      return;
-    }
-
-    await updateDoc(target, {
-      statusMsg: newMsg,
-    })
+    updateUserDoc({ statusMsg: newMsg })
       .then(() => {
         setStatusMsg(newMsg);
         alert("Status Message Changed!");
@@ -107,6 +72,10 @@ export default function Profile() {
       .catch((error) => {
         alert(error);
       });
+  };
+
+  const updateUserDoc = (newData) => {
+    return setDoc(doc(db, "profile", user.uid), newData, { merge: true });
   };
 
   return (
