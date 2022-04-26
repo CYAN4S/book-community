@@ -1,8 +1,9 @@
-import { Button, Divider, Header, List } from "semantic-ui-react";
+import { Button, Checkbox, Divider, Header, Input, Label, List, Radio } from "semantic-ui-react";
 import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { decode } from "he";
+import { useState } from "react";
 
 export default function Title({ books }) {
   const {
@@ -17,10 +18,54 @@ export default function Title({ books }) {
     description,
   } = books.items[0];
 
+  const [isChecked, setIsChecked] = useState(false);
+  const [checkItems, setCheckItems] = useState(new Set());
+  const [id, setId] = useState(0);
+  const regionData = [
+    {id : 11, name : "서울"},
+    {id : 21, name : "부산"},
+    {id : 22, name : "대구"},
+    {id : 23, name : "인천"},
+    {id : 24, name : "광주"},
+    {id : 25, name : "대전"},
+    {id : 26, name : "울산"},
+    {id : 29, name : "세종"},
+    {id : 31, name : "경기"},
+    {id : 32, name : "강원"},
+    {id : 33, name : "충북"},
+    {id : 34, name : "충남"},
+    {id : 35, name : "전북"},
+    {id : 36, name : "전남"},
+    {id : 37, name : "경북"},
+    {id : 38, name : "경남"},
+    {id : 39, name : "제주"},
+  ]
+
   const router = useRouter();
   function onClick(e) {
     e.preventDefault();
     router.back();
+  }
+
+  const checkHandler=({target},id)=>{
+    setIsChecked(!isChecked);
+    checkItemHandler(target.parentNode, target.value, target.checked);
+    setId(id);
+  }
+
+  const checkItemHandler=(box, id, isChecked)=>{
+    if (isChecked){
+      checkItems.add(id);
+      setCheckItems(checkItems);
+    }else if(!isChecked && checkItems.has(id)){ 
+      checkItems.delete(id);
+      setCheckItems(checkItems);
+    }
+    return checkItems;
+  }
+
+  const changeRegion = () => {
+    router.reload(window.location.pathname);
   }
 
   return (
@@ -60,17 +105,44 @@ export default function Title({ books }) {
             <Header as="h2" color="blue">
               Description
             </Header>
+
             <p style={{ paddingBottom: 20, fontSize: 15 }}>
               {decode(description)}
             </p>
+
             <Divider inverted />
-            <Link href={`../naru/${isbn}`}>
-              <a>
-                <div>
-                  소장도서관 확인하기
+
+            <div>
+              {checkItems.size ?
+              <div style={{marginBottom:10}}>
+                <strong style={{marginRight:10}}> {checkItems} 선택되었습니다. </strong>
+                <Button onClick={changeRegion}> 다시 선택하기 </Button>
+                
+                <Link href={`../naru/${isbn}/${id}`}>
+                    <a>
+                      <div>소장도서관 확인하기</div>
+                    </a>
+                </Link>
+              </div>
+              :
+              <>
+                {regionData.map((item) => {
+                  return (
+                    <div>
+                      <label key={item.id}>
+                        <Input
+                          type="checkbox"
+                          value={item.name}
+                          onChange={(e) => checkHandler(e, item.id)}
+                        />
+                        <strong style={{ marginLeft: 5 }}>{item.name}</strong>
+                      </label>
                 </div>
-              </a>
-            </Link>
+              );
+            })}
+              </>}
+            </div>
+
             
           </div>
         </Segment>
