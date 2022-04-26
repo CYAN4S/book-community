@@ -39,8 +39,7 @@ export default function Profile({ queryId }) {
 
   useEffect(() => {
     getDocAndSet(queryId);
-  }, [queryId])
-  
+  }, [queryId]);
 
   const onLogOutClick = () => {
     auth.signOut();
@@ -48,12 +47,19 @@ export default function Profile({ queryId }) {
   };
 
   const getDocAndSet = async (uid) => {
+    const userDoc = await getUserDoc(uid);
+    if (userDoc) {
+      setDisplayName(userDoc.displayName);
+      setStatusMsg(userDoc.statusMsg);
+    }
+  };
+
+  const getUserDoc = async (uid) => {
     const docRef = doc(db, "profile", uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      setDisplayName(docSnap.data().displayName);
-      setStatusMsg(docSnap.data().statusMsg);
-    }
+      return docSnap.data();
+    } else return null;
   };
 
   const updateDisplayName = (newName) => {
@@ -85,6 +91,19 @@ export default function Profile({ queryId }) {
   const onSubmit = (callback) => (e) => {
     e.preventDefault();
     callback();
+  };
+
+  const onSubscribeClick = async (e) => {
+    e.preventDefault();
+
+    const doc = await getUserDoc(uid);
+    const isSubing = !!doc.users?.includes(queryId);
+
+    if (isSubing) {
+      updateUserDoc({ users: doc.users.filter((id) => id != queryId) });
+    } else {
+      updateUserDoc({ users: doc.users ? [...doc.users, queryId] : [queryId] });
+    }
   };
 
   return (
@@ -124,6 +143,12 @@ export default function Profile({ queryId }) {
 
             <Button type="submit">바꾸기</Button>
           </Form>
+        </>
+      )}
+
+      {!isMe() && (
+        <>
+          <Button onClick={onSubscribeClick}>구독하기 / 구독 해제하기</Button>
         </>
       )}
 
