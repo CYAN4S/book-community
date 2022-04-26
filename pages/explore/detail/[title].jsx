@@ -67,7 +67,7 @@ export default function Title({ books }) {
             <Link href={`../naru/${isbn}`}>
               <a>
                 <div>
-                  확인하기
+                  소장도서관 확인하기
                 </div>
               </a>
             </Link>
