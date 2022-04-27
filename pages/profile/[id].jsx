@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { Button, Form, Header } from "semantic-ui-react";
 
+import { v4 } from "uuid";
+
 export default function Profile({ queryId }) {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const router = useRouter();
@@ -19,6 +21,8 @@ export default function Profile({ queryId }) {
   // Form Input
   const [newName, setNewName] = useState("");
   const [newStatusMsg, setNewStatusMsg] = useState("");
+
+  const [subscribers, setSubscribers] = useState([]);
 
   const isMe = () => uid == queryId;
 
@@ -51,6 +55,11 @@ export default function Profile({ queryId }) {
     if (userDoc) {
       setDisplayName(userDoc.displayName);
       setStatusMsg(userDoc.statusMsg);
+      const x = await Promise.all(
+        userDoc.users.map(async (uid) => await getUserDoc(uid))
+      );
+      const list = x.map((i) => i.displayName);
+      setSubscribers(list);
     }
   };
 
@@ -113,6 +122,17 @@ export default function Profile({ queryId }) {
       </Header>
 
       <p>{statusMsg}</p>
+
+      <Header as="h2">
+        구독자 목록
+      </Header>
+      <ul>
+        {subscribers.map((displayName) => (
+          <li key={v4()}>{displayName}</li>
+        ))}
+      </ul>
+
+      {subscribers.length == 0 && <p>구독자가 없습니다.</p>}
 
       {isMe() && (
         <>
