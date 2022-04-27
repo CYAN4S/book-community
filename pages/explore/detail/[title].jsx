@@ -1,4 +1,13 @@
-import { Button, Checkbox, Divider, Header, Input, Label, List, Radio } from "semantic-ui-react";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  Header,
+  Input,
+  Label,
+  List,
+  Radio,
+} from "semantic-ui-react";
 import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -28,24 +37,24 @@ export default function Title({ books }) {
   const [checkItems, setCheckItems] = useState(new Set());
   const [id, setId] = useState(0);
   const regionData = [
-    {id : 11, name : "서울"},
-    {id : 21, name : "부산"},
-    {id : 22, name : "대구"},
-    {id : 23, name : "인천"},
-    {id : 24, name : "광주"},
-    {id : 25, name : "대전"},
-    {id : 26, name : "울산"},
-    {id : 29, name : "세종"},
-    {id : 31, name : "경기"},
-    {id : 32, name : "강원"},
-    {id : 33, name : "충북"},
-    {id : 34, name : "충남"},
-    {id : 35, name : "전북"},
-    {id : 36, name : "전남"},
-    {id : 37, name : "경북"},
-    {id : 38, name : "경남"},
-    {id : 39, name : "제주"},
-  ]
+    { id: 11, name: "서울" },
+    { id: 21, name: "부산" },
+    { id: 22, name: "대구" },
+    { id: 23, name: "인천" },
+    { id: 24, name: "광주" },
+    { id: 25, name: "대전" },
+    { id: 26, name: "울산" },
+    { id: 29, name: "세종" },
+    { id: 31, name: "경기" },
+    { id: 32, name: "강원" },
+    { id: 33, name: "충북" },
+    { id: 34, name: "충남" },
+    { id: 35, name: "전북" },
+    { id: 36, name: "전남" },
+    { id: 37, name: "경북" },
+    { id: 38, name: "경남" },
+    { id: 39, name: "제주" },
+  ];
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
   onAuthStateChanged(authService, (user) => {
@@ -65,8 +74,10 @@ export default function Title({ books }) {
     });
   }, []);
 
-  const q = query(collection(dbService, `chat${isbn}`), orderBy("createdAt", "desc"));
- 
+  const q = query(
+    collection(dbService, `chat${isbn}`),
+    orderBy("createdAt", "desc")
+  );
 
   const router = useRouter();
   function onClick(e) {
@@ -74,26 +85,26 @@ export default function Title({ books }) {
     router.back();
   }
 
-  const checkHandler=({target},id)=>{
+  const checkHandler = ({ target }, id) => {
     setIsChecked(!isChecked);
     checkItemHandler(target.parentNode, target.value, target.checked);
     setId(id);
-  }
+  };
 
-  const checkItemHandler=(box, id, isChecked)=>{
-    if (isChecked){
+  const checkItemHandler = (box, id, isChecked) => {
+    if (isChecked) {
       checkItems.add(id);
       setCheckItems(checkItems);
-    }else if(!isChecked && checkItems.has(id)){ 
+    } else if (!isChecked && checkItems.has(id)) {
       checkItems.delete(id);
       setCheckItems(checkItems);
     }
     return checkItems;
-  }
+  };
 
   const changeRegion = () => {
     router.reload(window.location.pathname);
-  }
+  };
 
   return (
     <>
@@ -140,62 +151,82 @@ export default function Title({ books }) {
             <Divider inverted />
 
             <div>
-              {checkItems.size ?
-              <div style={{marginBottom:10}}>
-                <strong style={{marginRight:10}}> {checkItems} 선택되었습니다. </strong>
-                <Button onClick={changeRegion}> 다시 선택하기 </Button>
-                
-                <Link href={`../naru/${isbn}/${id}`}>
+              {checkItems.size ? (
+                <div style={{ marginBottom: 10 }}>
+                  <strong style={{ marginRight: 10 }}>
+                    {" "}
+                    {checkItems} 선택되었습니다.{" "}
+                  </strong>
+                  <Button onClick={changeRegion}> 다시 선택하기 </Button>
+
+                  <Link href={`../naru/${isbn}/${id}`}>
                     <a>
                       <div>소장도서관 확인하기</div>
                     </a>
-                </Link>
-              </div>
-              :
-              <>
-                {regionData.map((item) => {
-                  return (
-                    <div>
-                      <label key={item.id}>
-                        <Input
-                          type="checkbox"
-                          value={item.name}
-                          onChange={(e) => checkHandler(e, item.id)}
-                        />
-                        <strong style={{ marginLeft: 5 }}>{item.name}</strong>
-                      </label>
+                  </Link>
                 </div>
-              );
-            })}
-              </>}
+              ) : (
+                <>
+                  {regionData.map((item) => {
+                    return (
+                      <div>
+                        <label key={item.id}>
+                          <Input
+                            type="checkbox"
+                            value={item.name}
+                            onChange={(e) => checkHandler(e, item.id)}
+                          />
+                          <strong style={{ marginLeft: 5 }}>{item.name}</strong>
+                        </label>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
             </div>
 
             <Divider inverted />
-
-            <ChatFactory detailbook_chat = {collectionName}/>
-
-            <Header as="h2">올라온 채팅</Header>
-            <div>
-              {chats.length ? (
-                chats.map((chat) => (
-                  <div className="chat_space" key={chat.id}>
-                    <Chats chat={chat} isOwner={chat.createrId === userId} detailbook_chat = {collectionName}/>
-                  </div>
-                ))
-              ) : (
-                <p>채팅목록이 없습니다</p>
-              )}
-            </div>
           </div>
         </Segment>
-
-        <Button onClick={onClick} style={{ marginTop: 10 }}>
-          돌아가기
-        </Button>
       </div>
+
+      <Segment>
+        
+        <Header as="h3" style={{ paddingTop: 20, marginBottom : 30 }} color="blue">
+            생각 공유하기
+        </Header>
+        <ChatFactory detailbook_chat={collectionName} />
+
+        <Divider inverted style={{ marginTop: 40 }} />
+        <Header as="h3" style={{ marginBottom : 10 }} color="blue">
+            다른 사용자 의견
+        </Header>
+        
+        <div>
+          {chats.length ? (
+            chats.map((chat) => (
+              <div className="chat_space" key={chat.id}>
+                <Chats
+                  chat={chat}
+                  isOwner={chat.createrId === userId}
+                  detailbook_chat={collectionName}
+                />
+              </div>
+            ))
+          ) : (
+            <p>채팅목록이 없습니다</p>
+          )}
+        </div>
+      </Segment>
+
+      <Button onClick={onClick} style={{marginTop : 10, marginBottom : 20}}>
+          돌아가기
+      </Button>
+      
 
       <style jsx>{`
         .wrap {
+          display: flex;
           text-align: center;
           margin: 30px 10px 20px 10px;
         }
@@ -235,6 +266,16 @@ export default function Title({ books }) {
         p {
           margin-bottom: 0.1em;
         }
+
+        .chat_space {
+          margin-left: 10px;
+          margin-bottom: 5px;
+          width: 300px;
+          padding: 10px 10px 10px 0px;
+        }
+
+        
+
       `}</style>
     </>
   );
