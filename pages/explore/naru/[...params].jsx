@@ -6,20 +6,6 @@ import { decode } from "he";
 import Head from "next/head";
 
 export default function({infoData}) {
-  // <List>
-  //           <List.Item>{
-  //             infoData.map((item) => 
-  //             <div className="libName" key = {item.id}>
-  //               <Header as="h3"> {item.name} </Header>
-                
-  //               소장여부 : {item.value.response.result.hasBook}, 대출가능여부 : {item.value.response.result.loanAvailable}
-                
-                
-  //             </div>)}
-  //           </List.Item>
-  //         </List>
-
-  console.log(infoData)
   return (
     <>
       <div className="wrap">

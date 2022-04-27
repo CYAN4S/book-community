@@ -3,7 +3,12 @@ import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { decode } from "he";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ChatFactory from "../../../Components/ChatFactory";
+import { onAuthStateChanged } from "firebase/auth";
+import { authService, dbService } from "../../../firebaseConfig";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import Chats from "../../../Components/Chats";
 
 export default function Title({ books }) {
   const {
@@ -18,6 +23,7 @@ export default function Title({ books }) {
     description,
   } = books.items[0];
 
+  const collectionName = `chat${isbn}`;
   const [isChecked, setIsChecked] = useState(false);
   const [checkItems, setCheckItems] = useState(new Set());
   const [id, setId] = useState(0);
@@ -40,6 +46,27 @@ export default function Title({ books }) {
     {id : 38, name : "경남"},
     {id : 39, name : "제주"},
   ]
+  const [chats, setChats] = useState([]);
+  const [userId, setUserId] = useState("");
+  onAuthStateChanged(authService, (user) => {
+    if (user) {
+      setUserId(user.uid);
+    }
+  });
+
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      const chatArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setChats(chatArray);
+      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인. 변화발생 때 마다 console.log
+    });
+  }, []);
+
+  const q = query(collection(dbService, `chat${isbn}`), orderBy("createdAt", "desc"));
+ 
 
   const router = useRouter();
   function onClick(e) {
@@ -143,7 +170,22 @@ export default function Title({ books }) {
               </>}
             </div>
 
-            
+            <Divider inverted />
+
+            <ChatFactory detailbook_chat = {collectionName}/>
+
+            <Header as="h2">올라온 채팅</Header>
+            <div>
+              {chats.length ? (
+                chats.map((chat) => (
+                  <div className="chat_space" key={chat.id}>
+                    <Chats chat={chat} isOwner={chat.createrId === userId} detailbook_chat = {collectionName}/>
+                  </div>
+                ))
+              ) : (
+                <p>채팅목록이 없습니다</p>
+              )}
+            </div>
           </div>
         </Segment>
 

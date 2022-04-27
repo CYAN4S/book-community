@@ -20,7 +20,7 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 import { async } from "@firebase/util";
 
-export default function Chats({ chat, isOwner }) {
+export default function Chats({ chat, isOwner, detailbook_chat}) {
   const [newChat, setNewChat] = useState(chat.text);
   const [likeNum, setLikeNum] = useState(chat.likeNum);
   const [username, setUserName] = useState(
@@ -48,7 +48,7 @@ export default function Chats({ chat, isOwner }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
-      await deleteDoc(doc(dbService, "chat", `${chat.id}`))
+      await deleteDoc(doc(dbService, detailbook_chat ? detailbook_chat :"chat", `${chat.id}`))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
         })
@@ -69,7 +69,7 @@ export default function Chats({ chat, isOwner }) {
       const response = await uploadString(fileRef, imgFileString, "data_url");
       const temp_fileUrl = await getDownloadURL(response.ref);
 
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ? detailbook_chat :"chat", `${chat.id}`), {
         text: newChat,
         fileUrl: temp_fileUrl,
       })
@@ -80,7 +80,7 @@ export default function Chats({ chat, isOwner }) {
           alert(error);
         });
     } else {
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ? detailbook_chat :"chat", `${chat.id}`), {
         text: newChat,
       })
         .then(() => {
@@ -116,7 +116,7 @@ export default function Chats({ chat, isOwner }) {
     if(!filter.length && (userObj.uid!==chat.createrId)){
       console.log("제발?");
       setLikeNum((prev)=>prev+1);
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ? detailbook_chat :"chat", `${chat.id}`), {
         likeNum: chat.likeNum+1,
         users : chat.users.concat(userObj.uid),
       })
@@ -129,7 +129,7 @@ export default function Chats({ chat, isOwner }) {
     }else{
       console.log("제발");
       setLikeNum((prev)=>prev-1);
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ? detailbook_chat :"chat", `${chat.id}`), {
         likeNum: chat.likeNum-1,
         users : chat.users.filter((item)=>item !== userObj.uid)
       })
@@ -161,7 +161,7 @@ export default function Chats({ chat, isOwner }) {
         alert("채팅에 올려놓은 이미지가 없습니다.");
       } else {
         await deleteObject(ref(storageService, chat.fileUrl)).then(() => {
-          updateDoc(doc(dbService, "chat", `${chat.id}`), {
+          updateDoc(doc(dbService, detailbook_chat ? detailbook_chat :"chat", `${chat.id}`), {
             text: newChat,
             fileUrl: "",
           })
