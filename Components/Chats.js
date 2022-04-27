@@ -290,7 +290,7 @@ export default function Chats({ chat, isOwner }) {
     <>
       <div>
         <div style={{ marginBottom: 10 }}>
-          {username} : <strong> {chat.text}</strong>{" "}
+          <a href={'profile'.concat('/', chat.createrId)}>{username}</a> : <strong> {chat.text}</strong>{" "}
           <p>[등록시간] {new Date(chat.createdAt).toLocaleString()}</p>
           {chat.fileUrl && (
             <img src={chat.fileUrl} style={{ width: "100%", height: "100%" }} />
