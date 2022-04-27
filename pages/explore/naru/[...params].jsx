@@ -1,29 +1,58 @@
-import { Button, Divider, Header, List } from "semantic-ui-react";
+import { Button, Divider, Header, Icon, List, Table } from "semantic-ui-react";
 import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { decode } from "he";
 import Head from "next/head";
 
-export default function Title({infoData}) {
+export default function({infoData}) {
+  // <List>
+  //           <List.Item>{
+  //             infoData.map((item) => 
+  //             <div className="libName" key = {item.id}>
+  //               <Header as="h3"> {item.name} </Header>
+                
+  //               소장여부 : {item.value.response.result.hasBook}, 대출가능여부 : {item.value.response.result.loanAvailable}
+                
+                
+  //             </div>)}
+  //           </List.Item>
+  //         </List>
+
+  console.log(infoData)
   return (
     <>
       <div className="wrap">
-        
-        <div>
-          <List>
-            <List.Item>{
-              infoData.map((item) => 
-              <div className="libName" key = {item.id}>
-                <Header as="h3"> {item.name} </Header>
-                
-                소장여부 : {item.value.response.result.hasBook}, 대출가능여부 : {item.value.response.result.loanAvailable}
-                
-                
-              </div>)}
-            </List.Item>
-          </List>
-        </div>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell style={{ width: 300 }}>
+                도서관 이름
+              </Table.HeaderCell>
+              <Table.HeaderCell style={{ width: 100 }}>소장 여부</Table.HeaderCell>
+              <Table.HeaderCell style={{ width: 100 }}>대출 가능 여부</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {infoData.map((data)=>{
+              return(
+                <Table.Row>
+                  <Table.Cell>{data.name}</Table.Cell>
+                  {data.value.response.result.hasBook === 'Y'?
+                  <Table.Cell positive>O</Table.Cell>
+                  :
+                  <Table.Cell negative>X</Table.Cell>
+                  }
+                  {data.value.response.result.loanAvailable === 'Y'?
+                  <Table.Cell positive>O</Table.Cell>
+                  :
+                  <Table.Cell negative>X</Table.Cell>
+                  }
+                </Table.Row>              
+              )
+            })}
+          </Table.Body>
+        </Table>
       </div>
 
       <style jsx>{`
@@ -31,13 +60,12 @@ export default function Title({infoData}) {
           text-align: center;
           margin: 30px 10px 20px 10px;
         }
-        
-        .libName{
-          margin-top : 10px;
-          margin-bottom : 10px;
-          font-size : 12px;
-        }
 
+        .libName {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          font-size: 12px;
+        }
       `}</style>
     </>
   );
@@ -70,78 +98,7 @@ export async function getServerSideProps({params:{params}}) {
       infoData.push({id:libCode[i], name:lib.response.libs[i].lib.libName, value:saveBook});
     }
   }
-  // const res_lib01 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[0]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook01 = await res_lib01.json();
-  // available_Book.push({id:libCode[0], name:lib.response.libs[0].lib.libName, value:saveBook01});
-
-  // const res_lib02 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[1]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook02 = await res_lib02.json();
-  // available_Book.push({id:libCode[1], name:lib.response.libs[1].lib.libName, value:saveBook02});
-
-  // const res_lib03 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[2]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook03 = await res_lib03.json();
-  // available_Book.push({id:libCode[2], name:lib.response.libs[2].lib.libName, value:saveBook03});
-
-  // const res_lib04 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[3]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook04 = await res_lib04.json();
-  // available_Book.push({id:libCode[3], name:lib.response.libs[3].lib.libName, value:saveBook04});
-
-  // const res_lib05 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[4]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook05 = await res_lib05.json();
-  // available_Book.push({id:libCode[4], name:lib.response.libs[4].lib.libName, value:saveBook05});
-
-  // const res_lib06 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[5]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook06 = await res_lib06.json();
-  // available_Book.push({id:libCode[5], name:lib.response.libs[5].lib.libName, value:saveBook06});
-
-  // const res_lib07 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[6]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook07 = await res_lib07.json();
-  // available_Book.push({id:libCode[6], name:lib.response.libs[6].lib.libName, value:saveBook07});
-
-  // const res_lib08 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[7]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook08 = await res_lib08.json();
-  // available_Book.push({id:libCode[7], name:lib.response.libs[7].lib.libName, value:saveBook08});
-
-  // const res_lib09 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[8]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook09 = await res_lib09.json();
-  // available_Book.push({id:libCode[8], name:lib.response.libs[8].lib.libName, value:saveBook09});
-
-  // const res_lib10 = await fetch(
-  //   `http://data4library.kr/api/bookExist?authKey=8f244a56311ab46d397c395a1b1779663c53949135523c3c1bd16cf056ff8e5d&libCode=${libCode[9]}
-  //   &isbn13=${isbn}&format=json`
-  // ); // 소장여부, 대출가능여부
-  // let saveBook10 = await res_lib10.json();
-  // available_Book.push({id:libCode[9], name:lib.response.libs[9].lib.libName, value:saveBook10});
-
-  // console.log(data.response.libs[0].lib.libName, data2.response.result.loanAvailable);
-  // console.log(data.response.libs.map((lib)=>lib.lib.libName));
+  
   return {
     props: {
       infoData : infoData,
