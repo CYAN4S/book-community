@@ -92,8 +92,9 @@ export default function Chats({ chat, isOwner }) {
     setNewChat(value);
   };
 
-  const toggleEditing = () => setEditing((prev) => !prev);
-  const toggleLike = () => {
+  const onEditClick = () => setEditing((prev) => !prev);
+
+  const onLikeClick = () => {
     const filter = chat.users.filter((item) => {
       return item === userObj.uid;
     });
@@ -131,14 +132,14 @@ export default function Chats({ chat, isOwner }) {
     }
   };
 
-  const temp_imgDeleteing = () => {
+  const onDeleteTempImageClick = () => {
     if (imgFileString !== "") {
       setImgFileString("");
       setImgEdit(false);
     }
   };
 
-  const imgDeleteing = async () => {
+  const OnImageDeleteClick = async () => {
     const ok = window.confirm(
       "등록된 이미지를 삭제하시겠습니까? (삭제과정은 되돌릴 수 없습니다.)"
     );
@@ -177,156 +178,86 @@ export default function Chats({ chat, isOwner }) {
     }
   };
 
-  return editing ? (
-    <>
-      <div>
-        <Form onSubmit={onSubmit}>
-          <Form.Field>
-            <TextArea
-              value={newChat}
-              type="text"
-              placeholder="수정하기"
-              onChange={onChange}
-              autoFocus
-              required
-            />
-            {!chat.fileUrl ? (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={onFileChange}
-                id="attach-file"
-              />
-            ) : (
-              <></>
-            )}
-          </Form.Field>
-          {imgFileString && (
-            <>
-              <div className="temp">
-                <img
-                  src={imgFileString}
-                  style={{
-                    backgroundImage: imgFileString,
-                    width: "30%",
-                    height: "30%",
-                  }}
-                />
-                <span className="downTempImg" onClick={temp_imgDeleteing}>
-                  Del TempImg
-                </span>
-              </div>
-            </>
-          )}
-          {chat.fileUrl ? (
-            <div className="downImg" onClick={imgDeleteing}>
-              Del Img
-            </div>
-          ) : (
-            <></>
-          )}
-          <Button type="submit" value="update">
-            {" "}
-            수정 완료{" "}
-          </Button>
-        </Form>
-      </div>
-      <Button onClick={toggleEditing}>cancel</Button>
-      <style jsx>{`
-        div {
-          margin-bottom: 10px;
-        }
-
-        .temp {
-          display: flex;
-        }
-
-        .downImg {
-          width: 80px;
-          color: black;
-          font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-            "Lucida Sans", Arial, sans-serif;
-          cursor: pointer;
-          text-align: center;
-          border-top: 2px solid black;
-          border-left: none;
-          border-right: none;
-          border-bottom: 2px solid black;
-          transition: 400ms;
-        }
-
-        .downTempImg {
-          width: 100px;
-          height: 24px;
-          color: black;
-          font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-            "Lucida Sans", Arial, sans-serif;
-          cursor: pointer;
-          text-align: center;
-          border-top: 2px solid black;
-          border-left: none;
-          border-right: none;
-          border-bottom: 2px solid black;
-          transition: 400ms;
-          margin-left: 10px;
-        }
-
-        .downImg:hover {
-          color: white;
-          background-color: black;
-        }
-
-        .downTempImg:hover {
-          color: white;
-          background-color: black;
-        }
-
-        input {
-          margin: 5px auto;
-        }
-      `}</style>
-    </>
-  ) : (
+  return (
     <>
       <div>
         <div style={{ marginBottom: 10 }}>
-          <a href={'profile'.concat('/', chat.createrId)}>{username}</a> : <strong> {chat.text}</strong>{" "}
+          <a href={"profile".concat("/", chat.createrId)}>{username}</a> :{" "}
+          <strong> {chat.text}</strong>{" "}
           <p>[등록시간] {new Date(chat.createdAt).toLocaleString()}</p>
           {chat.fileUrl && (
             <img src={chat.fileUrl} style={{ width: "100%", height: "100%" }} />
           )}
         </div>
+        <span className="btn_Like" onClick={onLikeClick}>
+          좋아요 수 : {chat.likeNum ? "💗" : "🤍"} {chat.likeNum}
+        </span>
 
-        {isOwner ? (
-          <div className="btn_Span">
-            <Button onClick={onDeleteClick}>삭제</Button>
-            <Button onClick={toggleEditing}>편집</Button>
-            <span style={{ marginLeft: 10 }}>
-              좋아요 수 : {chat.likeNum ? "💗" : "🤍"} : {chat.likeNum}
-            </span>
-          </div>
-        ) : (
+        {isOwner && (
           <>
-            <span className="btn_Like" onClick={toggleLike}>
-              좋아요 수 : {chat.likeNum ? "💗" : "🤍"} {chat.likeNum}
-            </span>
+            <Button onClick={onDeleteClick}>삭제</Button>
+            <Button onClick={onEditClick}>편집</Button>
           </>
         )}
+
+        {editing && (
+          <div>
+            <Form onSubmit={onSubmit}>
+              <Form.Field>
+                <TextArea
+                  value={newChat}
+                  type="text"
+                  placeholder="수정하기"
+                  onChange={onChange}
+                  autoFocus
+                  required
+                />
+                {!chat.fileUrl ? (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={onFileChange}
+                    id="attach-file"
+                  />
+                ) : (
+                  <></>
+                )}
+              </Form.Field>
+              {imgFileString && (
+                <>
+                  <div className="temp">
+                    <img
+                      src={imgFileString}
+                      style={{
+                        backgroundImage: imgFileString,
+                        width: "30%",
+                        height: "30%",
+                      }}
+                    />
+                    <span
+                      className="downTempImg"
+                      onClick={onDeleteTempImageClick}
+                    >
+                      Del TempImg
+                    </span>
+                  </div>
+                </>
+              )}
+              {chat.fileUrl ? (
+                <div className="downImg" onClick={OnImageDeleteClick}>
+                  Del Img
+                </div>
+              ) : (
+                <></>
+              )}
+              <Button type="submit" value="update">
+                수정 완료
+              </Button>
+            </Form>
+            <Button onClick={onEditClick}>cancel</Button>
+          </div>
+        )}
       </div>
-      <style jsx>{`
-        .btn_Span {
-          margin-left: 10px;
-          width: 100%;
-        }
-
-        strong {
-          font-size: 15px;
-        }
-
-        .btn_Like {
-          cursor: pointer;
-        }
-      `}</style>
     </>
   );
 }
