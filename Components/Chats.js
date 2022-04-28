@@ -7,13 +7,13 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import PostEditor from "./PostEditor";
 
 export default function Chats({ chat, isOwner }) {
-  const [likeNum, setLikeNum] = useState(chat.likeNum);
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
   const [editing, setEditing] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
+  const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
 
   useEffect(() => {
@@ -60,6 +60,8 @@ export default function Chats({ chat, isOwner }) {
     }
   };
 
+  const onReplyClick = () => setReplying((prev) => !prev);
+
   return (
     <>
       <div>
@@ -81,6 +83,7 @@ export default function Chats({ chat, isOwner }) {
             {chat.users.length}
           </Label>
         </Button>
+        <Button onClick={onReplyClick}>댓글</Button>
 
         {isOwner && (
           <>
@@ -89,7 +92,13 @@ export default function Chats({ chat, isOwner }) {
           </>
         )}
 
-        {editing && <PostEditor chat={chat} />}
+        {editing && (
+          <PostEditor chat={chat} purpose={"edit"} uid={currentUid} />
+        )}
+
+        {replying && (
+          <PostEditor chat={chat} purpose={"reply"} uid={currentUid} />
+        )}
       </div>
     </>
   );

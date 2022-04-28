@@ -10,13 +10,11 @@ export default function ChatFactory() {
   const [chat, setChat] = useState("");
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
-  const [likeNum, setLikeNum] = useState(0);
-  const [users, setUsers] = useState([]);
+  
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setUserObj({
-          displayName: user.displayName,
           uid: user.uid,
           updateProfile: (args) => updateProfile(args),
         });
@@ -28,6 +26,7 @@ export default function ChatFactory() {
 
   const onNewPostSubmit = async (e) => {
     e.preventDefault();
+
     let fileUrl = "";
     if (chat === "") {
       return;
@@ -42,11 +41,10 @@ export default function ChatFactory() {
       text: chat,
       createdAt: Date.now(),
       createrId: userObj.uid,
-      nickName: userObj.displayName,
       fileUrl,
-      likeNum,
-      users,
+      users: [],
     };
+    
     await addDoc(collection(dbService, "chat"), chatObj)
       .then(() => console.log("전송완료"))
       .catch((error) => alert(error));
@@ -96,43 +94,20 @@ export default function ChatFactory() {
           style={{ marginBottom: 10 }}
         />
         {imgFileString && (
-          <>
-            <div>
-              <img
-                src={imgFileString}
-                style={{
-                  backgroundImage: imgFileString,
-                  width: "30%",
-                  height: "30%",
-                }}
-              />
+          <div>
+            <img
+              src={imgFileString}
+              style={{
+                backgroundImage: imgFileString,
+                width: "30%",
+                height: "30%",
+              }}
+            />
 
-              <div className="span_btn" onClick={onClearPhotoClick}>
-                <span>Remove</span>
-              </div>
+            <div onClick={onClearPhotoClick}>
+              <span>Remove</span>
             </div>
-            <style jsx>{`
-              .span_btn {
-                width: 70px;
-                height: 25px;
-                color: black;
-                font-family: "Trebuchet MS", "Lucida Sans Unicode",
-                  "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-                cursor: pointer;
-                text-align: center;
-                border-top: 2px solid black;
-                border-left: none;
-                border-right: none;
-                border-bottom: 2px solid black;
-                transition: 400ms;
-              }
-
-              .span_btn:hover {
-                color: white;
-                background-color: black;
-              }
-            `}</style>
-          </>
+          </div>
         )}
         <Button color="blue" style={{ marginTop: 15 }}>
           보내기

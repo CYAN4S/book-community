@@ -1,4 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, addDoc, collection } from "firebase/firestore";
 import {
   deleteObject,
   getDownloadURL,
@@ -10,17 +10,14 @@ import { Button, Form, TextArea } from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 
-export default function PostEditor({ chat }) {
-  const [newChat, setNewChat] = useState(chat.text);
-  const [editing, setEditing] = useState(false);
-  const [userObj, setUserObj] = useState(null);
+export default function PostEditor({ chat, purpose, uid }) {
+  const [newChat, setNewChat] = useState(purpose == "reply" ? "" : chat?.text);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onEditSubmit = async () => {
     if (imgEdit) {
-      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const fileRef = ref(storageService, `${uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
       const temp_fileUrl = await getDownloadURL(response.ref);
 
@@ -46,18 +43,46 @@ export default function PostEditor({ chat }) {
         });
     }
     setImgEdit(false);
-    setEditing(false);
     setImgFileString("");
   };
 
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setNewChat(value);
+  const onReplySubmit = async () => {
+    let fileUrl = "";
+    if (newChat === "") {
+      return;
+    }
+    if (imgFileString !== "") {
+      const fileRef = ref(storageService, `${uid}/${v4()}`);
+      const response = await uploadString(fileRef, imgFileString, "data_url");
+      fileUrl = await getDownloadURL(response.ref);
+    }
+
+    const chatObj = {
+      text: newChat,
+      createdAt: Date.now(),
+      createrId: uid,
+      fileUrl,
+      users: [],
+      replyTo: chat.id,
+    };
+
+    await addDoc(collection(dbService, "chat"), chatObj)
+      .then(() => console.log("전송완료"))
+      .catch((error) => alert(error));
+
+    setNewChat("");
+    setImgFileString("");
   };
 
-  const onEditClick = () => setEditing((prev) => !prev);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (purpose == "edit") {
+      onEditSubmit();
+    } else {
+      onReplySubmit();
+    }
+  };
 
   const onDeleteTempImageClick = () => {
     if (imgFileString !== "") {
@@ -113,20 +138,18 @@ export default function PostEditor({ chat }) {
             <TextArea
               value={newChat}
               type="text"
-              placeholder="수정하기"
-              onChange={onChange}
+              placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
+              onChange={(e) => setNewChat(e.target.value)}
               autoFocus
               required
             />
-            {!chat.fileUrl ? (
+            {!chat?.fileUrl && (
               <input
                 type="file"
                 accept="image/*"
                 onChange={onFileChange}
                 id="attach-file"
               />
-            ) : (
-              <></>
             )}
           </Form.Field>
           {imgFileString && (
@@ -144,12 +167,11 @@ export default function PostEditor({ chat }) {
               </span>
             </div>
           )}
-          {chat.fileUrl && <div onClick={OnImageDeleteClick}>Del Img</div>}
+          {chat?.fileUrl && <div onClick={OnImageDeleteClick}>Del Img</div>}
           <Button type="submit" value="update">
             수정 완료
           </Button>
         </Form>
-        <Button onClick={onEditClick}>cancel</Button>
       </div>
     </>
   );
