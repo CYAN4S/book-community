@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   Divider,
+  Grid,
   Header,
   Input,
   Label,
@@ -109,7 +110,7 @@ export default function Title({ books }) {
   return (
     <>
       <div className="wrap">
-        <Segment>
+        <Segment style={{ width: "100%" }}>
           <div>
             <Image src={image} size="medium" centered />
           </div>
@@ -154,33 +155,57 @@ export default function Title({ books }) {
               {checkItems.size ? (
                 <div style={{ marginBottom: 10 }}>
                   <strong style={{ marginRight: 10 }}>
-                    {" "}
-                    {checkItems} 선택되었습니다.{" "}
+                    "{checkItems}" 선택되었습니다.
                   </strong>
                   <Button onClick={changeRegion}> 다시 선택하기 </Button>
 
                   <Link href={`../naru/${isbn}/${id}`}>
                     <a>
-                      <div>소장도서관 확인하기</div>
+                      <Header
+                        as="h3"
+                        style={{ paddingTop: 20, marginBottom: 0}}
+                        color="blue"
+                        
+                      >
+                        소장도서관 확인하기
+                      </Header>
                     </a>
                   </Link>
                 </div>
               ) : (
                 <>
-                  {regionData.map((item) => {
-                    return (
-                      <div>
-                        <label key={item.id}>
-                          <Input
-                            type="checkbox"
-                            value={item.name}
-                            onChange={(e) => checkHandler(e, item.id)}
-                          />
-                          <strong style={{ marginLeft: 5 }}>{item.name}</strong>
-                        </label>
-                      </div>
-                    );
-                  })}
+                  <Header
+                    as="h3"
+                    style={{ paddingTop: 20, marginBottom: 30 }}
+                    color="blue"
+                  >
+                    어디에 있을까?
+                  </Header>
+                  <Grid columns={3}>
+                    <Grid.Row>
+                      {regionData.map((item) => {
+                        return (
+                          <Grid.Column
+                            key={item.id}
+                            style={{ marginBottom: 5 }}
+                          >
+                            <div>
+                              <label key={item.id} style={{ fontSize: 18 }}>
+                                <Input
+                                  type="checkbox"
+                                  value={item.name}
+                                  onChange={(e) => checkHandler(e, item.id)}
+                                />
+                                <strong style={{ marginLeft: 5 }}>
+                                  {item.name}
+                                </strong>
+                              </label>
+                            </div>
+                          </Grid.Column>
+                        );
+                      })}
+                    </Grid.Row>
+                  </Grid>
                 </>
               )}
             </div>
@@ -190,18 +215,21 @@ export default function Title({ books }) {
         </Segment>
       </div>
 
-      <Segment>
-        
-        <Header as="h3" style={{ paddingTop: 20, marginBottom : 30 }} color="blue">
-            생각 공유하기
+      <Segment style={{ width: "100%" }}>
+        <Header
+          as="h3"
+          style={{ paddingTop: 20, marginBottom: 30 }}
+          color="blue"
+        >
+          생각 공유하기
         </Header>
         <ChatFactory detailbook_chat={collectionName} />
 
         <Divider inverted style={{ marginTop: 40 }} />
-        <Header as="h3" style={{ marginBottom : 10 }} color="blue">
-            다른 사용자 의견
+        <Header as="h3" style={{ marginBottom: 10 }} color="blue">
+          이 책에 대한 다른 사용자의 의견
         </Header>
-        
+
         <div>
           {chats.length ? (
             chats.map((chat) => (
@@ -219,10 +247,9 @@ export default function Title({ books }) {
         </div>
       </Segment>
 
-      <Button onClick={onClick} style={{marginTop : 10, marginBottom : 20}}>
-          돌아가기
+      <Button onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
+        돌아가기
       </Button>
-      
 
       <style jsx>{`
         .wrap {
@@ -273,9 +300,6 @@ export default function Title({ books }) {
           width: 300px;
           padding: 10px 10px 10px 0px;
         }
-
-        
-
       `}</style>
     </>
   );
