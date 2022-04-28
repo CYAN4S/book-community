@@ -14,9 +14,10 @@ export default function Profile({ queryId }) {
   const router = useRouter();
 
   // User
-  const [uid, setUid] = useState("");
+  const [currentUid, setCurrentUid] = useState("");
   const [displayName, setDisplayName] = useState(null);
   const [statusMsg, setStatusMsg] = useState("");
+  const [wasSubingCheck, setWasSubingCheck] = useState(false);
 
   // Form Input
   const [newName, setNewName] = useState("");
@@ -24,11 +25,11 @@ export default function Profile({ queryId }) {
 
   const [subscribers, setSubscribers] = useState([]);
 
-  const isMe = () => uid == queryId;
+  const isMe = () => currentUid == queryId;
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      setUid(user.uid);
+      setCurrentUid(user.uid);
       setIsSignedIn(true);
     } else {
       setIsSignedIn(false);
@@ -58,8 +59,11 @@ export default function Profile({ queryId }) {
       const x = await Promise.all(
         userDoc.users.map(async (uid) => await getUserDoc(uid))
       );
-      const list = x.map((i) => i.displayName);
+      const list = x.map((i) => i?.displayName ?? "게스트");
       setSubscribers(list);
+    }
+    if (isSignedIn) {
+      checkSub(currentUid);
     }
   };
 
@@ -94,7 +98,7 @@ export default function Profile({ queryId }) {
   };
 
   const updateUserDoc = (newData) => {
-    return setDoc(doc(db, "profile", uid), newData, { merge: true });
+    return setDoc(doc(db, "profile", currentUid), newData, { merge: true });
   };
 
   const onSubmit = (callback) => (e) => {
@@ -102,16 +106,27 @@ export default function Profile({ queryId }) {
     callback();
   };
 
+  const checkSub = async (uid) => {
+    const doc = await getUserDoc(uid);
+    console.log(doc);
+    const isSubing = !!doc.users?.includes(queryId);
+    setWasSubingCheck(isSubing);
+  };
+
   const onSubscribeClick = async (e) => {
     e.preventDefault();
 
-    const doc = await getUserDoc(uid);
+    const doc = await getUserDoc(currentUid);
     const isSubing = !!doc.users?.includes(queryId);
 
     if (isSubing) {
       updateUserDoc({ users: doc.users.filter((id) => id != queryId) });
+      setWasSubingCheck(false);
+      console.log("구독 취소", isSubing);
     } else {
       updateUserDoc({ users: doc.users ? [...doc.users, queryId] : [queryId] });
+      setWasSubingCheck(true);
+      console.log("구독 완료", isSubing);
     }
   };
 
@@ -123,9 +138,7 @@ export default function Profile({ queryId }) {
 
       <p>{statusMsg}</p>
 
-      <Header as="h2">
-        구독자 목록
-      </Header>
+      <Header as="h2">구독자 목록</Header>
       <ul>
         {subscribers.map((displayName) => (
           <li key={v4()}>{displayName}</li>
@@ -167,9 +180,9 @@ export default function Profile({ queryId }) {
       )}
 
       {!isMe() && (
-        <>
-          <Button onClick={onSubscribeClick}>구독하기 / 구독 해제하기</Button>
-        </>
+        <Button onClick={onSubscribeClick}>
+          {wasSubingCheck ? "구독 중" : "구독하기"}
+        </Button>
       )}
 
       <Header as="h2">로그아웃 하기</Header>
