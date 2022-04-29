@@ -36,7 +36,10 @@ export default function Title({ books }) {
   const collectionName = `chat${isbn}`;
   const [isChecked, setIsChecked] = useState(false);
   const [checkItems, setCheckItems] = useState(new Set());
+
+  console.log(checkItems);
   const [id, setId] = useState(0);
+  const [name, setName] = useState("");
   const regionData = [
     { id: 11, name: "서울" },
     { id: 21, name: "부산" },
@@ -86,10 +89,11 @@ export default function Title({ books }) {
     router.back();
   }
 
-  const checkHandler = ({ target }, id) => {
+  const checkHandler = ({ target }, id, name) => {
     setIsChecked(!isChecked);
     checkItemHandler(target.parentNode, target.value, target.checked);
     setId(id);
+    setName(name);
   };
 
   const checkItemHandler = (box, id, isChecked) => {
@@ -155,7 +159,7 @@ export default function Title({ books }) {
               {checkItems.size ? (
                 <div style={{ marginBottom: 10 }}>
                   <strong style={{ marginRight: 10 }}>
-                    {`"${checkItems}"`} 선택되었습니다.
+                    {`"${name}"`} 선택되었습니다.
                   </strong>
                   <Button onClick={changeRegion}> 다시 선택하기 </Button>
 
@@ -193,7 +197,7 @@ export default function Title({ books }) {
                                 <Input
                                   type="checkbox"
                                   value={item.name}
-                                  onChange={(e) => checkHandler(e, item.id)}
+                                  onChange={(e) => checkHandler(e, item.id, item.name)}
                                 />
                                 <strong style={{ marginLeft: 5 }}>
                                   {item.name}

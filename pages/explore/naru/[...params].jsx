@@ -27,7 +27,7 @@ export default function Lib({ infoData }) {
           <Table.Body>
             {infoData.map((data) => {
               return (
-                <Table.Row key={v4()}>
+                <Table.Row key={data.name}>
                   <Table.Cell>{data.name}</Table.Cell>
                   {data.value.response.result.hasBook === "Y" ? (
                     <Table.Cell positive>O</Table.Cell>
