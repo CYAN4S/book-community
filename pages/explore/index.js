@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function Explorer() {
+export default function explorer() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {

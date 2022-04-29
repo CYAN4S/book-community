@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { authService, dbService } from "../firebaseConfig";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import {
   collection,
@@ -12,8 +13,10 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
+import { Button, Header } from "semantic-ui-react";
 
 export default function Profile() {
+  const router = useRouter();
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [user, setUser] = useState(null);
@@ -39,6 +42,12 @@ export default function Profile() {
     }
   }, [isSignedIn]);
 
+  
+  function onLogOutClick() {
+    authService.signOut();
+    router.push("/");
+  }
+  
   const getStatusMsg = async () => {
     const profileRef = collection(dbService, "profile");
     const q = query(profileRef, where("uid", "==", user.uid));
@@ -159,6 +168,8 @@ export default function Profile() {
           </div>
         </div>
       </form>
+      <Header as="h2">로그아웃 하기</Header>
+      <Button onClick={onLogOutClick}> Logout </Button>
     </div>
   );
 }
