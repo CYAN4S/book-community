@@ -8,9 +8,12 @@ import { Button, Form, Header } from "semantic-ui-react";
 
 import { v4 } from "uuid";
 
+import { textState } from "../../utils/hooks";
+import { useRecoilState } from "recoil";
+
 export default function Profile() {
   const [isSignedIn, setIsSignedIn] = useState(false);
-  
+
   const router = useRouter();
   const queryId = router.query.id;
 
@@ -25,6 +28,8 @@ export default function Profile() {
   const [newStatusMsg, setNewStatusMsg] = useState("");
 
   const [subscribers, setSubscribers] = useState([]);
+
+  const [text, setText] = useRecoilState(textState);
 
   const isMe = () => currentUid == queryId;
 
@@ -193,6 +198,8 @@ export default function Profile() {
 
       <Header as="h2">로그아웃 하기</Header>
       <Button onClick={onLogOutClick}> Logout </Button>
+
+      <h1>{text}</h1>
     </div>
   );
 }

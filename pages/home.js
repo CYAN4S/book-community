@@ -3,26 +3,25 @@ import { authService, dbService } from "../firebaseConfig";
 
 import { Divider, Header } from "semantic-ui-react";
 import { useState, useEffect } from "react";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import ChatFactory from "../Components/ChatFactory";
 import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
 
-export default function Book_home() {
+import { textState } from "../utils/hooks";
+import { useRecoilState } from "recoil";
 
+export default function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
+
+  const [text, setText] = useRecoilState(textState);
+
   onAuthStateChanged(authService, (user) => {
     if (user) {
       setUserId(user.uid);
     }
   });
-
 
   const q = query(collection(dbService, "chat"), orderBy("createdAt", "desc"));
   useEffect(() => {
@@ -61,8 +60,10 @@ export default function Book_home() {
           </div>
 
           <Divider />
-
         </div>
+
+        <h1>{text}</h1>
+        <button onClick={() => setText((v) => v + 1)}>값 바꾸기</button>
       </div>
     </>
   );
