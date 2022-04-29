@@ -10,7 +10,7 @@ import { Button, Form, TextArea } from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 
-export default function PostEditor({ chat, purpose, uid }) {
+export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
   const [newChat, setNewChat] = useState(purpose == "reply" ? "" : chat?.text);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
@@ -21,7 +21,7 @@ export default function PostEditor({ chat, purpose, uid }) {
       const response = await uploadString(fileRef, imgFileString, "data_url");
       const temp_fileUrl = await getDownloadURL(response.ref);
 
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`), {
         text: newChat,
         fileUrl: temp_fileUrl,
       })
@@ -32,7 +32,7 @@ export default function PostEditor({ chat, purpose, uid }) {
           alert(error);
         });
     } else {
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`), {
         text: newChat,
       })
         .then(() => {

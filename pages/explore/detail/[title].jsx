@@ -163,9 +163,8 @@ export default function Title({ books }) {
                     <a>
                       <Header
                         as="h3"
-                        style={{ paddingTop: 20, marginBottom: 0}}
+                        style={{ paddingTop: 20, marginBottom: 0 }}
                         color="blue"
-                        
                       >
                         소장도서관 확인하기
                       </Header>
