@@ -7,6 +7,8 @@ import { useState } from "react";
 import { authService as auth } from "../firebaseConfig";
 import { Button, Form, Header, Message, Divider } from "semantic-ui-react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { dbService as db } from "../firebaseConfig";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
@@ -66,7 +68,11 @@ export default function AuthForm() {
           console.log(methods);
           if (methods.length == 0) setProgress("signup");
           else if (methods.includes("password")) setProgress("password");
-          else setError(["소셜 로그인을 통해 로그인해주세요.", `사용할 수 있는 방법은 다음과 같습니다: ${methods}`])
+          else
+            setError([
+              "소셜 로그인을 통해 로그인해주세요.",
+              `사용할 수 있는 방법은 다음과 같습니다: ${methods}`,
+            ]);
         })
         .catch((error) => setError(getErrorText(error)));
       return;
@@ -80,9 +86,15 @@ export default function AuthForm() {
     }
 
     if (progress == "signup") {
-      createUserWithEmailAndPassword(auth, email, password).catch((error) =>
-        setError(getErrorText(error))
-      );
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(({ user }) => {
+          setDoc(
+            doc(db, "profile", user.uid),
+            { displayName: "", statusMsg: "", users: [] },
+            { merge: true }
+          );
+        })
+        .catch((error) => setError(getErrorText(error)));
       return;
     }
   };

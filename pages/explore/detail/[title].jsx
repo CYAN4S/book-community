@@ -155,7 +155,7 @@ export default function Title({ books }) {
               {checkItems.size ? (
                 <div style={{ marginBottom: 10 }}>
                   <strong style={{ marginRight: 10 }}>
-                    "{checkItems}" 선택되었습니다.
+                    {`"${checkItems}"`} 선택되었습니다.
                   </strong>
                   <Button onClick={changeRegion}> 다시 선택하기 </Button>
 

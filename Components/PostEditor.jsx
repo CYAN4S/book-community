@@ -169,7 +169,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
           )}
           {chat?.fileUrl && <div onClick={OnImageDeleteClick}>Del Img</div>}
           <Button type="submit" value="update">
-            수정 완료
+            {purpose == "reply" ? "댓글 달기" : "수정하기"}
           </Button>
         </Form>
       </div>

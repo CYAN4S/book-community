@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function explorer() {
+export default function Explorer() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     setKeyword("");
   }, []);
+
   return (
     <>
       <div className="ui fluid icon input">
