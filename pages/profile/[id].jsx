@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { authService as auth, dbService as db } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -9,9 +8,11 @@ import { Button, Form, Header } from "semantic-ui-react";
 
 import { v4 } from "uuid";
 
-export default function Profile({ queryId }) {
+export default function Profile() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  
   const router = useRouter();
+  const queryId = router.query.id;
 
   // User
   const [currentUid, setCurrentUid] = useState("");
@@ -54,13 +55,18 @@ export default function Profile({ queryId }) {
   const getDocAndSet = async (uid) => {
     const userDoc = await getUserDoc(uid);
     if (userDoc) {
+      console.log(userDoc);
+
       setDisplayName(userDoc.displayName);
       setStatusMsg(userDoc.statusMsg);
-      const x = await Promise.all(
-        userDoc.users.map(async (uid) => await getUserDoc(uid))
-      );
-      const list = x.map((i) => i?.displayName ?? "게스트");
-      setSubscribers(list);
+
+      if (userDoc.users) {
+        const x = await Promise.all(
+          userDoc.users.map(async (uid) => await getUserDoc(uid))
+        );
+        const list = x.map((i) => i?.displayName ?? "게스트");
+        setSubscribers(list);
+      }
     }
     if (isSignedIn) {
       checkSub(currentUid);
@@ -189,10 +195,4 @@ export default function Profile({ queryId }) {
       <Button onClick={onLogOutClick}> Logout </Button>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: { queryId: context.query.id },
-  };
 }

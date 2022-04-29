@@ -6,7 +6,7 @@ import { Button, Icon, Label } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import PostEditor from "./PostEditor";
 
-export default function Chats({ chat, isOwner }) {
+export default function Chats({ chat, isOwner, detailbook_chat }) {
   const [username, setUserName] = useState(
     chat.nickName ? chat.nickName : "guest"
   );
@@ -28,7 +28,7 @@ export default function Chats({ chat, isOwner }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
-      await deleteDoc(doc(dbService, "chat", `${chat.id}`))
+      await deleteDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
         })
@@ -48,12 +48,12 @@ export default function Chats({ chat, isOwner }) {
     const doLike = chat.users.includes(currentUid);
 
     if (doLike) {
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`), {
         users: chat.users.filter((content) => content != currentUid),
       });
       setDoLike(false);
     } else {
-      updateDoc(doc(dbService, "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`), {
         users: chat.users.concat(currentUid),
       });
       setDoLike(true);

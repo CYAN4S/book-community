@@ -11,6 +11,7 @@ export default function Explorer() {
   useEffect(() => {
     setKeyword("");
   }, []);
+
   return (
     <>
       <div className="ui fluid icon input">
