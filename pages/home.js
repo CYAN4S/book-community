@@ -1,18 +1,16 @@
 import Head from "next/head";
 import { authService, dbService } from "../firebaseConfig";
 
-import { Button, Divider, Header } from "semantic-ui-react";
+import { Divider, Header } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import {
   collection,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
 } from "firebase/firestore";
 import ChatFactory from "../Components/ChatFactory";
 import Chats from "../Components/Chats";
-import { async } from "@firebase/util";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Book_home() {
@@ -53,7 +51,7 @@ export default function Book_home() {
           <div>
             {chats.length ? (
               chats.map((chat) => (
-                <div className="chat_space" key={chat.id}>
+                <div key={chat.id}>
                   <Chats chat={chat} isOwner={chat.createrId === userId} />
                 </div>
               ))
@@ -66,14 +64,6 @@ export default function Book_home() {
 
         </div>
       </div>
-      <style jsx>{`
-        .chat_space {
-          margin-left: 10px;
-          margin-bottom: 5px;
-          width: 300px;
-          padding: 10px 10px 10px 0px;
-        }
-      `}</style>
     </>
   );
 }
