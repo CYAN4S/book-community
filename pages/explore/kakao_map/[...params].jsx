@@ -19,7 +19,6 @@ export default function LibMap({ MapData }) {
 
   return (
     <>
-
       <div style={{ width: "100%", height: "600px" }}>
         <Map
           center={{ lat: MapData.latitude, lng: MapData.longitude }}

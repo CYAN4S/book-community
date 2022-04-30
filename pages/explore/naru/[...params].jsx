@@ -1,17 +1,23 @@
-import { Button, Divider, Header, Icon, IconGroup, List, Table } from "semantic-ui-react";
+import {
+  Button,
+  Divider,
+  Header,
+  Icon,
+  IconGroup,
+  List,
+  Table,
+} from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Entire from "../kakao_map/entire";
 
-
 export default function Lib({ infoData }) {
-
   const router = useRouter();
   const [entire, setEntire] = useState(false);
-  const onClick = () =>{
-    setEntire(prev => !prev);
-  }
+  const onClick = () => {
+    setEntire((prev) => !prev);
+  };
 
   function returnClick(e) {
     e.preventDefault();
@@ -20,73 +26,99 @@ export default function Lib({ infoData }) {
   return (
     <>
       <div className="wrap">
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell style={{ width: 300 }}>
-                도서관 이름
-              </Table.HeaderCell>
-              <Table.HeaderCell style={{ width: 100 }}>
-                소장 여부
-              </Table.HeaderCell>
-              <Table.HeaderCell style={{ width: 100 }}>
-                대출 가능 여부
-              </Table.HeaderCell>
-              <Table.HeaderCell style={{ width: 100 }}>
-                도서관 위치 확인하기
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {infoData.map((data) => {
-              return (
-                <Table.Row key={data.name}>
-                  <Table.Cell>{data.name}</Table.Cell>
-                  {data.value.response.result.hasBook === "Y" ? (
-                    <Table.Cell positive>O</Table.Cell>
-                  ) : (
-                    <Table.Cell negative>X</Table.Cell>
-                  )}
-                  {data.value.response.result.loanAvailable === "Y" ? (
-                    <Table.Cell positive>O</Table.Cell>
-                  ) : (
-                    <Table.Cell negative>X</Table.Cell>
-                  )}
-                  <Table.Cell>
-                    <Link
-                      href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
-                    >
-                      <a>
-                        <Header as="h5">위치 확인하기</Header>
-                      </a>
-                    </Link>
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
-        </Table>
-
-        <Button color = "black" onClick={returnClick} style={{ marginTop: 10, marginBottom: 20 }}>
-          돌아가기
-        </Button>
-
-        <Divider style={{ marginTop: 30 }} inverted />
-        <Header as="h2" color="blue">
-          전체 위치 확인하기
-        </Header>
-        {entire ? (
+        {infoData.length ? (
           <>
-            <Entire infoData = {infoData} />
-            <div className="toggleEntireMap" onClick={onClick}>
-              <Icon name="angle double up"></Icon>
-            </div>
+            <Table celled>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell style={{ width: 300 }}>
+                    도서관 이름
+                  </Table.HeaderCell>
+                  <Table.HeaderCell style={{ width: 100 }}>
+                    소장 여부
+                  </Table.HeaderCell>
+                  <Table.HeaderCell style={{ width: 100 }}>
+                    대출 가능 여부
+                  </Table.HeaderCell>
+                  <Table.HeaderCell style={{ width: 100 }}>
+                    도서관 위치 확인하기
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {infoData.map((data) => {
+                  return (
+                    <Table.Row key={data.name}>
+                      <Table.Cell>{data.name}</Table.Cell>
+                      {data.value.response.result.hasBook === "Y" ? (
+                        <Table.Cell positive>O</Table.Cell>
+                      ) : (
+                        <Table.Cell negative>X</Table.Cell>
+                      )}
+                      {data.value.response.result.loanAvailable === "Y" ? (
+                        <Table.Cell positive>O</Table.Cell>
+                      ) : (
+                        <Table.Cell negative>X</Table.Cell>
+                      )}
+                      <Table.Cell>
+                        <Link
+                          href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
+                        >
+                          <a>
+                            <Header as="h5">위치 확인하기</Header>
+                          </a>
+                        </Link>
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })}
+              </Table.Body>
+            </Table>
           </>
         ) : (
           <>
-            <div className="toggleEntireMap" onClick={onClick}>
-              <Icon name="angle double down"></Icon>
+            <div
+              style={{
+                padding: "200px 0",
+                textAlign: "center",
+                fontSize: "35px",
+              }}
+            >
+              <Icon name="warning circle" color="red" />{" "}
+              <strong>검색결과가 존재하지 않습니다.</strong>
+              <p />
             </div>
+          </>
+        )}
+
+        <Button
+          color="black"
+          onClick={returnClick}
+          style={{ marginTop: 10, marginBottom: 20 }}
+        >
+          돌아가기
+        </Button>
+        
+        {infoData.length !== 0 && (
+          <>
+            <Divider style={{ marginTop: 30 }} inverted />
+            <Header as="h2" color="blue">
+              전체 위치 확인하기
+            </Header>
+            {entire ? (
+              <>
+                <Entire infoData={infoData} />
+                <div className="toggleEntireMap" onClick={onClick}>
+                  <Icon name="angle double up"></Icon>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="toggleEntireMap" onClick={onClick}>
+                  <Icon name="angle double down"></Icon>
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
@@ -156,8 +188,8 @@ export async function getServerSideProps({ params: { params } }) {
       infoData.push({
         id: libCode[i],
         name: lib.response.libs[i].lib.libName,
-        latitude : lib.response.libs[i].lib.latitude,
-        longitude : lib.response.libs[i].lib.longitude,
+        latitude: lib.response.libs[i].lib.latitude,
+        longitude: lib.response.libs[i].lib.longitude,
         value: saveBook,
       });
     }
