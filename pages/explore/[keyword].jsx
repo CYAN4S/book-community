@@ -56,7 +56,7 @@ export default function SearchKeyword({ books }) {
             {filter ? (
               <>
                 <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
-                <Button onClick={toggleDescPriceFilter}>가격 </Button>
+                <Button onClick={toggleDescPriceFilter}>가격 순 </Button>
                 <Grid columns={4}>
                   <Grid.Row>
                     {descDateFilter && (
@@ -115,7 +115,7 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>                    
                     )}
-                    {!descPriceFilter && (
+                    {!descPriceFilter && !descDateFilter && (
                       <>
                         {books.items.map((book) => (
                           <Grid.Column key={book.isbn}>
