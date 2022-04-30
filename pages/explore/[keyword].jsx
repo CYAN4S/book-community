@@ -19,16 +19,19 @@ export default function SearchKeyword({ books }) {
   const toggleFilter = () => {
     setFilter((prev) => !prev);
     console.log("setFilter 작동");
+    console.log("filter 상태", filter);
   };
 
   const toggleDescDateFilter = () => {
     setDescDateFilter((prev) => !prev);
     console.log("setDescDateFilter 작동");
+    console.log("filter 상태", filter);
   };
 
   const toggleDescPriceFilter = () => {
     setDescPriceFilter((prev) => !prev);
     console.log("setDescPriceFilter 작동");
+    console.log("filter 상태", filter);
   };
 
   const TempDescDate = [...books.items];
@@ -43,12 +46,13 @@ export default function SearchKeyword({ books }) {
         <>
           <div className="wrap">
             <Button onClick={toggleFilter}>정렬</Button>
-            <Grid columns={4}>
-              <Grid.Row>
-                {filter ? (
-                  <>
-                  <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
-                  <Button onClick={toggleDescPriceFilter}>가격 </Button>
+
+            {filter ? (
+              <>
+                <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
+                <Button onClick={toggleDescPriceFilter}>가격 </Button>
+                <Grid columns={4}>
+                  <Grid.Row>
                     {descDateFilter ? (
                       <>
                         {TempDescDate.map((book) => (
@@ -104,37 +108,34 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>
                     )}
-                  </>
-                ) : (
-                  <>
-                    {books.items.map((book) => (
-                      <Grid.Column key={book.isbn}>
-                        <Link href={`./detail/${book.title}`}>
-                          <a>
-                            <div>
-                              <img
-                                src={book.image}
-                                alt="DON'T HAVE IMAGE"
-                                className="img_book"
-                              />
-                              <strong className="book_item">
-                                {book.title}
-                              </strong>
-                              <span className="txt_info">
-                                {book.publisher},{book.pubdate}
-                              </span>
-                              <strong className="num_price">
-                                ${book.price}
-                              </strong>
-                            </div>
-                          </a>
-                        </Link>
-                      </Grid.Column>
-                    ))}
-                  </>
-                )}
-              </Grid.Row>
-            </Grid>
+                  </Grid.Row>
+                </Grid>
+              </>
+            ) : (
+              <>
+                {books.items.map((book) => (
+                  <Grid.Column key={book.isbn}>
+                    <Link href={`./detail/${book.title}`}>
+                      <a>
+                        <div>
+                          <img
+                            src={book.image}
+                            alt="DON'T HAVE IMAGE"
+                            className="img_book"
+                          />
+                          <strong className="book_item">{book.title}</strong>
+                          <span className="txt_info">
+                            {book.publisher},{book.pubdate}
+                          </span>
+                          <strong className="num_price">${book.price}</strong>
+                        </div>
+                      </a>
+                    </Link>
+                  </Grid.Column>
+                ))}
+              </>
+            )}
+
             <Link href={`/explore`}>
               <Button>돌아가기</Button>
             </Link>
