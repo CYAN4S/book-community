@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 export default function SearchKeyword({ books }) {
   const router = useRouter();
   const [lens, setLens] = useState(0);
-  const [desc_Filter, setDesc_Filter] = useState(false);
+  const [filter, setFilter] = useState(false);
+  const [descDateFilter, setDescDateFilter] = useState(false);
+  const [descPriceFilter, setDescPriceFilter] = useState(false);
 
   useEffect(() => {
     setLens(books.items.length);
@@ -14,49 +16,94 @@ export default function SearchKeyword({ books }) {
     // console.log(books.items[0].isbn.split(" ")[1]);
   }, []);
 
-  const toggleDesc_Filter = () => {
-    setDesc_Filter((prev) => !prev);
-    console.log(desc_Filter);
+  const toggleFilter = () => {
+    setFilter((prev) => !prev);
+    console.log("setFilter 작동");
   };
-  
 
-  const booksTemp = [...books.items];
-  booksTemp.sort((a,b) => b.pubdate - a.pubdate);
-  console.log(booksTemp);
+  const toggleDescDateFilter = () => {
+    setDescDateFilter((prev) => !prev);
+    console.log("setDescDateFilter 작동");
+  };
+
+  const toggleDescPriceFilter = () => {
+    setDescPriceFilter((prev) => !prev);
+    console.log("setDescPriceFilter 작동");
+  };
+
+  const TempDescDate = [...books.items];
+  TempDescDate.sort((a, b) => b.pubdate - a.pubdate);
+
+  const TempDescPrice = [...books.items];
+  TempDescPrice.sort((a, b) => b.price - a.price);
+
   return (
     <div>
       {lens ? (
         <>
           <div className="wrap">
-            <Button onClick={toggleDesc_Filter}>Filter</Button>
+            <Button onClick={toggleFilter}>정렬</Button>
             <Grid columns={4}>
               <Grid.Row>
-                {desc_Filter ? (
+                {filter ? (
                   <>
-                    {booksTemp.map((book) => (
-                      <Grid.Column key={book.isbn}>
-                        <Link href={`./detail/${book.title}`}>
-                          <a>
-                            <div>
-                              <img
-                                src={book.image}
-                                alt="DON'T HAVE IMAGE"
-                                className="img_book"
-                              />
-                              <strong className="book_item">
-                                {book.title}
-                              </strong>
-                              <span className="txt_info">
-                                {book.publisher},{book.pubdate}
-                              </span>
-                              <strong className="num_price">
-                                ${book.price}
-                              </strong>
-                            </div>
-                          </a>
-                        </Link>
-                      </Grid.Column>
-                    ))}
+                  <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
+                  <Button onClick={toggleDescPriceFilter}>가격 </Button>
+                    {descDateFilter ? (
+                      <>
+                        {TempDescDate.map((book) => (
+                          <Grid.Column key={book.isbn}>
+                            <Link href={`./detail/${book.title}`}>
+                              <a>
+                                <div>
+                                  <img
+                                    src={book.image}
+                                    alt="DON'T HAVE IMAGE"
+                                    className="img_book"
+                                  />
+                                  <strong className="book_item">
+                                    {book.title}
+                                  </strong>
+                                  <span className="txt_info">
+                                    {book.publisher},{book.pubdate}
+                                  </span>
+                                  <strong className="num_price">
+                                    ${book.price}
+                                  </strong>
+                                </div>
+                              </a>
+                            </Link>
+                          </Grid.Column>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {TempDescPrice.map((book) => (
+                          <Grid.Column key={book.isbn}>
+                            <Link href={`./detail/${book.title}`}>
+                              <a>
+                                <div>
+                                  <img
+                                    src={book.image}
+                                    alt="DON'T HAVE IMAGE"
+                                    className="img_book"
+                                  />
+                                  <strong className="book_item">
+                                    {book.title}
+                                  </strong>
+                                  <span className="txt_info">
+                                    {book.publisher},{book.pubdate}
+                                  </span>
+                                  <strong className="num_price">
+                                    ${book.price}
+                                  </strong>
+                                </div>
+                              </a>
+                            </Link>
+                          </Grid.Column>
+                        ))}
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
