@@ -55,7 +55,6 @@ export default function Profile() {
   const getDocAndSet = async (uid) => {
     const userDoc = await getUserDoc(uid);
     if (userDoc) {
-      console.log(userDoc);
 
       setDisplayName(userDoc.displayName);
       setStatusMsg(userDoc.statusMsg);
@@ -114,7 +113,6 @@ export default function Profile() {
 
   const checkSub = async (uid) => {
     const doc = await getUserDoc(uid);
-    console.log(doc);
     const isSubing = !!doc.users?.includes(queryId);
     setWasSubingCheck(isSubing);
   };
@@ -128,11 +126,9 @@ export default function Profile() {
     if (isSubing) {
       updateUserDoc({ users: doc.users.filter((id) => id != queryId) });
       setWasSubingCheck(false);
-      console.log("구독 취소", isSubing);
     } else {
       updateUserDoc({ users: doc.users ? [...doc.users, queryId] : [queryId] });
       setWasSubingCheck(true);
-      console.log("구독 완료", isSubing);
     }
   };
 

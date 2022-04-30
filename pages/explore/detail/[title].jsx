@@ -36,8 +36,6 @@ export default function Title({ books }) {
   const collectionName = `chat${isbn}`;
   const [isChecked, setIsChecked] = useState(false);
   const [checkItems, setCheckItems] = useState(new Set());
-
-  console.log(checkItems);
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
   const regionData = [
