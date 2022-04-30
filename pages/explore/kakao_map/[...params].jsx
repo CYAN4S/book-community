@@ -24,7 +24,7 @@ export default function LibMap({ MapData }) {
         <Map
           center={{ lat: MapData.latitude, lng: MapData.longitude }}
           style={{ width: "100%", height: "430px" }}
-          level={4}
+          level={6}
         >
           <MapMarker
             position={{
@@ -45,8 +45,8 @@ export default function LibMap({ MapData }) {
           </MapInfoWindow>
         </Map>
 
-        <Button onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
-        돌아가기
+        <Button color = "black" onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
+          돌아가기
         </Button>
       </div>
 

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Button, Grid } from "semantic-ui-react";
+import { Button, Grid, Icon } from "semantic-ui-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -43,16 +43,19 @@ export default function SearchKeyword({ books }) {
               </Grid.Row>
             </Grid>
             <Link href={`/explore`}>
-              <Button>돌아가기</Button>
+              <Button color = "black">돌아가기</Button>
             </Link>
           </div>
         </>
       ) : (
         <>
-          검색결과가 없습니다.
-          <Link href={`/explore`}>
-            <Button>돌아가기</Button>
-          </Link>
+          <div style={{ padding: "200px 0", textAlign: "center", fontSize: "35px" }}>
+            <Icon name="warning circle" color="red" /> <strong>검색결과가 존재하지 않습니다.</strong><p/>
+            <Link href={`/explore`} >
+              <Button color = "black">돌아가기</Button>
+            </Link>
+          </div>
+          
         </>
       )}
     </div>

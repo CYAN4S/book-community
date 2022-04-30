@@ -4,6 +4,7 @@ import {
   Divider,
   Grid,
   Header,
+  Icon,
   Input,
   Label,
   List,
@@ -159,7 +160,7 @@ export default function Title({ books }) {
                   <strong style={{ marginRight: 10 }}>
                     {`"${name}"`} 선택되었습니다.
                   </strong>
-                  <Button onClick={changeRegion}> 다시 선택하기 </Button>
+                  <Icon name = "undo" onClick={changeRegion} color = "red" style = {{cursor:"pointer"}}></Icon>
 
                   <Link href={`../naru/${isbn}/${id}`}>
                     <a>
@@ -168,7 +169,7 @@ export default function Title({ books }) {
                         style={{ paddingTop: 20, marginBottom: 0 }}
                         color="blue"
                       >
-                        소장도서관 확인하기
+                        <Button color="teal">소장도서관 확인하기</Button>
                       </Header>
                     </a>
                   </Link>
@@ -248,7 +249,7 @@ export default function Title({ books }) {
         </div>
       </Segment>
 
-      <Button onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
+      <Button color = "black" onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
         돌아가기
       </Button>
 

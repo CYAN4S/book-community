@@ -24,7 +24,7 @@ export default function Explorer() {
           }}
         ></input>
         <Link href={`/explore/${keyword}`}>
-          <a>검색</a>
+          <a><Button color = "black" style = {{marginLeft : 5}}>검색</Button></a>
         </Link>
       </div>
       <Header as="h3" color="black">

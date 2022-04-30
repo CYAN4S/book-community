@@ -1,21 +1,22 @@
 import { Button, Divider, Header, Icon, IconGroup, List, Table } from "semantic-ui-react";
-import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { decode } from "he";
-import Head from "next/head";
-import { v4 } from "uuid";
 import { useState } from "react";
 import Entire from "../kakao_map/entire";
 
 
 export default function Lib({ infoData }) {
 
+  const router = useRouter();
   const [entire, setEntire] = useState(false);
   const onClick = () =>{
     setEntire(prev => !prev);
   }
 
+  function returnClick(e) {
+    e.preventDefault();
+    router.back();
+  }
   return (
     <>
       <div className="wrap">
@@ -66,13 +67,17 @@ export default function Lib({ infoData }) {
           </Table.Body>
         </Table>
 
+        <Button color = "black" onClick={returnClick} style={{ marginTop: 10, marginBottom: 20 }}>
+          돌아가기
+        </Button>
+
         <Divider style={{ marginTop: 30 }} inverted />
         <Header as="h2" color="blue">
           전체 위치 확인하기
         </Header>
         {entire ? (
           <>
-            <Entire infoData = {infoData}/>
+            <Entire infoData = {infoData} />
             <div className="toggleEntireMap" onClick={onClick}>
               <Icon name="angle double up"></Icon>
             </div>
