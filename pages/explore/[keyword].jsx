@@ -8,7 +8,8 @@ export default function SearchKeyword({ books }) {
   const [lens, setLens] = useState(0);
   const [filter, setFilter] = useState(false);
   const [descDateFilter, setDescDateFilter] = useState(false);
-  const [descPriceFilter, setDescPriceFilter] = useState(false);
+  const [ascPriceFilter, setAscPriceFilter] = useState(false);
+  const [dateAndPriceFilter, setDateAndPriceFilter] = useState(false);
 
   useEffect(() => {
     setLens(books.items.length);
@@ -18,30 +19,38 @@ export default function SearchKeyword({ books }) {
 
   const toggleFilter = () => {
     setFilter((prev) => !prev);
-    console.log("setFilter 작동");
-    console.log("filter 상태", filter);
   };
 
   const toggleDescDateFilter = () => {
     setDescDateFilter((prev) => !prev);
-    setDescPriceFilter(false);
-    console.log("setDescDateFilter 작동");
-    console.log("filter 상태", filter);
+    setAscPriceFilter(false);
   };
 
-  const toggleDescPriceFilter = () => {
-    setDescPriceFilter((prev) => !prev);
+  const toggleAscPriceFilter = () => {
+    setAscPriceFilter((prev) => !prev);
     setDescDateFilter(false);
-    console.log("setDescPriceFilter 작동");
-    console.log("filter 상태", filter);
   };
 
-  const TempDescDate = [...books.items];
-  TempDescDate.sort((a, b) => b.pubdate - a.pubdate);
+  const toggleDateAndPrice =  () => {
+    setDateAndPriceFilter((prev) => !prev);
+    setDescDateFilter(false);
+    setAscPriceFilter(false);
 
-  const TempDescPrice = [...books.items];
-  TempDescPrice.sort((a, b) => b.price - a.price);
+  };
+  
+  const tempDescDate = [...books.items];
+  tempDescDate.sort((a, b) => b.pubdate - a.pubdate);
 
+  const tempAscPrice = [...books.items];
+  tempAscPrice.sort((a, b) => a.price - b.price);
+
+  const tempDateAndPrice = [...books.items];
+  tempDateAndPrice.sort((a,b) => {
+    if (a.pubdate > b.pubdate) return 1;
+    else if (a.pubdate < b.pubdate) return -1;
+    else if (a.price > b.price) return 1;
+    else if (a.price < b.price) return -1;
+  });
   return (
     <div>
       {lens ? (
@@ -56,12 +65,13 @@ export default function SearchKeyword({ books }) {
             {filter ? (
               <>
                 <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
-                <Button onClick={toggleDescPriceFilter}>가격 순 </Button>
+                <Button onClick={toggleAscPriceFilter}>가격 순 </Button>
+                <Button onClick={toggleAscPriceFilter}>최신 발간 순 및 가격 순</Button>
                 <Grid columns={4}>
                   <Grid.Row>
                     {descDateFilter && (
                       <>
-                        {TempDescDate.map((book) => (
+                        {tempDescDate.map((book) => (
                           <Grid.Column key={book.isbn}>
                             <Link href={`./detail/${book.title}`}>
                               <a>
@@ -87,9 +97,9 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>
                     )}
-                    {descPriceFilter && (
+                    {ascPriceFilter && (
                       <>
-                        {TempDescPrice.map((book) => (
+                        {tempAscPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
                             <Link href={`./detail/${book.title}`}>
                               <a>
@@ -115,7 +125,35 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>                    
                     )}
-                    {!descPriceFilter && !descDateFilter && (
+                    {ascPriceFilter && (
+                      <>
+                        {tempDateAndPrice.map((book) => (
+                          <Grid.Column key={book.isbn}>
+                            <Link href={`./detail/${book.title}`}>
+                              <a>
+                                <div>
+                                  <img
+                                    src={book.image}
+                                    alt="DON'T HAVE IMAGE"
+                                    className="img_book"
+                                  />
+                                  <strong className="book_item">
+                                    {book.title}
+                                  </strong>
+                                  <span className="txt_info">
+                                    {book.publisher},{book.pubdate}
+                                  </span>
+                                  <strong className="num_price">
+                                    ${book.price}
+                                  </strong>
+                                </div>
+                              </a>
+                            </Link>
+                          </Grid.Column>
+                        ))}
+                      </>                    
+                    )}
+                    {!ascPriceFilter && !descDateFilter && !dateAndPriceFilter&& (
                       <>
                         {books.items.map((book) => (
                           <Grid.Column key={book.isbn}>
