@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Entire from "../../../Components/Entire";
+import Entire from "../kakao_map/entire"
 
 export default function Lib({ infoData }) {
   const router = useRouter();
