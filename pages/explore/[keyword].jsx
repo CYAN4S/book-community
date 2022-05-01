@@ -126,9 +126,9 @@ export default function SearchKeyword({ books }) {
                                           <Table.HeaderCell
                                             style={{ width: 300 }}
                                           >
-                                            <strong className="num_price">
+                                            <span className="num_price">
                                               가격: {book.price}원
-                                            </strong>
+                                            </span>
                                           </Table.HeaderCell>
                                         </Table.Row>
                                       </Table.Header>
