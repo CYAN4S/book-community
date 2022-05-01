@@ -9,12 +9,10 @@ export default function SearchKeyword({ books }) {
   const [filter, setFilter] = useState(false);
   const [descDateFilter, setDescDateFilter] = useState(false);
   const [ascPriceFilter, setAscPriceFilter] = useState(false);
-  const [dateAndPriceFilter, setDateAndPriceFilter] = useState(false);
+  const [descPriceFilter, setDescPriceFilter] = useState(false);
 
   useEffect(() => {
     setLens(books.items.length);
-    // console.log(lens);
-    // console.log(books.items[0].isbn.split(" ")[1]);
   }, []);
 
   const toggleFilter = () => {
@@ -24,17 +22,17 @@ export default function SearchKeyword({ books }) {
   const toggleDescDateFilter = () => {
     setDescDateFilter((prev) => !prev);
     setAscPriceFilter(false);
-    setDateAndPriceFilter(false);
+    setDescPriceFilter(false);
   };
 
   const toggleAscPriceFilter = () => {
     setAscPriceFilter((prev) => !prev);
     setDescDateFilter(false);
-    setDateAndPriceFilter(false);
+    setDescPriceFilter(false);
   };
 
-  const toggleDateAndPriceFilter =  () => {
-    setDateAndPriceFilter((prev) => !prev);
+  const toggleDescPriceFilter =  () => {
+    setDescPriceFilter((prev) => !prev);
     setDescDateFilter(false);
     setAscPriceFilter(false);
   };
@@ -45,14 +43,17 @@ export default function SearchKeyword({ books }) {
   const tempAscPrice = [...books.items];
   tempAscPrice.sort((a, b) => a.price - b.price);
 
-  const tempDateAndPrice = [...books.items];
-  tempDateAndPrice.sort((a,b) => {
-    if (a.pubdate < b.pubdate) return 1;
-    else if (a.pubdate > b.pubdate) return -1;
-    else if (a.price < b.price) return 1;
-    else if (a.price > b.price) return -1;
-    console.log("작동")
-  });
+  const tempDescPrice = [...books.items];
+  tempDescPrice.sort((a, b) => b.price - a.price);
+  // 최신 발간 순 및 가격 높은 순
+  // const tempDateAndPrice = [...books.items];
+  // tempDateAndPrice.sort((a,b) => {
+  //   if (a.pubdate < b.pubdate) return 1;
+  //   else if (a.pubdate > b.pubdate) return -1;
+  //   else if (a.price < b.price) return 1;
+  //   else if (a.price > b.price) return -1;
+  //   console.log("작동")
+  // });
   return (
     <div>
       {lens ? (
@@ -68,7 +69,7 @@ export default function SearchKeyword({ books }) {
               <>
                 <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
                 <Button onClick={toggleAscPriceFilter}>가격 낮은 순 </Button>
-                <Button onClick={toggleDateAndPriceFilter}>최신 발간 순 및 가격 높은 순</Button>
+                <Button onClick={toggleDescPriceFilter}>가격 높은 순</Button>
                 <Grid columns={4}>
                   <Grid.Row>
                     {descDateFilter && (
@@ -127,9 +128,9 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>                    
                     )}
-                    {dateAndPriceFilter && (
+                    {descPriceFilter && (
                       <>
-                        {tempDateAndPrice.map((book) => (
+                        {tempDescPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
                             <Link href={`./detail/${book.title}`}>
                               <a>
@@ -155,7 +156,7 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>                    
                     )}
-                    {!ascPriceFilter && !descDateFilter && !dateAndPriceFilter&& (
+                    {!ascPriceFilter && !descDateFilter && !descPriceFilter&& (
                       <>
                         {books.items.map((book) => (
                           <Grid.Column key={book.isbn}>
