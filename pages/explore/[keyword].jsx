@@ -67,10 +67,10 @@ export default function SearchKeyword({ books }) {
 
             {filter ? (
               <>
-                <div class="ui grid">
-                  <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
-                  <Button onClick={toggleAscPriceFilter}>가격 낮은 순 </Button>
-                  <Button onClick={toggleDescPriceFilter}>가격 높은 순</Button>
+                <div class="three ui buttons blue ui buttons">
+                  <Button class="ui button"onClick={toggleDescDateFilter}>최신 발간 순</Button>
+                  <Button class="ui button"onClick= {toggleAscPriceFilter}>가격 낮은 순 </Button>
+                  <Button class="ui button"onClick={toggleDescPriceFilter}>가격 높은 순</Button>
                 </div>
                 <Grid columns={1}>
                   <Grid.Row>
