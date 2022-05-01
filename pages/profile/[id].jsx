@@ -29,8 +29,6 @@ export default function Profile() {
 
   const [subscribers, setSubscribers] = useState([]);
 
-  const [text, setText] = useRecoilState(textState);
-
   const isMe = () => currentUid == queryId;
 
   onAuthStateChanged(auth, (user) => {
@@ -60,8 +58,6 @@ export default function Profile() {
   const getDocAndSet = async (uid) => {
     const userDoc = await getUserDoc(uid);
     if (userDoc) {
-      console.log(userDoc);
-
       setDisplayName(userDoc.displayName);
       setStatusMsg(userDoc.statusMsg);
 
@@ -198,8 +194,6 @@ export default function Profile() {
 
       <Header as="h2">로그아웃 하기</Header>
       <Button onClick={onLogOutClick}> Logout </Button>
-
-      <h1>{text}</h1>
     </div>
   );
 }

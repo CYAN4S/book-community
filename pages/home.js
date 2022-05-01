@@ -8,14 +8,11 @@ import ChatFactory from "../Components/ChatFactory";
 import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
 
-import { textState } from "../utils/hooks";
 import { useRecoilState } from "recoil";
 
 export default function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
-
-  const [text, setText] = useRecoilState(textState);
 
   onAuthStateChanged(authService, (user) => {
     if (user) {
@@ -61,9 +58,6 @@ export default function Book_home() {
 
           <Divider />
         </div>
-
-        <h1>{text}</h1>
-        <button onClick={() => setText((v) => v + 1)}>값 바꾸기</button>
       </div>
     </>
   );

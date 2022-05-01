@@ -13,3 +13,15 @@ export default function toNativeString(date) {
     .toString()
     .padStart(2, "0")} : ${date.getSeconds().toString().padStart(2, "0")}`;
 }
+
+import { dbService as db } from "../firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+
+export const getUserDoc = async (uid) => {
+  const docRef = doc(db, "profile", uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else
+    return null;
+};
