@@ -20,22 +20,23 @@ export default function SearchKeyword({ books }) {
   const toggleFilter = () => {
     setFilter((prev) => !prev);
   };
-
+  
   const toggleDescDateFilter = () => {
     setDescDateFilter((prev) => !prev);
     setAscPriceFilter(false);
+    setDateAndPriceFilter(false);
   };
 
   const toggleAscPriceFilter = () => {
     setAscPriceFilter((prev) => !prev);
     setDescDateFilter(false);
+    setDateAndPriceFilter(false);
   };
 
-  const toggleDateAndPrice =  () => {
+  const toggleDateAndPriceFilter =  () => {
     setDateAndPriceFilter((prev) => !prev);
     setDescDateFilter(false);
     setAscPriceFilter(false);
-
   };
   
   const tempDescDate = [...books.items];
@@ -46,10 +47,11 @@ export default function SearchKeyword({ books }) {
 
   const tempDateAndPrice = [...books.items];
   tempDateAndPrice.sort((a,b) => {
-    if (a.pubdate > b.pubdate) return 1;
-    else if (a.pubdate < b.pubdate) return -1;
-    else if (a.price > b.price) return 1;
-    else if (a.price < b.price) return -1;
+    if (a.pubdate < b.pubdate) return 1;
+    else if (a.pubdate > b.pubdate) return -1;
+    else if (a.price < b.price) return 1;
+    else if (a.price > b.price) return -1;
+    console.log("작동")
   });
   return (
     <div>
@@ -65,8 +67,8 @@ export default function SearchKeyword({ books }) {
             {filter ? (
               <>
                 <Button onClick={toggleDescDateFilter}>최신 발간 순</Button>
-                <Button onClick={toggleAscPriceFilter}>가격 순 </Button>
-                <Button onClick={toggleAscPriceFilter}>최신 발간 순 및 가격 순</Button>
+                <Button onClick={toggleAscPriceFilter}>가격 낮은 순 </Button>
+                <Button onClick={toggleDateAndPriceFilter}>최신 발간 순 및 가격 높은 순</Button>
                 <Grid columns={4}>
                   <Grid.Row>
                     {descDateFilter && (
@@ -125,7 +127,7 @@ export default function SearchKeyword({ books }) {
                         ))}
                       </>                    
                     )}
-                    {ascPriceFilter && (
+                    {dateAndPriceFilter && (
                       <>
                         {tempDateAndPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
