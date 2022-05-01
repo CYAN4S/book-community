@@ -228,6 +228,7 @@ export default function Profile() {
                       placeholder="새로운 상태 메시지"
                       value={newStatusMsg}
                       onChange={(e) => setNewStatusMsg(e.target.value)}
+                      style={{ marginTop: 10 }}
                     />
                   </Form.Field>
 
