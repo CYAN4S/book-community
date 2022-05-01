@@ -4,13 +4,24 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { Button, Form, Header } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Input,
+  Label,
+  Segment,
+  Step,
+} from "semantic-ui-react";
 
 import { v4 } from "uuid";
 
 export default function Profile() {
   const [isSignedIn, setIsSignedIn] = useState(false);
-  
+
   const router = useRouter();
   const queryId = router.query.id;
 
@@ -55,7 +66,6 @@ export default function Profile() {
   const getDocAndSet = async (uid) => {
     const userDoc = await getUserDoc(uid);
     if (userDoc) {
-
       setDisplayName(userDoc.displayName);
       setStatusMsg(userDoc.statusMsg);
 
@@ -134,61 +144,106 @@ export default function Profile() {
 
   return (
     <div id="profile">
-      <Header as="h2">
-        {displayName ? `${displayName}님의 프로필` : "닉네임을 설정해주세요"}
+      <Header style={{ marginTop: 30 }}>
+        <Label color={"teal"} size="massive">
+          {displayName ? `${displayName}님의 프로필` : "닉네임을 설정해주세요"}
+        </Label>
       </Header>
 
-      <p>{statusMsg}</p>
+      <Grid columns={2} style={{ marginLeft: 10 }}>
+        <Grid.Column>
+          <Segment raised>
+            <Label as="a" color="red" ribbon>
+              상태메시지
+            </Label>
+            <span>{statusMsg ? statusMsg : "상태메시지를 입력해보세요"}</span>
+            <Image
+              src="https://markettraders.kr/wp-content/uploads/2020/04/stock.jpg"
+              size="medium"
+              style={{ marginTop: 10, marginBottom: 30 }}
+            />
 
-      <Header as="h2">구독자 목록</Header>
-      <ul>
-        {subscribers.map((displayName) => (
-          <li key={v4()}>{displayName}</li>
-        ))}
-      </ul>
+            <Label as="a" color="blue" ribbon>
+              나의 구독자 목록
+            </Label>
 
-      {subscribers.length == 0 && <p>구독자가 없습니다.</p>}
+            {subscribers.length == 0 ? (
+              <div>
+                <Icon name="thumbs up" style={{ marginTop: 15 }} />
+                <span>구독자가 없습니다.</span>
+              </div>
+            ) : (
+              <List>
+                {subscribers.map((displayName) => (
+                  <List.Item key={v4()}>
+                    <Image avatar src="/images/avatar/small/rachel.png" />
+                    <List.Content>
+                      <List.Header as="a">{displayName}</List.Header>
+                      <List.Description>
+                        Last seen watching just now. {/*구독자 상태메시지*/}
+                      </List.Description>
+                    </List.Content>
+                  </List.Item>
+                ))}
+              </List>
+            )}
 
-      {isMe() && (
-        <>
-          <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
-            <Form.Field>
-              <label>닉네임 바꾸기</label>
-              <input
-                type="text"
-                placeholder="새로운 닉네임"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-              />
-            </Form.Field>
+            {!isMe() && (
+              <Button onClick={onSubscribeClick}>
+                {wasSubingCheck ? "구독 중" : "구독하기"}
+              </Button>
+            )}
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment raised>
+            {isMe() && (
+              <>
+                <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
+                  <Form.Field>
+                    <Label as="a" color="red" ribbon="right">
+                      닉네임 바꾸기
+                    </Label>
+                    <Input
+                      type="text"
+                      placeholder="새로운 닉네임"
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      style={{ marginTop: 10 }}
+                    />
+                  </Form.Field>
 
-            <Button type="submit">바꾸기</Button>
-          </Form>
+                  <Button type="submit" color="black">
+                    바꾸기
+                  </Button>
+                </Form>
 
-          <Form onSubmit={onSubmit(() => updateStatusMsg(newStatusMsg))}>
-            <Form.Field>
-              <label>상태 메시지</label>
-              <input
-                type="text"
-                placeholder="새로운 상태 메시지"
-                value={newStatusMsg}
-                onChange={(e) => setNewStatusMsg(e.target.value)}
-              />
-            </Form.Field>
+                <Form onSubmit={onSubmit(() => updateStatusMsg(newStatusMsg))}>
+                  <Form.Field>
+                    <Label as="a" color="yellow" ribbon="right">
+                      상태메시지 바꾸기
+                    </Label>
+                    <input
+                      type="text"
+                      placeholder="새로운 상태 메시지"
+                      value={newStatusMsg}
+                      onChange={(e) => setNewStatusMsg(e.target.value)}
+                    />
+                  </Form.Field>
 
-            <Button type="submit">바꾸기</Button>
-          </Form>
-        </>
-      )}
+                  <Button type="submit" color="black">
+                    바꾸기
+                  </Button>
+                </Form>
+              </>
+            )}
 
-      {!isMe() && (
-        <Button onClick={onSubscribeClick}>
-          {wasSubingCheck ? "구독 중" : "구독하기"}
-        </Button>
-      )}
-
-      <Header as="h2">로그아웃 하기</Header>
-      <Button onClick={onLogOutClick}> Logout </Button>
+            <Label as="a" color="black" ribbon="right" onClick={onLogOutClick}>
+              <Icon name="hand point right outline"></Icon>로그아웃하기
+            </Label>
+          </Segment>
+        </Grid.Column>
+      </Grid>
     </div>
   );
 }
