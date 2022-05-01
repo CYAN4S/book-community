@@ -14,6 +14,7 @@ import {
   Input,
   Label,
   Segment,
+  List,
   Step,
 } from "semantic-ui-react";
 
@@ -64,6 +65,9 @@ export default function Profile() {
   };
 
   const getDocAndSet = async (uid) => {
+    if (!uid) {
+      return
+    }
     const userDoc = await getUserDoc(uid);
     if (userDoc) {
       setDisplayName(userDoc.displayName);
