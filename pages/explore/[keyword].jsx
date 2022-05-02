@@ -93,10 +93,10 @@ export default function SearchKeyword({ books }) {
                       <>
                         {tempDescDate.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <div style={{margin: 5}}>
+                            <div>
                               <div class="ui two column grid ui center aligned  segments">
                                 <div class="columnImage">
-                                  <div style={{}} class="ui orange segment">
+                                  <div class="ui orange segment">
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
                                         <img
@@ -112,7 +112,7 @@ export default function SearchKeyword({ books }) {
                                   </div>
                                 </div>
                                 <div
-                                  style={{ width: 300, height: 110 }}
+                                  style={{}}
                                   class="ui yellow segment"
                                 >
                                   <Table.Header>
@@ -132,7 +132,7 @@ export default function SearchKeyword({ books }) {
                                     <Table.Row>
                                       <Table.HeaderCell
                                         style={{
-                                          width: 300,
+                                          fontSize: 14,
                                         }}
                                       >
                                         <p>({book.publisher})</p>
@@ -146,7 +146,7 @@ export default function SearchKeyword({ books }) {
                                       </Table.HeaderCell>
                                     </Table.Row>
                                     <Table.Row>
-                                      <Table.HeaderCell style={{ width: 300 }}>
+                                      <Table.HeaderCell>
                                         가격: {book.price}원
                                       </Table.HeaderCell>
                                     </Table.Row>
