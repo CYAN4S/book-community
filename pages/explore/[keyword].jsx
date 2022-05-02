@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 export default function SearchKeyword({ books }) {
   const router = useRouter();
   const [lens, setLens] = useState(0);
-  const [filter, setFilter] = useState(false);
+  const [filter, setFilter] = useState(true);
   const [descDateFilter, setDescDateFilter] = useState(false);
   const [ascPriceFilter, setAscPriceFilter] = useState(false);
   const [descPriceFilter, setDescPriceFilter] = useState(false);
@@ -15,9 +15,9 @@ export default function SearchKeyword({ books }) {
     setLens(books.items.length);
   }, []);
 
-  const toggleFilter = () => {
-    setFilter((prev) => !prev);
-  };
+  // const toggleFilter = () => {
+  //   setFilter((prev) => !prev);
+  // };
 
   const toggleDescDateFilter = () => {
     setDescDateFilter((prev) => !prev);
@@ -60,7 +60,7 @@ export default function SearchKeyword({ books }) {
       {lens ? (
         <>
           <div className="wrap">
-            {!filter && (
+            {/* {!filter && (
               <>
                 <div class="ui segment">
                   <button
@@ -71,7 +71,7 @@ export default function SearchKeyword({ books }) {
                   </button>
                 </div>
               </>
-            )}
+            )} */}
 
             {filter ? (
               <>
