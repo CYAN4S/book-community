@@ -134,7 +134,7 @@ export default function SearchKeyword({ books }) {
                                         }}
                                       >
                                         <div>
-                                          {book.title.length < 17
+                                          {book.title.length < 15
                                             ? book.title
                                             : book.title.slice(0, 15) + "..."}
                                         </div>
@@ -428,10 +428,12 @@ export default function SearchKeyword({ books }) {
         </>
       ) : (
         <>
-          검색결과가 없습니다.
-          <Link href={`/explore`}>
-            <Button>돌아가기</Button>
-          </Link>
+          <div style = {{fontSize : 16}} class="ui black segment">
+            일치하는 검색결과가 없습니다!  &nbsp;&nbsp;&nbsp;&nbsp;
+            <Link href={`/explore`}>
+              <button class="ui blue basic button">돌아가기</button>
+            </Link>
+          </div>
         </>
       )}
     </div>
