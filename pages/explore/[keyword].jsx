@@ -87,21 +87,28 @@ export default function SearchKeyword({ books }) {
             </div>
             {filter ? (
               <>
-                <Grid style={{margin:5}} columns={3}>
+                <Grid style={{ margin: 2 }} columns={4}>
                   <Grid.Row>
                     {descDateFilter && (
                       <>
                         {tempDescDate.map((book) => (
                           <Grid.Column key={book.isbn}>
                             <div>
-                              <div class="ui two column grid ui center aligned  segments">
+                              <div
+                                style={{}}
+                                class="ui two column grid ui center aligned segments"
+                              >
                                 <div class="columnImage">
-                                  <div class="ui orange segment">
+                                  <div
+                                    style={{ width: 110, height: 145 }}
+                                    class="ui orange segment"
+                                  >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
                                         <img
                                           style={{
                                             width: 80,
+                                            height: 120,
                                           }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
@@ -112,7 +119,11 @@ export default function SearchKeyword({ books }) {
                                   </div>
                                 </div>
                                 <div
-                                  style={{}}
+                                  style={{
+                                    width: 300,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
                                   class="ui yellow segment"
                                 >
                                   <Table.Header>
@@ -125,29 +136,15 @@ export default function SearchKeyword({ books }) {
                                         <div>
                                           {book.title.length < 17
                                             ? book.title
-                                            : book.title.slice(0, 18) + "..."}
+                                            : book.title.slice(0, 15) + "..."}
                                         </div>
                                       </Table.HeaderCell>
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                        style={{
-                                          fontSize: 14,
-                                        }}
-                                      >
-                                        <p>({book.publisher})</p>
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell
-                                        style={{ fontSize: 12 }}
+                                        style={{ fontSize: 14 }}
                                       >
                                         출판일: {book.pubdate}
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell>
-                                        가격: {book.price}원
                                       </Table.HeaderCell>
                                     </Table.Row>
                                   </Table.Header>
@@ -162,15 +159,22 @@ export default function SearchKeyword({ books }) {
                       <>
                         {tempAscPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <div style={{}}>
-                              <div class="ui two column grid ui center aligned  segments">
+                            <div>
+                              <div
+                                style={{}}
+                                class="ui two column grid ui center aligned segments"
+                              >
                                 <div class="columnImage">
-                                  <div style={{}} class="ui orange segment">
+                                  <div
+                                    style={{ width: 110, height: 145 }}
+                                    class="ui orange segment"
+                                  >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
                                         <img
                                           style={{
                                             width: 80,
+                                            height: 120,
                                           }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
@@ -181,7 +185,11 @@ export default function SearchKeyword({ books }) {
                                   </div>
                                 </div>
                                 <div
-                                  style={{ width: 300, height: 110 }}
+                                  style={{
+                                    width: 300,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
                                   class="ui yellow segment"
                                 >
                                   <Table.Header>
@@ -194,29 +202,15 @@ export default function SearchKeyword({ books }) {
                                         <div>
                                           {book.title.length < 17
                                             ? book.title
-                                            : book.title.slice(0, 18) + "..."}
+                                            : book.title.slice(0, 15) + "..."}
                                         </div>
                                       </Table.HeaderCell>
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                        style={{
-                                          width: 300,
-                                        }}
-                                      >
-                                        <p>({book.publisher})</p>
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell
-                                        style={{ fontSize: 12 }}
+                                        style={{ fontSize: 14 }}
                                       >
                                         출판일: {book.pubdate}
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell style={{ width: 300 }}>
-                                        가격: {book.price}원
                                       </Table.HeaderCell>
                                     </Table.Row>
                                   </Table.Header>
@@ -231,15 +225,22 @@ export default function SearchKeyword({ books }) {
                       <>
                         {tempDescPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <div style={{}}>
-                              <div class="ui two column grid ui center aligned  segments">
+                            <div>
+                              <div
+                                style={{}}
+                                class="ui two column grid ui center aligned segments"
+                              >
                                 <div class="columnImage">
-                                  <div style={{}} class="ui orange segment">
+                                  <div
+                                    style={{ width: 110, height: 145 }}
+                                    class="ui orange segment"
+                                  >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
                                         <img
                                           style={{
                                             width: 80,
+                                            height: 120,
                                           }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
@@ -250,7 +251,11 @@ export default function SearchKeyword({ books }) {
                                   </div>
                                 </div>
                                 <div
-                                  style={{ width: 300, height: 110 }}
+                                  style={{
+                                    width: 300,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
                                   class="ui yellow segment"
                                 >
                                   <Table.Header>
@@ -263,29 +268,15 @@ export default function SearchKeyword({ books }) {
                                         <div>
                                           {book.title.length < 17
                                             ? book.title
-                                            : book.title.slice(0, 18) + "..."}
+                                            : book.title.slice(0, 15) + "..."}
                                         </div>
                                       </Table.HeaderCell>
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                        style={{
-                                          width: 300,
-                                        }}
-                                      >
-                                        <p>({book.publisher})</p>
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell
-                                        style={{ fontSize: 12 }}
+                                        style={{ fontSize: 14 }}
                                       >
                                         출판일: {book.pubdate}
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell style={{ width: 300 }}>
-                                        가격: {book.price}원
                                       </Table.HeaderCell>
                                     </Table.Row>
                                   </Table.Header>
@@ -300,15 +291,22 @@ export default function SearchKeyword({ books }) {
                       <>
                         {books.items.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <div style={{}}>
-                              <div class="ui two column grid ui center aligned  segments">
+                            <div>
+                              <div
+                                style={{}}
+                                class="ui two column grid ui center aligned segments"
+                              >
                                 <div class="columnImage">
-                                  <div style={{}} class="ui orange segment">
+                                  <div
+                                    style={{ width: 110, height: 145 }}
+                                    class="ui orange segment"
+                                  >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
                                         <img
                                           style={{
                                             width: 80,
+                                            height: 120,
                                           }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
@@ -319,7 +317,11 @@ export default function SearchKeyword({ books }) {
                                   </div>
                                 </div>
                                 <div
-                                  style={{ width: 300, height: 110 }}
+                                  style={{
+                                    width: 300,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
                                   class="ui yellow segment"
                                 >
                                   <Table.Header>
@@ -332,29 +334,15 @@ export default function SearchKeyword({ books }) {
                                         <div>
                                           {book.title.length < 17
                                             ? book.title
-                                            : book.title.slice(0, 18) + "..."}
+                                            : book.title.slice(0, 15) + "..."}
                                         </div>
                                       </Table.HeaderCell>
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                        style={{
-                                          width: 300,
-                                        }}
-                                      >
-                                        <p>({book.publisher})</p>
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell
-                                        style={{ fontSize: 12 }}
+                                        style={{ fontSize: 14 }}
                                       >
                                         출판일: {book.pubdate}
-                                      </Table.HeaderCell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                      <Table.HeaderCell style={{ width: 300 }}>
-                                        가격: {book.price}원
                                       </Table.HeaderCell>
                                     </Table.Row>
                                   </Table.Header>
@@ -370,19 +358,26 @@ export default function SearchKeyword({ books }) {
               </>
             ) : (
               <>
-                <Grid columns={3}>
+                <Grid style={{ margin: 2 }} columns={4}>
                   <Grid.Row>
                     {books.items.map((book) => (
                       <Grid.Column key={book.isbn}>
-                        <div style={{}}>
-                          <div class="ui two column grid ui center aligned  segments">
+                        <div>
+                          <div
+                            style={{}}
+                            class="ui two column grid ui center aligned segments"
+                          >
                             <div class="columnImage">
-                              <div style={{}} class="ui orange segment">
+                              <div
+                                style={{ width: 110, height: 145 }}
+                                class="ui orange segment"
+                              >
                                 <Link href={`./detail/${book.title}`}>
                                   <a>
                                     <img
                                       style={{
                                         width: 80,
+                                        height: 120,
                                       }}
                                       src={book.image}
                                       alt="DON'T HAVE IMAGE"
@@ -393,7 +388,11 @@ export default function SearchKeyword({ books }) {
                               </div>
                             </div>
                             <div
-                              style={{ width: 300, height: 110 }}
+                              style={{
+                                width: 300,
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
                               class="ui yellow segment"
                             >
                               <Table.Header>
@@ -406,27 +405,13 @@ export default function SearchKeyword({ books }) {
                                     <div>
                                       {book.title.length < 17
                                         ? book.title
-                                        : book.title.slice(0, 18) + "..."}
+                                        : book.title.slice(0, 15) + "..."}
                                     </div>
                                   </Table.HeaderCell>
                                 </Table.Row>
                                 <Table.Row>
-                                  <Table.HeaderCell
-                                    style={{
-                                      width: 300,
-                                    }}
-                                  >
-                                    <p>({book.publisher})</p>
-                                  </Table.HeaderCell>
-                                </Table.Row>
-                                <Table.Row>
-                                  <Table.HeaderCell style={{ fontSize: 12 }}>
+                                  <Table.HeaderCell style={{ fontSize: 14 }}>
                                     출판일: {book.pubdate}
-                                  </Table.HeaderCell>
-                                </Table.Row>
-                                <Table.Row>
-                                  <Table.HeaderCell style={{ width: 300 }}>
-                                    가격: {book.price}원
                                   </Table.HeaderCell>
                                 </Table.Row>
                               </Table.Header>
@@ -458,7 +443,7 @@ export async function getServerSideProps({ query }) {
   const res = await fetch(
     "https://openapi.naver.com/v1/search/book.json?query=" +
       text +
-      "&display=21",
+      "&display=20",
     {
       headers: {
         "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
