@@ -87,13 +87,13 @@ export default function SearchKeyword({ books }) {
             </div>
             {filter ? (
               <>
-                <Grid style={{}} columns={3}>
+                <Grid style={{margin:5}} columns={3}>
                   <Grid.Row>
                     {descDateFilter && (
                       <>
                         {tempDescDate.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <div style={{}}>
+                            <div style={{margin: 5}}>
                               <div class="ui two column grid ui center aligned  segments">
                                 <div class="columnImage">
                                   <div style={{}} class="ui orange segment">
@@ -140,7 +140,7 @@ export default function SearchKeyword({ books }) {
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                      //style={{ width: 300 }}
+                                        style={{ fontSize: 12 }}
                                       >
                                         출판일: {book.pubdate}
                                       </Table.HeaderCell>
@@ -209,7 +209,7 @@ export default function SearchKeyword({ books }) {
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                      //style={{ width: 300 }}
+                                        style={{ fontSize: 12 }}
                                       >
                                         출판일: {book.pubdate}
                                       </Table.HeaderCell>
@@ -278,7 +278,7 @@ export default function SearchKeyword({ books }) {
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                      //style={{ width: 300 }}
+                                        style={{ fontSize: 12 }}
                                       >
                                         출판일: {book.pubdate}
                                       </Table.HeaderCell>
@@ -347,7 +347,7 @@ export default function SearchKeyword({ books }) {
                                     </Table.Row>
                                     <Table.Row>
                                       <Table.HeaderCell
-                                      //style={{ width: 300 }}
+                                        style={{ fontSize: 12 }}
                                       >
                                         출판일: {book.pubdate}
                                       </Table.HeaderCell>
@@ -420,9 +420,7 @@ export default function SearchKeyword({ books }) {
                                   </Table.HeaderCell>
                                 </Table.Row>
                                 <Table.Row>
-                                  <Table.HeaderCell
-                                  //style={{ width: 300 }}
-                                  >
+                                  <Table.HeaderCell style={{ fontSize: 12 }}>
                                     출판일: {book.pubdate}
                                   </Table.HeaderCell>
                                 </Table.Row>
