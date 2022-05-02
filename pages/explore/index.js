@@ -7,14 +7,19 @@ import Link from "next/link";
 
 export default function Explorer() {
   const [keyword, setKeyword] = useState("");
-
+  
+  const router = useRouter();
   useEffect(() => {
     setKeyword("");
   }, []);
 
+  function goKeyword(e, data) {
+    router.push(`/explore/${keyword}`);
+  }
+
   return (
     <>
-      <div className="ui fluid icon input">
+      <div className="ui fluid action input">
         <input
           type="text"
           placeholder="책 이름, 글쓴이, 출판사 등.."
@@ -23,9 +28,11 @@ export default function Explorer() {
             setKeyword(e.target.value);
           }}
         ></input>
-        <Link href={`/explore/${keyword}`}>
-          <a>검색</a>
-        </Link>
+        
+        <button onClick = {goKeyword} class = "ui blue button">
+            검색
+        </button>
+        
       </div>
       <Header as="h3" color="black">
         읽고 있는 책

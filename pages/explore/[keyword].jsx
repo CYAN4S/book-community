@@ -61,18 +61,24 @@ export default function SearchKeyword({ books }) {
           <div className="wrap">
             {!filter && (
               <>
-                <Button onClick={toggleFilter}>정렬 필터</Button>
+                <button class="fluid ui button ui green button" onClick={toggleFilter}>정렬 필터</button>
               </>
             )}
 
             {filter ? (
               <>
-                <div class="three ui buttons blue ui buttons">
-                  <Button class="ui button"onClick={toggleDescDateFilter}>최신 발간 순</Button>
-                  <Button class="ui button"onClick= {toggleAscPriceFilter}>가격 낮은 순 </Button>
-                  <Button class="ui button"onClick={toggleDescPriceFilter}>가격 높은 순</Button>
+                <div class="three ui buttons green ui buttons">
+                  <Button class="ui button" onClick={toggleDescDateFilter}>
+                    최신 발간 순
+                  </Button>
+                  <Button class="ui button" onClick={toggleAscPriceFilter}>
+                    가격 낮은 순{" "}
+                  </Button>
+                  <Button class="ui button" onClick={toggleDescPriceFilter}>
+                    가격 높은 순
+                  </Button>
                 </div>
-                <Grid columns={1}>
+                <Grid columns={2}>
                   <Grid.Row>
                     {descDateFilter && (
                       <>
