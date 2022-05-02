@@ -161,7 +161,7 @@ export default function SearchKeyword({ books }) {
                           <Grid.Column key={book.isbn}>
                             <div>
                               <div
-                                style={{}}
+                                style={{marginBottom:20}}
                                 class="ui two column grid ui center aligned segments"
                               >
                                 <div class="columnImage">
@@ -227,7 +227,7 @@ export default function SearchKeyword({ books }) {
                           <Grid.Column key={book.isbn}>
                             <div>
                               <div
-                                style={{}}
+                                style={{marginBottom:20}}
                                 class="ui two column grid ui center aligned segments"
                               >
                                 <div class="columnImage">
@@ -293,7 +293,7 @@ export default function SearchKeyword({ books }) {
                           <Grid.Column key={book.isbn}>
                             <div>
                               <div
-                                style={{}}
+                                style={{marginBottom:20}}
                                 class="ui two column grid ui center aligned segments"
                               >
                                 <div class="columnImage">
@@ -364,7 +364,7 @@ export default function SearchKeyword({ books }) {
                       <Grid.Column key={book.isbn}>
                         <div>
                           <div
-                            style={{}}
+                            style={{marginBottom:20}}
                             class="ui two column grid ui center aligned segments"
                           >
                             <div class="columnImage">
