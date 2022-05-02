@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
 import { Button, Grid, Table } from "semantic-ui-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function SearchKeyword({ books }) {
-  const router = useRouter();
   const [lens, setLens] = useState(0);
   const [filter, setFilter] = useState(true);
   const [descDateFilter, setDescDateFilter] = useState(false);
@@ -15,24 +13,25 @@ export default function SearchKeyword({ books }) {
     setLens(books.items.length);
   }, []);
 
-  // const toggleFilter = () => {
-  //   setFilter((prev) => !prev);
-  // };
-
+  const toggleFilter = () => {
+    setDescDateFilter(false);
+    setAscPriceFilter(false);
+    setDescPriceFilter(false);
+  };
   const toggleDescDateFilter = () => {
-    setDescDateFilter((prev) => !prev);
+    setDescDateFilter(true);
     setAscPriceFilter(false);
     setDescPriceFilter(false);
   };
 
   const toggleAscPriceFilter = () => {
-    setAscPriceFilter((prev) => !prev);
+    setAscPriceFilter(true);
     setDescDateFilter(false);
     setDescPriceFilter(false);
   };
 
   const toggleDescPriceFilter = () => {
-    setDescPriceFilter((prev) => !prev);
+    setDescPriceFilter(true);
     setDescDateFilter(false);
     setAscPriceFilter(false);
   };
@@ -45,16 +44,7 @@ export default function SearchKeyword({ books }) {
 
   const tempDescPrice = [...books.items];
   tempDescPrice.sort((a, b) => b.price - a.price);
-  // 최신 발간 순 및 가격 높은 순
-  // const tempDateAndPrice = [...books.items];
-  // tempDateAndPrice.sort((a,b) => {
-  //   if (a.pubdate < b.pubdate) return 1;
-  //   else if (a.pubdate > b.pubdate) return -1;
-  //   else if (a.price < b.price) return 1;
-  //   else if (a.price > b.price) return -1;
-  //   console.log("작동")
-  // });
-  const maxlimit = 10;
+
   return (
     <div>
       {lens ? (
@@ -72,26 +62,31 @@ export default function SearchKeyword({ books }) {
                 </div>
               </>
             )} */}
-
+            <div class="ui black segment">
+              <button
+                class="ui left floated teal button"
+                onClick={toggleDescDateFilter}
+              >
+                최신 발간 순
+              </button>
+              <button class="ui blue button" onClick={toggleAscPriceFilter}>
+                가격 낮은 순{" "}
+              </button>
+              <button class="ui violet button" onClick={toggleDescPriceFilter}>
+                가격 높은 순
+              </button>
+              <Link href={`/explore`}>
+                <button class="ui right floated gray button">돌아가기</button>
+              </Link>
+              <button
+                class="ui right floated red button"
+                onClick={toggleFilter}
+              >
+                정렬 해제
+              </button>
+            </div>
             {filter ? (
               <>
-                <div class="ui black segment">
-                  <button
-                    class="ui left floated teal button"
-                    onClick={toggleDescDateFilter}
-                  >
-                    최신 발간 순
-                  </button>
-                  <button class="ui blue button" onClick={toggleAscPriceFilter}>
-                    가격 낮은 순{" "}
-                  </button>
-                  <button
-                    class="ui violet button"
-                    onClick={toggleDescPriceFilter}
-                  >
-                    가격 높은 순
-                  </button>
-                </div>
                 <Grid style={{}} columns={3}>
                   <Grid.Row>
                     {descDateFilter && (
@@ -165,7 +160,7 @@ export default function SearchKeyword({ books }) {
                     )}
                     {ascPriceFilter && (
                       <>
-                        {tempAscDate.map((book) => (
+                        {tempAscPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
                             <div style={{}}>
                               <div class="ui two column grid ui center aligned  segments">
@@ -305,64 +300,67 @@ export default function SearchKeyword({ books }) {
                       <>
                         {books.items.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <Link href={`./detail/${book.title}`}>
-                              <a>
-                                <div class="ui segment">
-                                  <div class="ui two column grid">
-                                    <div class="column">
-                                      <div class="ui internally celled">
+                            <div style={{}}>
+                              <div class="ui two column grid ui center aligned  segments">
+                                <div class="columnImage">
+                                  <div style={{}} class="ui orange segment">
+                                    <Link href={`./detail/${book.title}`}>
+                                      <a>
                                         <img
-                                          style={{ width: 80 }}
+                                          style={{
+                                            width: 80,
+                                          }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
                                           className="img_book"
                                         />
-                                      </div>
-                                    </div>
-                                    <div class="column">
-                                      <Table.Header>
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <strong className="book_item">
-                                              제목:
-                                            </strong>
-                                          </Table.HeaderCell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <span className="txt_info_publisher">
-                                              출판사: {book.publisher}
-                                            </span>
-                                          </Table.HeaderCell>
-                                        </Table.Row>{" "}
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <span className="txt_info_pubdate">
-                                              출판일자: {book.pubdate}
-                                            </span>
-                                          </Table.HeaderCell>
-                                        </Table.Row>{" "}
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <strong className="num_price">
-                                              가격: {book.price}원
-                                            </strong>
-                                          </Table.HeaderCell>
-                                        </Table.Row>
-                                      </Table.Header>
-                                    </div>
+                                      </a>
+                                    </Link>
                                   </div>
                                 </div>
-                              </a>
-                            </Link>
+                                <div
+                                  style={{ width: 300, height: 110 }}
+                                  class="ui yellow segment"
+                                >
+                                  <Table.Header>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                        style={{
+                                          fontSize: 16,
+                                        }}
+                                      >
+                                        <div>
+                                          {book.title.length < 17
+                                            ? book.title
+                                            : book.title.slice(0, 18) + "..."}
+                                        </div>
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                        style={{
+                                          width: 300,
+                                        }}
+                                      >
+                                        <p>({book.publisher})</p>
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                      //style={{ width: 300 }}
+                                      >
+                                        출판일: {book.pubdate}
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell style={{ width: 300 }}>
+                                        가격: {book.price}원
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                  </Table.Header>
+                                </div>
+                              </div>
+                            </div>
                           </Grid.Column>
                         ))}
                       </>
@@ -443,10 +441,6 @@ export default function SearchKeyword({ books }) {
                 </Grid>
               </>
             )}
-
-            <Link href={`/explore`}>
-              <Button>돌아가기</Button>
-            </Link>
           </div>
         </>
       ) : (
@@ -466,7 +460,7 @@ export async function getServerSideProps({ query }) {
   const res = await fetch(
     "https://openapi.naver.com/v1/search/book.json?query=" +
       text +
-      "&display=20",
+      "&display=21",
     {
       headers: {
         "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
