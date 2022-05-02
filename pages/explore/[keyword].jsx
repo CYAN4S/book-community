@@ -128,7 +128,9 @@ export default function SearchKeyword({ books }) {
                                         }}
                                       >
                                         <div>
-                                          {book.title.length < 17 ? book.title : book.title.slice(0,18) + '...'}
+                                          {book.title.length < 17
+                                            ? book.title
+                                            : book.title.slice(0, 18) + "..."}
                                         </div>
                                       </Table.HeaderCell>
                                     </Table.Row>
@@ -163,67 +165,69 @@ export default function SearchKeyword({ books }) {
                     )}
                     {ascPriceFilter && (
                       <>
-                        {tempAscPrice.map((book) => (
+                        {tempAscDate.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <Link href={`./detail/${book.title}`}>
-                              <a>
-                                <div class="ui segment">
-                                  <div class="ui two column grid">
-                                    <div class="column">
-                                      <div class="ui internally celled">
+                            <div style={{}}>
+                              <div class="ui two column grid ui center aligned  segments">
+                                <div class="columnImage">
+                                  <div style={{}} class="ui orange segment">
+                                    <Link href={`./detail/${book.title}`}>
+                                      <a>
                                         <img
-                                          style={{ width: 80 }}
+                                          style={{
+                                            width: 80,
+                                          }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
                                           className="img_book"
                                         />
-                                      </div>
-                                    </div>
-                                    <div class="column">
-                                      <Table.Header>
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <strong className="book_item">
-                                              제목:
-                                            </strong>
-                                            {truncateTitle}
-                                          </Table.HeaderCell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <span className="txt_info_publisher">
-                                              출판사: {book.publisher}
-                                            </span>
-                                          </Table.HeaderCell>
-                                        </Table.Row>{" "}
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <span className="txt_info_pubdate">
-                                              출판일자: {book.pubdate}
-                                            </span>
-                                          </Table.HeaderCell>
-                                        </Table.Row>{" "}
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <strong className="num_price">
-                                              가격: {book.price}원
-                                            </strong>
-                                          </Table.HeaderCell>
-                                        </Table.Row>
-                                      </Table.Header>
-                                    </div>
+                                      </a>
+                                    </Link>
                                   </div>
                                 </div>
-                              </a>
-                            </Link>
+                                <div
+                                  style={{ width: 300, height: 110 }}
+                                  class="ui yellow segment"
+                                >
+                                  <Table.Header>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                        style={{
+                                          fontSize: 16,
+                                        }}
+                                      >
+                                        <div>
+                                          {book.title.length < 17
+                                            ? book.title
+                                            : book.title.slice(0, 18) + "..."}
+                                        </div>
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                        style={{
+                                          width: 300,
+                                        }}
+                                      >
+                                        <p>({book.publisher})</p>
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                      //style={{ width: 300 }}
+                                      >
+                                        출판일: {book.pubdate}
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell style={{ width: 300 }}>
+                                        가격: {book.price}원
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                  </Table.Header>
+                                </div>
+                              </div>
+                            </div>
                           </Grid.Column>
                         ))}
                       </>
@@ -232,65 +236,67 @@ export default function SearchKeyword({ books }) {
                       <>
                         {tempDescPrice.map((book) => (
                           <Grid.Column key={book.isbn}>
-                            <Link href={`./detail/${book.title}`}>
-                              <a>
-                                <div class="ui segment">
-                                  <div class="ui two column grid">
-                                    <div class="column">
-                                      <div class="ui internally celled">
+                            <div style={{}}>
+                              <div class="ui two column grid ui center aligned  segments">
+                                <div class="columnImage">
+                                  <div style={{}} class="ui orange segment">
+                                    <Link href={`./detail/${book.title}`}>
+                                      <a>
                                         <img
-                                          style={{ width: 80 }}
+                                          style={{
+                                            width: 80,
+                                          }}
                                           src={book.image}
                                           alt="DON'T HAVE IMAGE"
                                           className="img_book"
                                         />
-                                      </div>
-                                    </div>
-                                    <div class="column">
-                                      <Table.Header>
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <strong className="book_item">
-                                              제목:
-                                            </strong>
-                                            {book.title}
-                                          </Table.HeaderCell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <span className="txt_info_publisher">
-                                              출판사: {book.publisher}
-                                            </span>
-                                          </Table.HeaderCell>
-                                        </Table.Row>{" "}
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <span className="txt_info_pubdate">
-                                              출판일자: {book.pubdate}
-                                            </span>
-                                          </Table.HeaderCell>
-                                        </Table.Row>{" "}
-                                        <Table.Row>
-                                          <Table.HeaderCell
-                                            style={{ width: 300 }}
-                                          >
-                                            <strong className="num_price">
-                                              가격: {book.price}원
-                                            </strong>
-                                          </Table.HeaderCell>
-                                        </Table.Row>
-                                      </Table.Header>
-                                    </div>
+                                      </a>
+                                    </Link>
                                   </div>
                                 </div>
-                              </a>
-                            </Link>
+                                <div
+                                  style={{ width: 300, height: 110 }}
+                                  class="ui yellow segment"
+                                >
+                                  <Table.Header>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                        style={{
+                                          fontSize: 16,
+                                        }}
+                                      >
+                                        <div>
+                                          {book.title.length < 17
+                                            ? book.title
+                                            : book.title.slice(0, 18) + "..."}
+                                        </div>
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                        style={{
+                                          width: 300,
+                                        }}
+                                      >
+                                        <p>({book.publisher})</p>
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell
+                                      //style={{ width: 300 }}
+                                      >
+                                        출판일: {book.pubdate}
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                    <Table.Row>
+                                      <Table.HeaderCell style={{ width: 300 }}>
+                                        가격: {book.price}원
+                                      </Table.HeaderCell>
+                                    </Table.Row>
+                                  </Table.Header>
+                                </div>
+                              </div>
+                            </div>
                           </Grid.Column>
                         ))}
                       </>
@@ -366,30 +372,71 @@ export default function SearchKeyword({ books }) {
               </>
             ) : (
               <>
-                <Grid columns={4}>
+                <Grid columns={3}>
                   <Grid.Row>
                     {books.items.map((book) => (
                       <Grid.Column key={book.isbn}>
-                        <Link href={`./detail/${book.title}`}>
-                          <a>
-                            <div>
-                              <img
-                                src={book.image}
-                                alt="DON'T HAVE IMAGE"
-                                className="img_book"
-                              />
-                              <strong className="book_item">
-                                {book.title}
-                              </strong>
-                              <span className="txt_info">
-                                {book.publisher},{book.pubdate}
-                              </span>
-                              <strong className="num_price">
-                                ${book.price}
-                              </strong>
+                        <div style={{}}>
+                          <div class="ui two column grid ui center aligned  segments">
+                            <div class="columnImage">
+                              <div style={{}} class="ui orange segment">
+                                <Link href={`./detail/${book.title}`}>
+                                  <a>
+                                    <img
+                                      style={{
+                                        width: 80,
+                                      }}
+                                      src={book.image}
+                                      alt="DON'T HAVE IMAGE"
+                                      className="img_book"
+                                    />
+                                  </a>
+                                </Link>
+                              </div>
                             </div>
-                          </a>
-                        </Link>
+                            <div
+                              style={{ width: 300, height: 110 }}
+                              class="ui yellow segment"
+                            >
+                              <Table.Header>
+                                <Table.Row>
+                                  <Table.HeaderCell
+                                    style={{
+                                      fontSize: 16,
+                                    }}
+                                  >
+                                    <div>
+                                      {book.title.length < 17
+                                        ? book.title
+                                        : book.title.slice(0, 18) + "..."}
+                                    </div>
+                                  </Table.HeaderCell>
+                                </Table.Row>
+                                <Table.Row>
+                                  <Table.HeaderCell
+                                    style={{
+                                      width: 300,
+                                    }}
+                                  >
+                                    <p>({book.publisher})</p>
+                                  </Table.HeaderCell>
+                                </Table.Row>
+                                <Table.Row>
+                                  <Table.HeaderCell
+                                  //style={{ width: 300 }}
+                                  >
+                                    출판일: {book.pubdate}
+                                  </Table.HeaderCell>
+                                </Table.Row>
+                                <Table.Row>
+                                  <Table.HeaderCell style={{ width: 300 }}>
+                                    가격: {book.price}원
+                                  </Table.HeaderCell>
+                                </Table.Row>
+                              </Table.Header>
+                            </div>
+                          </div>
+                        </div>
                       </Grid.Column>
                     ))}
                   </Grid.Row>
