@@ -10,11 +10,16 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Entire from "../kakao_map/entire"
+import Entire from "../kakao_map/entire";
+import { useEffect } from "react";
 
 export default function Lib({ infoData }) {
   const router = useRouter();
   const [entire, setEntire] = useState(false);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [min, setMin] = useState(999999);
+
   const onClick = () => {
     setEntire((prev) => !prev);
   };
@@ -23,6 +28,54 @@ export default function Lib({ infoData }) {
     e.preventDefault();
     router.back();
   }
+
+  function getDistanceFromLatLonInKm(lat1, lng1, lat2, lng2) {
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    }
+    var R = 6371;
+    var dLat = deg2rad(lat2 - lat1);
+    var dLon = deg2rad(lng2 - lng1);
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) *
+        Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d;
+  }
+
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // position 객체 내부에 timestamp(현재 시간)와 coords 객체
+        const time = new Date(position.timestamp);
+        console.log(`현재시간 : ${time}`);
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      (error) => {
+        console.error(error);
+      },
+      {
+        enableHighAccuracy: false,
+        maximumAge: 0,
+        timeout: Infinity,
+      }
+    );
+  
+    infoData.map((item)=>{
+      if(min > getDistanceFromLatLonInKm(latitude,longitude,item.latitude,item.longitude)){
+        setMin(getDistanceFromLatLonInKm(latitude,longitude,item.latitude,item.longitude));
+      }
+    })
+  
+  });
+
+  
   return (
     <>
       <div className="wrap">
@@ -34,6 +87,9 @@ export default function Lib({ infoData }) {
                   <Table.HeaderCell style={{ width: 300 }}>
                     도서관 이름
                   </Table.HeaderCell>
+                  <Table.HeaderCell style={{ width: 200 }}>
+                    연락처
+                  </Table.HeaderCell>
                   <Table.HeaderCell style={{ width: 100 }}>
                     소장 여부
                   </Table.HeaderCell>
@@ -43,6 +99,9 @@ export default function Lib({ infoData }) {
                   <Table.HeaderCell style={{ width: 100 }}>
                     도서관 위치 확인하기
                   </Table.HeaderCell>
+                  <Table.HeaderCell style={{ width: 100 }}>
+                    내 위치와의 거리
+                  </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -50,6 +109,9 @@ export default function Lib({ infoData }) {
                   return (
                     <Table.Row key={data.name}>
                       <Table.Cell>{data.name}</Table.Cell>
+                      <Table.Cell>
+                        010              
+                      </Table.Cell>
                       {data.value.response.result.hasBook === "Y" ? (
                         <Table.Cell positive>O</Table.Cell>
                       ) : (
@@ -68,6 +130,17 @@ export default function Lib({ infoData }) {
                             <Header as="h5">위치 확인하기</Header>
                           </a>
                         </Link>
+                      </Table.Cell>
+                      <Table.Cell>
+                        {min === getDistanceFromLatLonInKm(latitude,longitude,data.latitude,data.longitude) 
+                        ?
+                        <>
+                        <Icon name = "thumbs up"></Icon> 
+                        <strong>{getDistanceFromLatLonInKm(latitude,longitude,data.latitude,data.longitude).toFixed(1)}km</strong>
+                        </>
+                        :
+                        <>{getDistanceFromLatLonInKm(latitude,longitude,data.latitude,data.longitude).toFixed(1)}km</>}
+                                                 
                       </Table.Cell>
                     </Table.Row>
                   );
@@ -98,7 +171,7 @@ export default function Lib({ infoData }) {
         >
           돌아가기
         </Button>
-        
+
         {infoData.length !== 0 && (
           <>
             <Divider style={{ marginTop: 30 }} inverted />
@@ -175,8 +248,9 @@ export async function getServerSideProps({ params: { params } }) {
       "&format=json"
   ); // 보유도서관 검색
   let lib = await res.json();
+  // console.log(lib.response);
   const libCode = lib.response.libs.map((lib) => lib.lib.libCode);
-
+  
   if (libCode.length) {
     for (let i = 0; i < libCode.length; i = i + 1) {
       const res = await fetch(
