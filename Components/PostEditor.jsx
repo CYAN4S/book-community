@@ -6,7 +6,7 @@ import {
   uploadString,
 } from "firebase/storage";
 import React, { useState } from "react";
-import { Button, Form, TextArea } from "semantic-ui-react";
+import { Button, Form, Input, Label, TextArea, Image, Icon } from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 
@@ -77,11 +77,12 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (purpose == "edit") {
+    if (purpose === "edit") {
       onEditSubmit();
     } else {
       onReplySubmit();
     }
+
   };
 
   const onDeleteTempImageClick = () => {
@@ -135,6 +136,9 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
       <div>
         <Form onSubmit={onSubmit}>
           <Form.Field>
+            <Label basic color="violet" pointing="below" style={{marginTop:10}}>
+              Edit your text
+            </Label>
             <TextArea
               value={newChat}
               type="text"
@@ -143,33 +147,58 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
               autoFocus
               required
             />
+
             {!chat?.fileUrl && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={onFileChange}
-                id="attach-file"
-              />
+              <div style={{ marginTop: 10 }}>
+                <Label
+                  basic
+                  color="violet"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add/Edit photos</p>
+                </Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                  id="attach-file"
+                  icon="file image"
+                  style={{ width: 300 }}
+                />
+              </div>
             )}
           </Form.Field>
           {imgFileString && (
             <div className="temp">
-              <img
-                src={imgFileString}
-                style={{
-                  backgroundImage: imgFileString,
-                  width: "30%",
-                  height: "30%",
-                }}
-              />
-              <span className="downTempImg" onClick={onDeleteTempImageClick}>
-                Del TempImg
-              </span>
+              <Image
+              fluid
+              label={{
+                color: 'red',
+                onClick : onDeleteTempImageClick,
+                icon: 'remove circle',
+                size : "large",
+                ribbon: true,
+              }}
+              src={imgFileString}
+              style={{
+                backgroundImage: imgFileString,
+                width: "30%",
+                height: "30%",
+                marginTop : 10,
+                marginLeft : 20,
+                marginBottom : 15,
+              }}
+            />
             </div>
           )}
-          {chat?.fileUrl && <div onClick={OnImageDeleteClick}>Del Img</div>}
-          <Button type="submit" value="update">
-            {purpose == "reply" ? "댓글 달기" : "수정하기"}
+          {chat?.fileUrl && 
+          <div onClick={OnImageDeleteClick} style = {{width:100, height:30,cursor:"pointer"}}>
+            <Icon color = "red" name="remove circle"/> <span>DEL IMG</span>
+          </div>
+          }
+          <Button type="submit" value="update" inverted color='green' >
+            {purpose == "reply" ? "댓글 달기" : "수정 완료"}
           </Button>
         </Form>
       </div>

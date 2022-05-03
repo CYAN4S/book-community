@@ -236,7 +236,7 @@ export default function Title({ books }) {
         <div>
           {chats.length ? (
             chats.map((chat) => (
-              <div className="chat_space" key={chat.id}>
+              <div className="chat_space" key={chat.id} style={{width:"100%"}}>
                 <Chats
                   chat={chat}
                   isOwner={chat.createrId === userId}
