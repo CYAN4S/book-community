@@ -112,111 +112,127 @@ export default function Title({ books }) {
 
   return (
     <>
-      <div className="wrap">
-        <Segment style={{ width: "100%" }}>
-          <div>
-            <Image src={image} size="medium" centered />
-          </div>
-          <Header as="h3" style={{ paddingTop: 20 }} color="blue">
-            책 정보
-          </Header>
-          <div className="info_book">
-            <strong className="book_item"> {title} </strong>
-            <strong className="num_price">
-              {new Intl.NumberFormat("ko", {
-                style: "currency",
-                currency: "KRW",
-              }).format(price)}
+      <>
+        <Grid style={{ margin: 2 }} columns={2}>
+          <Grid.Row>
+            <Grid.Column>
+              <div
+                style={{ width: 150, height: 210 }}
+                class="ui orange segment"
+              >
+                <img
+                  style={{
+                    width: 120,
+                    height: 180,
+                  }}
+                  src={image}
+                  alt="DON'T HAVE IMAGE"
+                  className="img_book"
+                />
+              </div>
+            </Grid.Column>
+
+            <Grid.Column>
+              <Header as="h3" style={{ paddingTop: 20 }} color="blue">
+                책 정보
+              </Header>
+              <strong className="book_item"> {title} </strong>
+              <strong className="num_price">
+                {new Intl.NumberFormat("ko", {
+                  style: "currency",
+                  currency: "KRW",
+                }).format(price)}
+              </strong>
+
+              <div>
+                <List divided horizontal>
+                  <List.Item>
+                    <strong>출판사</strong> {publisher}
+                  </List.Item>
+                  <List.Item>
+                    <strong>출간일</strong> {pubdate}
+                  </List.Item>
+                  <List.Item>
+                    <strong>작가</strong> {author}
+                  </List.Item>
+                </List>
+              </div>
+            </Grid.Column>
+
+            <Grid.Column>
+              <Header as="h2" color="blue">
+                Description
+              </Header>
+
+              <p style={{ paddingBottom: 20, fontSize: 15 }}>
+                {decode(description)}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+      <div>
+        {checkItems.size ? (
+          <div style={{ marginBottom: 10 }}>
+            <strong style={{ marginRight: 10 }}>
+              {`"${name}"`} 선택되었습니다.
             </strong>
+            <Icon
+              name="undo"
+              onClick={changeRegion}
+              color="red"
+              style={{ cursor: "pointer" }}
+            ></Icon>
 
-            <div className="txt_info">
-              <List divided horizontal>
-                <List.Item>
-                  <strong>출판사</strong> {publisher}
-                </List.Item>
-                <List.Item>
-                  <strong>출간일</strong> {pubdate}
-                </List.Item>
-                <List.Item>
-                  <strong>작가</strong> {author}
-                </List.Item>
-              </List>
-            </div>
-
-            <Divider inverted />
-            <Header as="h2" color="blue">
-              Description
-            </Header>
-
-            <p style={{ paddingBottom: 20, fontSize: 15 }}>
-              {decode(description)}
-            </p>
-
-            <Divider inverted />
-
-            <div>
-              {checkItems.size ? (
-                <div style={{ marginBottom: 10 }}>
-                  <strong style={{ marginRight: 10 }}>
-                    {`"${name}"`} 선택되었습니다.
-                  </strong>
-                  <Icon name = "undo" onClick={changeRegion} color = "red" style = {{cursor:"pointer"}}></Icon>
-
-                  <Link href={`../naru/${isbn}/${id}`}>
-                    <a>
-                      <Header
-                        as="h3"
-                        style={{ paddingTop: 20, marginBottom: 0 }}
-                        color="blue"
-                      >
-                        <Button color="teal">소장도서관 확인하기</Button>
-                      </Header>
-                    </a>
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  <Header
-                    as="h3"
-                    style={{ paddingTop: 20, marginBottom: 30 }}
-                    color="blue"
-                  >
-                    어디에 있을까?
-                  </Header>
-                  <Grid columns={3}>
-                    <Grid.Row>
-                      {regionData.map((item) => {
-                        return (
-                          <Grid.Column
-                            key={item.id}
-                            style={{ marginBottom: 5 }}
-                          >
-                            <div>
-                              <label key={item.id} style={{ fontSize: 18 }}>
-                                <Input
-                                  type="checkbox"
-                                  value={item.name}
-                                  onChange={(e) => checkHandler(e, item.id, item.name)}
-                                />
-                                <strong style={{ marginLeft: 5 }}>
-                                  {item.name}
-                                </strong>
-                              </label>
-                            </div>
-                          </Grid.Column>
-                        );
-                      })}
-                    </Grid.Row>
-                  </Grid>
-                </>
-              )}
-            </div>
-
-            <Divider inverted />
+            <Link href={`../naru/${isbn}/${id}`}>
+              <a>
+                <Header
+                  as="h3"
+                  style={{ paddingTop: 20, marginBottom: 0 }}
+                  color="blue"
+                >
+                  <Button color="teal">소장도서관 확인하기</Button>
+                </Header>
+              </a>
+            </Link>
           </div>
-        </Segment>
+        ) : (
+          <>
+            <Divider inverted />
+            <Header
+              as="h3"
+              style={{ paddingTop: 10, marginBottom: 30 }}
+              color="blue"
+            >
+              어디에 있을까?
+            </Header>
+            <Grid columns={3}>
+              <Grid.Row>
+                {regionData.map((item) => {
+                  return (
+                    <Grid.Column key={item.id} style={{ marginBottom: 5 }}>
+                      <div>
+                        <label key={item.id} style={{ fontSize: 18 }}>
+                          <Input
+                            type="checkbox"
+                            value={item.name}
+                            onChange={(e) =>
+                              checkHandler(e, item.id, item.name)
+                            }
+                          />
+                          <strong style={{ marginLeft: 5 }}>{item.name}</strong>
+                        </label>
+                      </div>
+                    </Grid.Column>
+                  );
+                })}
+              </Grid.Row>
+            </Grid>
+          </>
+        )}
       </div>
 
+      <Divider inverted />
       <Segment style={{ width: "100%" }}>
         <Header
           as="h3"
@@ -249,60 +265,13 @@ export default function Title({ books }) {
         </div>
       </Segment>
 
-      <Button color = "black" onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
+      <Button
+        color="black"
+        onClick={onClick}
+        style={{ marginTop: 10, marginBottom: 20 }}
+      >
         돌아가기
       </Button>
-
-      <style jsx>{`
-        .wrap {
-          display: flex;
-          text-align: center;
-          margin: 30px 10px 20px 10px;
-        }
-
-        .book_item {
-          display: block;
-          font-size: 16px;
-          margin-top: 25px;
-        }
-
-        .txt_info {
-          display: block;
-          font-size: 15px;
-          color: red;
-        }
-
-        .book_item {
-          display: block;
-          font-size: 19px;
-        }
-
-        .num_price {
-          display: block;
-          font-size: 15px;
-          margin-top: 10px;
-          margin-bottom: 12px;
-        }
-
-        img {
-          width: auto;
-          height: 250px;
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          image-rendering: -webkit-optimize-contrast;
-        }
-
-        p {
-          margin-bottom: 0.1em;
-        }
-
-        .chat_space {
-          margin-left: 10px;
-          margin-bottom: 5px;
-          width: 300px;
-          padding: 10px 10px 10px 0px;
-        }
-      `}</style>
     </>
   );
 }
