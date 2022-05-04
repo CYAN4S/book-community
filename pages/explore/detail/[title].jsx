@@ -113,7 +113,7 @@ export default function Title({ books }) {
   return (
     <>
       <>
-        <Grid style={{ }} columns={3}>
+        <Grid style={{}} columns={3}>
           <Grid.Row>
             <div
               style={{
@@ -143,7 +143,7 @@ export default function Title({ books }) {
 
               <Grid.Column>
                 <div
-                  style={{ width: 300, height: 210, marginLeft:-40 }}
+                  style={{ width: 300, height: 210, marginLeft: -40 }}
                   class="ui orange segment"
                 >
                   <Header as="h3" style={{ paddingTop: 10 }} color="blue">
@@ -158,7 +158,6 @@ export default function Title({ books }) {
                         </div>
                       </List.Item>
 
-                      
                       <List.Item>
                         <strong>출판사</strong> {publisher}
                       </List.Item>
@@ -183,85 +182,106 @@ export default function Title({ books }) {
             </div>
             <Grid.Column>
               <div
-                style={{ width: 600, height: 240,marginLeft: 10, marginRight:20 }}
+                style={{
+                  width: 600,
+                  height: 240,
+                  marginLeft: 10,
+                  marginRight: 20,
+                }}
                 class="ui segment"
               >
-                <div style = {{height:210}}class="ui orange segment">
-                <Header as="h2" color="blue">
-                  Description
-                </Header>
+                <div style={{ height: 210 }} class="ui orange segment">
+                  <Header as="h2" color="blue">
+                    Description
+                  </Header>
 
-                <p style={{ paddingBottom: 20, fontSize: 15 }}>
-                  {decode(description)}
-                </p>
+                  <p style={{ paddingBottom: 20, fontSize: 15 }}>
+                    {decode(description)}
+                  </p>
                 </div>
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+            <div
+                style={{
+                  width: 600,
+                  marginLeft: 10,
+                  marginRight: 20,
+                }}
+                class="ui segment"
+              >
+                <div style={{ height: 210 }} class="ui orange segment">
+              <div>
+                {checkItems.size ? (
+                  <div style={{ marginBottom: 10 }}>
+                    <strong style={{ marginRight: 10 }}>
+                      {`"${name}"`} 선택되었습니다.
+                    </strong>
+                    <Icon
+                      name="undo"
+                      onClick={changeRegion}
+                      color="red"
+                      style={{ cursor: "pointer" }}
+                    ></Icon>
+
+                    <Link href={`../naru/${isbn}/${id}`}>
+                      <a>
+                        <Header
+                          as="h3"
+                          style={{ paddingTop: 20, marginBottom: 0 }}
+                          color="blue"
+                        >
+                          <Button color="teal">소장도서관 확인하기</Button>
+                        </Header>
+                      </a>
+                    </Link>
+                  </div>
+                ) : (
+                  <>
+                    <Header
+                      as="h3"
+                      style={{ paddingTop: 10, marginBottom: 30 }}
+                      color="blue"
+                    >
+                      어디에 있을까?
+                    </Header>
+                    <Grid columns={3}>
+                      <Grid.Row>
+                        {regionData.map((item) => {
+                          return (
+                            <Grid.Column
+                              key={item.id}
+                              style={{ marginBottom: 5 }}
+                            >
+                              <div>
+                                <label key={item.id} style={{ fontSize: 18 }}>
+                                  <Input
+                                    type="checkbox"
+                                    value={item.name}
+                                    onChange={(e) =>
+                                      checkHandler(e, item.id, item.name)
+                                    }
+                                  />
+                                  <strong style={{ marginLeft: 5 }}>
+                                    {item.name}
+                                  </strong>
+                                </label>
+                              </div>
+                            </Grid.Column>
+                          );
+                        })}
+                      </Grid.Row>
+                    </Grid>
+                  </>
+                )}
+              </div>
+              </div>
               </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </>
-      <div>
-        {checkItems.size ? (
-          <div style={{ marginBottom: 10 }}>
-            <strong style={{ marginRight: 10 }}>
-              {`"${name}"`} 선택되었습니다.
-            </strong>
-            <Icon
-              name="undo"
-              onClick={changeRegion}
-              color="red"
-              style={{ cursor: "pointer" }}
-            ></Icon>
 
-            <Link href={`../naru/${isbn}/${id}`}>
-              <a>
-                <Header
-                  as="h3"
-                  style={{ paddingTop: 20, marginBottom: 0 }}
-                  color="blue"
-                >
-                  <Button color="teal">소장도서관 확인하기</Button>
-                </Header>
-              </a>
-            </Link>
-          </div>
-        ) : (
-          <>
-            <Divider inverted />
-            <Header
-              as="h3"
-              style={{ paddingTop: 10, marginBottom: 30 }}
-              color="blue"
-            >
-              어디에 있을까?
-            </Header>
-            <Grid columns={3}>
-              <Grid.Row>
-                {regionData.map((item) => {
-                  return (
-                    <Grid.Column key={item.id} style={{ marginBottom: 5 }}>
-                      <div>
-                        <label key={item.id} style={{ fontSize: 18 }}>
-                          <Input
-                            type="checkbox"
-                            value={item.name}
-                            onChange={(e) =>
-                              checkHandler(e, item.id, item.name)
-                            }
-                          />
-                          <strong style={{ marginLeft: 5 }}>{item.name}</strong>
-                        </label>
-                      </div>
-                    </Grid.Column>
-                  );
-                })}
-              </Grid.Row>
-            </Grid>
-          </>
-        )}
-      </div>
-
-      <Divider inverted />
       <Segment style={{ width: "100%" }}>
         <Header
           as="h3"
