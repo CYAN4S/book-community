@@ -47,7 +47,6 @@ export default function Lib({ infoData }) {
     return d;
   }
 
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -66,16 +65,29 @@ export default function Lib({ infoData }) {
         timeout: Infinity,
       }
     );
-  
-    infoData.map((item)=>{
-      if(min > getDistanceFromLatLonInKm(latitude,longitude,item.latitude,item.longitude)){
-        setMin(getDistanceFromLatLonInKm(latitude,longitude,item.latitude,item.longitude));
+
+    infoData.map((item) => {
+      if (
+        min >
+        getDistanceFromLatLonInKm(
+          latitude,
+          longitude,
+          item.latitude,
+          item.longitude
+        )
+      ) {
+        setMin(
+          getDistanceFromLatLonInKm(
+            latitude,
+            longitude,
+            item.latitude,
+            item.longitude
+          )
+        );
       }
-    })
-  
+    });
   });
 
-  
   return (
     <>
       <div className="wrap">
@@ -84,20 +96,20 @@ export default function Lib({ infoData }) {
             <Table celled>
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell style={{ width: 300 }}>
+                  <Table.HeaderCell style={{ width: 170 }}>
                     도서관 이름
                   </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 200 }}>
+                  <Table.HeaderCell style={{ width: 100 }}>
                     연락처
                   </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 100 }}>
+                  <Table.HeaderCell style={{ width: 250 }}>
+                    주소
+                  </Table.HeaderCell>
+                  <Table.HeaderCell style={{ width: 50 }}>
                     소장 여부
                   </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 100 }}>
+                  <Table.HeaderCell style={{ width: 50 }}>
                     대출 가능 여부
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 100 }}>
-                    도서관 위치 확인하기
                   </Table.HeaderCell>
                   <Table.HeaderCell style={{ width: 100 }}>
                     내 위치와의 거리
@@ -108,9 +120,19 @@ export default function Lib({ infoData }) {
                 {infoData.map((data) => {
                   return (
                     <Table.Row key={data.name}>
-                      <Table.Cell>{data.name}</Table.Cell>
                       <Table.Cell>
-                        010              
+                        <a href={data.homepage}>{data.name}</a>
+                      </Table.Cell>
+                      <Table.Cell>{data.tel}</Table.Cell>
+                      <Table.Cell>
+                      {data.address}
+                        <Link
+                          href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
+                        >
+                          <a>
+                            <Icon name="map marker alternate" style={{marginLeft:5}}/>
+                          </a>
+                        </Link>
                       </Table.Cell>
                       {data.value.response.result.hasBook === "Y" ? (
                         <Table.Cell positive>O</Table.Cell>
@@ -123,24 +145,36 @@ export default function Lib({ infoData }) {
                         <Table.Cell negative>X</Table.Cell>
                       )}
                       <Table.Cell>
-                        <Link
-                          href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
-                        >
-                          <a>
-                            <Header as="h5">위치 확인하기</Header>
-                          </a>
-                        </Link>
-                      </Table.Cell>
-                      <Table.Cell>
-                        {min === getDistanceFromLatLonInKm(latitude,longitude,data.latitude,data.longitude) 
-                        ?
-                        <>
-                        <Icon name = "thumbs up"></Icon> 
-                        <strong>{getDistanceFromLatLonInKm(latitude,longitude,data.latitude,data.longitude).toFixed(1)}km</strong>
-                        </>
-                        :
-                        <>{getDistanceFromLatLonInKm(latitude,longitude,data.latitude,data.longitude).toFixed(1)}km</>}
-                                                 
+                        {min ===
+                        getDistanceFromLatLonInKm(
+                          latitude,
+                          longitude,
+                          data.latitude,
+                          data.longitude
+                        ) ? (
+                          <>
+                            <Icon name="thumbs up"></Icon>
+                            <strong>
+                              {getDistanceFromLatLonInKm(
+                                latitude,
+                                longitude,
+                                data.latitude,
+                                data.longitude
+                              ).toFixed(1)}
+                              km
+                            </strong>
+                          </>
+                        ) : (
+                          <>
+                            {getDistanceFromLatLonInKm(
+                              latitude,
+                              longitude,
+                              data.latitude,
+                              data.longitude
+                            ).toFixed(1)}
+                            km
+                          </>
+                        )}
                       </Table.Cell>
                     </Table.Row>
                   );
@@ -248,9 +282,9 @@ export async function getServerSideProps({ params: { params } }) {
       "&format=json"
   ); // 보유도서관 검색
   let lib = await res.json();
-  // console.log(lib.response);
+  console.log(lib.response.libs[1]);
   const libCode = lib.response.libs.map((lib) => lib.lib.libCode);
-  
+
   if (libCode.length) {
     for (let i = 0; i < libCode.length; i = i + 1) {
       const res = await fetch(
@@ -262,6 +296,9 @@ export async function getServerSideProps({ params: { params } }) {
       infoData.push({
         id: libCode[i],
         name: lib.response.libs[i].lib.libName,
+        tel: lib.response.libs[i].lib.tel,
+        address: lib.response.libs[i].lib.address,
+        homepage: lib.response.libs[i].lib.homepage,
         latitude: lib.response.libs[i].lib.latitude,
         longitude: lib.response.libs[i].lib.longitude,
         value: saveBook,
