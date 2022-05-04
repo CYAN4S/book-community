@@ -244,7 +244,7 @@ export default function Profile() {
             )}
 
             <Label as="a" color="black" ribbon="right" onClick={onLogOutClick}>
-              <Icon name="hand point right outline"></Icon>로그아웃하기
+              <Icon name="sign out alternate"></Icon>로그아웃하기
             </Label>
           </Segment>
         </Grid.Column>

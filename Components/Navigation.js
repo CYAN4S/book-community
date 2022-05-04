@@ -21,10 +21,8 @@ export default function Navigation() {
 
   if (router.pathname === "/") {
     activeItem = "home";
-  } else if (router.pathname === "/about") {
-    activeItem = "about";
-  } else if (router.pathname === "/books/books") {
-    activeItem = "books";
+  } else if (router.pathname === "/view_more") {
+    activeItem = "view_more";
   } else if (router.pathname === "/explore") {
     activeItem = "explore";
   } else if (router.pathname === "/profile") {
@@ -34,34 +32,24 @@ export default function Navigation() {
   function goLink(e, data) {
     if (data.name === "home") {
       router.push("/");
-    } else if (data.name === "about") {
-      router.push("/about");
-    } else if (data.name === "books") {
-      router.push("/books/books");
+    } else if (data.name === "view_more") {
+      router.push("/view_more");
     } else if (data.name === "explore") {
       router.push("/explore");
     } else if (data.name === "profile") {
       router.push("/profile");
     }
   }
+
+
   return (
     <>
       {isSignedIn ? (
         <>
-          <Menu inverted color={"black"} widths={5}>
+          <Menu inverted color={"teal"} widths={4} attached='top' tabular>
             <Menu.Item
               name="home"
               active={activeItem === "home"}
-              onClick={goLink}
-            />
-            <Menu.Item
-              name="about"
-              active={activeItem === "about"}
-              onClick={goLink}
-            />
-            <Menu.Item
-              name="books"
-              active={activeItem === "books"}
               onClick={goLink}
             />
             <Menu.Item
@@ -72,6 +60,11 @@ export default function Navigation() {
             <Menu.Item
               name="profile"
               active={activeItem === "profile"}
+              onClick={goLink}
+            />
+            <Menu.Item
+              name="view_more"
+              active={activeItem === "about"}
               onClick={goLink}
             />
           </Menu>
