@@ -118,7 +118,7 @@ export default function Title({ books }) {
             <div
               style={{
                 marginBottom: 20,
-                marginLeft: 20,
+                marginLeft: 25,
                 width: 600,
                 height: 240,
               }}
@@ -143,7 +143,7 @@ export default function Title({ books }) {
 
               <Grid.Column>
                 <div
-                  style={{ width: 300, height: 210, marginLeft: -40 }}
+                  style={{ width: 330, height: 210, marginLeft: -70 }}
                   class="ui orange segment"
                 >
                   <Header as="h3" style={{ paddingTop: 10 }} color="blue">
@@ -180,6 +180,7 @@ export default function Title({ books }) {
                 </div>
               </Grid.Column>
             </div>
+
             <Grid.Column>
               <div
                 style={{
@@ -191,7 +192,7 @@ export default function Title({ books }) {
                 class="ui segment"
               >
                 <div style={{ height: 210 }} class="ui orange segment">
-                  <Header as="h2" color="blue">
+                  <Header style={{ textAlign: "center" }} as="h2" color="blue">
                     Description
                   </Header>
 
@@ -201,16 +202,32 @@ export default function Title({ books }) {
                 </div>
               </div>
             </Grid.Column>
-            <Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+      <Grid.Column>
+        
+        <div
+          style={{
+            marginTop:20,
+            marginBottom: 20,
+            marginLeft: 10,
+            width: 1210,
+            height: 240,
+            display: "flex",
+            justifyContent: "center",
+            // 수정해야 함
+          }}
+          class="ui segments"
+        >
+          <div style={{ paddingTop: 10, marginLeft: 10 }} class="ui segment">
             <div
-                style={{
-                  width: 600,
-                  marginLeft: 10,
-                  marginRight: 20,
-                }}
-                class="ui segment"
-              >
-                <div style={{ height: 210 }} class="ui orange segment">
+              style={{
+                width: 570,
+                height: 210,
+              }}
+              class="ui black segment"
+            >
               <div>
                 {checkItems.size ? (
                   <div style={{ marginBottom: 10 }}>
@@ -240,7 +257,7 @@ export default function Title({ books }) {
                   <>
                     <Header
                       as="h3"
-                      style={{ paddingTop: 10, marginBottom: 30 }}
+                      style={{ textAlign: "center" }}
                       color="blue"
                     >
                       어디에 있을까?
@@ -275,13 +292,10 @@ export default function Title({ books }) {
                   </>
                 )}
               </div>
-              </div>
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </>
-
+            </div>
+          </div>
+        </div>
+      </Grid.Column>
       <Segment style={{ width: "100%" }}>
         <Header
           as="h3"
