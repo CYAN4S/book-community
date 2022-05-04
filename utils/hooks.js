@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 export const currentUserState = atom({
   key: "userData",
-  default: {},
+  default: null,
 });
 
 export const currentUserUidState = selector({
@@ -15,9 +15,7 @@ export const currentUserUidState = selector({
   },
 });
 
-export const usersDataState = atom({
-  key: "usersDisplayName",
+export const usersDisplayNameState = atom({
+  key: "usersDisplayNameName",
   default: {},
 });
-
-

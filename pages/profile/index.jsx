@@ -7,13 +7,15 @@ export default function ProfileRoute() {
   const router = useRouter();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         router.replace(`/profile/${user.uid}`);
       } else {
         router.replace("/");
       }
     });
+
+    return () => unsub();
   }, []);
 
   return <></>;

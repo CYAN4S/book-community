@@ -1,27 +1,53 @@
-export default function toNativeString(date) {
-  const week = ["일", "월", "화", "수", "목", "금", "토"];
-  return `${date.getFullYear().toString().padStart(2, "0")}/${(
-    date.getMonth() + 1
-  )
-    .toString()
-    .padStart(2, "0")}/${date.getDate().toString().padStart(2, "0")}
-      ${week[date.getDay()]}요일${date.getHours() < 12 ? " 오전" : " 오후"}
-           ${(((date.getHours() + 11) % 12) + 1)
-             .toString()
-             .padStart(2, "0")} : ${date
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")} : ${date.getSeconds().toString().padStart(2, "0")}`;
-}
-
 import { dbService as db } from "../firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { usersDisplayNameState } from "./hooks";
+import { useRecoilState } from "recoil";
+import { useState, useEffect } from "react";
 
 export const getUserDoc = async (uid) => {
+  if (!uid) return null;
+
   const docRef = doc(db, "profile", uid);
   const docSnap = await getDoc(docRef);
+
   if (docSnap.exists()) {
-    return docSnap.data();
-  } else
-    return null;
+    return { uid, ...docSnap.data() };
+  } else return { uid };
+};
+
+/**
+ * `uid` 사용자의 프로필이 변경될 때 `callback`이 호출됩니다.
+ * @param {string} uid
+ * @param {(any) => void} callback
+ * @returns {Unsubscribe}
+ */
+export const onUserDocSnapshot = (uid, callback) => {
+  if (!uid) return null;
+
+  return onSnapshot(
+    doc(db, "profile", uid),
+    (doc) => callback({ uid, ...doc.data() }),
+    (error) => {
+      console.log(error);
+      callback(null);
+    }
+  );
+};
+
+// TODO: Extract function
+export const useUserDisplayName = (targetUid) => {
+  const [users, setUsers] = useRecoilState(usersDisplayNameState);
+  const [name, setName] = useState(null);
+
+  useEffect(async () => {
+    if (!users.hasOwnProperty(targetUid)) {
+      const userDoc = await getUserDoc(targetUid);
+      setUsers((prev) => ({ ...prev, [targetUid]: userDoc?.displayName ?? "게스트" }));
+      setName(userDoc?.displayName ?? "게스트");
+    } else {
+      setName(users[targetUid]);
+    }
+  }, []);
+
+  return name;
 };
