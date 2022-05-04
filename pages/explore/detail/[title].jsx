@@ -113,7 +113,7 @@ export default function Title({ books }) {
   return (
     <>
       <>
-        <Grid style={{ margin: 2 }} columns={2}>
+        <Grid style={{ margin: 2 }} columns={3}>
           <Grid.Row>
             <Grid.Column>
               <div
@@ -133,33 +133,46 @@ export default function Title({ books }) {
             </Grid.Column>
 
             <Grid.Column>
-              <Header as="h3" style={{ paddingTop: 20 }} color="blue">
-                책 정보
-              </Header>
-              <strong className="book_item"> {title} </strong>
-              <strong className="num_price">
-                {new Intl.NumberFormat("ko", {
-                  style: "currency",
-                  currency: "KRW",
-                }).format(price)}
-              </strong>
+              <div
+                style={{ width: 300, height: 210 }}
+                class="ui orange segment"
+              >
+                <Header as="h3" style={{ paddingTop: 20 }} color="blue">
+                  책 정보
+                </Header>
+                <div style={{ fontSize: 16 }}>
+                  <strong className="book_item"> {title} </strong>
+                </div>
 
-              <div>
-                <List divided horizontal>
-                  <List.Item>
-                    <strong>출판사</strong> {publisher}
-                  </List.Item>
-                  <List.Item>
-                    <strong>출간일</strong> {pubdate}
-                  </List.Item>
-                  <List.Item>
-                    <strong>작가</strong> {author}
-                  </List.Item>
-                </List>
+                <div>
+                  <List divided Vertical>
+                    <List.Item>
+                      <strong className="num_price">
+                        {new Intl.NumberFormat("ko", {
+                          style: "currency",
+                          currency: "KRW",
+                        }).format(price)}
+                      </strong>
+                    </List.Item>
+                    <List.Item>
+                      <strong>출판사</strong> {publisher}
+                    </List.Item>
+                    <List.Item>
+                      <strong>출간일</strong> {pubdate}
+                    </List.Item>
+                    <List.Item>
+                      <strong>작가</strong> {author}
+                    </List.Item>
+                  </List>
+                </div>
               </div>
             </Grid.Column>
 
             <Grid.Column>
+            <div
+                style={{ width: 600, height: 210 }}
+                class="ui orange segment"
+              >
               <Header as="h2" color="blue">
                 Description
               </Header>
@@ -167,6 +180,7 @@ export default function Title({ books }) {
               <p style={{ paddingBottom: 20, fontSize: 15 }}>
                 {decode(description)}
               </p>
+              </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
