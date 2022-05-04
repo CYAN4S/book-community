@@ -113,73 +113,88 @@ export default function Title({ books }) {
   return (
     <>
       <>
-        <Grid style={{ margin: 2 }} columns={3}>
+        <Grid style={{ }} columns={3}>
           <Grid.Row>
-            <Grid.Column>
-              <div
-                style={{ width: 150, height: 210 }}
-                class="ui orange segment"
-              >
-                <img
-                  style={{
-                    width: 120,
-                    height: 180,
-                  }}
-                  src={image}
-                  alt="DON'T HAVE IMAGE"
-                  className="img_book"
-                />
-              </div>
-            </Grid.Column>
-
-            <Grid.Column>
-              <div
-                style={{ width: 300, height: 210 }}
-                class="ui orange segment"
-              >
-                <Header as="h3" style={{ paddingTop: 20 }} color="blue">
-                  책 정보
-                </Header>
-                <div style={{ fontSize: 16 }}>
-                  <strong className="book_item"> {title} </strong>
-                </div>
-
-                <div>
-                  <List divided Vertical>
-                    <List.Item>
-                      <strong className="num_price">
-                        {new Intl.NumberFormat("ko", {
-                          style: "currency",
-                          currency: "KRW",
-                        }).format(price)}
-                      </strong>
-                    </List.Item>
-                    <List.Item>
-                      <strong>출판사</strong> {publisher}
-                    </List.Item>
-                    <List.Item>
-                      <strong>출간일</strong> {pubdate}
-                    </List.Item>
-                    <List.Item>
-                      <strong>작가</strong> {author}
-                    </List.Item>
-                  </List>
-                </div>
-              </div>
-            </Grid.Column>
-
-            <Grid.Column>
             <div
-                style={{ width: 600, height: 210 }}
-                class="ui orange segment"
-              >
-              <Header as="h2" color="blue">
-                Description
-              </Header>
+              style={{
+                marginBottom: 20,
+                marginLeft: 20,
+                width: 600,
+                height: 240,
+              }}
+              class="ui two column grid ui center aligned segments"
+            >
+              <Grid.Column>
+                <div
+                  style={{ width: 150, height: 210 }}
+                  class="ui orange segment"
+                >
+                  <img
+                    style={{
+                      width: 120,
+                      height: 180,
+                    }}
+                    src={image}
+                    alt="DON'T HAVE IMAGE"
+                    className="img_book"
+                  />
+                </div>
+              </Grid.Column>
 
-              <p style={{ paddingBottom: 20, fontSize: 15 }}>
-                {decode(description)}
-              </p>
+              <Grid.Column>
+                <div
+                  style={{ width: 300, height: 210, marginLeft:-40 }}
+                  class="ui orange segment"
+                >
+                  <Header as="h3" style={{ paddingTop: 10 }} color="blue">
+                    책 정보
+                  </Header>
+
+                  <div>
+                    <List divided Vertical>
+                      <List.Item>
+                        <div style={{ fontSize: 14 }}>
+                          <strong className="book_item"> {title} </strong>
+                        </div>
+                      </List.Item>
+
+                      
+                      <List.Item>
+                        <strong>출판사</strong> {publisher}
+                      </List.Item>
+                      <List.Item>
+                        <strong>출간일</strong> {pubdate}
+                      </List.Item>
+                      <List.Item>
+                        <strong>작가</strong> {author}
+                      </List.Item>
+                      <List.Item>
+                        <strong className="num_price">
+                          {new Intl.NumberFormat("ko", {
+                            style: "currency",
+                            currency: "KRW",
+                          }).format(price)}
+                        </strong>
+                      </List.Item>
+                    </List>
+                  </div>
+                </div>
+              </Grid.Column>
+            </div>
+            <Grid.Column>
+              <div
+                style={{ width: 600, height: 240,marginLeft: 10, marginRight:20 }}
+                class="ui segment"
+              >
+                <div style = {{height:210}}class="ui orange segment">
+                <Header as="h2" color="blue">
+                  Description
+                </Header>
+
+                <p style={{ paddingBottom: 20, fontSize: 15 }}>
+                  {decode(description)}
+                </p>
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>
