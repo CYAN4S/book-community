@@ -367,7 +367,7 @@ export default function Title({ books }) {
       <Button
         color="black"
         onClick={onClick}
-        style={{ marginLeft: 20, marginTop: 10, marginBottom: 20 }}
+        style={{marginTop: 10, marginBottom: 20 }}
       >
         돌아가기
       </Button>
