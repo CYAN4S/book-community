@@ -24,7 +24,7 @@ import {
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-const Inquiry = () => {
+const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
   const router = useRouter();
   const panels = [
@@ -162,4 +162,4 @@ const Inquiry = () => {
   );
 };
 
-export default Inquiry;
+export default Report;

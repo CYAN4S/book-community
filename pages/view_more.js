@@ -1,21 +1,6 @@
 import {
-  Button,
-  Card,
   Divider,
-  Form,
-  Header,
-  Input,
-  List,
-  Placeholder,
-  Segment,
-  Sidebar,
-  TextArea,
-  Image,
-  Menu,
   Icon,
-  Label,
-  Grid,
-  Checkbox,
   Item,
 } from "semantic-ui-react";
 import React from "react";
@@ -43,7 +28,7 @@ export default function About() {
             </Item>
           </Link>
           <Divider horizontal>Or</Divider>
-          <Link href={`/view/declaration`}>
+          <Link href={`/view/report`}>
             <Item style={{ marginTop: 10, cursor: "pointer" }}>
               <Icon
                 loading
