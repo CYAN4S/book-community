@@ -211,11 +211,17 @@ export default function Profile() {
                 <span>등록한 책이 없습니다.</span>
               </div>
             ) : (
-              <div className="ui bulleted list">
-                <div className="item">
-                  <Link href={`/explore/detail/${myBooks}`}>{(myBooks).toString()}</Link>
-                </div>
-              </div>
+              <List className="ui bulleted list">
+                {myBooks.map((myBooks) => (
+                  <List.Item key={v4()}>
+                  
+                    <List.Content>
+                      <List.Header as="a">{myBooks}</List.Header>
+                    </List.Content>
+                  </List.Item>
+                ))}
+              </List>
+              
             )}
 
             {!isMe() && (
