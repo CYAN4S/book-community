@@ -87,7 +87,7 @@ const Inquire = () => {
         </Header>
       </Container>
       <Container textAlign="justified">
-        <b>when to report?</b>
+        <b>when to inquire?</b>
         <Divider />
         <Accordion defaultActiveIndex={0} panels={panels} />
         <Divider />
