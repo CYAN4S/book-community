@@ -38,6 +38,8 @@ export default function Profile() {
 
   const [subscribers, setSubscribers] = useState([]);
 
+  const [myBooks, setmyBooks] = useState([]);
+
   const isMe = () => currentUid == queryId;
 
   onAuthStateChanged(auth, (user) => {
