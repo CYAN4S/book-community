@@ -404,6 +404,21 @@ export async function getServerSideProps(props) {
     );
   });
 
+  books.items.author = books.items.map((book) => {
+    book.author = book.author.replace(
+      /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+      ""
+    );
+  });
+
+  books.items.publisher= books.items.map((book) => {
+    book.publisher = book.publisher.replace(
+      /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+      ""
+    );
+  });
+
+
   return {
     props: {
       books,
