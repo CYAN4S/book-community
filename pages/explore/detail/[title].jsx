@@ -18,7 +18,16 @@ import { useState, useEffect } from "react";
 import ChatFactory from "../../../Components/ChatFactory";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService, dbService } from "../../../firebaseConfig";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 import Chats from "../../../Components/Chats";
 
 export default function Title({ books }) {
@@ -39,6 +48,10 @@ export default function Title({ books }) {
   const [checkItems, setCheckItems] = useState(new Set());
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
+  // registerBook Check
+  const [wasRegisterBookCheck, setWasRegisterBookCheck] = useState(false);
+  const [currentIsbn, setCurrentIsbn] = useState("");
+
   const regionData = [
     { id: 11, name: "서울" },
     { id: 21, name: "부산" },
@@ -62,7 +75,13 @@ export default function Title({ books }) {
   const [userId, setUserId] = useState("");
   onAuthStateChanged(authService, (user) => {
     if (user) {
+      setCurrentUid(user.uid); // profile 복붙
       setUserId(user.uid);
+      setCurrentIsbn(isbn);
+    }
+    // 추가
+    else {
+      setIsSignedIn(false);
     }
   });
 
@@ -84,14 +103,80 @@ export default function Title({ books }) {
 
   const router = useRouter();
 
+  // profile 기능 복붙
+
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const queryId = router.query.id;
+
+  const [currentUid, setCurrentUid] = useState("");
+
+  const isMe = () => currentUid == queryId;
+  const getDocAndSet = async (uid) => {
+    if (!uid) {
+      return;
+    }
+
+    if (isSignedIn) {
+      checkRegisterBook(isbn);
+    }
+  };
+
+  const getUserDoc = async (uid) => {
+    const docRef = doc(dbService, "profile", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else return null;
+  };
+
+  const updateUserDoc = (newData) => {
+    return setDoc(doc(dbService, "profile", currentIsbn), newData, {
+      merge: true,
+    });
+  };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      getDocAndSet(queryId);
+    }
+  }, [isSignedIn]);
+
+  useEffect(() => {
+    getDocAndSet(queryId);
+  }, [queryId]);
+  // profile 끝
+
   function onClick(e) {
     e.preventDefault();
     router.back();
   }
-  function onRegisterClick(e) {
+  const checkRegisterBook = async (uid) => {
+    const doc = await getUserDoc(uid);
+    const isRegisterBook = !!doc.mybooks?.includes(isbn);
+    setWasRegisterBookCheck(isRegisterBook);
+  };
+
+  const onRegisterClick = async (e) => {
     e.preventDefault();
-    
-  }
+    console.log("onRegisterClick, currentUid 값:", currentUid);
+    const doc = await getUserDoc(currentUid);
+    console.log("doc 값",doc);
+    const registeredMybook = !!doc.mybooks?.includes(isbn);
+
+    if (registeredMybook) {
+      console.log("registeredMyBook 값 if 문 작동",registeredMybook);
+      updateUserDoc({ mybooks: doc.mybooks.filter((id) => id != isbn) });
+      console.log("mybooks 값",doc.mybooks);
+      setWasRegisterBookCheck(false);
+    } else {
+      console.log("registeredMyBook 값 else 문 작동",registeredMybook);
+      updateUserDoc({
+        mybooks: doc.mybooks ? [...doc.mybooks, isbn] : [isbn],
+      });
+      setWasRegisterBookCheck(true);
+    }
+  };
   // 내 책으로 등록하기
 
   const checkHandler = ({ target }, id, name) => {
@@ -183,10 +268,17 @@ export default function Title({ books }) {
                           </strong>
                         </List.Item>
                         <List.Item>
-                          <Button basic color="orange" onClick={onRegisterClick} style={{}}>
-                            내 책으로 등록
-                          </Button>
-                          <Button basic color="black" onClick={onClick} style={{}}>
+                          {!isMe() && (
+                            <Button basic color="orange" onClick={onRegisterClick}>
+                              {wasRegisterBookCheck ? "등록 해제" : "내 책으로 등록하기"}
+                            </Button>
+                          )}
+                          <Button
+                            basic
+                            color="black"
+                            onClick={onClick}
+                            style={{}}
+                          >
                             뒤로 돌아가기
                           </Button>
                         </List.Item>
