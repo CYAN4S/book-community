@@ -210,21 +210,21 @@ export default function Title({ books }) {
               <div
                 style={{
                   marginBottom: 20,
-                  marginLeft: 25,
+                  marginLeft: 15,
                   width: 600,
-                  height: 240,
+                  height: 270,
                 }}
                 class="ui two column grid ui center aligned basicsegments"
               >
                 <Grid.Column>
                   <div
-                    style={{ width: 150, height: 210 }}
+                    style={{width: 210, height: 240 }}
                     class="ui orange segment"
                   >
                     <img
                       style={{
-                        width: 120,
-                        height: 180,
+                        width: 180,
+                        height: 210,
                       }}
                       src={image}
                       alt="DON'T HAVE IMAGE"
@@ -235,7 +235,7 @@ export default function Title({ books }) {
 
                 <Grid.Column>
                   <div
-                    style={{ width: 330, height: 210, marginLeft: -70 }}
+                    style={{ width: 330, height: 240, marginLeft: -50 }}
                     class="ui orange segment"
                   >
                     <Header as="h3" style={{}} color="blue">
@@ -269,7 +269,7 @@ export default function Title({ books }) {
                         </List.Item>
                         <List.Item>
                           {!isMe() && (
-                            <Button basic color="orange" onClick={onRegisterClick}>
+                            <Button style = {{marginTop : 10}} basic color="orange" onClick={onRegisterClick}>
                               {wasRegisterBookCheck ? "등록 해제" : "내 책으로 등록하기"}
                             </Button>
                           )}
@@ -292,14 +292,14 @@ export default function Title({ books }) {
                 <div
                   style={{
                     width: 600,
-                    height: 240,
+                    height: 270,
                     marginLeft: 10,
                     marginRight: 20,
                   }}
                   class="ui basic segment"
                 >
                   <div
-                    style={{ height: 210, marginLeft: 5 }}
+                    style={{ height: 240, marginLeft: 5 }}
                     class="ui orange segment"
                   >
                     <Header
@@ -414,7 +414,7 @@ export default function Title({ books }) {
                   style={{
                     width: 600,
                     height: 350,
-                    marginLeft: 5,
+                    
                   }}
                   class="ui basic segment"
                 >
