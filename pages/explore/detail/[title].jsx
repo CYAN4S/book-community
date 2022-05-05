@@ -115,6 +115,7 @@ export default function Title({ books }) {
       <>
         <Grid style={{}} columns={3}>
           <Grid.Row>
+            
             <div
               style={{
                 marginBottom: 20,
@@ -341,26 +342,23 @@ export default function Title({ books }) {
         </Grid>
       </>
 
-      {/* <Segment style={{ width: "100%" }}> */}
+        {/* <Divider inverted style={{ marginTop: 40 }} /> */}
 
-      {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-
-      <div
-        style={{ width: 570, marginLeft: 20, height: 350 }}
-        class="ui orange segment"
-      >
-        <Header as="h3" style={{ textAlign: "center" }} color="blue">
-          생각 공유하기
-        </Header>
-        <div style={{ overflow: "auto", height: 290, maxHeight: 320 }}>
-          <ChatFactory detailbook_chat={collectionName} />
+        <div
+          style={{ width: 570, marginLeft: 20, height: 350 }}
+          class="ui orange segment"
+        >
+          <Header as="h3" style={{ textAlign: "center" }} color="blue">
+            생각 공유하기
+          </Header>
+          <div style={{ overflow: "auto", height: 290, maxHeight: 320 }}>
+            <ChatFactory detailbook_chat={collectionName} />
+          </div>
         </div>
-        
-      </div>
-      <Button
+        <Button
           color="black"
           onClick={onClick}
-          style={{ marginLeft:20, marginTop: 10, marginBottom: 20 }}
+          style={{ marginLeft: 20, marginTop: 10, marginBottom: 20 }}
         >
           돌아가기
         </Button>
