@@ -19,6 +19,7 @@ import {
 } from "semantic-ui-react";
 
 import { v4 } from "uuid";
+import Link from "next/link";
 
 export default function Profile() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -38,7 +39,7 @@ export default function Profile() {
 
   const [subscribers, setSubscribers] = useState([]);
 
-  const [myBooks, setmyBooks] = useState([]);
+  const [myBooks, setMyBooks] = useState([]);
 
   const isMe = () => currentUid == queryId;
 
@@ -68,7 +69,7 @@ export default function Profile() {
 
   const getDocAndSet = async (uid) => {
     if (!uid) {
-      return
+      return;
     }
     const userDoc = await getUserDoc(uid);
     if (userDoc) {
@@ -81,6 +82,13 @@ export default function Profile() {
         );
         const list = x.map((i) => i?.displayName ?? "게스트");
         setSubscribers(list);
+      }
+
+      if (userDoc.myBooks) {
+        const listMyBook = await Promise.all(
+          userDoc.myBooks.map(async (x) => await x.substr(24))
+        );
+        setMyBooks(listMyBook);
       }
     }
     if (isSignedIn) {
@@ -147,7 +155,6 @@ export default function Profile() {
       setWasSubingCheck(true);
     }
   };
-
   return (
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
@@ -192,6 +199,23 @@ export default function Profile() {
                   </List.Item>
                 ))}
               </List>
+            )}
+
+            <Label style={{ marginTop: 15 }} as="a" color="purple" ribbon>
+              내가 등록한 책 목록
+            </Label>
+
+            {myBooks.length == 0 ? (
+              <div>
+                <Icon name="thumbs up" style={{ marginTop: 15 }} />
+                <span>등록한 책이 없습니다.</span>
+              </div>
+            ) : (
+              <div className="ui bulleted list">
+                <div className="item">
+                  <Link href={`/explore/detail/${myBooks}`}>{(myBooks).toString()}</Link>
+                </div>
+              </div>
             )}
 
             {!isMe() && (

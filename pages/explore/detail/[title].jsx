@@ -134,22 +134,22 @@ export default function Title({ books }) {
 
   const checkRegisterBook = async (uid) => {
     const doc = await getUserDoc(uid);
-    const isRegisterBook = !!doc.mybooks?.includes(isbn);
+    const isRegisterBook = !!doc.myBooks?.includes(`${isbn}${title}`);
     setWasRegisterBookCheck(isRegisterBook);
   };
 
   const onRegisterClick = async (e) => {
     e.preventDefault();
     const doc = await getUserDoc(currentUid);
-    const registeredMybook = !!doc.mybooks?.includes(isbn);
+    const registeredMybook = !!doc.myBooks?.includes(`${isbn}${title}`);
 
     if (registeredMybook) {
-      updateUserDoc({ mybooks: doc.mybooks.filter((id) => id != isbn) });
+      updateUserDoc({ myBooks: doc.myBooks.filter((id) => id != `${isbn}${title}`) });
 
       setWasRegisterBookCheck(false);
     } else {
       updateUserDoc({
-        mybooks: doc.mybooks ? [...doc.mybooks, isbn] : [isbn],
+        myBooks: doc.myBooks ? [...doc.myBooks, `${isbn}${title}`] : [`${isbn}${title}`],
       });
       setWasRegisterBookCheck(true);
     }
@@ -186,7 +186,7 @@ export default function Title({ books }) {
   return (
     <>
       <>
-        <div class="ui center aligned container">
+        <div className="ui center aligned container">
           <Grid style={{}} columns={3}>
             <Grid.Row>
               <div
@@ -196,12 +196,12 @@ export default function Title({ books }) {
                   width: 600,
                   height: 270,
                 }}
-                class="ui two column grid ui center aligned basicsegments"
+                className="ui two column grid ui center aligned basicsegments"
               >
                 <Grid.Column>
                   <div
                     style={{ width: 210, height: 240 }}
-                    class="ui orange segment"
+                    className="ui orange segment"
                   >
                     <img
                       style={{
@@ -218,14 +218,14 @@ export default function Title({ books }) {
                 <Grid.Column>
                   <div
                     style={{ width: 330, height: 240, marginLeft: -50 }}
-                    class="ui orange segment"
+                    className="ui orange segment"
                   >
                     <Header as="h3" style={{}} color="blue">
                       책 정보
                     </Header>
 
                     <div>
-                      <List divided Vertical>
+                      <List divided vertical>
                         <List.Item>
                           <div style={{ fontSize: 16 }}>
                             <strong className="book_item"> {title} </strong>
@@ -285,11 +285,11 @@ export default function Title({ books }) {
                     marginLeft: 10,
                     marginRight: 20,
                   }}
-                  class="ui basic segment"
+                  className="ui basic segment"
                 >
                   <div
                     style={{ height: 240, marginLeft: 5 }}
-                    class="ui orange segment"
+                    className="ui orange segment"
                   >
                     <Header
                       style={{ textAlign: "center" }}
@@ -308,7 +308,7 @@ export default function Title({ books }) {
             </Grid.Row>
           </Grid>
         </div>
-        <div class="ui center aligned container">
+        <div className="ui center aligned container">
           <Grid style={{ marginTop: -10 }} columns={3}>
             <Grid.Row>
               <div
@@ -317,14 +317,14 @@ export default function Title({ books }) {
                   height: 350,
                   marginLeft: 25,
                 }}
-                class="ui basic segment"
+                className="ui basic segment"
               >
                 <Grid.Column>
                   <div
                     style={{
                       height: 260,
                     }}
-                    class="ui red segment"
+                    className="ui red segment"
                   >
                     <div>
                       {checkItems.size ? (
@@ -404,13 +404,13 @@ export default function Title({ books }) {
                     width: 600,
                     height: 350,
                   }}
-                  class="ui basic segment"
+                  className="ui basic segment"
                 >
                   <div
                     style={{
                       height: 260,
                     }}
-                    class="ui red segment"
+                    className="ui red segment"
                   >
                     <Header
                       as="h3"
@@ -446,10 +446,10 @@ export default function Title({ books }) {
       </>
 
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-      <div class="ui center aligned container">
+      <div className="ui center aligned container">
         <div
           style={{ marginTop: -70, width: 570, marginLeft: 20, height: 320 }}
-          class="ui purple segment"
+          className="ui purple segment"
         >
           <Header as="h3" style={{ textAlign: "center" }} color="blue">
             생각 공유하기
