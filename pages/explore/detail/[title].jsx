@@ -113,255 +113,265 @@ export default function Title({ books }) {
   return (
     <>
       <>
-        <Grid style={{}} columns={3}>
-          <Grid.Row>
-            
-            <div
-              style={{
-                marginBottom: 20,
-                marginLeft: 25,
-                width: 600,
-                height: 240,
-              }}
-              class="ui two column grid ui center aligned basicsegments"
-            >
-              <Grid.Column>
-                <div
-                  style={{ width: 150, height: 210 }}
-                  class="ui orange segment"
-                >
-                  <img
-                    style={{
-                      width: 120,
-                      height: 180,
-                    }}
-                    src={image}
-                    alt="DON'T HAVE IMAGE"
-                    className="img_book"
-                  />
-                </div>
-              </Grid.Column>
-
-              <Grid.Column>
-                <div
-                  style={{ width: 330, height: 210, marginLeft: -70 }}
-                  class="ui orange segment"
-                >
-                  <Header as="h3" style={{ paddingTop: 10 }} color="blue">
-                    책 정보
-                  </Header>
-
-                  <div>
-                    <List divided Vertical>
-                      <List.Item>
-                        <div style={{ fontSize: 14 }}>
-                          <strong className="book_item"> {title} </strong>
-                        </div>
-                      </List.Item>
-
-                      <List.Item>
-                        <strong>출판사</strong> {publisher}
-                      </List.Item>
-                      <List.Item>
-                        <strong>출간일</strong> {pubdate}
-                      </List.Item>
-                      <List.Item>
-                        <strong>작가</strong> {author}
-                      </List.Item>
-                      <List.Item>
-                        <strong className="num_price">
-                          {new Intl.NumberFormat("ko", {
-                            style: "currency",
-                            currency: "KRW",
-                          }).format(price)}
-                        </strong>
-                      </List.Item>
-                    </List>
-                  </div>
-                </div>
-              </Grid.Column>
-            </div>
-
-            <Grid.Column>
+        <div class="ui center aligned container">
+          <Grid style={{}} columns={3}>
+            <Grid.Row>
               <div
                 style={{
+                  marginBottom: 20,
+                  marginLeft: 25,
                   width: 600,
                   height: 240,
-                  marginLeft: 10,
-                  marginRight: 20,
                 }}
-                class="ui basic segment"
+                class="ui two column grid ui center aligned basicsegments"
               >
-                <div
-                  style={{ height: 210, marginLeft: 5 }}
-                  class="ui orange segment"
-                >
-                  <Header style={{ textAlign: "center" }} as="h2" color="blue">
-                    Description
-                  </Header>
+                <Grid.Column>
+                  <div
+                    style={{ width: 150, height: 210 }}
+                    class="ui orange segment"
+                  >
+                    <img
+                      style={{
+                        width: 120,
+                        height: 180,
+                      }}
+                      src={image}
+                      alt="DON'T HAVE IMAGE"
+                      className="img_book"
+                    />
+                  </div>
+                </Grid.Column>
 
-                  <p style={{ paddingBottom: 20, fontSize: 15 }}>
-                    {decode(description)}
-                  </p>
-                </div>
+                <Grid.Column>
+                  <div
+                    style={{ width: 330, height: 210, marginLeft: -70 }}
+                    class="ui orange segment"
+                  >
+                    <Header as="h3" style={{ paddingTop: 10 }} color="blue">
+                      책 정보
+                    </Header>
+
+                    <div>
+                      <List divided Vertical>
+                        <List.Item>
+                          <div style={{ fontSize: 14 }}>
+                            <strong className="book_item"> {title} </strong>
+                          </div>
+                        </List.Item>
+
+                        <List.Item>
+                          <strong>출판사</strong> {publisher}
+                        </List.Item>
+                        <List.Item>
+                          <strong>출간일</strong> {pubdate}
+                        </List.Item>
+                        <List.Item>
+                          <strong>작가</strong> {author}
+                        </List.Item>
+                        <List.Item>
+                          <strong className="num_price">
+                            {new Intl.NumberFormat("ko", {
+                              style: "currency",
+                              currency: "KRW",
+                            }).format(price)}
+                          </strong>
+                        </List.Item>
+                      </List>
+                    </div>
+                  </div>
+                </Grid.Column>
               </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Grid style={{ marginTop: -10 }} columns={3}>
-          <Grid.Row>
-            <div
-              style={{
-                width: 600,
-                height: 350,
-                marginLeft: 25,
-              }}
-              class="ui basic segment"
-            >
+
               <Grid.Column>
                 <div
                   style={{
-                    height: 320,
+                    width: 600,
+                    height: 240,
+                    marginLeft: 10,
+                    marginRight: 20,
                   }}
-                  class="ui red segment"
+                  class="ui basic segment"
                 >
-                  <div>
-                    {checkItems.size ? (
-                      <div style={{ textAlign: "center", marginBottom: 10 }}>
-                        <strong style={{ marginRight: 10 }}>
-                          {`"${name}"`} 선택되었습니다.
-                        </strong>
-                        <Icon
-                          name="undo"
-                          onClick={changeRegion}
-                          color="red"
-                          style={{ cursor: "pointer" }}
-                        ></Icon>
+                  <div
+                    style={{ height: 210, marginLeft: 5 }}
+                    class="ui orange segment"
+                  >
+                    <Header
+                      style={{ textAlign: "center" }}
+                      as="h2"
+                      color="blue"
+                    >
+                      Description
+                    </Header>
 
-                        <Link href={`../naru/${isbn}/${id}`}>
-                          <a>
-                            <Header
-                              as="h3"
-                              style={{ paddingTop: 20, marginBottom: 0 }}
-                              color="blue"
-                            >
-                              <Button color="teal">소장도서관 확인하기</Button>
-                            </Header>
-                          </a>
-                        </Link>
-                      </div>
-                    ) : (
-                      <>
-                        <Header
-                          as="h3"
-                          style={{ height: 60, textAlign: "center" }}
-                          color="blue"
-                        >
-                          어디에 있을까?
-                        </Header>
-                        <Grid columns={3}>
-                          <Grid.Row>
-                            {regionData.map((item) => {
-                              return (
-                                <Grid.Column
-                                  key={item.id}
-                                  style={{ marginBottom: 12 }}
-                                >
-                                  <div>
-                                    <label
-                                      key={item.id}
-                                      style={{ fontSize: 18 }}
-                                    >
-                                      <Input
-                                        type="checkbox"
-                                        value={item.name}
-                                        onChange={(e) =>
-                                          checkHandler(e, item.id, item.name)
-                                        }
-                                      />
-                                      <strong style={{ marginLeft: 5 }}>
-                                        {item.name}
-                                      </strong>
-                                    </label>
-                                  </div>
-                                </Grid.Column>
-                              );
-                            })}
-                          </Grid.Row>
-                        </Grid>
-                      </>
-                    )}
+                    <p style={{ paddingBottom: 20, fontSize: 15 }}>
+                      {decode(description)}
+                    </p>
                   </div>
                 </div>
               </Grid.Column>
-            </div>
-            <Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+        <div class="ui center aligned container">
+          <Grid style={{ marginTop: -10 }} columns={3}>
+            <Grid.Row>
               <div
                 style={{
                   width: 600,
                   height: 350,
-                  marginLeft: 5,
+                  marginLeft: 25,
                 }}
                 class="ui basic segment"
               >
+                <Grid.Column>
+                  <div
+                    style={{
+                      height: 320,
+                    }}
+                    class="ui red segment"
+                  >
+                    <div>
+                      {checkItems.size ? (
+                        <div style={{ textAlign: "center", marginBottom: 10 }}>
+                          <strong style={{ marginRight: 10 }}>
+                            {`"${name}"`} 선택되었습니다.
+                          </strong>
+                          <Icon
+                            name="undo"
+                            onClick={changeRegion}
+                            color="red"
+                            style={{ cursor: "pointer" }}
+                          ></Icon>
+
+                          <Link href={`../naru/${isbn}/${id}`}>
+                            <a>
+                              <Header
+                                as="h3"
+                                style={{ paddingTop: 20, marginBottom: 0 }}
+                                color="blue"
+                              >
+                                <Button color="teal">
+                                  소장도서관 확인하기
+                                </Button>
+                              </Header>
+                            </a>
+                          </Link>
+                        </div>
+                      ) : (
+                        <>
+                          <Header
+                            as="h3"
+                            style={{ height: 60, textAlign: "center" }}
+                            color="blue"
+                          >
+                            어디에 있을까?
+                          </Header>
+                          <Grid columns={3}>
+                            <Grid.Row>
+                              {regionData.map((item) => {
+                                return (
+                                  <Grid.Column
+                                    key={item.id}
+                                    style={{ marginBottom: 12 }}
+                                  >
+                                    <div>
+                                      <label
+                                        key={item.id}
+                                        style={{ fontSize: 18 }}
+                                      >
+                                        <Input
+                                          type="checkbox"
+                                          value={item.name}
+                                          onChange={(e) =>
+                                            checkHandler(e, item.id, item.name)
+                                          }
+                                        />
+                                        <strong style={{ marginLeft: 5 }}>
+                                          {item.name}
+                                        </strong>
+                                      </label>
+                                    </div>
+                                  </Grid.Column>
+                                );
+                              })}
+                            </Grid.Row>
+                          </Grid>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Grid.Column>
+              </div>
+              <Grid.Column>
                 <div
                   style={{
-                    height: 320,
+                    width: 600,
+                    height: 350,
+                    marginLeft: 5,
                   }}
-                  class="ui red segment"
+                  class="ui basic segment"
                 >
-                  <Header
-                    as="h3"
-                    style={{ textAlign: "center", marginBottom: 10 }}
-                    color="blue"
-                  >
-                    이 책에 대한 다른 사용자의 의견
-                  </Header>
-
                   <div
-                    style={{ overflow: "auto", height: 250, maxHeight: 320 }}
+                    style={{
+                      height: 320,
+                    }}
+                    class="ui red segment"
                   >
-                    {chats.length ? (
-                      chats.map((chat) => (
-                        <div className="chat_space" key={chat.id}>
-                          <Chats
-                            chat={chat}
-                            isOwner={chat.createrId === userId}
-                            detailbook_chat={collectionName}
-                          />
-                        </div>
-                      ))
-                    ) : (
-                      <p>채팅목록이 없습니다</p>
-                    )}
+                    <Header
+                      as="h3"
+                      style={{ textAlign: "center", marginBottom: 10 }}
+                      color="blue"
+                    >
+                      이 책에 대한 다른 사용자의 의견
+                    </Header>
+
+                    <div
+                      style={{ overflow: "auto", height: 250, maxHeight: 320 }}
+                    >
+                      {chats.length ? (
+                        chats.map((chat) => (
+                          <div className="chat_space" key={chat.id}>
+                            <Chats
+                              chat={chat}
+                              isOwner={chat.createrId === userId}
+                              detailbook_chat={collectionName}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <p>채팅목록이 없습니다</p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
       </>
 
-        {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-
-        <div
-          style={{ width: 570, marginLeft: 20, height: 350 }}
-          class="ui orange segment"
-        >
-          <Header as="h3" style={{ textAlign: "center" }} color="blue">
-            생각 공유하기
-          </Header>
-          <div style={{ overflow: "auto", height: 290, maxHeight: 320 }}>
-            <ChatFactory detailbook_chat={collectionName} />
-          </div>
+      {/* <Divider inverted style={{ marginTop: 40 }} /> */}
+      <div class="ui center aligned container">
+      <div
+        style={{ width: 570, marginLeft: 20, height: 350 }}
+        class="ui purple segment"
+      >
+        <Header as="h3" style={{ textAlign: "center" }} color="blue">
+          생각 공유하기
+        </Header>
+        <div style={{ overflow: "auto", height: 290, maxHeight: 320 }}>
+          <ChatFactory detailbook_chat={collectionName} />
         </div>
-        <Button
-          color="black"
-          onClick={onClick}
-          style={{ marginLeft: 20, marginTop: 10, marginBottom: 20 }}
-        >
-          돌아가기
-        </Button>
+      </div>
+      <Button
+        color="black"
+        onClick={onClick}
+        style={{ marginLeft: 20, marginTop: 10, marginBottom: 20 }}
+      >
+        돌아가기
+      </Button>
+      </div>
     </>
   );
 }
