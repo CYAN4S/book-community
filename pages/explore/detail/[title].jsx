@@ -131,7 +131,7 @@ export default function Title({ books }) {
   };
 
   const updateUserDoc = (newData) => {
-    return setDoc(doc(dbService, "profile", currentIsbn), newData, {
+    return setDoc(doc(dbService, "profile", currentUid), newData, {
       merge: true,
     });
   };
