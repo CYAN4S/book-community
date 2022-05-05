@@ -227,7 +227,7 @@ export default function Title({ books }) {
                 <Grid.Column>
                   <div
                     style={{
-                      height: 320,
+                      height: 260,
                     }}
                     class="ui red segment"
                   >
@@ -262,7 +262,7 @@ export default function Title({ books }) {
                         <>
                           <Header
                             as="h3"
-                            style={{ height: 60, textAlign: "center" }}
+                            style={{ height: 30, textAlign: "center" }}
                             color="blue"
                           >
                             어디에 있을까?
@@ -278,7 +278,7 @@ export default function Title({ books }) {
                                     <div>
                                       <label
                                         key={item.id}
-                                        style={{ fontSize: 18 }}
+                                        style={{ fontSize: 17 }}
                                       >
                                         <Input
                                           type="checkbox"
@@ -314,20 +314,20 @@ export default function Title({ books }) {
                 >
                   <div
                     style={{
-                      height: 320,
+                      height: 260,
                     }}
                     class="ui red segment"
                   >
                     <Header
                       as="h3"
-                      style={{ textAlign: "center", marginBottom: 10 }}
+                      style={{ textAlign: "center", marginBottom: 20 }}
                       color="blue"
                     >
                       이 책에 대한 다른 사용자의 의견
                     </Header>
 
                     <div
-                      style={{ overflow: "auto", height: 250, maxHeight: 320 }}
+                      style={{ overflow: "auto", height: 200, maxHeight: 220 }}
                     >
                       {chats.length ? (
                         chats.map((chat) => (
@@ -353,24 +353,24 @@ export default function Title({ books }) {
 
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
       <div class="ui center aligned container">
-      <div
-        style={{ width: 570, marginLeft: 20, height: 350 }}
-        class="ui purple segment"
-      >
-        <Header as="h3" style={{ textAlign: "center" }} color="blue">
-          생각 공유하기
-        </Header>
-        <div style={{ overflow: "auto", height: 290, maxHeight: 320 }}>
-          <ChatFactory detailbook_chat={collectionName} />
+        <div
+          style={{ marginTop:-70, width: 570, marginLeft: 20, height: 320 }}
+          class="ui purple segment"
+        >
+          <Header as="h3" style={{ textAlign: "center" }} color="blue">
+            생각 공유하기
+          </Header>
+          <div style={{ overflow: "auto", height: 260, maxHeight: 290 }}>
+            <ChatFactory detailbook_chat={collectionName} />
+          </div>
         </div>
-      </div>
-      <Button
-        color="black"
-        onClick={onClick}
-        style={{marginTop: 10, marginBottom: 20 }}
-      >
-        돌아가기
-      </Button>
+        <Button
+          color="black"
+          onClick={onClick}
+          style={{ marginTop: 10, marginBottom: 20 }}
+        >
+          돌아가기
+        </Button>
       </div>
     </>
   );
