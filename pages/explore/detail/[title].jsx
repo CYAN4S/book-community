@@ -83,10 +83,16 @@ export default function Title({ books }) {
   );
 
   const router = useRouter();
+
   function onClick(e) {
     e.preventDefault();
     router.back();
   }
+  function onRegisterClick(e) {
+    e.preventDefault();
+    
+  }
+  // 내 책으로 등록하기
 
   const checkHandler = ({ target }, id, name) => {
     setIsChecked(!isChecked);
@@ -147,7 +153,7 @@ export default function Title({ books }) {
                     style={{ width: 330, height: 210, marginLeft: -70 }}
                     class="ui orange segment"
                   >
-                    <Header as="h3" style={{ paddingTop: 10 }} color="blue">
+                    <Header as="h3" style={{}} color="blue">
                       책 정보
                     </Header>
 
@@ -175,6 +181,14 @@ export default function Title({ books }) {
                               currency: "KRW",
                             }).format(price)}
                           </strong>
+                        </List.Item>
+                        <List.Item>
+                          <Button basic color="orange" onClick={onRegisterClick} style={{}}>
+                            내 책으로 등록
+                          </Button>
+                          <Button basic color="black" onClick={onClick} style={{}}>
+                            뒤로 돌아가기
+                          </Button>
                         </List.Item>
                       </List>
                     </div>
@@ -354,7 +368,7 @@ export default function Title({ books }) {
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
       <div class="ui center aligned container">
         <div
-          style={{ marginTop:-70, width: 570, marginLeft: 20, height: 320 }}
+          style={{ marginTop: -70, width: 570, marginLeft: 20, height: 320 }}
           class="ui purple segment"
         >
           <Header as="h3" style={{ textAlign: "center" }} color="blue">
@@ -364,13 +378,6 @@ export default function Title({ books }) {
             <ChatFactory detailbook_chat={collectionName} />
           </div>
         </div>
-        <Button
-          color="black"
-          onClick={onClick}
-          style={{ marginTop: 10, marginBottom: 20 }}
-        >
-          돌아가기
-        </Button>
       </div>
     </>
   );
@@ -399,6 +406,20 @@ export async function getServerSideProps(props) {
 
   books.items.description = books.items.map((book) => {
     book.description = book.description.replace(
+      /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+      ""
+    );
+  });
+
+  books.items.author = books.items.map((book) => {
+    book.author = book.author.replace(
+      /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+      ""
+    );
+  });
+
+  books.items.publisher = books.items.map((book) => {
+    book.publisher = book.publisher.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
       ""
     );
