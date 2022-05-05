@@ -122,7 +122,7 @@ export default function Title({ books }) {
                 width: 600,
                 height: 240,
               }}
-              class="ui two column grid ui center aligned segments"
+              class="ui two column grid ui center aligned basicsegments"
             >
               <Grid.Column>
                 <div
@@ -189,9 +189,12 @@ export default function Title({ books }) {
                   marginLeft: 10,
                   marginRight: 20,
                 }}
-                class="ui segment"
+                class="ui basic segment"
               >
-                <div style={{ height: 210 }} class="ui orange segment">
+                <div
+                  style={{ height: 210, marginLeft: 5 }}
+                  class="ui orange segment"
+                >
                   <Header style={{ textAlign: "center" }} as="h2" color="blue">
                     Description
                   </Header>
@@ -204,19 +207,17 @@ export default function Title({ books }) {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <Grid style={{ marginTop: -10 }} columns={2}>
+        <Grid style={{ marginTop: -10 }} columns={3}>
           <Grid.Row>
-          <div
-                style={{
-                  width: 600,
-                  height: 350,
-                  marginLeft: 25,
-
-                }}
-                class="ui segment"
-              >
-            <Grid.Column>
-              
+            <div
+              style={{
+                width: 600,
+                height: 350,
+                marginLeft: 25,
+              }}
+              class="ui basic segment"
+            >
+              <Grid.Column>
                 <div
                   style={{
                     height: 320,
@@ -252,7 +253,7 @@ export default function Title({ books }) {
                       <>
                         <Header
                           as="h3"
-                          style={{ height:60,textAlign: "center" }}
+                          style={{ height: 60, textAlign: "center" }}
                           color="blue"
                         >
                           어디에 있을까?
@@ -263,7 +264,7 @@ export default function Title({ books }) {
                               return (
                                 <Grid.Column
                                   key={item.id}
-                                  style={{ marginBottom: 7 }}
+                                  style={{ marginBottom: 12 }}
                                 >
                                   <div>
                                     <label
@@ -291,17 +292,16 @@ export default function Title({ books }) {
                     )}
                   </div>
                 </div>
-             
-            </Grid.Column>
+              </Grid.Column>
             </div>
             <Grid.Column>
               <div
                 style={{
                   width: 600,
                   height: 350,
-                  
+                  marginLeft: 5,
                 }}
-                class="ui segment"
+                class="ui basic segment"
               >
                 <div
                   style={{
@@ -311,12 +311,29 @@ export default function Title({ books }) {
                 >
                   <Header
                     as="h3"
-                    style={{ textAlign: "center"   }}
+                    style={{ textAlign: "center", marginBottom: 10 }}
                     color="blue"
                   >
-                    생각 공유하기
+                    이 책에 대한 다른 사용자의 의견
                   </Header>
-                  <ChatFactory detailbook_chat={collectionName} />
+
+                  <div
+                    style={{ overflow: "auto", height: 250, maxHeight: 320 }}
+                  >
+                    {chats.length ? (
+                      chats.map((chat) => (
+                        <div className="chat_space" key={chat.id}>
+                          <Chats
+                            chat={chat}
+                            isOwner={chat.createrId === userId}
+                            detailbook_chat={collectionName}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <p>채팅목록이 없습니다</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </Grid.Column>
@@ -327,33 +344,26 @@ export default function Title({ books }) {
       {/* <Segment style={{ width: "100%" }}> */}
 
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-      <Header as="h3" style={{ marginBottom: 10 }} color="blue">
-        이 책에 대한 다른 사용자의 의견
-      </Header>
 
-      <div>
-        {chats.length ? (
-          chats.map((chat) => (
-            <div className="chat_space" key={chat.id}>
-              <Chats
-                chat={chat}
-                isOwner={chat.createrId === userId}
-                detailbook_chat={collectionName}
-              />
-            </div>
-          ))
-        ) : (
-          <p>채팅목록이 없습니다</p>
-        )}
-      </div>
-
-      <Button
-        color="black"
-        onClick={onClick}
-        style={{ marginTop: 10, marginBottom: 20 }}
+      <div
+        style={{ width: 570, marginLeft: 20, height: 350 }}
+        class="ui orange segment"
       >
-        돌아가기
-      </Button>
+        <Header as="h3" style={{ textAlign: "center" }} color="blue">
+          생각 공유하기
+        </Header>
+        <div style={{ overflow: "auto", height: 290, maxHeight: 320 }}>
+          <ChatFactory detailbook_chat={collectionName} />
+        </div>
+        
+      </div>
+      <Button
+          color="black"
+          onClick={onClick}
+          style={{ marginLeft:20, marginTop: 10, marginBottom: 20 }}
+        >
+          돌아가기
+        </Button>
     </>
   );
 }
