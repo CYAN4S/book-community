@@ -245,7 +245,7 @@ export default function Title({ books }) {
                     <div>
                       <List divided Vertical>
                         <List.Item>
-                          <div style={{ fontSize: 14 }}>
+                          <div style={{ fontSize: 16 }}>
                             <strong className="book_item"> {title} </strong>
                           </div>
                         </List.Item>
