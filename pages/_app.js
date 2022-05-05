@@ -13,9 +13,9 @@ function MyApp({ Component, pageProps }) {
     <div>
       <div className="img_wrap">
         <Image 
-          src="bookstamp.png"
-          width = '25%'
-          height = '25%'
+          src="./bookstamp.png"
+          width = '10%'
+          height = '10%'
           />
       </div>
     
