@@ -113,7 +113,7 @@ export default function Title({ books }) {
   return (
     <>
       <>
-        <Grid style={{}} columns={4}>
+        <Grid style={{}} columns={3}>
           <Grid.Row>
             <div
               style={{
@@ -202,20 +202,26 @@ export default function Title({ books }) {
                 </div>
               </div>
             </Grid.Column>
-            <Grid.Column>
-              <div
-                style={{  width: 600,
-                  height: 240,
-                  marginLeft: 10,
-                  marginRight: 20,paddingTop: 10, marginLeft: 10 }}
+          </Grid.Row>
+        </Grid>
+        <Grid style={{ marginTop: -10 }} columns={2}>
+          <Grid.Row>
+          <div
+                style={{
+                  width: 600,
+                  height: 350,
+                  marginLeft: 25,
+
+                }}
                 class="ui segment"
               >
+            <Grid.Column>
+              
                 <div
                   style={{
-                    width: 570,
-                    height: 210,
+                    height: 320,
                   }}
-                  class="ui black segment"
+                  class="ui red segment"
                 >
                   <div>
                     {checkItems.size ? (
@@ -246,7 +252,7 @@ export default function Title({ books }) {
                       <>
                         <Header
                           as="h3"
-                          style={{ textAlign: "center" }}
+                          style={{ height:60,textAlign: "center" }}
                           color="blue"
                         >
                           어디에 있을까?
@@ -257,7 +263,7 @@ export default function Title({ books }) {
                               return (
                                 <Grid.Column
                                   key={item.id}
-                                  style={{ marginBottom: 5 }}
+                                  style={{ marginBottom: 7 }}
                                 >
                                   <div>
                                     <label
@@ -285,43 +291,61 @@ export default function Title({ books }) {
                     )}
                   </div>
                 </div>
+             
+            </Grid.Column>
+            </div>
+            <Grid.Column>
+              <div
+                style={{
+                  width: 600,
+                  height: 350,
+                  
+                }}
+                class="ui segment"
+              >
+                <div
+                  style={{
+                    height: 320,
+                  }}
+                  class="ui red segment"
+                >
+                  <Header
+                    as="h3"
+                    style={{ textAlign: "center"   }}
+                    color="blue"
+                  >
+                    생각 공유하기
+                  </Header>
+                  <ChatFactory detailbook_chat={collectionName} />
+                </div>
               </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </>
 
-      <Segment style={{ width: "100%" }}>
-        <Header
-          as="h3"
-          style={{ paddingTop: 20, marginBottom: 30 }}
-          color="blue"
-        >
-          생각 공유하기
-        </Header>
-        <ChatFactory detailbook_chat={collectionName} />
+      {/* <Segment style={{ width: "100%" }}> */}
 
-        <Divider inverted style={{ marginTop: 40 }} />
-        <Header as="h3" style={{ marginBottom: 10 }} color="blue">
-          이 책에 대한 다른 사용자의 의견
-        </Header>
+      {/* <Divider inverted style={{ marginTop: 40 }} /> */}
+      <Header as="h3" style={{ marginBottom: 10 }} color="blue">
+        이 책에 대한 다른 사용자의 의견
+      </Header>
 
-        <div>
-          {chats.length ? (
-            chats.map((chat) => (
-              <div className="chat_space" key={chat.id}>
-                <Chats
-                  chat={chat}
-                  isOwner={chat.createrId === userId}
-                  detailbook_chat={collectionName}
-                />
-              </div>
-            ))
-          ) : (
-            <p>채팅목록이 없습니다</p>
-          )}
-        </div>
-      </Segment>
+      <div>
+        {chats.length ? (
+          chats.map((chat) => (
+            <div className="chat_space" key={chat.id}>
+              <Chats
+                chat={chat}
+                isOwner={chat.createrId === userId}
+                detailbook_chat={collectionName}
+              />
+            </div>
+          ))
+        ) : (
+          <p>채팅목록이 없습니다</p>
+        )}
+      </div>
 
       <Button
         color="black"
