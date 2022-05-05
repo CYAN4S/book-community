@@ -76,6 +76,7 @@ export default function Title({ books }) {
   onAuthStateChanged(authService, (user) => {
     if (user) {
       setCurrentUid(user.uid); // profile 복붙
+      setIsSignedIn(true); // profile 복붙
       setUserId(user.uid);
       setCurrentIsbn(isbn);
     }
@@ -103,25 +104,16 @@ export default function Title({ books }) {
 
   const router = useRouter();
 
-  // profile 기능 복붙
-
+  // 내 책으로 등록하기 기능 코드 시작 부분
   const [isSignedIn, setIsSignedIn] = useState(false);
-
   const queryId = router.query.id;
-
   const [currentUid, setCurrentUid] = useState("");
-
   const isMe = () => currentUid == queryId;
-  const getDocAndSet = async (uid) => {
-    if (!uid) {
-      return;
-    }
-
+  const getDocAndCheck = async () => {
     if (isSignedIn) {
-      checkRegisterBook(isbn);
+      checkRegisterBook(currentUid);
     }
   };
-
   const getUserDoc = async (uid) => {
     const docRef = doc(dbService, "profile", uid);
     const docSnap = await getDoc(docRef);
@@ -129,28 +121,17 @@ export default function Title({ books }) {
       return docSnap.data();
     } else return null;
   };
-
   const updateUserDoc = (newData) => {
     return setDoc(doc(dbService, "profile", currentUid), newData, {
       merge: true,
     });
   };
-
   useEffect(() => {
     if (isSignedIn) {
-      getDocAndSet(queryId);
+      getDocAndCheck();
     }
   }, [isSignedIn]);
 
-  useEffect(() => {
-    getDocAndSet(queryId);
-  }, [queryId]);
-  // profile 끝
-
-  function onClick(e) {
-    e.preventDefault();
-    router.back();
-  }
   const checkRegisterBook = async (uid) => {
     const doc = await getUserDoc(uid);
     const isRegisterBook = !!doc.mybooks?.includes(isbn);
@@ -159,25 +140,26 @@ export default function Title({ books }) {
 
   const onRegisterClick = async (e) => {
     e.preventDefault();
-    console.log("onRegisterClick, currentUid 값:", currentUid);
     const doc = await getUserDoc(currentUid);
-    console.log("doc 값",doc);
     const registeredMybook = !!doc.mybooks?.includes(isbn);
 
     if (registeredMybook) {
-      console.log("registeredMyBook 값 if 문 작동",registeredMybook);
       updateUserDoc({ mybooks: doc.mybooks.filter((id) => id != isbn) });
-      console.log("mybooks 값",doc.mybooks);
+
       setWasRegisterBookCheck(false);
     } else {
-      console.log("registeredMyBook 값 else 문 작동",registeredMybook);
       updateUserDoc({
         mybooks: doc.mybooks ? [...doc.mybooks, isbn] : [isbn],
       });
       setWasRegisterBookCheck(true);
     }
   };
-  // 내 책으로 등록하기
+  // 내 책으로 등록하기 기능 소스코드 끝 부분
+
+  function onClick(e) {
+    e.preventDefault();
+    router.back();
+  }
 
   const checkHandler = ({ target }, id, name) => {
     setIsChecked(!isChecked);
@@ -218,7 +200,7 @@ export default function Title({ books }) {
               >
                 <Grid.Column>
                   <div
-                    style={{width: 210, height: 240 }}
+                    style={{ width: 210, height: 240 }}
                     class="ui orange segment"
                   >
                     <img
@@ -269,8 +251,15 @@ export default function Title({ books }) {
                         </List.Item>
                         <List.Item>
                           {!isMe() && (
-                            <Button style = {{marginTop : 10}} basic color="orange" onClick={onRegisterClick}>
-                              {wasRegisterBookCheck ? "등록 해제" : "내 책으로 등록하기"}
+                            <Button
+                              style={{ marginTop: 10 }}
+                              basic
+                              color="orange"
+                              onClick={onRegisterClick}
+                            >
+                              {wasRegisterBookCheck
+                                ? "등록 해제"
+                                : "내 책으로 등록하기"}
                             </Button>
                           )}
                           <Button
@@ -414,7 +403,6 @@ export default function Title({ books }) {
                   style={{
                     width: 600,
                     height: 350,
-                    
                   }}
                   class="ui basic segment"
                 >
