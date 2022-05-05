@@ -24,33 +24,31 @@ import {
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-const Inquiry = () => {
+const Inquire = () => {
   const [formOpen, setFormOpen] = useState(false);
   const router = useRouter();
   const panels = [
     {
-      key: "misuse",
-      title: "불량 이용",
+      key: "system_inquiry",
+      title: "시스템 문의",
       content: {
         content: (
           <div style={{ marginLeft: 30 }}>
             <p style={{ fontSize: 13 }}>
-              - 불량 이용 : 불건전 언어 사용, 불법프로그램 사용 등 커뮤니티 이용
-              피해
+              - 시스템 사용에 방법에 대한 질문이 있을 때 문의하실 수 있어요!
             </p>
           </div>
         ),
       },
     },
     {
-      key: "account_hijacking",
-      title: "계정 도용",
+      key: "system_improvement",
+      title: "시스템 개선",
       content: {
         content: (
           <div style={{ marginLeft: 30 }}>
             <p style={{ fontSize: 13 }}>
-              - 계정 도용으로 인한 피해를 받으셨거나, 목격하셨을 때
-              신고해주세요!
+              - 시스템 개선에 대한 생각이 있으시거나, 불편한 점이 있으실 때 문의하실 수 있어요!
             </p>
           </div>
         ),
@@ -63,7 +61,7 @@ const Inquiry = () => {
         content: (
           <div style={{ marginLeft: 30 }}>
             <p style={{ fontSize: 13 }}>
-              - 그 외의 사용자 기망행위가 목격되면 신고해주세요!
+              - 그 외의 사항
             </p>
           </div>
         ),
@@ -84,8 +82,8 @@ const Inquiry = () => {
     <div>
       <Container textAlign="center">
         <Header as="h2" icon>
-          <Icon name="meh outline" />
-          report
+          <Icon name="envelope outline" />
+          Inquire
         </Header>
       </Container>
       <Container textAlign="justified">
@@ -110,7 +108,7 @@ const Inquiry = () => {
           <Icon name="edit" />
           <Header.Subheader>
             <p style={{ marginTop: 20 }}>
-              아래 화살표 버튼을 눌러 양식을 펼쳐 작성해주세요.
+            아래 화살표 버튼을 눌러 양식에 따라 내용을 작성해주세요.
             </p>
           </Header.Subheader>
         </Header>
@@ -124,23 +122,23 @@ const Inquiry = () => {
                     <Form.Field
                       id="form-input-control-report-name"
                       control={Input}
-                      label="신고자 닉네임"
-                      placeholder="신고자 닉네임"
+                      label="문의자 닉네임"
+                      placeholder="문의자 닉네임"
                     />
 
                     <Form.Field
                       id="form-input-control-target-name"
                       control={Input}
-                      label="신고 대상 닉네임"
-                      placeholder="신고 대상 닉네임"
+                      label="문의 일자"
+                      placeholder="2000-01-01"
                       style={{ marginBottom: 20 }}
                     />
                   </Form.Group>
                   <Form.Field
                     id="form-textarea-control-opinion"
                     control={TextArea}
-                    label="신고 내용"
-                    placeholder="신고 내용"
+                    label="문의 내용"
+                    placeholder="문의 내용"
                   />
                   <Form.Field
                     id="form-button-control-public"
@@ -162,4 +160,4 @@ const Inquiry = () => {
   );
 };
 
-export default Inquiry;
+export default Inquire;

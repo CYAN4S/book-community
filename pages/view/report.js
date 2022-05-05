@@ -135,6 +135,14 @@ const Report = () => {
                       placeholder="신고 대상 닉네임"
                       style={{ marginBottom: 20 }}
                     />
+
+                    <Form.Field
+                      id="form-input-control-target-name"
+                      control={Input}
+                      label="신고 일자"
+                      placeholder="2000-01-01"
+                      style={{ marginBottom: 20 }}
+                    />
                   </Form.Group>
                   <Form.Field
                     id="form-textarea-control-opinion"

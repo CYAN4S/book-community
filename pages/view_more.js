@@ -11,7 +11,7 @@ export default function About() {
     <>
       <div style={{ width: 300 }}>
         <Item.Group style={{ marginLeft: 10 }}>
-          <Link href={`/view/inquiry`}>
+          <Link href={`/view/inquire`}>
             <Item style={{ marginTop: 10, cursor: "pointer" }}>
               <Icon
                 loading
