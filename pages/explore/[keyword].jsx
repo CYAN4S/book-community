@@ -77,7 +77,7 @@ export default function SearchKeyword({ books }) {
                 가격 높은 순
               </button>
               <Link href={`/explore`}>
-                <button class="ui right floated gray button">돌아가기</button>
+                <button class="ui right floated gray button" style={{backgroundColor:"black", color:"white"}}>돌아가기</button>
               </Link>
               <button
                 class="ui right floated red button"

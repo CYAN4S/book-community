@@ -266,9 +266,8 @@ export default function Title({ books }) {
                             basic
                             color="black"
                             onClick={onClick}
-                            style={{}}
                           >
-                            뒤로 돌아가기
+                            돌아가기
                           </Button>
                         </List.Item>
                       </List>

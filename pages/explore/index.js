@@ -30,7 +30,7 @@ export default function Explorer() {
         ></input>
         <Link href={`/explore/${keyword}`}>
           <a>
-            <Button color="black" style={{ marginLeft: 5 }}>
+            <Button inverted color='blue' style={{ marginLeft: 5 }}>
               검색
             </Button>
           </a>

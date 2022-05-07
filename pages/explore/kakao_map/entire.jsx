@@ -1,17 +1,7 @@
 import { Button, Divider, Header, Icon, List, Table } from "semantic-ui-react";
-import { Image, Segment } from "semantic-ui-react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { decode } from "he";
-import Head from "next/head";
-import { v4 } from "uuid";
 import { useState, useEffect } from "react";
-
 import { Map, MapInfoWindow, MapMarker } from "react-kakao-maps-sdk";
-import Script from "next/script";
-
 export default function Entire({ infoData }) {
-  const router = useRouter();
   const hasBookLib = [];
   const availBookLib = [];
   const pos = [];
@@ -19,13 +9,6 @@ export default function Entire({ infoData }) {
   const [hasBookCheck, setHasBookCheck] = useState(false);
   const [availLoanCheck, setAvailLoanCheck] = useState(false);
   const [defaultCheck, setDefaultCheck] = useState(true);
-
-  console.log(infoData);
-  function onClick(e) {
-    e.preventDefault();
-    router.back();
-  }
-
   function checkDefault(e) {
     setHasBookCheck(false);
     setAvailLoanCheck(false);
@@ -78,7 +61,7 @@ export default function Entire({ infoData }) {
 
   return (
     <>
-      <div style={{ width: "100%", height: "600px" }}>
+      <div style={{ width: "100%", height: "540px" }}>
         <div className="btnSet">
           <Button color = "red" onClick={checkDefault}> 전체 확인하기 </Button>
           <Button color = "teal" onClick={checkHasBook}> 소장된 도서관 확인하기 </Button>
@@ -203,9 +186,6 @@ export default function Entire({ infoData }) {
             </Map>
           </>
         )}
-        <Button onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
-          돌아가기
-        </Button>
       </div>
 
       <style jsx>{`

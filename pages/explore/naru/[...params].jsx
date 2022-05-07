@@ -215,15 +215,11 @@ export default function Lib({ infoData }) {
             {entire ? (
               <>
                 <Entire infoData={infoData} />
-                <div className="toggleEntireMap" onClick={onClick}>
-                  <Icon name="angle double up"></Icon>
-                </div>
+                <Icon name="arrow alternate circle up" size = "big" onClick={onClick}></Icon>
               </>
             ) : (
               <>
-                <div className="toggleEntireMap" onClick={onClick}>
-                  <Icon name="angle double down"></Icon>
-                </div>
+                <Icon name="arrow alternate circle down" size = "big" onClick={onClick}></Icon>
               </>
             )}
           </>
