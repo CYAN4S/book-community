@@ -135,15 +135,41 @@ export default function Profile() {
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
         <Label color={"teal"} size="massive">
-        {displayName
-          ? `${displayName}님의 프로필`
-          : isMe()
-          ? "닉네임을 설정해주세요."
-          : "닉네임을 아직 설정하지 않은 사용자입니다."}
+          {displayName
+            ? `${displayName}님의 프로필`
+            : isMe()
+            ? "닉네임을 설정해주세요."
+            : "닉네임을 아직 설정하지 않은 사용자입니다."}
         </Label>
+
+        {!isMe() && (
+          <span style={{ marginLeft: 20 }}>
+            {wasSubingCheck ? (
+              <>
+                <Button.Group size="large">
+                  <Button onClick={onSubscribeClick} negative>
+                    구독 취소
+                  </Button>
+                  <Button.Or />
+                  <Button disabled>구독하기</Button>
+                </Button.Group>
+              </>
+            ) : (
+              <>
+                <Button.Group size="large">
+                  <Button disabled>구독 취소</Button>
+                  <Button.Or />
+                  <Button onClick={onSubscribeClick} positive>
+                    구독하기
+                  </Button>
+                </Button.Group>
+              </>
+            )}
+          </span>
+        )}
       </Header>
 
-      <Grid columns={2} style={{ marginLeft: 10 }}>
+      <Grid columns={isMe()?2:1} style={{ marginLeft: 10 }}>
         <Grid.Column>
           <Segment raised>
             <Label as="a" color="red" ribbon>
@@ -169,7 +195,7 @@ export default function Profile() {
               <List>
                 {subscribers.map((displayName) => (
                   <List.Item key={v4()}>
-                    <Image avatar src="/images/avatar/small/rachel.png" />
+                    {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
                       <List.Header as="a">{displayName}</List.Header>
                       <List.Description>
@@ -194,71 +220,66 @@ export default function Profile() {
               <List className="ui bulleted list">
                 {myBooks.map((myBooks) => (
                   <List.Item key={v4()}>
-                  
                     <List.Content>
                       <List.Header as="a">{myBooks}</List.Header>
                     </List.Content>
                   </List.Item>
                 ))}
               </List>
-              
-            )}
-
-            {!isMe() && (
-              <Button onClick={onSubscribeClick}>
-                {wasSubingCheck ? "구독 중" : "구독하기"}
-              </Button>
             )}
           </Segment>
         </Grid.Column>
         <Grid.Column>
-          <Segment raised>
-            {isMe() && (
-              <>
-                <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
-                  <Form.Field>
-                    <Label as="a" color="red" ribbon="right">
-                      닉네임 바꾸기
-                    </Label>
-                    <Input
-                      type="text"
-                      placeholder="새로운 닉네임"
-                      value={newName}
-                      onChange={(e) => setNewName(e.target.value)}
-                      style={{ marginTop: 10 }}
-                    />
-                  </Form.Field>
+          {isMe() && (
+            <Segment raised>
+              <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
+                <Form.Field>
+                  <Label as="a" color="red" ribbon="right">
+                    닉네임 바꾸기
+                  </Label>
+                  <Input
+                    type="text"
+                    placeholder="새로운 닉네임"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    style={{ marginTop: 10 }}
+                  />
+                </Form.Field>
 
-                  <Button type="submit" color="black">
-                    바꾸기
-                  </Button>
-                </Form>
+                <Button type="submit" color="black">
+                  바꾸기
+                </Button>
+              </Form>
 
-                <Form onSubmit={onSubmit(() => updateStatusMsg(newStatusMsg))}>
-                  <Form.Field>
-                    <Label as="a" color="yellow" ribbon="right">
-                      상태메시지 바꾸기
-                    </Label>
-                    <input
-                      type="text"
-                      placeholder="새로운 상태 메시지"
-                      value={newStatusMsg}
-                      onChange={(e) => setNewStatusMsg(e.target.value)}
-                      style={{ marginTop: 10 }}
-                    />
-                  </Form.Field>
+              <Form onSubmit={onSubmit(() => updateStatusMsg(newStatusMsg))}>
+                <Form.Field>
+                  <Label as="a" color="yellow" ribbon="right">
+                    상태메시지 바꾸기
+                  </Label>
+                  <input
+                    type="text"
+                    placeholder="새로운 상태 메시지"
+                    value={newStatusMsg}
+                    onChange={(e) => setNewStatusMsg(e.target.value)}
+                    style={{ marginTop: 10 }}
+                  />
+                </Form.Field>
 
-                  <Button type="submit" color="black">
-                    바꾸기
-                  </Button>
-                </Form>
-              </>
-            )}
+                <Button type="submit" color="black">
+                  바꾸기
+                </Button>
+              </Form>
 
-            <Label as="a" color="black" ribbon="right" onClick={onLogOutClick}>
-              <Icon name="sign out alternate"></Icon>로그아웃하기
-            </Label>
-          </Segment>
+              <Label
+                as="a"
+                color="black"
+                ribbon="right"
+                onClick={onLogOutClick}
+              >
+                <Icon name="sign out alternate"></Icon>로그아웃하기
+              </Label>
+            </Segment>
+          )}
         </Grid.Column>
       </Grid>
     </div>
