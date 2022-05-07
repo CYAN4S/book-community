@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Button, Icon, Label } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
+import { useUserDisplayName } from "../utils/functions";
 import PostEditor from "./PostEditor";
 
 export default function Chats({ chat, isOwner, detailbook_chat }) {
@@ -15,6 +16,8 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
 
   const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
+  
+  const displayName = useUserDisplayName(chat.createrId)
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -67,7 +70,7 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
       <div>
         <div style={{ marginBottom: 10 }}>
           <Link href={`/profile/${chat.createrId}`}>
-            <a>{username}</a>
+            <a>{displayName}</a>
           </Link>{" "}
           : <strong> {chat.text}</strong>
           <p>[등록시간] {new Date(chat.createdAt).toLocaleString()}</p>

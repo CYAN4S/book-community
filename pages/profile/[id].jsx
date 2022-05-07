@@ -1,4 +1,3 @@
-import { onAuthStateChanged } from "firebase/auth";
 import { authService as auth, dbService as db } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -21,93 +20,69 @@ import {
 import { v4 } from "uuid";
 import Link from "next/link";
 
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../utils/hooks";
+
+import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
+
 export default function Profile() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [currentUser] = useRecoilState(currentUserState);
 
+  // Route
   const router = useRouter();
   const queryId = router.query.id;
 
-  // User
-  const [currentUid, setCurrentUid] = useState("");
+  // Query User
   const [displayName, setDisplayName] = useState(null);
   const [statusMsg, setStatusMsg] = useState("");
   const [wasSubingCheck, setWasSubingCheck] = useState(false);
+  const [subscribers, setSubscribers] = useState([]);
 
   // Form Input
   const [newName, setNewName] = useState("");
   const [newStatusMsg, setNewStatusMsg] = useState("");
 
-  const [subscribers, setSubscribers] = useState([]);
-
+  const isMe = () => currentUser?.uid == queryId;
   const [myBooks, setMyBooks] = useState([]);
-
-  const isMe = () => currentUid == queryId;
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setCurrentUid(user.uid);
-      setIsSignedIn(true);
-    } else {
-      setIsSignedIn(false);
-    }
-  });
-
-  useEffect(() => {
-    if (isSignedIn) {
-      getDocAndSet(queryId);
-    }
-  }, [isSignedIn]);
-
-  useEffect(() => {
-    getDocAndSet(queryId);
-  }, [queryId]);
 
   const onLogOutClick = () => {
     auth.signOut();
     router.push("/");
   };
 
-  const getDocAndSet = async (uid) => {
-    if (!uid) {
-      return;
-    }
-    const userDoc = await getUserDoc(uid);
-    if (userDoc) {
-      setDisplayName(userDoc.displayName);
-      setStatusMsg(userDoc.statusMsg);
+  useEffect(() => {
+    const unsub = onUserDocSnapshot(queryId, onUser);
+    return () => unsub?.();
+  }, [queryId]);
 
-      if (userDoc.users) {
-        const x = await Promise.all(
-          userDoc.users.map(async (uid) => await getUserDoc(uid))
-        );
-        const list = x.map((i) => i?.displayName ?? "게스트");
-        setSubscribers(list);
+  const onUser = async (data) => {
+    setDisplayName(data?.displayName);
+    setStatusMsg(data?.statusMsg);
+
+    if (data?.users) {
+      const x = await Promise.all(
+        data.users.map(async (uid) => await getUserDoc(uid))
+      );
+      const list = x.map((i) => i?.displayName ?? "게스트");
+      setSubscribers(list);
+
+      if (currentUser) {
+        checkSub(data.uid);
       }
 
-      if (userDoc.myBooks) {
+      if (data.myBooks) {
         const listMyBook = await Promise.all(
-          userDoc.myBooks.map(async (x) => await x.substr(24))
+          data.myBooks.map(async (x) => await x.substr(24))
         );
         setMyBooks(listMyBook);
       }
     }
-    if (isSignedIn) {
-      checkSub(currentUid);
-    }
-  };
-
-  const getUserDoc = async (uid) => {
-    const docRef = doc(db, "profile", uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else return null;
   };
 
   const updateDisplayName = (newName) => {
     updateUserDoc({ displayName: newName })
       .then(() => {
-        setDisplayName(newName);
         alert("Name Changed!");
       })
       .catch((error) => {
@@ -118,7 +93,6 @@ export default function Profile() {
   const updateStatusMsg = async (newMsg) => {
     updateUserDoc({ statusMsg: newMsg })
       .then(() => {
-        setStatusMsg(newMsg);
         alert("Status Message Changed!");
       })
       .catch((error) => {
@@ -127,7 +101,9 @@ export default function Profile() {
   };
 
   const updateUserDoc = (newData) => {
-    return setDoc(doc(db, "profile", currentUid), newData, { merge: true });
+    return setDoc(doc(db, "profile", currentUser.uid), newData, {
+      merge: true,
+    });
   };
 
   const onSubmit = (callback) => (e) => {
@@ -144,7 +120,7 @@ export default function Profile() {
   const onSubscribeClick = async (e) => {
     e.preventDefault();
 
-    const doc = await getUserDoc(currentUid);
+    const doc = await getUserDoc(currentUser?.uid);
     const isSubing = !!doc.users?.includes(queryId);
 
     if (isSubing) {
@@ -159,7 +135,11 @@ export default function Profile() {
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
         <Label color={"teal"} size="massive">
-          {displayName ? `${displayName}님의 프로필` : "닉네임을 설정해주세요"}
+        {displayName
+          ? `${displayName}님의 프로필`
+          : isMe()
+          ? "닉네임을 설정해주세요."
+          : "닉네임을 아직 설정하지 않은 사용자입니다."}
         </Label>
       </Header>
 
