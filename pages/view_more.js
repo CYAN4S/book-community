@@ -6,7 +6,8 @@ import {
 import React from "react";
 import Link from "next/link";
 
-export default function About() {
+export default function View_more() {
+  
   return (
     <>
       <div style={{ width: 300 }}>

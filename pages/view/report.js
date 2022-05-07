@@ -110,7 +110,7 @@ const Report = () => {
           <Icon name="edit" />
           <Header.Subheader>
             <p style={{ marginTop: 20 }}>
-              아래 화살표 버튼을 눌러 양식을 펼쳐 작성해주세요.
+              아래 화살표 버튼을 눌러 양식에 따라 내용을 작성해주세요.
             </p>
           </Header.Subheader>
         </Header>
