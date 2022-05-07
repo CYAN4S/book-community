@@ -22,15 +22,42 @@ import {
   Rating,
 } from "semantic-ui-react";
 import React from "react";
-
+import { useRouter } from "next/router";
 const Help = () => {
+  const router = useRouter();
+  function returnClick(e) {
+    e.preventDefault();
+    router.back();
+  }
   return (
     <>
       <div>
-        <Container fluid textAlign='center' style = {{width:"90%"}}>
-          <Header as="h2">도움말 페이지</Header>
+        <Container fluid textAlign="center" style={{ width: "90%" }}>
+          <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
+            <Icon name="question circle" circular />
+            <Header.Content> 도움말</Header.Content>
+          </Header>
+          <div>
+            <Icon
+              name="caret left"
+              style={{ cursor: "pointer" }}
+              onClick={returnClick}
+            ></Icon>
+            <strong
+              style={{ cursor: "pointer" }}
+              onClick={returnClick}
+            >
+              뒤로가기
+            </strong>
+          </div>
+          <Divider horizontal style={{ marginBottom:30 }}>
+            <Header as="h4">
+              <Icon name="tag" />
+              Kinds
+            </Header>
+          </Divider>
           <Grid columns={3}>
-            <Grid.Row centered columns={4} color='black' textAlign='center'>
+            <Grid.Row centered columns={4} color="black" textAlign="center">
               <Grid.Column>
                 <Popup
                   trigger={
@@ -120,7 +147,7 @@ const Help = () => {
                 </Popup>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row centered columns={4} color='black' textAlign='center'>
+            <Grid.Row centered columns={4} color="black" textAlign="center">
               <Grid.Column>
                 <Popup
                   trigger={
@@ -187,8 +214,8 @@ const Help = () => {
                   </Popup.Content>
                 </Popup>
               </Grid.Column>
-            </Grid.Row> 
-            <Grid.Row centered columns={4} color='black' textAlign='center'>
+            </Grid.Row>
+            <Grid.Row centered columns={4} color="black" textAlign="center">
               <Grid.Column>
                 <Popup
                   trigger={
@@ -201,9 +228,7 @@ const Help = () => {
                     </Card>
                   }
                 >
-                  <Popup.Header style={{ width: 300 }}>
-                  NONE
-                  </Popup.Header>
+                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
                   <Popup.Content>
                     <Icon name="hand point right" />
                     추천도{" "}
@@ -223,9 +248,7 @@ const Help = () => {
                     </Card>
                   }
                 >
-                  <Popup.Header style={{ width: 300 }}>
-                  NONE
-                  </Popup.Header>
+                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
                   <Popup.Content>
                     <Icon name="hand point right" />
                     추천도{" "}
@@ -245,9 +268,7 @@ const Help = () => {
                     </Card>
                   }
                 >
-                  <Popup.Header style={{ width: 300 }}>
-                  NONE
-                  </Popup.Header>
+                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
                   <Popup.Content>
                     <Icon name="hand point right" />
                     추천도{" "}
@@ -267,9 +288,7 @@ const Help = () => {
                     </Card>
                   }
                 >
-                  <Popup.Header style={{ width: 300 }}>
-                  NONE
-                  </Popup.Header>
+                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
                   <Popup.Content>
                     <Icon name="hand point right" />
                     추천도{" "}
@@ -277,14 +296,14 @@ const Help = () => {
                   </Popup.Content>
                 </Popup>
               </Grid.Column>
-            </Grid.Row>       
+            </Grid.Row>
           </Grid>
         </Container>
       </div>
       <style jsx>{`
         div {
-          display: flex;
-          justify-content: space-around;
+          margin-top: 30px;
+          text-align: right;
         }
       `}</style>
     </>

@@ -14,9 +14,8 @@ export default function About() {
           <Link href={`/view/inquire`}>
             <Item style={{ marginTop: 10, cursor: "pointer" }}>
               <Icon
-                loading
                 size="big"
-                name="question circle"
+                name="envelope"
                 style={{ marginRight: 15, marginBottom: 10 }}
               />
               <Item.Content>
@@ -31,7 +30,6 @@ export default function About() {
           <Link href={`/view/report`}>
             <Item style={{ marginTop: 10, cursor: "pointer" }}>
               <Icon
-                loading
                 size="big"
                 name="warning circle"
                 style={{ marginRight: 15, marginBottom: 10 }}
@@ -49,7 +47,7 @@ export default function About() {
             <Item style={{ marginBottom: 30, cursor: "pointer" }}>
               <Icon
                 size="big"
-                name="info circle"
+                name="question circle"
                 style={{ marginRight: 15, marginBottom: 10 }}
               />
               <Item.Content>
