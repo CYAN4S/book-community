@@ -2,7 +2,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Button, Icon, Label } from "semantic-ui-react";
+import { Button, Icon, Label, Image, Item } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
 import PostEditor from "./PostEditor";
@@ -69,16 +69,36 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
     <>
       <div>
         <div style={{ marginBottom: 10 }}>
-          <Link href={`/profile/${chat.createrId}`}>
-            <a>{displayName}</a>
-          </Link>{" "}
-          : <strong> {chat.text}</strong>
-          <p>[등록시간] {new Date(chat.createdAt).toLocaleString()}</p>
+          <Item style={{display:"flex", alignItems: "center"}}>
+            <Link href={`/profile/${chat.createrId}`}>
+            <a>
+              <Label style={{backgroundColor:"white", width:60, height:60}}>
+                <Item.Image
+                  avatar
+                  spaced="right"
+                  src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
+                  size = "large"
+                />
+                <p style={{marginTop:3}}> {displayName} </p>
+              </Label>
+            </a>
+          </Link>
+           <Item.Content style={{marginLeft:3, marginBottom:5}}>
+             <Item.Description>
+             <strong> 
+               {chat.text}
+            </strong>
+            <p style={{marginTop:3}}> <Icon name="clock"/>{new Date(chat.createdAt).toLocaleString()}</p>
+             </Item.Description>
+          </Item.Content>
+          </Item>
+          
+          
           {chat.fileUrl && (
-            <img src={chat.fileUrl} style={{ width: "100%", height: "100%" }} />
+            <Image src={chat.fileUrl} style={{ width: "40%", height: "40%", marginTop:10, marginBottom:5}} />
           )}
         </div>
-        <Button labelPosition="right" onClick={onLikeClick}>
+        <Button labelPosition="right" onClick={onLikeClick} style={{marginRight:10}}>
           <Button color={doLike ? "red" : "grey"}>
             <Icon name="heart" />
           </Button>
@@ -86,23 +106,32 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
             {chat.users.length}
           </Label>
         </Button>
-        <Button onClick={onReplyClick}>댓글</Button>
+        <Button inverted color='blue' onClick={onReplyClick}>댓글</Button>
 
         {isOwner && (
           <>
-            <Button onClick={onDeleteClick}>삭제</Button>
-            <Button onClick={onEditClick}>편집</Button>
+            <Button inverted color='red' onClick={onDeleteClick}>삭제</Button>
+            <Button inverted color='green' onClick={onEditClick}>편집</Button>
           </>
         )}
 
         {editing && (
-          <PostEditor chat={chat} purpose={"edit"} uid={currentUid} />
-        )}
+          <div>
+             <PostEditor chat={chat} purpose={"edit"} uid={currentUid} />
+          </div> 
+        )} 
 
         {replying && (
           <PostEditor chat={chat} purpose={"reply"} uid={currentUid} />
         )}
       </div>
+      <style jsx>{`
+        strong{
+          font-size:16px;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+      `}</style>
     </>
   );
 }

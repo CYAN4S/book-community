@@ -1,5 +1,5 @@
 import { authService, dbService, storageService } from "../firebaseConfig";
-import { Button, Form, TextArea } from "semantic-ui-react";
+import { Button, Form, Icon, Input, Label, Segment, TextArea, Image } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { v4 } from "uuid";
@@ -77,42 +77,52 @@ export default function ChatFactory({ detailbook_chat }) {
     <div>
       <Form onSubmit={onNewPostSubmit}>
         <Form.Field>
-          <label>의견남기기</label>
+          <Label basic color="orange" pointing = "below">Please enter your text</Label>
           <TextArea
             value={chat}
             onChange={(e) => setChat(e.target.value)}
             required
           />
         </Form.Field>
+        <div>
+          <Label basic color='orange' pointing='right' htmlFor="attach-file" >
+            <p>Add photos</p>
+          </Label>
 
-        <label htmlFor="attach-file">
-          <span>Add photos</span>
-        </label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={onFileChange}
-          id="attach-file"
-          style={{ marginBottom: 10 }}
-        />
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            id="attach-file"
+            icon="file image"
+          />
+        </div>
+        
         {imgFileString && (
           <div>
-            <img
+            <Image
+              fluid
+              label={{
+                color: 'red',
+                onClick : onClearPhotoClick,
+                icon: 'remove circle',
+                size : "large",
+                ribbon: true,
+              }}
               src={imgFileString}
               style={{
                 backgroundImage: imgFileString,
-                width: "30%",
-                height: "30%",
+                width: "40%",
+                height: "40%",
+                marginTop : 10,
+                marginLeft : 20,
               }}
             />
-
-            <div onClick={onClearPhotoClick}>
-              <span>Remove</span>
-            </div>
           </div>
         )}
-        <Button color="blue" style={{ marginTop: 15 }}>
+        <Button icon labelPosition='right' color="teal" style={{ marginTop: 15 }}>
           보내기
+          <Icon name='right arrow' />
         </Button>
       </Form>
     </div>

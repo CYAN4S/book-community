@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 export default function SearchKeyword({ books }) {
   const router = useRouter();
   const [lens, setLens] = useState(0);
+  const [desc_Filter, setDesc_Filter] = useState(false);
 
   useEffect(() => {
     setLens(books.items.length);
@@ -13,33 +14,78 @@ export default function SearchKeyword({ books }) {
     // console.log(books.items[0].isbn.split(" ")[1]);
   }, []);
 
+  const toggleDesc_Filter = () => {
+    setDesc_Filter((prev) => !prev);
+    console.log(desc_Filter);
+  };
+  
+
+  const booksTemp = [...books.items];
+  booksTemp.sort((a,b) => b.pubdate - a.pubdate);
+  console.log(booksTemp);
   return (
     <div>
       {lens ? (
         <>
           <div className="wrap">
+            <Button onClick={toggleDesc_Filter}>Filter</Button>
             <Grid columns={4}>
               <Grid.Row>
-                {books.items.map((book) => (
-                  <Grid.Column key={book.isbn}>
-                    <Link href={`./detail/${book.title}`}>
-                      <a>
-                        <div>
-                          <img
-                            src={book.image}
-                            alt="DON'T HAVE IMAGE"
-                            className="img_book"
-                          />
-                          <strong className="book_item">{book.title}</strong>
-                          <span className="txt_info">
-                            {book.publisher},{book.pubdate}
-                          </span>
-                          <strong className="num_price">${book.price}</strong>
-                        </div>
-                      </a>
-                    </Link>
-                  </Grid.Column>
-                ))}
+                {desc_Filter ? (
+                  <>
+                    {booksTemp.map((book) => (
+                      <Grid.Column key={book.isbn}>
+                        <Link href={`./detail/${book.title}`}>
+                          <a>
+                            <div>
+                              <img
+                                src={book.image}
+                                alt="DON'T HAVE IMAGE"
+                                className="img_book"
+                              />
+                              <strong className="book_item">
+                                {book.title}
+                              </strong>
+                              <span className="txt_info">
+                                {book.publisher},{book.pubdate}
+                              </span>
+                              <strong className="num_price">
+                                ${book.price}
+                              </strong>
+                            </div>
+                          </a>
+                        </Link>
+                      </Grid.Column>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {books.items.map((book) => (
+                      <Grid.Column key={book.isbn}>
+                        <Link href={`./detail/${book.title}`}>
+                          <a>
+                            <div>
+                              <img
+                                src={book.image}
+                                alt="DON'T HAVE IMAGE"
+                                className="img_book"
+                              />
+                              <strong className="book_item">
+                                {book.title}
+                              </strong>
+                              <span className="txt_info">
+                                {book.publisher},{book.pubdate}
+                              </span>
+                              <strong className="num_price">
+                                ${book.price}
+                              </strong>
+                            </div>
+                          </a>
+                        </Link>
+                      </Grid.Column>
+                    ))}
+                  </>
+                )}
               </Grid.Row>
             </Grid>
             <Link href={`/explore`}>
