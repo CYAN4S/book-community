@@ -61,8 +61,6 @@ export default function Entire({ infoData }) {
     }
   });
 
-  console.log(hasBookLib);
-
   return (
     <>
       <div style={{ width: "100%", height: "540px" }}>

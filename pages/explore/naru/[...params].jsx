@@ -29,6 +29,7 @@ export default function Lib({ infoData }) {
     router.back();
   }
 
+  // 특정 도서관과 현재 내 위치 dict 확인
   function getDistanceFromLatLonInKm(lat1, lng1, lat2, lng2) {
     function deg2rad(deg) {
       return deg * (Math.PI / 180);
@@ -52,7 +53,6 @@ export default function Lib({ infoData }) {
       (position) => {
         // position 객체 내부에 timestamp(현재 시간)와 coords 객체
         const time = new Date(position.timestamp);
-        console.log(`현재시간 : ${time}`);
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
       },
@@ -66,6 +66,7 @@ export default function Lib({ infoData }) {
       }
     );
 
+    // setMin : 지역 내 도서관과 내 위치의 거리를 비교한 후, 제일 작은 위치를 확인
     infoData.map((item) => {
       if (
         min >
@@ -134,6 +135,7 @@ export default function Lib({ infoData }) {
                           </a>
                         </Link>
                       </Table.Cell>
+                      {/* 소장 및 대출가능 시, O 표시 */}
                       {data.value.response.result.hasBook === "Y" ? (
                         <Table.Cell positive>O</Table.Cell>
                       ) : (
@@ -145,6 +147,7 @@ export default function Lib({ infoData }) {
                         <Table.Cell negative>X</Table.Cell>
                       )}
                       <Table.Cell>
+                        {/* min값이면, 두드러지게 표시 */}
                         {min ===
                         getDistanceFromLatLonInKm(
                           latitude,
@@ -206,6 +209,7 @@ export default function Lib({ infoData }) {
           돌아가기
         </Button>
 
+        {/* 해당페이지에 표시된 도서관들의 위치 표시 */}
         {infoData.length !== 0 && (
           <>
             <Divider style={{ marginTop: 30 }} inverted />

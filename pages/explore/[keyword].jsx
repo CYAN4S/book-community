@@ -46,23 +46,12 @@ export default function SearchKeyword({ books }) {
   const tempDescPrice = [...books.items];
   tempDescPrice.sort((a, b) => b.price - a.price);
 
+  // 책 검색 결과를 CSS에 맞게 배치 
   return (
     <div>
       {lens ? (
         <>
           <div className="wrap">
-            {/* {!filter && (
-              <>
-                <div class="ui segment">
-                  <button
-                    class="fluid ui button ui green button"
-                    onClick={toggleFilter}
-                  >
-                    정렬 필터
-                  </button>
-                </div>
-              </>
-            )} */}
             <div>
               <Button onClick={toggleDescDateFilter} inverted color="orange">
                 최신 발간 순
