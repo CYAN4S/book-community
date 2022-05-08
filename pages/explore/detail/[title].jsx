@@ -82,12 +82,11 @@ export default function Title({ books }) {
 
   onAuthStateChanged(authService, (user) => {
     if (user) {
-      setCurrentUid(user.uid); 
-      setIsSignedIn(true); 
+      setCurrentUid(user.uid);
+      setIsSignedIn(true);
       setUserId(user.uid);
       setCurrentIsbn(isbn);
-    }
-    else {
+    } else {
       setIsSignedIn(false);
     }
   });
@@ -439,31 +438,30 @@ export default function Title({ books }) {
       </>
 
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-      <div style ={{marginTop:-70}}className="ui center aligned container">
+      <div style={{ marginTop: -70 }} className="ui center aligned container">
         <Divider horizontal>
-          <Header style ={{}} as="h3" color="blue">
-            <Icon name="clipboard outline" />
-            이 책에 대한 다른 사용자의 의견
+          <Header style={{}} as="h3" color="blue">
+            <Icon name="clipboard outline" />이 책에 대한 다른 사용자의 의견
           </Header>
         </Divider>
-       
-          
 
-          <div style={{ marginLeft: 20, textAlign: "left" }}>
-            {chats.length ? (
-              chats.map((chat) => (
-                <div className="chat_space" key={chat.id}>
-                  <Chats
-                    chat={chat}
-                    isOwner={chat.createrId === userId}
-                    detailbook_chat={collectionName}
-                  />
-                </div>
-              ))
-            ) : (
-              <p>채팅목록이 없습니다</p>
-            )}
-          </div>
+        <div style={{ marginLeft: 20, textAlign: "left" }}>
+          {chats.length ? (
+            chats.map((chat) => (
+              <div className="chat_space" key={chat.id}>
+                <Chats
+                  chat={chat}
+                  isOwner={chat.createrId === userId}
+                  detailbook_chat={collectionName}
+                  style={{}}
+                />
+              </div>
+            ))
+          ) : (
+            <p>채팅목록이 없습니다</p>
+          )}
+        </div>
+        <div className="ui divider"></div>
       </div>
     </>
   );

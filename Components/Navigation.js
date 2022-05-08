@@ -32,13 +32,13 @@ export default function Navigation() {
 
   // actual movement
   function goLink(e, data) {
-    if (data.name === "home") {
+    if (data.name === "HOME") {
       router.push("/");
-    } else if (data.name === "view_more") {
+    } else if (data.name === "VIEW MORE") {
       router.push("/view_more");
-    } else if (data.name === "explore") {
+    } else if (data.name === "EXPLORE") {
       router.push("/explore");
-    } else if (data.name === "profile") {
+    } else if (data.name === "PROFILE") {
       router.push("/profile");
     }
   }
