@@ -208,7 +208,7 @@ export default function Profile() {
             )}
 
             <Label style={{ marginTop: 15 }} as="a" color="purple" ribbon>
-              내가 등록한 책 목록
+              {isMe() ? <> 내가 등록한 책 목록 </> : <> 해당 사용자가 등록한 책 목록 </>}
             </Label>
 
             {myBooks.length == 0 ? (
