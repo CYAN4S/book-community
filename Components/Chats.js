@@ -117,12 +117,12 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
 
         {editing && (
           <div>
-             <PostEditor chat={chat} purpose={"edit"} uid={currentUid} />
+             <PostEditor chat={chat} purpose={"edit"} uid={currentUid} detailbook_chat={detailbook_chat}/>
           </div> 
         )} 
 
         {replying && (
-          <PostEditor chat={chat} purpose={"reply"} uid={currentUid} />
+          <PostEditor chat={chat} purpose={"reply"} uid={currentUid} detailbook_chat={detailbook_chat}/>
         )}
       </div>
       <style jsx>{`
