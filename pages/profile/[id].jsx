@@ -179,7 +179,7 @@ export default function Profile() {
             />
 
             <Label as="a" color="blue" ribbon>
-              나의 구독자 목록
+              {isMe() ? <> 내가 구독한 사용자 </> : <> 해당 사용자가 구독한 사용자 </>}
             </Label>
 
             {subscribers.length == 0 ? (
@@ -193,11 +193,23 @@ export default function Profile() {
                   <List.Item key={v4()}>
                     {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
-                      <Link href={`/profile/${user.uid}`}>
-                        <List.Header as="a">
-                          {user.displayName ?? "게스트"}
-                        </List.Header>
-                      </Link>
+                      {
+                        user.uid === currentUser.uid ?
+                        <>
+                          <List.Header>
+                              {user.displayName ?? "게스트"}
+                          </List.Header>
+                        </>
+                        :
+                        <>
+                          <Link href={`/profile/${user.uid}`}>
+                            <List.Header as="a">
+                              {user.displayName ?? "게스트"}
+                            </List.Header>
+                          </Link>
+                        </>
+                      }
+                      
                       <List.Description>
                         {user.statusMsg ?? ""}
                       </List.Description>
