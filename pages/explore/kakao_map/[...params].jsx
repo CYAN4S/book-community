@@ -12,6 +12,8 @@ import Script from "next/script";
 
 export default function LibMap({ MapData }) {
   const router = useRouter();
+
+  // 뒤로가기 버튼 click event
   function onClick(e) {
     e.preventDefault();
     router.back();
@@ -20,12 +22,14 @@ export default function LibMap({ MapData }) {
   return (
     <>
       <div style={{ width: "100%", height: "600px" }}>
+        {/* Map Component : 카카오맵 API 사용을 위해 제공됨*/}
         <Map
           center={{ lat: MapData.latitude, lng: MapData.longitude }}
           style={{ width: "100%", height: "430px" }}
           level={6}
         >
-          <MapMarker
+          {/* MapMarker : 지정된 POS위치 위에 마커*/}
+          <MapMarker 
             position={{
               lat: MapData.latitude,
               lng: MapData.longitude,
@@ -33,12 +37,13 @@ export default function LibMap({ MapData }) {
             draggable={true}
           ></MapMarker>
 
+          {/* MapInfoWindow : 지정된 POS위치 위에 인포윈도우 설정*/}
           <MapInfoWindow
             position={{
               lat: MapData.latitude,
               lng: MapData.longitude,
             }}
-            removable={true} // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+            removable={true} // removeable = true : 인포윈도우를 닫을 수 있는 x버튼 표시
           >
             <div style={{ padding: "5px", color: "#000" }}>{MapData.name}</div>
           </MapInfoWindow>

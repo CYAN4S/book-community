@@ -6,9 +6,12 @@ export default function Entire({ infoData }) {
   const availBookLib = [];
   const pos = [];
 
+  // 소장/대출가능여부/기본 체크 필터
   const [hasBookCheck, setHasBookCheck] = useState(false);
   const [availLoanCheck, setAvailLoanCheck] = useState(false);
   const [defaultCheck, setDefaultCheck] = useState(true);
+
+  // 필터 선택에 따른 분기
   function checkDefault(e) {
     setHasBookCheck(false);
     setAvailLoanCheck(false);
@@ -27,6 +30,7 @@ export default function Entire({ infoData }) {
     setDefaultCheck(false);
   }
 
+  // 도서관 위치 데이터를 배열 push
   infoData.map((pos_data) => {
     pos.push({
       name: pos_data.name,

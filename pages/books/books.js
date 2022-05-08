@@ -49,17 +49,21 @@ export default function Books({ books }) {
         </Grid>
       </div>
       <style jsx>{`
+
+        // full layout
         .wrap {
           text-align: center;
           margin: 30px 10px 20px 10px;
         }
 
+        // item placement
         .book_item {
           display: block;
           font-size: 16px;
           margin-top: 25px;
         }
 
+        // text placement
         .txt_info {
           display: block;
           font-size: 13px;

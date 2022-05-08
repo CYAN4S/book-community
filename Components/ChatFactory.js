@@ -71,7 +71,7 @@ export default function ChatFactory({ detailbook_chat }) {
     }
   };
 
-  const onClearPhotoClick = () => setImgFileString(""); // 위 onFileChange에서 들고온 result을 무효화
+  const onClearPhotoClick = () => setImgFileString("");
 
   return (
     <div>
