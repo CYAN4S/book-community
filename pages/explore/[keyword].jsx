@@ -83,12 +83,12 @@ export default function SearchKeyword({ books }) {
                             <div>
                               <div
                                 style={{ marginBottom: 20 }}
-                                class="ui two column grid ui center aligned segments"
+                                className="ui two column grid ui center aligned segments"
                               >
-                                <div class="columnImage">
+                                <div className="columnImage">
                                   <div
                                     style={{ width: 110, height: 145 }}
-                                    class="ui orange segment"
+                                    className="ui orange segment"
                                   >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
@@ -111,7 +111,7 @@ export default function SearchKeyword({ books }) {
                                     display: "flex",
                                     justifyContent: "center",
                                   }}
-                                  class="ui yellow segment"
+                                  className="ui yellow segment"
                                 >
                                   <Table.Header>
                                     <Table.Row>
@@ -149,12 +149,12 @@ export default function SearchKeyword({ books }) {
                             <div>
                               <div
                                 style={{ marginBottom: 20 }}
-                                class="ui two column grid ui center aligned segments"
+                                className="ui two column grid ui center aligned segments"
                               >
-                                <div class="columnImage">
+                                <div className="columnImage">
                                   <div
                                     style={{ width: 110, height: 145 }}
-                                    class="ui orange segment"
+                                    className="ui orange segment"
                                   >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
@@ -177,7 +177,7 @@ export default function SearchKeyword({ books }) {
                                     display: "flex",
                                     justifyContent: "center",
                                   }}
-                                  class="ui yellow segment"
+                                  className="ui yellow segment"
                                 >
                                   <Table.Header>
                                     <Table.Row>
@@ -215,12 +215,12 @@ export default function SearchKeyword({ books }) {
                             <div>
                               <div
                                 style={{ marginBottom: 20 }}
-                                class="ui two column grid ui center aligned segments"
+                                className="ui two column grid ui center aligned segments"
                               >
-                                <div class="columnImage">
+                                <div className="columnImage">
                                   <div
                                     style={{ width: 110, height: 145 }}
-                                    class="ui orange segment"
+                                    className="ui orange segment"
                                   >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
@@ -243,7 +243,7 @@ export default function SearchKeyword({ books }) {
                                     display: "flex",
                                     justifyContent: "center",
                                   }}
-                                  class="ui yellow segment"
+                                  className="ui yellow segment"
                                 >
                                   <Table.Header>
                                     <Table.Row>
@@ -281,12 +281,12 @@ export default function SearchKeyword({ books }) {
                             <div>
                               <div
                                 style={{ marginBottom: 20 }}
-                                class="ui two column grid ui center aligned segments"
+                                className="ui two column grid ui center aligned segments"
                               >
-                                <div class="columnImage">
+                                <div className="columnImage">
                                   <div
                                     style={{ width: 110, height: 145 }}
-                                    class="ui orange segment"
+                                    className="ui orange segment"
                                   >
                                     <Link href={`./detail/${book.title}`}>
                                       <a>
@@ -309,7 +309,7 @@ export default function SearchKeyword({ books }) {
                                     display: "flex",
                                     justifyContent: "center",
                                   }}
-                                  class="ui yellow segment"
+                                  className="ui yellow segment"
                                 >
                                   <Table.Header>
                                     <Table.Row>
@@ -352,12 +352,12 @@ export default function SearchKeyword({ books }) {
                         <div>
                           <div
                             style={{ marginBottom: 20 }}
-                            class="ui two column grid ui center aligned segments"
+                            className="ui two column grid ui center aligned segments"
                           >
-                            <div class="columnImage">
+                            <div className="columnImage">
                               <div
                                 style={{ width: 110, height: 145 }}
-                                class="ui orange segment"
+                                className="ui orange segment"
                               >
                                 <Link href={`./detail/${book.title}`}>
                                   <a>
@@ -380,7 +380,7 @@ export default function SearchKeyword({ books }) {
                                 display: "flex",
                                 justifyContent: "center",
                               }}
-                              class="ui yellow segment"
+                              className="ui yellow segment"
                             >
                               <Table.Header>
                                 <Table.Row>
