@@ -48,22 +48,22 @@ export default function Navigation() {
         <>
           <Menu inverted color={"teal"} widths={4} attached='top' tabular>
             <Menu.Item
-              name="home"
+              name="HOME"
               active={activeItem === "home"}
               onClick={goLink}
             />
             <Menu.Item
-              name="explore"
+              name="EXPLORE"
               active={activeItem === "explore"}
               onClick={goLink}
             />
             <Menu.Item
-              name="profile"
+              name="PROFILE"
               active={activeItem === "profile"}
               onClick={goLink}
             />
             <Menu.Item
-              name="view_more"
+              name="VIEW MORE"
               active={activeItem === "about"}
               onClick={goLink}
             />

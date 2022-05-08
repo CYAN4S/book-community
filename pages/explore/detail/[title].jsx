@@ -9,6 +9,7 @@ import {
   Label,
   List,
   Radio,
+  Container,
 } from "semantic-ui-react";
 import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
@@ -144,12 +145,16 @@ export default function Title({ books }) {
     const registeredMybook = !!doc.myBooks?.includes(`${isbn}${title}`);
 
     if (registeredMybook) {
-      updateUserDoc({ myBooks: doc.myBooks.filter((id) => id != `${isbn}${title}`) });
+      updateUserDoc({
+        myBooks: doc.myBooks.filter((id) => id != `${isbn}${title}`),
+      });
 
       setWasRegisterBookCheck(false);
     } else {
       updateUserDoc({
-        myBooks: doc.myBooks ? [...doc.myBooks, `${isbn}${title}`] : [`${isbn}${title}`],
+        myBooks: doc.myBooks
+          ? [...doc.myBooks, `${isbn}${title}`]
+          : [`${isbn}${title}`],
       });
       setWasRegisterBookCheck(true);
     }
@@ -192,7 +197,7 @@ export default function Title({ books }) {
               <div
                 style={{
                   marginBottom: 20,
-                  marginLeft: 15,
+                  marginLeft: 5,
                   width: 600,
                   height: 270,
                 }}
@@ -220,10 +225,6 @@ export default function Title({ books }) {
                     style={{ width: 330, height: 240, marginLeft: -50 }}
                     className="ui orange segment"
                   >
-                    <Header as="h3" style={{}} color="blue">
-                      책 정보
-                    </Header>
-
                     <div>
                       <List divided vertical>
                         <List.Item>
@@ -249,28 +250,24 @@ export default function Title({ books }) {
                             }).format(price)}
                           </strong>
                         </List.Item>
-                        <List.Item>
-                          {!isMe() && (
-                            <Button
-                              style={{ marginTop: 10 }}
-                              basic
-                              color="orange"
-                              onClick={onRegisterClick}
-                            >
-                              {wasRegisterBookCheck
-                                ? "등록 해제"
-                                : "내 책으로 등록하기"}
-                            </Button>
-                          )}
-                          <Button
-                            basic
-                            color="black"
-                            onClick={onClick}
-                          >
-                            돌아가기
-                          </Button>
-                        </List.Item>
                       </List>
+                      <div style={{ marginTop: 10 }}>
+                        {!isMe() && (
+                          <Button
+                            style={{ marginTop: 10 }}
+                            basic
+                            color="orange"
+                            onClick={onRegisterClick}
+                          >
+                            {wasRegisterBookCheck
+                              ? "등록 해제"
+                              : "내 책으로 등록하기"}
+                          </Button>
+                        )}
+                        <Button basic color="black" onClick={onClick}>
+                          돌아가기
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </Grid.Column>
@@ -313,7 +310,7 @@ export default function Title({ books }) {
               <div
                 style={{
                   width: 600,
-                  height: 350,
+                  height: 380,
                   marginLeft: 25,
                 }}
                 className="ui basic segment"
@@ -321,7 +318,7 @@ export default function Title({ books }) {
                 <Grid.Column>
                   <div
                     style={{
-                      height: 260,
+                      height: 290,
                     }}
                     className="ui red segment"
                   >
@@ -356,7 +353,7 @@ export default function Title({ books }) {
                         <>
                           <Header
                             as="h3"
-                            style={{ height: 30, textAlign: "center" }}
+                            style={{ height: 50, textAlign: "center" }}
                             color="blue"
                           >
                             어디에 있을까?
@@ -401,40 +398,27 @@ export default function Title({ books }) {
                 <div
                   style={{
                     width: 600,
-                    height: 350,
+                    height: 380,
                   }}
                   className="ui basic segment"
                 >
                   <div
                     style={{
-                      height: 260,
+                      height: 290,
+                      overflow: "auto",
+                      maxHeight: 300,
                     }}
                     className="ui red segment"
                   >
                     <Header
                       as="h3"
-                      style={{ textAlign: "center", marginBottom: 20 }}
+                      style={{ textAlign: "center" }}
                       color="blue"
                     >
-                      이 책에 대한 다른 사용자의 의견
+                      생각 공유하기
                     </Header>
-
-                    <div
-                      style={{ overflow: "auto", height: 200, maxHeight: 220 }}
-                    >
-                      {chats.length ? (
-                        chats.map((chat) => (
-                          <div className="chat_space" key={chat.id}>
-                            <Chats
-                              chat={chat}
-                              isOwner={chat.createrId === userId}
-                              detailbook_chat={collectionName}
-                            />
-                          </div>
-                        ))
-                      ) : (
-                        <p>채팅목록이 없습니다</p>
-                      )}
+                    <div>
+                      <ChatFactory detailbook_chat={collectionName} />
                     </div>
                   </div>
                 </div>
@@ -445,18 +429,31 @@ export default function Title({ books }) {
       </>
 
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-      <div className="ui center aligned container">
-        <div
-          style={{ marginTop: -70, width: 570, marginLeft: 20, height: 320 }}
-          className="ui purple segment"
-        >
-          <Header as="h3" style={{ textAlign: "center" }} color="blue">
-            생각 공유하기
+      <div style ={{marginTop:-70}}className="ui center aligned container">
+        <Divider horizontal>
+          <Header style ={{}} as="h3" color="blue">
+            <Icon name="clipboard outline" />
+            이 책에 대한 다른 사용자의 의견
           </Header>
-          <div style={{ overflow: "auto", height: 260, maxHeight: 290 }}>
-            <ChatFactory detailbook_chat={collectionName} />
+        </Divider>
+       
+          
+
+          <div style={{ marginLeft: 20, textAlign: "left" }}>
+            {chats.length ? (
+              chats.map((chat) => (
+                <div className="chat_space" key={chat.id}>
+                  <Chats
+                    chat={chat}
+                    isOwner={chat.createrId === userId}
+                    detailbook_chat={collectionName}
+                  />
+                </div>
+              ))
+            ) : (
+              <p>채팅목록이 없습니다</p>
+            )}
           </div>
-        </div>
       </div>
     </>
   );
