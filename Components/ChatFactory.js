@@ -45,7 +45,7 @@ export default function ChatFactory({ detailbook_chat }) {
       users: [],
     };
     await addDoc(
-      collection(dbService, detailbook_chat ? detailbook_chat : "chat"),
+      collection(dbService, detailbook_chat ?? "chat"),
       chatObj
     )
       .then(() => console.log("전송완료"))

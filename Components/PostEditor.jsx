@@ -6,7 +6,15 @@ import {
   uploadString,
 } from "firebase/storage";
 import React, { useState } from "react";
-import { Button, Form, Input, Label, TextArea, Image, Icon } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Input,
+  Label,
+  TextArea,
+  Image,
+  Icon,
+} from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 
@@ -15,13 +23,15 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
 
+  const collectionName = detailbook_chat ?? "chat"
+
   const onEditSubmit = async () => {
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
       const temp_fileUrl = await getDownloadURL(response.ref);
 
-      updateDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
         text: newChat,
         fileUrl: temp_fileUrl,
       })
@@ -32,7 +42,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
           alert(error);
         });
     } else {
-      updateDoc(doc(dbService, detailbook_chat ?? "chat", `${chat.id}`), {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
         text: newChat,
       })
         .then(() => {
@@ -66,7 +76,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
       replyTo: chat.id,
     };
 
-    await addDoc(collection(dbService, "chat"), chatObj)
+    await addDoc(collection(dbService, collectionName), chatObj)
       .then(() => console.log("전송완료"))
       .catch((error) => alert(error));
 
@@ -82,7 +92,6 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
     } else {
       onReplySubmit();
     }
-
   };
 
   const onDeleteTempImageClick = () => {
@@ -101,7 +110,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
         alert("채팅에 올려놓은 이미지가 없습니다.");
       } else {
         await deleteObject(ref(storageService, chat.fileUrl)).then(() => {
-          updateDoc(doc(dbService, "chat", `${chat.id}`), {
+          updateDoc(doc(dbService, collectionName, `${chat.id}`), {
             text: newChat,
             fileUrl: "",
           })
@@ -136,7 +145,12 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
       <div>
         <Form onSubmit={onSubmit}>
           <Form.Field>
-            <Label basic color="violet" pointing="below" style={{marginTop:10}}>
+            <Label
+              basic
+              color="violet"
+              pointing="below"
+              style={{ marginTop: 10 }}
+            >
               Edit your text
             </Label>
             <TextArea
@@ -172,32 +186,35 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
           {imgFileString && (
             <div className="temp">
               <Image
-              fluid
-              label={{
-                color: 'red',
-                onClick : onDeleteTempImageClick,
-                icon: 'remove circle',
-                size : "large",
-                ribbon: true,
-              }}
-              src={imgFileString}
-              style={{
-                backgroundImage: imgFileString,
-                width: "30%",
-                height: "30%",
-                marginTop : 10,
-                marginLeft : 20,
-                marginBottom : 15,
-              }}
-            />
+                fluid
+                label={{
+                  color: "red",
+                  onClick: onDeleteTempImageClick,
+                  icon: "remove circle",
+                  size: "large",
+                  ribbon: true,
+                }}
+                src={imgFileString}
+                style={{
+                  backgroundImage: imgFileString,
+                  width: "30%",
+                  height: "30%",
+                  marginTop: 10,
+                  marginLeft: 20,
+                  marginBottom: 15,
+                }}
+              />
             </div>
           )}
-          {chat?.fileUrl && 
-          <div onClick={OnImageDeleteClick} style = {{width:100, height:30,cursor:"pointer"}}>
-            <Icon color = "red" name="remove circle"/> <span>DEL IMG</span>
-          </div>
-          }
-          <Button type="submit" value="update" inverted color='green' >
+          {chat?.fileUrl && (
+            <div
+              onClick={OnImageDeleteClick}
+              style={{ width: 100, height: 30, cursor: "pointer" }}
+            >
+              <Icon color="red" name="remove circle" /> <span>DEL IMG</span>
+            </div>
+          )}
+          <Button type="submit" value="update" inverted color="green">
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
           </Button>
         </Form>
