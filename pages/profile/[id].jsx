@@ -66,7 +66,7 @@ export default function Profile() {
       console.log(x);
       setSubscribers(x);
     } else {
-      setSubscribers([])
+      setSubscribers([]);
     }
 
     if (currentUser) {
@@ -221,7 +221,9 @@ export default function Profile() {
                 {myBooks.map((myBooks) => (
                   <List.Item key={v4()}>
                     <List.Content>
-                      <List.Header as="a">{myBooks}</List.Header>
+                      <Link href={`/explore/detail/${myBooks}`}>
+                        <List.Header as="a">{myBooks}</List.Header>
+                      </Link>
                     </List.Content>
                   </List.Item>
                 ))}
