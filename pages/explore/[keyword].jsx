@@ -63,29 +63,26 @@ export default function SearchKeyword({ books }) {
                 </div>
               </>
             )} */}
-            <div class="ui black segment">
-              <button
-                class="ui left floated teal button"
-                onClick={toggleDescDateFilter}
-              >
+            <div>
+              <Button onClick={toggleDescDateFilter} inverted color="orange">
                 최신 발간 순
-              </button>
-              <button class="ui blue button" onClick={toggleAscPriceFilter}>
+              </Button>
+              <Button onClick={toggleAscPriceFilter} inverted color="green">
                 가격 낮은 순{" "}
-              </button>
-              <button class="ui violet button" onClick={toggleDescPriceFilter}>
+              </Button>
+              <Button onClick={toggleDescPriceFilter} inverted color="violet">
                 가격 높은 순
-              </button>
-              <Link href={`/explore`}>
-                <button class="ui right floated gray button" style={{backgroundColor:"black", color:"white"}}>돌아가기</button>
-              </Link>
-              <button
-                class="ui right floated red button"
-                onClick={toggleFilter}
-              >
+              </Button>
+              <Button onClick={toggleFilter} inverted color="red">
                 정렬 해제
-              </button>
+              </Button>
             </div>
+            <div style={{ textAlign: "right" }}>
+              <Link href={`/explore`}>
+                <Button color="black">돌아가기</Button>
+              </Link>
+            </div>
+
             {filter ? (
               <>
                 <Grid style={{ margin: 2 }} columns={4}>
