@@ -26,7 +26,6 @@ import { currentUserState } from "../../utils/hooks";
 import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
 
 export default function Profile() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
   const [currentUser] = useRecoilState(currentUserState);
 
   // Route
@@ -64,19 +63,21 @@ export default function Profile() {
       const x = await Promise.all(
         data.users.map(async (uid) => await getUserDoc(uid))
       );
-      const list = x.map((i) => i?.displayName ?? "게스트");
-      setSubscribers(list);
+      console.log(x);
+      setSubscribers(x);
+    } else {
+      setSubscribers([]);
+    }
 
-      if (currentUser) {
-        checkSub(data.uid);
-      }
+    if (currentUser) {
+      setWasSubingCheck(currentUser.users?.includes(queryId));
+    }
 
-      if (data.myBooks) {
-        const listMyBook = await Promise.all(
-          data.myBooks.map(async (x) => await x.substr(24))
-        );
-        setMyBooks(listMyBook);
-      }
+    if (data?.myBooks) {
+      const listMyBook = await Promise.all(
+        data.myBooks.map(async (x) => await x.substr(24))
+      );
+      setMyBooks(listMyBook);
     }
   };
 
@@ -111,12 +112,6 @@ export default function Profile() {
     callback();
   };
 
-  const checkSub = async (uid) => {
-    const doc = await getUserDoc(uid);
-    const isSubing = !!doc.users?.includes(queryId);
-    setWasSubingCheck(isSubing);
-  };
-
   const onSubscribeClick = async (e) => {
     e.preventDefault();
 
@@ -131,6 +126,7 @@ export default function Profile() {
       setWasSubingCheck(true);
     }
   };
+
   return (
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
@@ -169,7 +165,7 @@ export default function Profile() {
         )}
       </Header>
 
-      <Grid columns={isMe()?2:1} style={{ marginLeft: 10 }}>
+      <Grid columns={isMe() ? 2 : 1} style={{ marginLeft: 10 }}>
         <Grid.Column>
           <Segment raised>
             <Label as="a" color="red" ribbon>
@@ -193,13 +189,17 @@ export default function Profile() {
               </div>
             ) : (
               <List>
-                {subscribers.map((displayName) => (
+                {subscribers.map((user) => (
                   <List.Item key={v4()}>
                     {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
-                      <List.Header as="a">{displayName}</List.Header>
+                      <Link href={`/profile/${user.uid}`}>
+                        <List.Header as="a">
+                          {user.displayName ?? "게스트"}
+                        </List.Header>
+                      </Link>
                       <List.Description>
-                        Last seen watching just now. {/*구독자 상태메시지*/}
+                        {user.statusMsg ?? ""}
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -208,7 +208,7 @@ export default function Profile() {
             )}
 
             <Label style={{ marginTop: 15 }} as="a" color="purple" ribbon>
-              내가 등록한 책 목록
+              {isMe() ? <> 내가 등록한 책 목록 </> : <> 해당 사용자가 등록한 책 목록 </>}
             </Label>
 
             {myBooks.length == 0 ? (
@@ -221,7 +221,9 @@ export default function Profile() {
                 {myBooks.map((myBooks) => (
                   <List.Item key={v4()}>
                     <List.Content>
-                      <List.Header as="a">{myBooks}</List.Header>
+                      <Link href={`/explore/detail/${myBooks}`}>
+                        <List.Header as="a">{myBooks}</List.Header>
+                      </Link>
                     </List.Content>
                   </List.Item>
                 ))}

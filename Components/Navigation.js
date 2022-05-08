@@ -19,6 +19,7 @@ export default function Navigation() {
   const router = useRouter();
   let activeItem = {};
 
+  // active branch
   if (router.pathname === "/") {
     activeItem = "home";
   } else if (router.pathname === "/view_more") {
@@ -29,6 +30,7 @@ export default function Navigation() {
     activeItem = "profile";
   }
 
+  // actual movement
   function goLink(e, data) {
     if (data.name === "home") {
       router.push("/");

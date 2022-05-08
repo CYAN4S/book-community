@@ -29,7 +29,7 @@ export default function Book_home() {
       }));
 
       setChats(chatArray);
-      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인. 변화발생 때 마다 console.log
+      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
 

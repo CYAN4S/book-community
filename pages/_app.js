@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }) {
           </Header>
         </div>
 
+        {/* 카카오 맵 API를 사용하기 위함 */}
         <Script
           type="text/javascript"
           src={

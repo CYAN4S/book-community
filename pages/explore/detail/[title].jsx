@@ -49,10 +49,12 @@ export default function Title({ books }) {
   const [checkItems, setCheckItems] = useState(new Set());
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
+
   // registerBook Check
   const [wasRegisterBookCheck, setWasRegisterBookCheck] = useState(false);
   const [currentIsbn, setCurrentIsbn] = useState("");
 
+  // region classification code
   const regionData = [
     { id: 11, name: "서울" },
     { id: 21, name: "부산" },
@@ -72,21 +74,25 @@ export default function Title({ books }) {
     { id: 38, name: "경남" },
     { id: 39, name: "제주" },
   ];
+
+  // Save chat details
   const [chats, setChats] = useState([]);
+  // Save userID
   const [userId, setUserId] = useState("");
+
   onAuthStateChanged(authService, (user) => {
     if (user) {
-      setCurrentUid(user.uid); // profile 복붙
-      setIsSignedIn(true); // profile 복붙
+      setCurrentUid(user.uid); 
+      setIsSignedIn(true); 
       setUserId(user.uid);
       setCurrentIsbn(isbn);
     }
-    // 추가
     else {
       setIsSignedIn(false);
     }
   });
 
+  // DB Real-time change check
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
@@ -94,10 +100,10 @@ export default function Title({ books }) {
         ...doc.data(),
       }));
       setChats(chatArray);
-      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인. 변화발생 때 마다 console.log
     });
   }, []);
 
+  // Detail book page chatting query
   const q = query(
     collection(dbService, `chat${isbn}`),
     orderBy("createdAt", "desc")
@@ -225,6 +231,10 @@ export default function Title({ books }) {
                     style={{ width: 330, height: 240, marginLeft: -50 }}
                     className="ui orange segment"
                   >
+                    <Header as="h3" color="blue">
+                      책 정보
+                    </Header>
+
                     <div>
                       <List divided vertical>
                         <List.Item>

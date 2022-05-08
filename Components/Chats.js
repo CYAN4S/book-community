@@ -8,9 +8,6 @@ import { useUserDisplayName } from "../utils/functions";
 import PostEditor from "./PostEditor";
 
 export default function Chats({ chat, isOwner, detailbook_chat }) {
-  const [username, setUserName] = useState(
-    chat.nickName ? chat.nickName : "guest"
-  );
   const [editing, setEditing] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
@@ -45,8 +42,10 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
     }
   };
 
+  // toggle edit mode
   const onEditClick = () => setEditing((prev) => !prev);
 
+  // chat Like func
   const onLikeClick = () => {
     const doLike = chat.users.includes(currentUid);
 
@@ -63,6 +62,7 @@ export default function Chats({ chat, isOwner, detailbook_chat }) {
     }
   };
 
+  // recomment edit mode
   const onReplyClick = () => setReplying((prev) => !prev);
 
   return (
