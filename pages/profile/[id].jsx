@@ -2,7 +2,8 @@ import { authService as auth, dbService as db } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+
 import {
   Button,
   Form,
@@ -12,9 +13,8 @@ import {
   Image,
   Input,
   Label,
-  Segment,
   List,
-  Step,
+  Segment,
 } from "semantic-ui-react";
 
 import { v4 } from "uuid";

@@ -1,5 +1,7 @@
 import {
   Button,
+  Container,
+  Dropdown,
   Form,
   Grid,
   Header,
@@ -7,10 +9,21 @@ import {
   Image,
   Input,
   Label,
+  Menu,
   Segment,
 } from "semantic-ui-react";
+import { useState } from "react";
 
 const Post = () => {
+
+  // 장르 선택여부 확인
+  const [representative_KDC, setRepresentative_KDC] = useState(false);
+  const [detail_KDC, setDetail_KDC] = useState(false);
+
+  // 장르 선택요소 확인
+  const [representative_KDC_Track, setRepresentative_KDC_Track] = useState([]);
+  const [representative_KDC_Element, setRepresentative_KDC_Element] = useState([]);
+
   // 총류
   const kdc_general = [
     { id: 10, name: "도서학, 서지학" },
@@ -155,25 +168,45 @@ const Post = () => {
     { id: 900, name: "역사", track: kdc_history },
   ];
 
-  console.log(kdc[0].track);
+
+  const handleItemClick = (e) => {
+    const target = kdc.filter((item)=>{
+      return item.name === e.target.outerText
+    })
+    setRepresentative_KDC_Element(target[0]);
+    setRepresentative_KDC_Track(target[0].track);
+    setRepresentative_KDC((prev)=>!prev);
+  };
 
   return (
-    <Grid>
-      <Grid.Row style={{textAlign:"center"}}>
-      {kdc.map((item) => (
-          <div style={{ marginBottom: 30 }}>
-            <p>{item.name}</p>
-            <div style={{ marginLeft: 40 }}>
-              {item.track.map((item2) => (
-                <strong>
-                  <p>{item2.name}</p>
-                </strong>
-              ))}
-            </div>
-          </div>
-        ))}
-      </Grid.Row>
-    </Grid>
+    <Container textAlign="center">
+      <Header as="h2" icon>
+        <Icon name="book" />
+        게시글 작성하기
+        <Header.Subheader>
+          작성할 게시글의 장르를 먼저 선택해주세요.
+        </Header.Subheader>
+      </Header>
+      {representative_KDC ? (
+        <>
+          <Header>
+            <p>{representative_KDC_Element.name}</p>
+          </Header>
+        </>
+      ) : (
+        <>
+          <Menu vertical size="massive">
+            <Dropdown item text="장르 선택하기">
+              <Dropdown.Menu>
+                {kdc.map((item) => (
+                  <Dropdown.Item key = {item.id} onClick={handleItemClick}>{item.name}</Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu>
+        </>
+      )}
+    </Container>
   );
 };
 
