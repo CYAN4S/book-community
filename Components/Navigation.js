@@ -28,6 +28,8 @@ export default function Navigation() {
     activeItem = "explore";
   } else if (router.pathname === "/profile") {
     activeItem = "profile";
+  } else if (router.pathname === "/post") {
+    activeItem = "post";
   }
 
   // actual movement
@@ -40,6 +42,8 @@ export default function Navigation() {
       router.push("/explore");
     } else if (data.name === "PROFILE") {
       router.push("/profile");
+    } else if (data.name === "POST") {
+      router.push("/post");
     }
   }
 
@@ -48,7 +52,7 @@ export default function Navigation() {
     <>
       {isSignedIn ? (
         <>
-          <Menu inverted color={"teal"} widths={4} attached='top' tabular>
+          <Menu inverted color={"teal"} widths={5} attached='top' tabular>
             <Menu.Item
               name="HOME"
               active={activeItem === "home"}
@@ -57,6 +61,11 @@ export default function Navigation() {
             <Menu.Item
               name="EXPLORE"
               active={activeItem === "explore"}
+              onClick={goLink}
+            />
+            <Menu.Item
+              name="POST"
+              active={activeItem === "post"}
               onClick={goLink}
             />
             <Menu.Item
