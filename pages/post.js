@@ -16,7 +16,6 @@ import {
 import { useState } from "react";
 
 const Post = () => {
-
   // 대표장르가 선택되었는가?
   const [representative_KDC, setRepresentative_KDC] = useState(false);
 
@@ -27,7 +26,9 @@ const Post = () => {
   const [representative_KDC_Track, setRepresentative_KDC_Track] = useState([]);
 
   // 선택된 대표장르에 해당하는 obj 전체를 저장하는 배열
-  const [representative_KDC_Element, setRepresentative_KDC_Element] = useState([]);
+  const [representative_KDC_Element, setRepresentative_KDC_Element] = useState(
+    []
+  );
 
   // 선택된 세부장르의 이름
   const [detail_KDC_Element, setDetail_KDC_Element] = useState("");
@@ -179,35 +180,34 @@ const Post = () => {
     { id: 900, name: "역사", track: kdc_history },
   ];
 
-
   const handleItemClick = (e) => {
-    const target = kdc.filter((item)=>{
-      return item.name === e.target.outerText
-    })
+    const target = kdc.filter((item) => {
+      return item.name === e.target.outerText;
+    });
     setRepresentative_KDC_Element(target[0]);
     setRepresentative_KDC_Track(target[0].track);
-    setRepresentative_KDC((prev)=>!prev);
+    setRepresentative_KDC((prev) => !prev);
 
-    if(target[0].name === "총류"){
+    if (target[0].name === "총류") {
       setKdc_Arr(kdc_general);
-    } else if(target[0].name === "철학") {
+    } else if (target[0].name === "철학") {
       setKdc_Arr(kdc_philosophy);
-    } else if(target[0].name === "종교") {
+    } else if (target[0].name === "종교") {
       setKdc_Arr(kdc_religion);
-    } else if(target[0].name === "사회과학") {
+    } else if (target[0].name === "사회과학") {
       setKdc_Arr(kdc_social_science);
-    } else if(target[0].name === "자연과학") {
-      setKdc_Arr(kdc_natural_science );
-    } else if(target[0].name === "기술과학") {
+    } else if (target[0].name === "자연과학") {
+      setKdc_Arr(kdc_natural_science);
+    } else if (target[0].name === "기술과학") {
       setKdc_Arr(kdc_technology_science);
-    } else if(target[0].name === "예술") {
+    } else if (target[0].name === "예술") {
       setKdc_Arr(kdc_art);
-    } else if(target[0].name === "언어") {
+    } else if (target[0].name === "언어") {
       setKdc_Arr(kdc_lng);
-    } else if(target[0].name === "문학") {
+    } else if (target[0].name === "문학") {
       setKdc_Arr(kdc_literature);
-    } else if(target[0].name === "역사") {
-      setKdc_Arr(kdc_history );
+    } else if (target[0].name === "역사") {
+      setKdc_Arr(kdc_history);
     } else {
       alert("치명적인 오류");
     }
@@ -216,7 +216,7 @@ const Post = () => {
   const handleDetailItemClick = (e) => {
     setDetail_KDC_Element(e.target.outerText);
     setDetail_KDC(true);
-  }
+  };
 
   const retrySelect = () => {
     setRepresentative_KDC(false);
@@ -225,7 +225,7 @@ const Post = () => {
     setRepresentative_KDC_Element([]);
     setDetail_KDC_Element("");
     setKdc_Arr([]);
-  }
+  };
 
   return (
     <Container textAlign="center">
@@ -236,17 +236,27 @@ const Post = () => {
           작성할 게시글의 장르를 먼저 선택해주세요.
         </Header.Subheader>
       </Header>
+
       {representative_KDC ? (
-        <>
-          <Card fluid color='teal' header = {`장르로 "${representative_KDC_Element.name}"을 선택하셨습니다.`}/>
-        </>
+          <Card>
+            <Image src="./represent.jpg" wrapped ui={false} />
+            <Card.Content>
+              <Card.Header>선택된 장르</Card.Header>
+              <Card.Meta>대표</Card.Meta>
+              <Card.Description>
+                {representative_KDC_Element.name}
+              </Card.Description>
+            </Card.Content>
+          </Card>
       ) : (
         <>
           <Menu vertical size="massive">
             <Dropdown item text="장르 선택하기">
               <Dropdown.Menu>
                 {kdc.map((item) => (
-                  <Dropdown.Item key = {item.id} onClick={handleItemClick}>{item.name}</Dropdown.Item>
+                  <Dropdown.Item key={item.id} onClick={handleItemClick}>
+                    {item.name}
+                  </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
@@ -255,36 +265,51 @@ const Post = () => {
       )}
 
       {detail_KDC ? (
-        <>
-          <Card fluid color='violet' header = {`세부장르로 "${detail_KDC_Element}"을 선택하셨습니다.`}/>
-          
-        </>
+
+          <Card>
+            <Image src="./detail.jpg" wrapped ui={false} />
+            <Card.Content>
+              <Card.Header>선택된 장르</Card.Header>
+              <Card.Meta>세부</Card.Meta>
+              <Card.Description>{detail_KDC_Element}</Card.Description>
+            </Card.Content>
+          </Card>
+
       ) : (
         <>
-          {representative_KDC 
-          ?
-          <>
-            <Menu vertical size="massive">
-              <Dropdown item text="세부 장르 선택하기">
-                <Dropdown.Menu>
-                  {kdc_Arr.map((item) => (
-                    <Dropdown.Item key = {item.id} onClick={handleDetailItemClick}>{item.name}</Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu>
-          </> : <></>}
+          {representative_KDC ? (
+            <>
+              <Menu vertical size="massive">
+                <Dropdown item text="세부 장르 선택하기">
+                  <Dropdown.Menu>
+                    {kdc_Arr.map((item) => (
+                      <Dropdown.Item
+                        key={item.id}
+                        onClick={handleDetailItemClick}
+                      >
+                        {item.name}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu>
+            </>
+          ) : (
+            <></>
+          )}
         </>
       )}
 
-      {representative_KDC && detail_KDC && 
-        <Button 
-        onClick={retrySelect} 
-        content = "다시 선택하기" 
-        labelPosition='left' 
-        icon="redo"
-        inverted color='red'/>
-      }
+      {representative_KDC && detail_KDC && (
+        <Button
+          onClick={retrySelect}
+          content="다시 선택하기"
+          labelPosition="left"
+          icon="redo"
+          inverted
+          color="red"
+        />
+      )}
     </Container>
   );
 };
