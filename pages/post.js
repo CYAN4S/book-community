@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   Container,
   Dropdown,
   Form,
@@ -16,13 +17,23 @@ import { useState } from "react";
 
 const Post = () => {
 
-  // 장르 선택여부 확인
+  // 대표장르가 선택되었는가?
   const [representative_KDC, setRepresentative_KDC] = useState(false);
+
+  // 세부장르가 선택되었는가?
   const [detail_KDC, setDetail_KDC] = useState(false);
 
-  // 장르 선택요소 확인
+  // 대표장르가 선택되었을 때, track 이름을 가진 value 값의 배열이 저장됨
   const [representative_KDC_Track, setRepresentative_KDC_Track] = useState([]);
+
+  // 선택된 대표장르에 해당하는 obj 전체를 저장하는 배열
   const [representative_KDC_Element, setRepresentative_KDC_Element] = useState([]);
+
+  // 선택된 세부장르의 이름
+  const [detail_KDC_Element, setDetail_KDC_Element] = useState("");
+
+  // 세부 장르 출력을 위한 배열명 저장 (map으로 다루어짐)
+  const [kdc_Arr, setKdc_Arr] = useState([]);
 
   // 총류
   const kdc_general = [
@@ -176,7 +187,45 @@ const Post = () => {
     setRepresentative_KDC_Element(target[0]);
     setRepresentative_KDC_Track(target[0].track);
     setRepresentative_KDC((prev)=>!prev);
+
+    if(target[0].name === "총류"){
+      setKdc_Arr(kdc_general);
+    } else if(target[0].name === "철학") {
+      setKdc_Arr(kdc_philosophy);
+    } else if(target[0].name === "종교") {
+      setKdc_Arr(kdc_religion);
+    } else if(target[0].name === "사회과학") {
+      setKdc_Arr(kdc_social_science);
+    } else if(target[0].name === "자연과학") {
+      setKdc_Arr(kdc_natural_science );
+    } else if(target[0].name === "기술과학") {
+      setKdc_Arr(kdc_technology_science);
+    } else if(target[0].name === "예술") {
+      setKdc_Arr(kdc_art);
+    } else if(target[0].name === "언어") {
+      setKdc_Arr(kdc_lng);
+    } else if(target[0].name === "문학") {
+      setKdc_Arr(kdc_literature);
+    } else if(target[0].name === "역사") {
+      setKdc_Arr(kdc_history );
+    } else {
+      alert("치명적인 오류");
+    }
   };
+
+  const handleDetailItemClick = (e) => {
+    setDetail_KDC_Element(e.target.outerText);
+    setDetail_KDC(true);
+  }
+
+  const retrySelect = () => {
+    setRepresentative_KDC(false);
+    setDetail_KDC(false);
+    setRepresentative_KDC_Track([]);
+    setRepresentative_KDC_Element([]);
+    setDetail_KDC_Element("");
+    setKdc_Arr([]);
+  }
 
   return (
     <Container textAlign="center">
@@ -189,9 +238,7 @@ const Post = () => {
       </Header>
       {representative_KDC ? (
         <>
-          <Header>
-            <p>{representative_KDC_Element.name}</p>
-          </Header>
+          <Card fluid color='teal' header = {`장르로 "${representative_KDC_Element.name}"을 선택하셨습니다.`}/>
         </>
       ) : (
         <>
@@ -206,6 +253,38 @@ const Post = () => {
           </Menu>
         </>
       )}
+
+      {detail_KDC ? (
+        <>
+          <Card fluid color='violet' header = {`세부장르로 "${detail_KDC_Element}"을 선택하셨습니다.`}/>
+          
+        </>
+      ) : (
+        <>
+          {representative_KDC 
+          ?
+          <>
+            <Menu vertical size="massive">
+              <Dropdown item text="세부 장르 선택하기">
+                <Dropdown.Menu>
+                  {kdc_Arr.map((item) => (
+                    <Dropdown.Item key = {item.id} onClick={handleDetailItemClick}>{item.name}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </> : <></>}
+        </>
+      )}
+
+      {representative_KDC && detail_KDC && 
+        <Button 
+        onClick={retrySelect} 
+        content = "다시 선택하기" 
+        labelPosition='left' 
+        icon="redo"
+        inverted color='red'/>
+      }
     </Container>
   );
 };
