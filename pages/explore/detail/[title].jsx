@@ -166,7 +166,7 @@ export default function Title({ books }) {
   };
   // 내 책으로 등록하기 기능 소스코드 끝 부분
 
-  function onClick(e) {
+  function returnClick(e) {
     e.preventDefault();
     router.back();
   }
@@ -273,7 +273,7 @@ export default function Title({ books }) {
                               : "내 책으로 등록하기"}
                           </Button>
                         )}
-                        <Button basic color="black" onClick={onClick}>
+                        <Button basic color="black" onClick={returnClick}>
                           돌아가기
                         </Button>
                       </div>

@@ -15,6 +15,7 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { useState } from "react";
+import Link from "next/link";
 
 const Post = () => {
   // 대표장르가 선택되었는가?
@@ -289,7 +290,7 @@ const Post = () => {
         {representative_KDC && detail_KDC && (
           <div style={{margin:30, textAlign:"center"}}>
             <Grid centered columns={2}>
-              <Grid.Row Column={2}>
+              <Grid.Row column={2}>
                 <Grid.Column width = {3} centered >
                   <Card>
                     <Image src="./represent.jpg" wrapped ui={false} />
@@ -323,15 +324,18 @@ const Post = () => {
               color="red"
               style={{marginTop:100,marginLeft : 8}}
             />
-            <Button
-              onClick={retrySelect}
-              content="선택 완료하기"
-              labelPosition="left"
-              icon="redo"
-              inverted
-              color="violet"
-              style={{marginTop:100, marginLeft:50}}
-            />
+            
+            <Link href={`./post/${representative_KDC_Element.name}/${detail_KDC_Element}`}>
+              <Button
+                content="선택 완료하기"
+                labelPosition="left"
+                icon="redo"
+                inverted
+                color="violet"
+                style={{marginTop:100, marginLeft:50}}
+              />             
+            </Link>
+           
           </div>
         )}
 

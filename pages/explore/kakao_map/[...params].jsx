@@ -14,7 +14,7 @@ export default function LibMap({ MapData }) {
   const router = useRouter();
 
   // 뒤로가기 버튼 click event
-  function onClick(e) {
+  function returnClick(e) {
     e.preventDefault();
     router.back();
   }
@@ -49,7 +49,7 @@ export default function LibMap({ MapData }) {
           </MapInfoWindow>
         </Map>
 
-        <Button color = "black" onClick={onClick} style={{ marginTop: 10, marginBottom: 20 }}>
+        <Button color = "black" onClick={returnClick} style={{ marginTop: 10, marginBottom: 20 }}>
           돌아가기
         </Button>
       </div>

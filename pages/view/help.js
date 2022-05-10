@@ -56,7 +56,7 @@ const Help = () => {
               Kinds
             </Header>
           </Divider>
-          <Grid columns={3}>
+          <Grid columns={3} style={{marginLeft : 10}}>
             <Grid.Row centered columns={4} color="black" textAlign="center">
               <Grid.Column>
                 <Popup
