@@ -190,28 +190,28 @@ export default function Profile() {
             ) : (
               <List>
                 {subscribers.map((user) => (
-                  <List.Item key={v4()}>
+                  <List.Item key={v4()} style={{marginBottom : 5}}>
                     {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
                       {
                         user.uid === currentUser.uid ?
                         <>
                           <List.Header>
-                              {user.displayName ?? "게스트"}
+                            <strong style={{fontSize : 15}}> ✅ {user.displayName ?? "게스트"} </strong>
                           </List.Header>
                         </>
                         :
                         <>
                           <Link href={`/profile/${user.uid}`}>
                             <List.Header as="a">
-                              {user.displayName ?? "게스트"}
+                              <strong style={{fontSize : 15}}> ✅ {user.displayName ?? "게스트"} </strong>
                             </List.Header>
                           </Link>
                         </>
                       }
                       
                       <List.Description>
-                        {user.statusMsg ?? ""}
+                        <p style={{fontSize : 12, marginLeft : 30}}> { user.statusMsg ? `상태메시지 : ${user.statusMsg}` : "상태메시지가 없습니다."} </p>
                       </List.Description>
                     </List.Content>
                   </List.Item>
