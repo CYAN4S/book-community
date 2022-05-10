@@ -23,8 +23,8 @@ import { Map, MapInfoWindow, MapMarker } from "react-kakao-maps-sdk";
 import Script from "next/script";
 
 export default function PostArea({
-  representative_KDC_Element,
-  detail_KDC_Element,
+  representative_KDC_Name,
+  detail_KDC_Name,
 }) {
   const router = useRouter();
 
@@ -46,8 +46,8 @@ export default function PostArea({
     <>
       <Message
         info
-        header={`선택된 대표 장르는 "${representative_KDC_Element}" 입니다.`}
-        content={`선택된 세부 장르는 "${detail_KDC_Element}" 입니다.`}
+        header={`선택된 대표 장르는 "${representative_KDC_Name}" 입니다.`}
+        content={`선택된 세부 장르는 "${detail_KDC_Name}" 입니다.`}
       />
 
       <Message warning>
@@ -114,9 +114,6 @@ export default function PostArea({
           </Grid.Row>
         </Grid>
       </Grid>
-      <style jsx>{`
-      
-      `}</style>
     </>
   );
 }
@@ -127,8 +124,8 @@ export async function getServerSideProps({ params: { params } }) {
   console.log(params);
   return {
     props: {
-      representative_KDC_Element: representative_KDC_Element,
-      detail_KDC_Element: detail_KDC_Element,
+      representative_KDC_Name: representative_KDC_Element,
+      detail_KDC_Name: detail_KDC_Element,
     },
   };
 }
