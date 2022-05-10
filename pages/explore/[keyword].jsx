@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { Button, Grid, Icon, Table } from "semantic-ui-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";

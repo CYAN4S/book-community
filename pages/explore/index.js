@@ -1,21 +1,13 @@
 import React from "react";
-
 import { Button, Header } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Explorer() {
   const [keyword, setKeyword] = useState("");
-
-  const router = useRouter();
   useEffect(() => {
     setKeyword("");
   }, []);
-
-  function goKeyword(e, data) {
-    router.push(`/explore/${keyword}`);
-  }
 
   return (
     <>

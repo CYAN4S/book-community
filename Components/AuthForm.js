@@ -7,7 +7,7 @@ import { useState } from "react";
 import { authService as auth } from "../firebaseConfig";
 import { Button, Form, Header, Message, Divider } from "semantic-ui-react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { dbService as db } from "../firebaseConfig";
 
 export default function AuthForm() {

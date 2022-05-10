@@ -6,21 +6,12 @@ import {
   Header,
   Icon,
   Label,
-  List,
   Message,
   Popup,
-  Rating,
-  Table,
 } from "semantic-ui-react";
-import { Image, Segment } from "semantic-ui-react";
+import { Image} from "semantic-ui-react";
 import { useRouter } from "next/router";
-import { decode } from "he";
-import Head from "next/head";
-import { v4 } from "uuid";
 import { useState, useEffect } from "react";
-
-import { Map, MapInfoWindow, MapMarker } from "react-kakao-maps-sdk";
-import Script from "next/script";
 
 export default function PostArea({
   representative_KDC_Name,

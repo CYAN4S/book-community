@@ -3,8 +3,6 @@ import {
   Divider,
   Header,
   Icon,
-  IconGroup,
-  List,
   Table,
 } from "semantic-ui-react";
 import Link from "next/link";

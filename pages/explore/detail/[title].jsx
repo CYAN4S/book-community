@@ -1,17 +1,12 @@
 import {
   Button,
-  Checkbox,
   Divider,
   Grid,
   Header,
   Icon,
   Input,
-  Label,
   List,
-  Radio,
-  Container,
 } from "semantic-ui-react";
-import { Image, Segment } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { decode } from "he";
@@ -37,7 +32,6 @@ export default function Title({ books }) {
     image,
     author,
     price,
-    discount,
     publisher,
     pubdate,
     isbn,
