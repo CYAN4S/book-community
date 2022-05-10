@@ -3,16 +3,11 @@ import {
   Card,
   Container,
   Dropdown,
-  Form,
   Grid,
-  GridColumn,
   Header,
   Icon,
   Image,
-  Input,
-  Label,
   Menu,
-  Segment,
 } from "semantic-ui-react";
 import { useState } from "react";
 import Link from "next/link";

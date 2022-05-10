@@ -1,28 +1,17 @@
 import {
-  Button,
   Card,
   Container,
   Divider,
-  Form,
   Header,
-  Input,
-  List,
-  Placeholder,
-  Segment,
-  Sidebar,
-  TextArea,
   Image,
-  Menu,
   Icon,
-  Label,
   Grid,
-  Checkbox,
-  Item,
   Popup,
   Rating,
 } from "semantic-ui-react";
 import React from "react";
 import { useRouter } from "next/router";
+
 const Help = () => {
   const router = useRouter();
   function returnClick(e) {

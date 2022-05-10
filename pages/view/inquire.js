@@ -1,29 +1,19 @@
 import {
   Button,
-  Card,
   Divider,
   Form,
   Header,
   Input,
-  List,
-  Placeholder,
   Segment,
-  Sidebar,
   TextArea,
-  Image,
-  Menu,
   Icon,
-  Label,
-  Grid,
-  Checkbox,
-  Item,
   Container,
   Accordion,
-  Select,
 } from "semantic-ui-react";
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+
 const Inquire = () => {
   const [formOpen, setFormOpen] = useState(false);
   const router = useRouter();

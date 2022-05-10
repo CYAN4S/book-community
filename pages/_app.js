@@ -1,9 +1,8 @@
 import "../styles/globals.css";
 import "semantic-ui-css/semantic.min.css";
 import Navigation from "../Components/Navigation";
-import { authService } from "../firebaseConfig";
 import Script from "next/script";
-import { Header, Image } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 
 // React
 import React from "react";
@@ -12,12 +11,11 @@ import { useState, useEffect } from "react";
 // Firebase
 import { onAuthStateChanged } from "firebase/auth";
 import { authService as auth, dbService as db } from "../firebaseConfig";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
 
 import { onUserDocSnapshot } from "../utils/functions";
 
 // Recoil
-import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 import { currentUserState } from "../utils/hooks";
 
 function MyApp({ Component, pageProps }) {

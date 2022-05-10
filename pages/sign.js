@@ -1,5 +1,5 @@
 import AuthForm from "../Components/AuthForm";
-import { Button, Divider, Header } from "semantic-ui-react";
+import { Divider, Header } from "semantic-ui-react";
 
 export default function Sign() {
   return (
@@ -7,9 +7,7 @@ export default function Sign() {
       <Header as="h3" style={{ paddingTop: 40 }} color="blue">
         북스탬프
       </Header>
-
       <Divider />
-
       <AuthForm />
 
       <div>
