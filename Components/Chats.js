@@ -74,7 +74,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     <>
       {genre_chat ? (
         <div>
-          genre_chat에 알맞은 css를 제작하세요
+          genre_chat에 알맞은 css를 제작하세요. 사진 갖고오는 기능이 필요함
           <div style={{ marginBottom: 10 }}>
             <Item style={{ display: "flex", alignItems: "center" }}>
               <Link href={`/profile/${chat.createrId}`}>

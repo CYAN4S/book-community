@@ -49,7 +49,7 @@ const Post = () => {
   // 철학
   const kdc_philosophy = [
     { id: 110, name: "형이상학" },
-    { id: 120, name: "인식론_인과론_인간학" },
+    { id: 120, name: "인식론, 인과론, 인간학" },
     { id: 130, name: "철학의 체계" },
     { id: 140, name: "경학" },
     { id: 150, name: "동양철학, 사상" },
