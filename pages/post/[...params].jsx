@@ -9,7 +9,7 @@ import {
   Message,
   Popup,
 } from "semantic-ui-react";
-import { Image} from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 import ChatFactory from "../../Components/ChatFactory";
 import Chats from "../../Components/Chats";
 import { useRouter } from "next/router";
@@ -17,11 +17,9 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService, dbService } from "../../firebaseConfig";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import Link from "next/link";
 
-export default function PostArea({
-  representative_KDC_Name,
-  detail_KDC_Name,
-}) {
+export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
   const router = useRouter();
 
   // 서버의 현재시간을 담을 state
@@ -50,7 +48,10 @@ export default function PostArea({
     setTime(new Date().getTime());
   }, []);
 
-  const q = query(collection(dbService, collectionName), orderBy("createdAt", "desc"));
+  const q = query(
+    collection(dbService, collectionName),
+    orderBy("createdAt", "desc")
+  );
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
@@ -62,7 +63,6 @@ export default function PostArea({
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
-
 
   return (
     <>
@@ -88,24 +88,35 @@ export default function PostArea({
       <Divider horizontal style={{ marginTop: 20 }}>
         <Header as="h4">
           <Icon name="clipboard" />
-          게시하기
+          게시된 글
         </Header>
       </Divider>
 
-      <ChatFactory genre_chat={collectionName}/>
-      {/* 게시글 */}
-      <div style={{marginTop:30}}>
-            {chats.length ? (
-              chats.map((chat) => (
-                <div key={chat.id} style={{marginBottom:30}}>
-                  <Chats chat={chat} isOwner={chat.createrId === userId} genre_chat={collectionName} />
-                </div>
-              ))
-            ) : (
-              <p>채팅목록이 없습니다</p>
-            )}
-          </div>
+      <Button.Group basic size="small" right>
+        <Link href={`./${collectionName}`}>
+          <Button icon="pencil alternate" content="글 작성하기" />
+        </Link>
+        <Button icon="redo" content="새로고침" />
+        <Button icon="comment alternate outline" content="문의하기" />
+        <Button icon="question" content="도움말" />
+      </Button.Group>
 
+      {/* 게시글 */}
+      <div style={{ marginTop: 30 }}>
+        {chats.length ? (
+          chats.map((chat) => (
+            <div key={chat.id} style={{ marginBottom: 30 }}>
+              <Chats
+                chat={chat}
+                isOwner={chat.createrId === userId}
+                genre_chat={collectionName}
+              />
+            </div>
+          ))
+        ) : (
+          <p>채팅목록이 없습니다</p>
+        )}
+      </div>
     </>
   );
 }
