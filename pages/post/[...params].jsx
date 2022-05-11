@@ -9,15 +9,14 @@ import {
   Message,
   Popup,
 } from "semantic-ui-react";
-import { Image } from "semantic-ui-react";
-import ChatFactory from "../../Components/ChatFactory";
-import Chats from "../../Components/Chats";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService, dbService } from "../../firebaseConfig";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
+
+import CardChats from "../../Components/CardChats";
 
 export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
   const router = useRouter();
@@ -103,22 +102,20 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       </Button.Group>
 
       {/* 게시글 */}
-      <div style={{ marginTop: 30 }}>
-        {chats.length ? (
-          chats.map((chat) => (
-            <div key={chat.id} style={{ marginBottom: 30 }}>
-              {console.log(chat)}
-              <Chats
-                chat={chat}
+
+      {chats.length ? (
+        chats.map((chat) => (
+          <div key={chat.id} style={{ marginBottom: 30 }}>
+            <CardChats chat={chat}
                 isOwner={chat.createrId === userId}
-                genre_chat={collectionName}
-              />
-            </div>
-          ))
-        ) : (
-          <p>채팅목록이 없습니다</p>
-        )}
-      </div>
+                genre_chat={collectionName}/>
+                
+            
+          </div>
+        ))
+      ) : (
+        <p>채팅목록이 없습니다</p>
+      )}
     </>
   );
 }
@@ -126,7 +123,6 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
 export async function getServerSideProps({ params: { params } }) {
   let [representative_KDC_Element, detail_KDC_Element] = params;
 
-  console.log(params);
   return {
     props: {
       representative_KDC_Name: representative_KDC_Element,
