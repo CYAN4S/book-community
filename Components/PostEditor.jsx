@@ -18,12 +18,12 @@ import {
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 
-export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
+export default function PostEditor({ chat, purpose, uid, detailbook_chat, genre_chat }) {
   const [newChat, setNewChat] = useState(purpose == "reply" ? "" : chat?.text);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
 
-  const collectionName = detailbook_chat ?? "chat"
+  const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
 
   const onEditSubmit = async () => {
     if (imgEdit) {

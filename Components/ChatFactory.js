@@ -6,10 +6,13 @@ import { v4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
-export default function ChatFactory({ detailbook_chat }) {
+export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [chat, setChat] = useState("");
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
+
+  const collection = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
+  console.log(`${collection}임`);
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -45,7 +48,7 @@ export default function ChatFactory({ detailbook_chat }) {
       users: [],
     };
     await addDoc(
-      collection(dbService, detailbook_chat ?? "chat"),
+      collection(dbService, collection),
       chatObj
     )
       .then(() => console.log("전송완료"))

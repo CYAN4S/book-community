@@ -10,8 +10,13 @@ import {
   Popup,
 } from "semantic-ui-react";
 import { Image} from "semantic-ui-react";
+import ChatFactory from "../../Components/ChatFactory";
+import Chats from "../../Components/Chats";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { authService, dbService } from "../../firebaseConfig";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 export default function PostArea({
   representative_KDC_Name,
@@ -22,16 +27,42 @@ export default function PostArea({
   // 서버의 현재시간을 담을 state
   const [time, setTime] = useState(0);
 
+  // chat data, userId
+  const [chats, setChats] = useState([]);
+  const [userId, setUserId] = useState("");
+
+  const collectionName = `genre_chat_${representative_KDC_Name}_${detail_KDC_Name}`;
+
   // 뒤로가기 버튼 click event
   function returnClick(e) {
     e.preventDefault();
     router.back();
   }
 
+  onAuthStateChanged(authService, (user) => {
+    if (user) {
+      setUserId(user.uid);
+    }
+  });
+
   useEffect(() => {
     // 서버 현재시간
     setTime(new Date().getTime());
   }, []);
+
+  const q = query(collection(dbService, collectionName), orderBy("createdAt", "desc"));
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      const chatArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setChats(chatArray);
+      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
+    });
+  }, []);
+
 
   return (
     <>
@@ -61,50 +92,20 @@ export default function PostArea({
         </Header>
       </Divider>
 
+      <ChatFactory genre_chat={collectionName}/>
       {/* 게시글 */}
-      <Grid style={{ marginLeft: 10 }}>
-        <Grid columns={3}>
-          <Grid.Row centered columns={4} color="white" textAlign="center">
-            <Grid.Column>
-              <div style={{ display: "flex" }}>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>게시글 제목</Card.Header>
-                        <Card.Description>게시글 작성자</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header>클릭으로 확인하기</Popup.Header>
-                </Popup>
-                {/*
+      <div style={{marginTop:30}}>
+            {chats.length ? (
+              chats.map((chat) => (
+                <div key={chat.id} style={{marginBottom:30}}>
+                  <Chats chat={chat} isOwner={chat.createrId === userId} genre_chat={collectionName} />
+                </div>
+              ))
+            ) : (
+              <p>채팅목록이 없습니다</p>
+            )}
+          </div>
 
-               : 게시시간이 1분 미만인 것에 대해 new
-               : 서버시간 - 작성시간이 60만 밀리초(10분) 이하이면 new
-              */}
-
-                {new Date().getTime() - time < 600000 ? (
-                  <>
-                    <Label
-                      as="a"
-                      color="red"
-                      tag
-                      style={{ width: 60, height: "5%", textAlign: "center" }}
-                    >
-                      new
-                    </Label>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Grid>
     </>
   );
 }

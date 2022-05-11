@@ -280,7 +280,7 @@ export async function getServerSideProps({ params: { params } }) {
       "&format=json"
   ); // 보유도서관 검색
   let lib = await res.json();
-  console.log(lib.response.libs[1]);
+  console.log(lib.response);
   const libCode = lib.response.libs.map((lib) => lib.lib.libCode);
 
   if (libCode.length) {
