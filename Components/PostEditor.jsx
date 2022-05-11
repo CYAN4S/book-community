@@ -25,6 +25,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat, genre_
 
   const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
 
+  console.log(collectionName);
   const onEditSubmit = async () => {
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
