@@ -5,14 +5,17 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { v4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [chat, setChat] = useState("");
+  const [title, setTitle] = useState("");
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
 
+  const router = useRouter();
+
   const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
-  console.log(`${collectionName}임`);
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -41,6 +44,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     }
 
     const chatObj = {
+      title: title,
       text: chat,
       createdAt: Date.now(),
       createrId: userObj.uid,
@@ -56,6 +60,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
     setChat("");
     setImgFileString("");
+    router.back();
   };
 
   const onFileChange = (event) => {
@@ -81,7 +86,64 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       {genre_chat 
       ? 
       <>
-       <p>장르에 맞는 chat input을 입력하세요</p>
+       <Form onSubmit={onNewPostSubmit}>
+        <Form.Field>
+          <Form.Input
+           fluid 
+           label='제목' 
+           value={title}
+           onChange={(e) => setTitle(e.target.value)}
+           placeholder='글의 제목을 입력해주세요.'
+           required />
+          <Form.TextArea
+            label='내용'
+            value={chat}
+            onChange={(e) => setChat(e.target.value)}
+            placeholder='글의 내용을 입력해주세요.'
+            required
+          />
+        </Form.Field>
+        <div>
+          <Label basic color='orange' pointing='right' htmlFor="attach-file" >
+            <p>Add photos</p>
+          </Label>
+
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            id="attach-file"
+            icon="file image"
+          />
+        </div>
+        
+        {imgFileString && (
+          <div>
+            <Image
+              fluid
+              label={{
+                color: 'red',
+                onClick : onClearPhotoClick,
+                icon: 'remove circle',
+                size : "large",
+                ribbon: true,
+              }}
+              src={imgFileString}
+              style={{
+                backgroundImage: imgFileString,
+                width: "40%",
+                height: "40%",
+                marginTop : 10,
+                marginLeft : 20,
+              }}
+            />
+          </div>
+        )}
+        <Button icon labelPosition='right' color="teal" style={{ marginTop: 15 }}>
+          보내기
+          <Icon name='right arrow' />
+        </Button>
+      </Form>
       </>
       : 
       <>

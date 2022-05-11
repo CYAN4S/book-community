@@ -52,6 +52,7 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
     collection(dbService, collectionName),
     orderBy("createdAt", "desc")
   );
+
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
@@ -106,6 +107,7 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
         {chats.length ? (
           chats.map((chat) => (
             <div key={chat.id} style={{ marginBottom: 30 }}>
+              {console.log(chat)}
               <Chats
                 chat={chat}
                 isOwner={chat.createrId === userId}
