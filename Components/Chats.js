@@ -30,7 +30,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
-      await deleteDoc(doc(dbService, collectionName))
+      await deleteDoc(doc(dbService, collectionName, `${chat.id}`))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
         })
