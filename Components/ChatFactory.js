@@ -11,8 +11,8 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
 
-  const collection = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
-  console.log(`${collection}임`);
+  const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
+  console.log(`${collectionName}임`);
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -48,7 +48,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       users: [],
     };
     await addDoc(
-      collection(dbService, collection),
+      collection(dbService, collectionName),
       chatObj
     )
       .then(() => console.log("전송완료"))

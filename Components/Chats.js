@@ -15,6 +15,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [doLike, setDoLike] = useState(false);
   
   const displayName = useUserDisplayName(chat.createrId)
+  const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -28,7 +29,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
-      await deleteDoc(doc(dbService, detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat")))
+      await deleteDoc(doc(dbService, collectionName))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
         })
@@ -50,12 +51,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     const doLike = chat.users.includes(currentUid);
 
     if (doLike) {
-      updateDoc(doc(dbService, detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat"), `${chat.id}`), {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
         users: chat.users.filter((content) => content != currentUid),
       });
       setDoLike(false);
     } else {
-      updateDoc(doc(dbService, detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat"), `${chat.id}`), {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
         users: chat.users.concat(currentUid),
       });
       setDoLike(true);
