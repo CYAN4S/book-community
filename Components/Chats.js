@@ -13,9 +13,13 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
-  
-  const displayName = useUserDisplayName(chat.createrId)
-  const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
+
+  const displayName = useUserDisplayName(chat.createrId);
+  const collectionName = detailbook_chat
+    ? detailbook_chat
+    : genre_chat
+    ? genre_chat
+    : "chat";
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -68,70 +72,114 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   return (
     <>
-      <div>
-        <div style={{ marginBottom: 10 }}>
-          <Item style={{display:"flex", alignItems: "center"}}>
-            <Link href={`/profile/${chat.createrId}`}>
-            <a>
-              <Label style={{backgroundColor:"white", width:60, height:60}}>
-                <Item.Image
-                  avatar
-                  spaced="right"
-                  src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
-                  size = "large"
-                />
-                <p style={{marginTop:3}}> {displayName} </p>
-              </Label>
-            </a>
-          </Link>
-           <Item.Content style={{marginLeft:3, marginBottom:5}}>
-             <Item.Description>
-             <strong> 
-               {chat.text}
-            </strong>
-            <p style={{marginTop:3}}> <Icon name="clock"/>{new Date(chat.createdAt).toLocaleString()}</p>
-             </Item.Description>
-          </Item.Content>
-          </Item>
-          
-          
-          {chat.fileUrl && (
-            <Image src={chat.fileUrl} style={{ width: "40%", height: "40%", marginTop:10, marginBottom:5}} />
+      {genre_chat ? (
+        <div>
+          genre_chat에 알맞은 css를 제작하세요
+        </div>
+      ) : (
+        <div>
+          <div style={{ marginBottom: 10 }}>
+            <Item style={{ display: "flex", alignItems: "center" }}>
+              <Link href={`/profile/${chat.createrId}`}>
+                <a>
+                  <Label
+                    style={{
+                      backgroundColor: "white",
+                      width: 60,
+                      height: 60,
+                    }}
+                  >
+                    <Item.Image
+                      avatar
+                      spaced="right"
+                      src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
+                      size="large"
+                    />
+                    <p style={{ marginTop: 3 }}> {displayName} </p>
+                  </Label>
+                </a>
+              </Link>
+              <Item.Content style={{ marginLeft: 3, marginBottom: 5 }}>
+                <Item.Description>
+                  <strong>{chat.text}</strong>
+                  <p style={{ marginTop: 3 }}>
+                    {" "}
+                    <Icon name="clock" />
+                    {new Date(chat.createdAt).toLocaleString()}
+                  </p>
+                </Item.Description>
+              </Item.Content>
+            </Item>
+
+            {chat.fileUrl && (
+              <Image
+                src={chat.fileUrl}
+                style={{
+                  width: "40%",
+                  height: "40%",
+                  marginTop: 10,
+                  marginBottom: 5,
+                }}
+              />
+            )}
+          </div>
+          <Button
+            labelPosition="right"
+            onClick={onLikeClick}
+            style={{ marginRight: 10 }}
+          >
+            <Button color={doLike ? "red" : "grey"}>
+              <Icon name="heart" />
+            </Button>
+            <Label as="a" basic color={doLike ? "red" : "grey"} pointing="left">
+              {chat.users.length}
+            </Label>
+          </Button>
+          <Button inverted color="blue" onClick={onReplyClick}>
+            댓글
+          </Button>
+
+          {isOwner && (
+            <>
+              <Button inverted color="red" onClick={onDeleteClick}>
+                삭제
+              </Button>
+              <Button inverted color="green" onClick={onEditClick}>
+                편집
+              </Button>
+            </>
+          )}
+
+          {editing && (
+            <div>
+              <PostEditor
+                chat={chat}
+                purpose={"edit"}
+                uid={currentUid}
+                detailbook_chat={detailbook_chat}
+                genre_chat={genre_chat}
+              />
+            </div>
+          )}
+
+          {replying && (
+            <PostEditor
+              chat={chat}
+              purpose={"reply"}
+              uid={currentUid}
+              detailbook_chat={detailbook_chat}
+              genre_chat={genre_chat}
+            />
           )}
         </div>
-        <Button labelPosition="right" onClick={onLikeClick} style={{marginRight:10}}>
-          <Button color={doLike ? "red" : "grey"}>
-            <Icon name="heart" />
-          </Button>
-          <Label as="a" basic color={doLike ? "red" : "grey"} pointing="left">
-            {chat.users.length}
-          </Label>
-        </Button>
-        <Button inverted color='blue' onClick={onReplyClick}>댓글</Button>
+      )}
 
-        {isOwner && (
-          <>
-            <Button inverted color='red' onClick={onDeleteClick}>삭제</Button>
-            <Button inverted color='green' onClick={onEditClick}>편집</Button>
-          </>
-        )}
-
-        {editing && (
-          <div>
-             <PostEditor chat={chat} purpose={"edit"} uid={currentUid} detailbook_chat={detailbook_chat} genre_chat = {genre_chat}/>
-          </div> 
-        )} 
-
-        {replying && (
-          <PostEditor chat={chat} purpose={"reply"} uid={currentUid} detailbook_chat={detailbook_chat} genre_chat = {genre_chat}/>
-        )}
-      </div>
       <style jsx>{`
-        strong{
-          font-size:16px;
-          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        strong {
+          font-size: 16px;
+          font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+            "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
         }
-
       `}</style>
     </>
   );

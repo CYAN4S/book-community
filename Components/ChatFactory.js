@@ -78,7 +78,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
   return (
     <div>
-      <Form onSubmit={onNewPostSubmit}>
+      {genre_chat 
+      ? 
+      <>
+       <p>장르에 맞는 chat input을 입력하세요</p>
+      </>
+      : 
+      <>
+        <Form onSubmit={onNewPostSubmit}>
         <Form.Field>
           <Label basic color="orange" pointing = "below">Please enter your text</Label>
           <TextArea
@@ -128,6 +135,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
           <Icon name='right arrow' />
         </Button>
       </Form>
+      </>
+      }
+      
     </div>
   );
 }
