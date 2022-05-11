@@ -15,11 +15,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [doLike, setDoLike] = useState(false);
 
   const displayName = useUserDisplayName(chat.createrId);
-  const collectionName = detailbook_chat
-    ? detailbook_chat
-    : genre_chat
-    ? genre_chat
-    : "chat";
+  const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
+  
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {

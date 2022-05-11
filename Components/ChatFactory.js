@@ -16,6 +16,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const router = useRouter();
 
   const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
+  // const collectionName = detailbook_chat ?? "chat"
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -83,7 +84,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
   return (
     <div>
-      {genre_chat 
+      {genre_chat
       ? 
       <>
        <Form onSubmit={onNewPostSubmit}>
