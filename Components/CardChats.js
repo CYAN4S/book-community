@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { authService, dbService } from "../firebaseConfig";
 
 export default function CardChats({ chat, id, isOwner, genre_chat }) {
-
   
   return (
     <>
