@@ -242,7 +242,8 @@ export default function Profile() {
               <>
                 <Image
                   src={currentUserPhotoUri}
-                  size="medium"
+                  width= "50%"
+                  height= "50%"
                   style={{ marginTop: 10, marginBottom: 10 }}
                 ></Image>
               </>
@@ -312,16 +313,18 @@ export default function Profile() {
                               color: "red",
                               onClick: onClearPhotoClick,
                               icon: "remove circle",
-                              size: "large",
+                              size: "medium",
                               ribbon: true,
+                              
                             }}
                             src={imgFileString}
                             style={{
                               backgroundImage: imgFileString,
-                              width: "20%",
-                              height: "20%",
+                              width: "40%",
+                              height: "40%",
                               marginTop: 10,
                               marginLeft: 20,
+                              marginBottom: 20,
                             }}
                           />
                         </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Button, Icon, Label, Image, Item } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
-import { useUserDisplayName } from "../utils/functions";
+import { useUserDisplayName, useUserPhoto } from "../utils/functions";
 import PostEditor from "./PostEditor";
 
 export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
@@ -13,14 +13,18 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
-
+  // syncUserPhoto
+  const userPhoto = useUserPhoto(chat.createrId);
+  console.log("userPhoto 값",userPhoto);
   const displayName = useUserDisplayName(chat.createrId);
+
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
     ? genre_chat
     : "chat";
 
+  
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -86,12 +90,11 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       height: 60,
                     }}
                   >
-                    <Item.Image
-                      avatar
-                      spaced="right"
-                      src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
-                      size="large"
-                    />
+                    <Image
+                      src={userPhoto}
+                      size="medium"
+                      style={{ marginTop: 10, marginBottom: 10 }}
+                    ></Image>
                     <p style={{ marginTop: 3 }}> {displayName} </p>
                   </Label>
                 </a>
@@ -135,7 +138,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
           <Button inverted color="blue" onClick={onReplyClick}>
             댓글
           </Button>
-
           {isOwner && (
             <>
               <Button inverted color="red" onClick={onDeleteClick}>
@@ -146,7 +148,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               </Button>
             </>
           )}
-
           {editing && (
             <div>
               <PostEditor
@@ -158,7 +159,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               />
             </div>
           )}
-
           {replying && (
             <PostEditor
               chat={chat}
@@ -182,12 +182,13 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       height: 60,
                     }}
                   >
-                    <Item.Image
-                      avatar
-                      spaced="right"
-                      src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
-                      size="large"
-                    />
+                    {/* test */}
+                    <Image
+                      src={userPhoto}
+                      size="medium"
+                      style={{ marginTop: 10, marginBottom: 10 }}
+                    ></Image>
+
                     <p style={{ marginTop: 3 }}> {displayName} </p>
                   </Label>
                 </a>

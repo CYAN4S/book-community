@@ -1,6 +1,6 @@
 import { dbService as db } from "../firebaseConfig";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
-import { usersDisplayNameState } from "./hooks";
+import { usersDisplayNameState, usersPhotoState } from "./hooks";
 import { useRecoilState } from "recoil";
 import { useState, useEffect } from "react";
 
@@ -50,4 +50,22 @@ export const useUserDisplayName = (targetUid) => {
   }, []);
 
   return name;
+};
+
+export const useUserPhoto= (targetUid) => {
+  const [users, setUsers] = useRecoilState(usersPhotoState);
+  const [userPhoto, setUserPhoto] = useState(null);
+
+  useEffect(async () => {
+    if (!users.hasOwnProperty(targetUid)) {
+      const userDoc = await getUserDoc(targetUid);
+
+      setUsers((prev) => ({ ...prev, [targetUid]: userDoc?.userPhoto ??  "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"}));
+      setUserPhoto(userDoc?.userPhoto ?? "https://react.semantic-ui.com/images/avatar/small/elliot.jpg");
+    } else {
+      setUserPhoto(users[targetUid]);
+    }
+  }, []);
+
+  return userPhoto;
 };
