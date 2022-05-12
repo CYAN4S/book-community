@@ -1,8 +1,9 @@
-import { authService as auth, dbService as db } from "../../firebaseConfig";
+import { authService as auth, dbService as db,storageService } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
-import { doc, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { addDoc, collection,doc, setDoc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 
 import {
   Button,
@@ -15,6 +16,7 @@ import {
   Label,
   List,
   Segment,
+  TextArea,
 } from "semantic-ui-react";
 
 import { v4 } from "uuid";
@@ -44,6 +46,10 @@ export default function Profile() {
 
   const isMe = () => currentUser?.uid == queryId;
   const [myBooks, setMyBooks] = useState([]);
+
+  // ProfilePhoto Code
+  const [imgFileString, setImgFileString] = useState("");
+  const [userObj, setUserObj] = useState(null);
 
   const onLogOutClick = () => {
     auth.signOut();
@@ -126,6 +132,56 @@ export default function Profile() {
       setWasSubingCheck(true);
     }
   };
+  // profilePhoto code
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj({
+          uid: user.uid,
+          updateProfile: (args) => updateProfile(args),
+        });
+      } else {
+        setUserObj(null);
+      }
+    });
+  }, []);
+  const onNewPhotoSubmit = async (e) => {
+    e.preventDefault();
+
+    let fileUrl = "";
+    if (imgFileString !== "") {
+      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const response = await uploadString(fileRef, imgFileString, "data_url");
+      fileUrl = await getDownloadURL(response.ref);
+    }
+    const userPhotoObj = {
+      fileUrl
+    };
+    await addDoc(collection(db, "profile"), userPhotoObj)
+      .then(() => console.log("전송완료"))
+      .catch((error) => alert(error));
+
+    setImgFileString("");
+    router.back();
+  };
+
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setImgFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onClearPhotoClick = () => setImgFileString("");
 
   return (
     <div id="profile">
@@ -177,9 +233,66 @@ export default function Profile() {
               size="medium"
               style={{ marginTop: 10, marginBottom: 30 }}
             />
+            {/* test */}
+            <Form onSubmit={onNewPhotoSubmit}>
+              <div>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add photos</p>
+                </Label>
+
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                  id="attach-file"
+                  icon="file image"
+                />
+              </div>
+
+              {imgFileString && (
+                <div>
+                  <Image
+                    fluid
+                    label={{
+                      color: "red",
+                      onClick: onClearPhotoClick,
+                      icon: "remove circle",
+                      size: "large",
+                      ribbon: true,
+                    }}
+                    src={imgFileString}
+                    style={{
+                      backgroundImage: imgFileString,
+                      width: "40%",
+                      height: "40%",
+                      marginTop: 10,
+                      marginLeft: 20,
+                    }}
+                  />
+                </div>
+              )}
+              <Button
+                icon
+                labelPosition="right"
+                color="teal"
+                style={{ marginTop: 15 }}
+              >
+                보내기
+                <Icon name="right arrow" />
+              </Button>
+            </Form>
 
             <Label as="a" color="blue" ribbon>
-              {isMe() ? <> 내가 구독한 사용자 </> : <> 해당 사용자가 구독한 사용자 </>}
+              {isMe() ? (
+                <> 내가 구독한 사용자 </>
+              ) : (
+                <> 해당 사용자가 구독한 사용자 </>
+              )}
             </Label>
 
             {subscribers.length == 0 ? (
@@ -190,28 +303,38 @@ export default function Profile() {
             ) : (
               <List>
                 {subscribers.map((user) => (
-                  <List.Item key={v4()} style={{marginBottom : 5}}>
+                  <List.Item key={v4()} style={{ marginBottom: 5 }}>
                     {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
-                      {
-                        user.uid === currentUser.uid ?
+                      {user.uid === currentUser.uid ? (
                         <>
                           <List.Header>
-                            <strong style={{fontSize : 15}}> ✅ {user.displayName ?? "게스트"} </strong>
+                            <strong style={{ fontSize: 15 }}>
+                              {" "}
+                              ✅ {user.displayName ?? "게스트"}{" "}
+                            </strong>
                           </List.Header>
                         </>
-                        :
+                      ) : (
                         <>
                           <Link href={`/profile/${user.uid}`}>
                             <List.Header as="a">
-                              <strong style={{fontSize : 15}}> ✅ {user.displayName ?? "게스트"} </strong>
+                              <strong style={{ fontSize: 15 }}>
+                                {" "}
+                                ✅ {user.displayName ?? "게스트"}{" "}
+                              </strong>
                             </List.Header>
                           </Link>
                         </>
-                      }
-                      
+                      )}
+
                       <List.Description>
-                        <p style={{fontSize : 12, marginLeft : 30}}> { user.statusMsg ? `상태메시지 : ${user.statusMsg}` : "상태메시지가 없습니다."} </p>
+                        <p style={{ fontSize: 12, marginLeft: 30 }}>
+                          {" "}
+                          {user.statusMsg
+                            ? `상태메시지 : ${user.statusMsg}`
+                            : "상태메시지가 없습니다."}{" "}
+                        </p>
                       </List.Description>
                     </List.Content>
                   </List.Item>
@@ -220,7 +343,11 @@ export default function Profile() {
             )}
 
             <Label style={{ marginTop: 15 }} as="a" color="purple" ribbon>
-              {isMe() ? <> 내가 등록한 책 목록 </> : <> 해당 사용자가 등록한 책 목록 </>}
+              {isMe() ? (
+                <> 내가 등록한 책 목록 </>
+              ) : (
+                <> 해당 사용자가 등록한 책 목록 </>
+              )}
             </Label>
 
             {myBooks.length == 0 ? (
