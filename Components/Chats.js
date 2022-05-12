@@ -90,8 +90,9 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                     }}
                   >
                     <Image
+                     className="ui medium circular image"
                       src={userPhoto}
-                      size="medium"
+                      size="big"
                       style={{ marginTop: 10, marginBottom: 10 }}
                     ></Image>
                     <p style={{ marginTop: 3 }}> {displayName} </p>
@@ -183,8 +184,9 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                   >
                     {/* test */}
                     <Image
+                    className="ui medium circular image"
                       src={userPhoto}
-                      size="medium"
+                      size="big"
                       style={{ marginTop: 10, marginBottom: 10 }}
                     ></Image>
 
