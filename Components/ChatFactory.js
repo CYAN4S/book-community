@@ -52,6 +52,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       fileUrl,
       users: [],
     };
+    
     await addDoc(
       collection(dbService, collectionName),
       chatObj

@@ -39,12 +39,17 @@ export default function PostEditor({
     : "chat";
 
   const onEditSubmit = async () => {
+
+    console.log(chat);
+    console.log(newChat, newTitle);
+    console.log(collectionName)
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
       const temp_fileUrl = await getDownloadURL(response.ref);
 
       updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+        title: newTitle,
         text: newChat,
         fileUrl: temp_fileUrl,
       })
@@ -56,6 +61,7 @@ export default function PostEditor({
         });
     } else {
       updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+        title: newTitle,
         text: newChat,
       })
         .then(() => {
@@ -89,6 +95,7 @@ export default function PostEditor({
       users: [],
       replyTo: chat.id,
     };
+
 
     await addDoc(collection(dbService, collectionName), chatObj)
       .then(() => console.log("전송완료"))
@@ -126,6 +133,7 @@ export default function PostEditor({
       } else {
         await deleteObject(ref(storageService, chat.fileUrl)).then(() => {
           updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+            title: newTitle,
             text: newChat,
             fileUrl: "",
           })
@@ -137,8 +145,6 @@ export default function PostEditor({
       }
     }
   };
-
-  console.log(chat);
 
   const onFileChange = async (event) => {
     setImgEdit(true);
@@ -170,14 +176,19 @@ export default function PostEditor({
             >
               Edit your text
             </Label>
-            <Form.Input
-              value={newTitle}
-              type="text"
-              placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
-              onChange={(e) => setNewTitle(e.target.value)}
-              autoFocus
-              required
-            />
+            {genre_chat ? (
+              <Form.Input
+                value={newTitle}
+                type="text"
+                placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
+                onChange={(e) => setNewTitle(e.target.value)}
+                autoFocus
+                required
+              />
+            ) : (
+              <></>
+            )}
+
             <Form.TextArea
               value={newChat}
               type="text"

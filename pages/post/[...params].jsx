@@ -42,11 +42,6 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
     }
   });
 
-  useEffect(() => {
-    // 서버 현재시간
-    setTime(new Date().getTime());
-  }, []);
-
   const q = query(
     collection(dbService, collectionName),
     orderBy("createdAt", "desc")
@@ -62,7 +57,9 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       setChats(chatArray);
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
+    
   }, []);
+
 
   return (
     <>
@@ -109,8 +106,6 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
             <CardChats chat={chat} id = {chat.id}
                 isOwner={chat.createrId === userId}
                 genre_chat={collectionName}/>
-                
-            
           </div>
         ))
       ) : (
