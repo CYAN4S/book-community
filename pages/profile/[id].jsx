@@ -223,7 +223,18 @@ export default function Profile() {
             <Label as="a" color="red" ribbon>
               상태메시지
             </Label>
-            <span>{statusMsg ? statusMsg : "상태메시지를 입력해보세요"}</span>
+            <span>
+              {statusMsg ? (
+                <>
+                {statusMsg}
+                </>
+                ):(
+                  <>
+                  상태메시지를 입력해보세요
+                  </>
+                  )}
+                  
+                  </span>
             <Divider></Divider>
             <Label as="a" color="orange" ribbon>
               프로필사진
@@ -237,27 +248,39 @@ export default function Profile() {
                 ></Image>
               </>
             ) : (
+              <>
+              {isMe() ? (
+                <> 나만의 프로필 사진을 꾸며봐요 </>
+              ) : (
+                <> 사진을 등록하지 않은 사용자입니다. </>
+              )}
+              </>
               
-              <>나만의 프로필 사진을 올려봐요</>
             )}
 
             {/* userPhotoUpload */}
-            {!doUploadPhoto ? (
+            {isMe() ? (
               <>
-                {" "}
-                <Button
-                  color="black"
-                  floated ="right"
-                  onClick={onUploadPhotoClick}
-                  style={{ marginTop: 20 }}
-                >
-                  프로필 사진 바꾸기
-                </Button>
+                {!doUploadPhoto ? (
+                  <>
+                    {" "}
+                    <Button
+                      color="black"
+                      //floated ="right"
+                      onClick={onUploadPhotoClick}
+                      style={{ marginTop: 20 }}
+                    >
+                      바꾸기
+                    </Button>
+                  </>
+                ) : (
+                  <></>
+                )}
               </>
             ) : (
               <></>
             )}
-          
+
             {isMe() ? (
               <>
                 {doUploadPhoto ? (
