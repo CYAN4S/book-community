@@ -54,7 +54,7 @@ export default function Profile() {
 
   // ProfilePhoto Code
   const [imgFileString, setImgFileString] = useState("");
-  const [currentUserPhotoUri,setCurrentUserPhotoUri] = useState("");
+  const [currentUserPhotoUri, setCurrentUserPhotoUri] = useState("");
   const [doUploadPhoto, setDoUploadPhoto] = useState(false);
 
   const onLogOutClick = () => {
@@ -64,6 +64,7 @@ export default function Profile() {
 
   useEffect(() => {
     const unsub = onUserDocSnapshot(queryId, onUser);
+
     return () => unsub?.();
   }, [queryId]);
 
@@ -224,11 +225,21 @@ export default function Profile() {
             </Label>
             <span>{statusMsg ? statusMsg : "상태메시지를 입력해보세요"}</span>
             <Divider></Divider>
-            <Image
-              src={currentUserPhotoUri}
-              size="medium"
-              style={{ marginTop: 10, marginBottom: 10 }}
-            />
+            <Label as="a" color="orange" ribbon>
+              프로필사진
+            </Label>
+            {currentUserPhotoUri ? (
+              <>
+                <Image
+                  src={currentUserPhotoUri}
+                  size="medium"
+                  style={{ marginTop: 10, marginBottom: 10 }}
+                ></Image>
+              </>
+            ) : (
+              
+              <>나만의 프로필 사진을 올려봐요</>
+            )}
 
             {/* userPhotoUpload */}
             {!doUploadPhoto ? (
@@ -236,8 +247,9 @@ export default function Profile() {
                 {" "}
                 <Button
                   color="black"
+                  floated ="right"
                   onClick={onUploadPhotoClick}
-                  style={{ marginTop: 10, }}
+                  style={{ marginTop: 20 }}
                 >
                   프로필 사진 바꾸기
                 </Button>
@@ -245,7 +257,7 @@ export default function Profile() {
             ) : (
               <></>
             )}
-
+          
             {isMe() ? (
               <>
                 {doUploadPhoto ? (
@@ -292,16 +304,13 @@ export default function Profile() {
                           />
                         </div>
                       )}
-                      <Button
-                        color="teal"
-                        style={{ marginTop: 10 }}
-                      >
+                      <Button color="teal" style={{ marginTop: 10 }}>
                         프로필 사진 바꾸기
                       </Button>
                       <Button
                         color="teal"
                         onClick={onUploadPhotoClick}
-                        style={{ marginTop: 10}}
+                        style={{ marginTop: 10 }}
                       >
                         돌아가기
                       </Button>
