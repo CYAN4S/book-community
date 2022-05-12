@@ -54,6 +54,7 @@ export default function Profile() {
 
   // ProfilePhoto Code
   const [imgFileString, setImgFileString] = useState("");
+  const [currentUserPhotoUri,setCurrentUserPhotoUri] = useState("");
   const [doUploadPhoto, setDoUploadPhoto] = useState(false);
 
   const onLogOutClick = () => {
@@ -69,6 +70,7 @@ export default function Profile() {
   const onUser = async (data) => {
     setDisplayName(data?.displayName);
     setStatusMsg(data?.statusMsg);
+    setCurrentUserPhotoUri(data?.userPhoto);
 
     if (data?.users) {
       const x = await Promise.all(
@@ -223,7 +225,7 @@ export default function Profile() {
             <span>{statusMsg ? statusMsg : "상태메시지를 입력해보세요"}</span>
             <Divider></Divider>
             <Image
-              src="https://markettraders.kr/wp-content/uploads/2020/04/stock.jpg"
+              src={currentUserPhotoUri}
               size="medium"
               style={{ marginTop: 10, marginBottom: 10 }}
             />
@@ -282,8 +284,8 @@ export default function Profile() {
                             src={imgFileString}
                             style={{
                               backgroundImage: imgFileString,
-                              width: "40%",
-                              height: "40%",
+                              width: "20%",
+                              height: "20%",
                               marginTop: 10,
                               marginLeft: 20,
                             }}
