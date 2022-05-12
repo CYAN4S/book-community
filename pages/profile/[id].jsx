@@ -64,7 +64,6 @@ export default function Profile() {
 
   useEffect(() => {
     const unsub = onUserDocSnapshot(queryId, onUser);
-
     return () => unsub?.();
   }, [queryId]);
 
