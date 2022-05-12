@@ -18,12 +18,25 @@ import {
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
 
-export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
+export default function PostEditor({
+  chat,
+  purpose,
+  uid,
+  detailbook_chat,
+  genre_chat,
+}) {
   const [newChat, setNewChat] = useState(purpose == "reply" ? "" : chat?.text);
+  const [newTitle, setNewTitle] = useState(
+    purpose == "reply" ? "" : chat?.title
+  );
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
 
-  const collectionName = detailbook_chat ?? "chat"
+  const collectionName = detailbook_chat
+    ? detailbook_chat
+    : genre_chat
+    ? genre_chat
+    : "chat";
 
   const onEditSubmit = async () => {
     if (imgEdit) {
@@ -68,6 +81,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
     }
 
     const chatObj = {
+      title: newTitle,
       text: newChat,
       createdAt: Date.now(),
       createrId: uid,
@@ -81,6 +95,7 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
       .catch((error) => alert(error));
 
     setNewChat("");
+    setNewTitle("");
     setImgFileString("");
   };
 
@@ -123,6 +138,8 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
     }
   };
 
+  console.log(chat);
+
   const onFileChange = async (event) => {
     setImgEdit(true);
     const {
@@ -153,7 +170,15 @@ export default function PostEditor({ chat, purpose, uid, detailbook_chat }) {
             >
               Edit your text
             </Label>
-            <TextArea
+            <Form.Input
+              value={newTitle}
+              type="text"
+              placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
+              onChange={(e) => setNewTitle(e.target.value)}
+              autoFocus
+              required
+            />
+            <Form.TextArea
               value={newChat}
               type="text"
               placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
