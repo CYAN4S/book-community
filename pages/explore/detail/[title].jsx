@@ -119,7 +119,7 @@ export default function Title({ books }) {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data();
-    } else return null;
+    } else return 0;
   };
   const updateUserDoc = (newData) => {
     return setDoc(doc(dbService, "profile", currentUid), newData, {
