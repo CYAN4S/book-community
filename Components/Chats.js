@@ -15,7 +15,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [doLike, setDoLike] = useState(false);
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
-  console.log("userPhoto 값",userPhoto);
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat
