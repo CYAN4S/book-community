@@ -6,8 +6,10 @@ import { Button, Icon, Label, Image, Item } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
 import PostEditor from "./PostEditor";
+import { useRouter } from "next/router";
 
 export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
+
   const [editing, setEditing] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
@@ -17,7 +19,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const displayName = useUserDisplayName(chat.createrId);
   const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
   
-
+  const router = useRouter();
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -41,6 +43,10 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       if (chat.fileUrl !== "") {
         await deleteObject(ref(storageService, chat.fileUrl));
       }
+    }
+
+    if(genre_chat){
+      router.back();
     }
   };
 
@@ -97,7 +103,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 <Item.Description>
                   <strong>{chat.text}</strong>
                   <p style={{ marginTop: 3 }}>
-                    {" "}
                     <Icon name="clock" />
                     {new Date(chat.createdAt).toLocaleString()}
                   </p>
@@ -191,9 +196,9 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               </Link>
               <Item.Content style={{ marginLeft: 3, marginBottom: 5 }}>
                 <Item.Description>
+                  <strong>{chat.title}</strong>
                   <strong>{chat.text}</strong>
                   <p style={{ marginTop: 3 }}>
-                    {" "}
                     <Icon name="clock" />
                     {new Date(chat.createdAt).toLocaleString()}
                   </p>

@@ -106,7 +106,7 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {chats.length ? (
         chats.map((chat) => (
           <div key={chat.id} style={{ marginBottom: 30 }}>
-            <CardChats chat={chat}
+            <CardChats chat={chat} id = {chat.id}
                 isOwner={chat.createrId === userId}
                 genre_chat={collectionName}/>
                 

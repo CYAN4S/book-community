@@ -61,7 +61,10 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
     setChat("");
     setImgFileString("");
-    router.back();
+
+    if(genre_chat){
+      router.back();
+    }
   };
 
   const onFileChange = (event) => {
