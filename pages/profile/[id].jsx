@@ -1,11 +1,16 @@
-import { authService as auth, dbService as db,storageService } from "../../firebaseConfig";
+import {
+  authService as auth,
+  dbService as db,
+  storageService,
+} from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { addDoc, collection,doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
 import {
+  Divider,
   Button,
   Form,
   Grid,
@@ -49,6 +54,7 @@ export default function Profile() {
 
   // ProfilePhoto Code
   const [imgFileString, setImgFileString] = useState("");
+  const [doUploadPhoto, setDoUploadPhoto] = useState(false);
 
   const onLogOutClick = () => {
     auth.signOut();
@@ -58,9 +64,8 @@ export default function Profile() {
   useEffect(() => {
     const unsub = onUserDocSnapshot(queryId, onUser);
     return () => unsub?.();
-    
   }, [queryId]);
-  
+
   const onUser = async (data) => {
     setDisplayName(data?.displayName);
     setStatusMsg(data?.statusMsg);
@@ -133,7 +138,7 @@ export default function Profile() {
   };
 
   // profilePhoto code start
-  const onNewPhotoSubmit = async (e,data) => {
+  const onNewPhotoSubmit = async (e, data) => {
     e.preventDefault();
 
     let userPhoto = "";
@@ -143,7 +148,7 @@ export default function Profile() {
       userPhoto = await getDownloadURL(response.ref);
     }
     const userPhotoObj = {
-      userPhoto
+      userPhoto,
     };
     updateUserDoc(userPhotoObj)
       .then(() => console.log("프로필사진 전송완료"))
@@ -169,7 +174,8 @@ export default function Profile() {
   };
 
   const onClearPhotoClick = () => setImgFileString("");
-   // profilePhoto code end
+  const onUploadPhotoClick = () => setDoUploadPhoto((prev) => !prev);
+  // profilePhoto code end
   return (
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
@@ -215,74 +221,98 @@ export default function Profile() {
               상태메시지
             </Label>
             <span>{statusMsg ? statusMsg : "상태메시지를 입력해보세요"}</span>
+            <Divider></Divider>
             <Image
               src="https://markettraders.kr/wp-content/uploads/2020/04/stock.jpg"
               size="medium"
-              style={{ marginTop: 10, marginBottom: 30 }}
+              style={{ marginTop: 10, marginBottom: 10 }}
             />
 
             {/* userPhotoUpload */}
-            {isMe() ? (
-                <>
-                <Form onSubmit={onNewPhotoSubmit}>
-              <div>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
+            {!doUploadPhoto ? (
+              <>
+                {" "}
+                <Button
+                  color="black"
+                  onClick={onUploadPhotoClick}
+                  style={{ marginTop: 10, }}
                 >
-                  <p>Add photos</p>
-                </Label>
+                  프로필 사진 바꾸기
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
 
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  id="attach-file"
-                  icon="file image"
-                />
-              </div>
-              
-              {imgFileString && (
-                <div>
-                  <Image
-                    fluid
-                    label={{
-                      color: "red",
-                      onClick: onClearPhotoClick,
-                      icon: "remove circle",
-                      size: "large",
-                      ribbon: true,
-                    }}
-                    src={imgFileString}
-                    style={{
-                      backgroundImage: imgFileString,
-                      width: "40%",
-                      height: "40%",
-                      marginTop: 10,
-                      marginLeft: 20,
-                    }}
-                  />
-                </div>
-              )}
-              <Button
-                icon
-                labelPosition="right"
-                color="teal"
-                style={{ marginTop: 15 }}
-              >
-                보내기
-                <Icon name="right arrow" />
-              </Button>
-            </Form> 
-                </>
-              ) : (
-                <>  </>
-              )}
-            
-            
+            {isMe() ? (
+              <>
+                {doUploadPhoto ? (
+                  <>
+                    <Form onSubmit={onNewPhotoSubmit}>
+                      <div>
+                        <Label
+                          basic
+                          color="orange"
+                          pointing="right"
+                          htmlFor="attach-file"
+                        >
+                          <p>Add photos</p>
+                        </Label>
 
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={onFileChange}
+                          id="attach-file"
+                          icon="file image"
+                        />
+                      </div>
+
+                      {imgFileString && (
+                        <div>
+                          <Image
+                            fluid
+                            label={{
+                              color: "red",
+                              onClick: onClearPhotoClick,
+                              icon: "remove circle",
+                              size: "large",
+                              ribbon: true,
+                            }}
+                            src={imgFileString}
+                            style={{
+                              backgroundImage: imgFileString,
+                              width: "40%",
+                              height: "40%",
+                              marginTop: 10,
+                              marginLeft: 20,
+                            }}
+                          />
+                        </div>
+                      )}
+                      <Button
+                        color="teal"
+                        style={{ marginTop: 10 }}
+                      >
+                        프로필 사진 바꾸기
+                      </Button>
+                      <Button
+                        color="teal"
+                        onClick={onUploadPhotoClick}
+                        style={{ marginTop: 10}}
+                      >
+                        돌아가기
+                      </Button>
+                    </Form>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <> </>
+            )}
+            <Divider></Divider>
             <Label as="a" color="blue" ribbon>
               {isMe() ? (
                 <> 내가 구독한 사용자 </>
@@ -337,8 +367,8 @@ export default function Profile() {
                 ))}
               </List>
             )}
-
-            <Label style={{ marginTop: 15 }} as="a" color="purple" ribbon>
+            <Divider></Divider>
+            <Label style={{ marginTop: 5 }} as="a" color="purple" ribbon>
               {isMe() ? (
                 <> 내가 등록한 책 목록 </>
               ) : (
