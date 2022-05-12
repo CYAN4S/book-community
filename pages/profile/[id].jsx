@@ -49,7 +49,6 @@ export default function Profile() {
 
   // ProfilePhoto Code
   const [imgFileString, setImgFileString] = useState("");
-  const [userObj, setUserObj] = useState(null);
 
   const onLogOutClick = () => {
     auth.signOut();
@@ -59,8 +58,9 @@ export default function Profile() {
   useEffect(() => {
     const unsub = onUserDocSnapshot(queryId, onUser);
     return () => unsub?.();
+    
   }, [queryId]);
-
+  
   const onUser = async (data) => {
     setDisplayName(data?.displayName);
     setStatusMsg(data?.statusMsg);
@@ -69,7 +69,6 @@ export default function Profile() {
       const x = await Promise.all(
         data.users.map(async (uid) => await getUserDoc(uid))
       );
-      console.log(x);
       setSubscribers(x);
     } else {
       setSubscribers([]);
@@ -132,37 +131,25 @@ export default function Profile() {
       setWasSubingCheck(true);
     }
   };
-  // profilePhoto code
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserObj({
-          uid: user.uid,
-          updateProfile: (args) => updateProfile(args),
-        });
-      } else {
-        setUserObj(null);
-      }
-    });
-  }, []);
-  const onNewPhotoSubmit = async (e) => {
+
+  // profilePhoto code start
+  const onNewPhotoSubmit = async (e,data) => {
     e.preventDefault();
 
-    let fileUrl = "";
+    let userPhoto = "";
     if (imgFileString !== "") {
-      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
-      fileUrl = await getDownloadURL(response.ref);
+      userPhoto = await getDownloadURL(response.ref);
     }
     const userPhotoObj = {
-      fileUrl
+      userPhoto
     };
-    await addDoc(collection(db, "profile"), userPhotoObj)
-      .then(() => console.log("전송완료"))
+    updateUserDoc(userPhotoObj)
+      .then(() => console.log("프로필사진 전송완료"))
       .catch((error) => alert(error));
-
     setImgFileString("");
-    router.back();
+    router.push("/profile");
   };
 
   const onFileChange = (event) => {
@@ -182,7 +169,7 @@ export default function Profile() {
   };
 
   const onClearPhotoClick = () => setImgFileString("");
-
+   // profilePhoto code end
   return (
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
@@ -233,8 +220,11 @@ export default function Profile() {
               size="medium"
               style={{ marginTop: 10, marginBottom: 30 }}
             />
-            {/* test */}
-            <Form onSubmit={onNewPhotoSubmit}>
+
+            {/* userPhotoUpload */}
+            {isMe() ? (
+                <>
+                <Form onSubmit={onNewPhotoSubmit}>
               <div>
                 <Label
                   basic
@@ -253,7 +243,7 @@ export default function Profile() {
                   icon="file image"
                 />
               </div>
-
+              
               {imgFileString && (
                 <div>
                   <Image
@@ -285,7 +275,13 @@ export default function Profile() {
                 보내기
                 <Icon name="right arrow" />
               </Button>
-            </Form>
+            </Form> 
+                </>
+              ) : (
+                <>  </>
+              )}
+            
+            
 
             <Label as="a" color="blue" ribbon>
               {isMe() ? (
