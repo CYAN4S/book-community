@@ -24,7 +24,7 @@ const Report = () => {
   const [badUserChat, setBadUserChat] = useState("");
   const [badUserName, setBadUserName] = useState("");
   const [badUserContext, setBadUserContext] = useState("");
-  const [badChatWhy, setBadChatWhy] = useState("내용 없음");
+  const [badChatWhy, setBadChatWhy] = useState("");
   const badChatWhys = [
     { key: "i", text: "부적절한 게시글", value: "inapposite" },
     { key: "u", text: "불건전한 게시글", value: "unwholesome" },
@@ -32,6 +32,7 @@ const Report = () => {
     { key: "a", text: "계정 도용", value: "account hijacking" },
     { key: "p", text: "도배", value: "papering" },
   ];
+  
   const [userObj, setUserObj] = useState(null);
   const collectionName = `userReport`;
   useEffect(() => {
@@ -189,8 +190,9 @@ const Report = () => {
                       options={badChatWhys}
                       label={"신고 사유"}
                       placeholder="신고 사유"
-                      value={badChatWhys}
+                      value = {badChatWhy}
                       onChange={(e) => setBadChatWhy(e.target.value)}
+
                       required
                     />
                   </Form.Group>
