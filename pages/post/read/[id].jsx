@@ -5,6 +5,7 @@ import { dbService } from "../../../firebaseConfig";
 import { useState, useEffect } from "react";
 
 export default function ReadWriting({ chat_data }) {
+  // 게시글 출력 페이지 : 게시글 수정 시, 바로 출력되게끔 구성 
   const [chats, setChats] = useState({})
 
   const q = query(
@@ -39,6 +40,8 @@ export default function ReadWriting({ chat_data }) {
 }
 
 export async function getServerSideProps(props) {
+
+  // query값으로 받아온 string요소를 다시 원상복구
   const chat = props.query && JSON.parse(props.query.chat);
   const isOwner = props.query && JSON.parse(props.query.isOwner);
   const genre_chat = props.query && props.query.genre_chat;
