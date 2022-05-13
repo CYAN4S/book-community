@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 
 export default function ReadWriting({ chat_data }) {
   const [chats, setChats] = useState({})
-  let chatdatata;
 
   const q = query(
     collection(dbService, chat_data.genre_chat),
@@ -21,19 +20,20 @@ export default function ReadWriting({ chat_data }) {
       }));
 
       setChats(chatArray.filter((item) => chat_data.chat.id === item.id));
-      chatdatata =chatArray.filter((item) => chat_data.chat.id === item.id);
-      console.log(chatdatata);
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
 
   return (
     <>
+    {chats.length ? 
       <Chats
-        chat={chat_data.chat}
+        chat={chats[0]}
         isOwner={chat_data.isOwner}
         genre_chat={chat_data.genre_chat}
       />
+      :
+      <></>}
     </>
   );
 }
