@@ -42,7 +42,7 @@ export default function PostEditor({
 
     console.log(chat);
     console.log(newChat, newTitle);
-    console.log(collectionName)
+    console.log(collectionName);
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
