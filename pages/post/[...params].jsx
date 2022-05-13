@@ -6,8 +6,10 @@ import {
   Header,
   Icon,
   Label,
+  List,
   Message,
   Popup,
+  Segment,
 } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -101,13 +103,20 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {/* 게시글 */}
 
       {chats.length ? (
-        chats.map((chat) => (
-          <div key={chat.id} style={{ marginBottom: 30 }}>
-            <CardChats chat={chat} id = {chat.id}
-                isOwner={chat.createrId === userId}
-                genre_chat={collectionName}/>
-          </div>
-        ))
+        <Segment inverted>
+        <List inverted animated selection>
+          {chats.map((chat) => (
+            <>
+              <List.Item key={chat.id}>
+                <CardChats chat={chat} id = {chat.id}
+                    isOwner={chat.createrId === userId}
+                    genre_chat={collectionName}/>
+              </List.Item>
+              <Divider/>
+            </>
+          ))}
+        </List>
+        </Segment>
       ) : (
         <p>채팅목록이 없습니다</p>
       )}
