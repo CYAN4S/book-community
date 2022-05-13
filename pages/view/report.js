@@ -1,3 +1,4 @@
+import { authService, dbService, storageService } from "../../firebaseConfig";
 import {
   Button,
   Divider,
@@ -9,13 +10,64 @@ import {
   Icon,
   Container,
   Accordion,
+  Select,
 } from "semantic-ui-react";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
+  // 0513_0849 코드 추가 시작
+  const [badUserChat, setBadUserChat] = useState("");
+  const [badUserName, setBadUserName] = useState("");
+  const [badUserContext, setBadUserContext] = useState("");
+  const [badChatWhy, setBadChatWhy] = useState("내용 없음");
+  const badChatWhys = [
+    { key: "i", text: "부적절한 게시글", value: "inapposite" },
+    { key: "u", text: "불건전한 게시글", value: "unwholesome" },
+    { key: "c", text: "상업적인 게시글", value: "commercial" },
+    { key: "a", text: "계정 도용", value: "account hijacking" },
+    { key: "p", text: "도배", value: "papering" },
+  ];
+  const [userObj, setUserObj] = useState(null);
+  const collectionName = `userReport`;
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj({
+          uid: user.uid,
+          updateProfile: (args) => updateProfile(args),
+        });
+      } else {
+        setUserObj(null);
+      }
+    });
+  }, []);
+
+  const onNewReportSubmit = async (e) => {
+    e.preventDefault();
+
+    const reportObj = {
+      createdAt: Date.now(),
+      createrId: userObj.uid,
+      badUserChat: badUserChat,
+      badUserName: badUserName,
+      badUserContext:badUserChat,
+      badChatWhy:badChatWhy,
+    };
+    await addDoc(collection(dbService, collectionName), reportObj)
+      .then(() => console.log("전송완료"))
+      .catch((error) => alert(error));
+    setBadUserChat("");
+    setBadUserName("");
+    setBadUserContext("");
+    setBadChatWhy("");
+  };
+  // 0513_0849 코드 추가 끝
+
   const router = useRouter();
   const panels = [
     {
@@ -109,13 +161,16 @@ const Report = () => {
             <>
               <Icon name="caret up" onClick={onToggleForm} size="big"></Icon>
               <Segment>
-                <Form>
+                <Form onSubmit={onNewReportSubmit}>
                   <Form.Group widths="equal">
                     <Form.Field
                       id="form-input-control-report-name"
                       control={Input}
                       label="신고자 닉네임"
                       placeholder="신고자 닉네임"
+                      value={badUserName}
+                      onChange={(e) => setBadUserName(e.target.value)}
+                      required
                     />
 
                     <Form.Field
@@ -124,21 +179,28 @@ const Report = () => {
                       label="신고 대상 닉네임"
                       placeholder="신고 대상 닉네임"
                       style={{ marginBottom: 20 }}
+                      value={badUserChat}
+                      onChange={(e) => setBadUserChat(e.target.value)}
+                      required
                     />
 
                     <Form.Field
-                      id="form-input-control-target-name"
-                      control={Input}
-                      label="신고 일자"
-                      placeholder="2000-01-01"
-                      style={{ marginBottom: 20 }}
+                      control={Select}
+                      options={badChatWhys}
+                      label={"신고 사유"}
+                      placeholder="신고 사유"
+                      value={badChatWhys}
+                      onChange={(e) => setBadChatWhy(e.target.value)}
+                      required
                     />
                   </Form.Group>
                   <Form.Field
                     id="form-textarea-control-opinion"
                     control={TextArea}
-                    label="신고 내용"
-                    placeholder="신고 내용"
+                    label="세부 신고 내용"
+                    placeholder="세부 신고 내용"
+                    value={badUserContext}
+                    onChange={(e) => setBadUserContext(e.target.value)}
                   />
                   <Form.Field
                     id="form-button-control-public"
