@@ -59,9 +59,7 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       setChats(chatArray);
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
-    
   }, []);
-
 
   return (
     <>
@@ -103,19 +101,24 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {/* 게시글 */}
 
       {chats.length ? (
-        <Segment inverted>
-        <List inverted animated selection>
-          {chats.map((chat) => (
-            <>
-              <List.Item key={chat.id}>
-                <CardChats chat={chat} id = {chat.id}
-                    isOwner={chat.createrId === userId}
-                    genre_chat={collectionName}/>
-              </List.Item>
-              <Divider/>
-            </>
-          ))}
-        </List>
+        <Segment inverted style={{ textAlign: "center" }}>
+          <Card.Group centered>
+            {chats.map((chat) => (
+              <>
+                <Card key={chat.id} style={{marginLeft : 20, marginRight : 20}} >
+                  <Card.Content>
+                    <CardChats
+                      chat={chat}
+                      id={chat.id}
+                      isOwner={chat.createrId === userId}
+                      genre_chat={collectionName}
+                    />{" "}
+                  </Card.Content>
+                </Card>
+                <Divider />
+              </>
+            ))}
+          </Card.Group>
         </Segment>
       ) : (
         <p>채팅목록이 없습니다</p>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container, Divider, List } from "semantic-ui-react";
+import { Card, Container, Divider, List } from "semantic-ui-react";
 
 export default function CardChats({ chat, id, isOwner, genre_chat }) {
   return (
@@ -17,12 +17,16 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           },
         }}
       >
-        <List.Content>
-          <List.Header style={{fontSize : 18, marginBottom : 0}}> 제목 : {chat.title}</List.Header>
-            <List.List>
-              <List.Description>내용 : {chat.text.length > 30 ? `${chat.text.substring(0,30)}...` : chat.text}</List.Description>
-            </List.List>
-        </List.Content>
+        <>
+          <Card.Header style={{ fontSize: 18, marginBottom: 0 }}>
+             {chat.title}
+          </Card.Header>
+          <Card.Description>
+            {chat.text.length > 30
+              ? `${chat.text.substring(0, 30)}...`
+              : chat.text}
+          </Card.Description>
+        </>
       </Link>
 
       <style jsx>{``}</style>
