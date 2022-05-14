@@ -19,12 +19,22 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
       >
         <>
           <Card.Header style={{ fontSize: 18, marginBottom: 0 }}>
-             {chat.title}
+            {chat.title}
           </Card.Header>
           <Card.Description>
             {chat.text.length > 30
               ? `${chat.text.substring(0, 30)}...`
               : chat.text}
+          </Card.Description>
+          <Card.Description
+            style={{
+              fontSize: 13,
+              textAlign: "right",
+              marginTop: 10,
+              marginBottom: -14,
+            }}
+          >
+            {new Date(chat.createdAt).toLocaleString()}
           </Card.Description>
         </>
       </Link>
