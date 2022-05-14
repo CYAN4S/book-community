@@ -95,7 +95,9 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
         </Link>
         <Button icon="redo" content="새로고침" />
         <Button icon="comment alternate outline" content="문의하기" />
-        <Button icon="question" content="도움말" />
+        <Link href={`../view/help`}>
+          <Button icon="question" content="도움말" />
+        </Link>
       </Button.Group>
 
       {/* 게시글 */}

@@ -30,7 +30,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           {new Date() - new Date(chat.createdAt) > 600000 ? (
             <></>
           ) : (
-            <Label  color="red" floating style={{width : "26%"}}>
+            <Label  color="red" floating style={{width : "24%"}}>
               <>
                 <p style={{fontSize : 14, marginTop : -3}}>New</p>
                 <p style={{fontSize : 10, marginTop : -17, marginBottom : -3}}>{`약 ${new Date(new Date() - new Date(chat.createdAt)).getMinutes()}분 전`}</p>
