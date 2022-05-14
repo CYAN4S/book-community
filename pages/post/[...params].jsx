@@ -38,6 +38,10 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
     router.back();
   }
 
+  function refreshPage() {
+    router.reload(window.location.pathname);
+  }
+
   onAuthStateChanged(authService, (user) => {
     if (user) {
       setUserId(user.uid);
@@ -93,7 +97,7 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
         <Link href={`./${collectionName}`}>
           <Button icon="pencil alternate" content="글 작성하기" />
         </Link>
-        <Button icon="redo" content="새로고침" />
+        <Button icon="redo" content="새로고침" onClick={refreshPage} />
         <Link href={`../view/inquire`}>        
           <Button icon="comment alternate outline" content="문의하기" />
         </Link>
