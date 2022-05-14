@@ -112,16 +112,16 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {/* 게시글 */}
 
       {chats.length ? (
-        <Segment inverted style={{ textAlign: "center" }}>
+        <Segment inverted style={{ textAlign: "center", marginLeft:20, marginRight:20, borderRadius : "30px" }} >
           <Card.Group itemsPerRow={5} centered>
             {chats.map((chat) => (
-              <span key={chat.id} style={{marginLeft : 20, marginRight : 20}}>
+              <span key={chat.id} style={{marginLeft : 10, marginRight : 10}}>
                     <CardChats
                       chat={chat}
                       id={chat.id}
                       isOwner={chat.createrId === userId}
                       genre_chat={collectionName}
-                    />{" "}
+                    />
      
               </span>
             ))}

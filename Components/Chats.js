@@ -120,7 +120,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 {new Date(chat.createdAt).toLocaleString()}
               </span>
             </p>
-            <Divider style={{marginTop : -10, marginBottom : 30, width:"40%"}}/>
+            <Divider style={{marginTop : -10, marginBottom : 15, width:"40%"}}/>
             <p style={{marginBottom : 10}}>{chat.text}</p>
 
             {chat.fileUrl && (
@@ -184,9 +184,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
             />
           )}
             </Container>
-            
-
-          
           </Container>
           
         </div>
