@@ -30,10 +30,14 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           {new Date() - new Date(chat.createdAt) > 600000 ? (
             <></>
           ) : (
-            <Label  color="red" floating style={{width : "24%"}}>
+            <Label color="red" floating style={{ width: "24%" }}>
               <>
-                <p style={{fontSize : 14, marginTop : -3}}>New</p>
-                <p style={{fontSize : 10, marginTop : -17, marginBottom : -3}}>{`약 ${new Date(new Date() - new Date(chat.createdAt)).getMinutes()}분 전`}</p>
+                <p style={{ fontSize: 14, marginTop: -3 }}>New</p>
+                <p
+                  style={{ fontSize: 10, marginTop: -17, marginBottom: -3 }}
+                >{`약 ${new Date(
+                  new Date() - new Date(chat.createdAt)
+                ).getMinutes()}분 전`}</p>
               </>
             </Label>
           )}
@@ -73,8 +77,18 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
               marginRight: 10,
             }}
           >
-            {" "}
             {new Date(chat.createdAt).toLocaleString()}
+          </Card.Meta>
+          <Card.Meta
+            style={{
+              fontSize: 11,
+              textAlign: "right",
+              marginTop: 10,
+              marginRight: 10,
+            }}
+          >
+            <Icon name="heart" color={chat.users.length ? "red" : "grey"} />
+            {chat.users.length}
           </Card.Meta>
           <Card.Content extra>
             <Icon name="user" />

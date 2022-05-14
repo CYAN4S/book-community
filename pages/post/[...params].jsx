@@ -101,6 +101,9 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
         <Link href={`../view/inquire`}>        
           <Button icon="comment alternate outline" content="문의하기" />
         </Link>
+        <Link href={`../view/report`}>        
+          <Button icon="warning" content="신고하기" />
+        </Link>
         <Link href={`../view/help`}>
           <Button icon="question" content="도움말" />
         </Link>

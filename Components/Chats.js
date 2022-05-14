@@ -20,8 +20,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
   
   const router = useRouter();
-
-  console.log(chat);
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
