@@ -8,6 +8,7 @@ export default function Home() {
   const [isSigned, setIsSigned] = useState(false);
   const [init, setInit] = useState(false);
 
+  
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {

@@ -3,7 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import Navigation from "../Components/Navigation";
 import Script from "next/script";
 import { Header } from "semantic-ui-react";
-
+import "../public/static/fonts/style.css";
 // React
 import React from "react";
 import { useState, useEffect } from "react";
