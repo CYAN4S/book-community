@@ -10,6 +10,7 @@ import {
   Item,
   Container,
   Header,
+  Divider,
 } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
@@ -89,7 +90,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       {genre_chat ? (
         <div>
           <Container centered>
-            <Header as="h2" style={{ marginTop: "10%" }}>
+            <Header as="h2" style={{ marginTop: "7%" }}>
               {chat.title}
             </Header>
             <p style={{ textAlign: "left", display: "flex" }}>
@@ -112,16 +113,82 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 </a>
               </Link>
               <p style={{ marginTop: 3, fontWeight: "bold" }}>
-                {" "}
-                {displayName}{" "}
+                {displayName}
               </p>
               <span style={{ marginTop: 25, marginLeft: -40 }}>
                 <Icon name="clock" />
                 {new Date(chat.createdAt).toLocaleString()}
               </span>
             </p>
-            <p>{chat.text}</p>
+            <Divider style={{marginTop : -10, marginBottom : 30, width:"40%"}}/>
+            <p style={{marginBottom : 10}}>{chat.text}</p>
+
+            {chat.fileUrl && (
+              <Image
+                src={chat.fileUrl}
+                style={{
+                  width: "40%",
+                  height: "40%",
+                  marginTop: 10,
+                  marginBottom: 25,
+                }}
+              />
+            )}
+            <Container textAlign='right' style={{marginBottom : 100}}>
+            <Button
+            labelPosition="right"
+            onClick={onLikeClick}
+            style={{ marginRight: 10 }}
+          >
+            <Button color={doLike ? "red" : "grey"}>
+              <Icon name="heart" />
+            </Button>
+            <Label as="a" basic color={doLike ? "red" : "grey"} pointing="left">
+              {chat.users.length}
+            </Label>
+          </Button>
+          <Button inverted color="blue" onClick={onReplyClick}>
+            댓글
+          </Button>
+
+          {isOwner && (
+            <>
+              <Button inverted color="red" onClick={onDeleteClick}>
+                삭제
+              </Button>
+              <Button inverted color="green" onClick={onEditClick}>
+                편집
+              </Button>
+            </>
+          )}
+
+          {editing && (
+            <div>
+              <PostEditor
+                chat={chat}
+                purpose={"edit"}
+                uid={currentUid}
+                detailbook_chat={detailbook_chat}
+                genre_chat={genre_chat}
+              />
+            </div>
+          )}
+
+          {replying && (
+            <PostEditor
+              chat={chat}
+              purpose={"reply"}
+              uid={currentUid}
+              detailbook_chat={detailbook_chat}
+              genre_chat={genre_chat}
+            />
+          )}
+            </Container>
+            
+
+          
           </Container>
+          
         </div>
       ) : (
         <div>

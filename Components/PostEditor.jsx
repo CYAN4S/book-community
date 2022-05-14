@@ -39,7 +39,6 @@ export default function PostEditor({
     : "chat";
 
   const onEditSubmit = async () => {
-
     console.log(chat);
     console.log(newChat, newTitle);
     console.log(collectionName);
@@ -95,7 +94,6 @@ export default function PostEditor({
       users: [],
       replyTo: chat.id,
     };
-
 
     await addDoc(collection(dbService, collectionName), chatObj)
       .then(() => console.log("전송완료"))
@@ -172,19 +170,29 @@ export default function PostEditor({
               basic
               color="violet"
               pointing="below"
-              style={{ marginTop: 10 }}
+              style={{ marginTop: 20 }}
             >
               Edit your text
             </Label>
             {genre_chat ? (
-              <Form.Input
-                value={newTitle}
-                type="text"
-                placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
-                onChange={(e) => setNewTitle(e.target.value)}
-                autoFocus
-                required
-              />
+              <>
+                {purpose == "reply" ? (
+                  <></>
+                ) : (
+                  <>
+                    <Form.Input
+                      value={newTitle}
+                      type="text"
+                      placeholder={
+                        purpose == "reply" ? "댓글 달기" : "수정하기"
+                      }
+                      onChange={(e) => setNewTitle(e.target.value)}
+                      autoFocus
+                      required
+                    />
+                  </>
+                )}
+              </>
             ) : (
               <></>
             )}
