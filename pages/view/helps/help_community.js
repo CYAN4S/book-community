@@ -10,11 +10,13 @@ import {
   Container,
   Accordion,
   Grid,
+  Card,
+  Popup,
 } from "semantic-ui-react";
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
+import Link from "next/link";
 const Help_Community = () => {
   const router = useRouter();
 
@@ -56,12 +58,40 @@ const Help_Community = () => {
         <Segment>
           <Grid columns={2} relaxed="very" style={{ textAlign: "center" }}>
             <Grid.Column>
-              <p style={{fontSize : 18}}> first space for you</p>
-              <Icon name="hand point down" size="big"></Icon>
+              <p style={{ fontSize: 18 }}> first space for you</p>
+              <Icon name="hand point down" size="big" style={{marginBottom : 15}}></Icon>
+              <Link href="../../explore">
+                <a>
+                <Popup
+                  trigger={
+                    <Card
+                      header="이야기 1"
+                      meta="책에 집중하기"
+                      description="하나의 책에 대해 다른 사람들과 깊은 이야기를 나누어보세요"
+                      centered
+                    />
+                  }
+                ></Popup>
+                </a>
+              </Link>
             </Grid.Column>
             <Grid.Column>
-              <p style={{fontSize : 18}}>second space for you</p>
-              <Icon name="hand point down outline" size="big"></Icon>
+              <p style={{ fontSize: 18 }}>second space for you</p>
+              <Icon name="hand point down outline" size="big" style={{marginBottom : 15}}></Icon>
+              <Link href="../../explore">
+                <a>
+                <Popup
+                  trigger={
+                    <Card
+                    header="이야기 2"
+                    meta="장르에 집중하기"
+                    description="특정 장르에 대하여 다른 사람들과 넓은 이야기를 나누어보세요"
+                    centered
+                  />
+                  }
+                ></Popup>
+                </a>
+              </Link>
             </Grid.Column>
           </Grid>
           <Divider vertical>And</Divider>
