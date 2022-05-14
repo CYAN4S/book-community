@@ -102,18 +102,19 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
 
       {chats.length ? (
         <Segment inverted style={{ textAlign: "center" }}>
+          <Card.Group itemsPerRow={5} centered>
             {chats.map((chat) => (
-              <>
-
+              <span key={chat.id} style={{marginLeft : 20, marginRight : 20}}>
                     <CardChats
                       chat={chat}
                       id={chat.id}
                       isOwner={chat.createrId === userId}
                       genre_chat={collectionName}
                     />{" "}
-                <Divider />
-              </>
+     
+              </span>
             ))}
+          </Card.Group>
         </Segment>
       ) : (
         <p>채팅목록이 없습니다</p>

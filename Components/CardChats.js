@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { Card, Container, Divider, List } from "semantic-ui-react";
+import { Card, Container, Divider, Icon, List } from "semantic-ui-react";
+import { useUserDisplayName } from "../utils/functions";
 
 export default function CardChats({ chat, id, isOwner, genre_chat }) {
   return (
     <>
-      {/*게시된 글을 누르면, 게시된 글을 출력하는 페이지로 이동
-        또한 obj는 string화함
-    */}
       <Link
         href={{
           pathname: `../post/read/${id}`,
@@ -17,26 +15,58 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           },
         }}
       >
-        <>
-          <Card.Header style={{ fontSize: 18, marginBottom: 0 }}>
-            {chat.title}
-          </Card.Header>
-          <Card.Description>
-            {chat.text.length > 30
-              ? `${chat.text.substring(0, 30)}...`
-              : chat.text}
-          </Card.Description>
-          <Card.Description
+        <Card
+          raised
+          style={{
+            marginTop: 20,
+            marginBottom: 20,
+            color: "black",
+            fontFamily: `Helvetica, Arial, sans-serif`,
+          }}
+        >
+          <Card.Header
             style={{
-              fontSize: 13,
-              textAlign: "right",
+              fontSize: 17,
+              marginLeft: 18,
               marginTop: 10,
-              marginBottom: -14,
+              marginBottom: 5,
+              textAlign: "left",
             }}
           >
-            {new Date(chat.createdAt).toLocaleString()}
+            {chat.title.length > 15
+              ? `${chat.title.substring(0, 15)}...`
+              : `${chat.title}`}
+          </Card.Header>
+          <Card.Description
+            style={{
+              fontSize: 11,
+              marginLeft: 15,
+              marginBottom: 5,
+              textAlign: "left",
+              color : "grey"
+            }}
+          >
+            <Icon name ="pencil alternate"/>
+            {chat.text.length > 20
+              ? `${chat.text.substring(0, 20)}...`
+              : chat.text}
           </Card.Description>
-        </>
+          <Card.Meta
+            style={{
+              fontSize: 11,
+              textAlign: "right",
+              marginTop: 10,
+              marginRight: 10,
+            }}
+          >
+            {" "}
+            {new Date(chat.createdAt).toLocaleString()}
+          </Card.Meta>
+          <Card.Content extra>
+              <Icon name="user" />
+              {`작성자 : ${useUserDisplayName(chat.createrId)}`}
+          </Card.Content>
+        </Card>
       </Link>
 
       <style jsx>{``}</style>
