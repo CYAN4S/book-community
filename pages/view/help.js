@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import React from "react";
 import { useRouter } from "next/router";
-
+import Link from "next/link";
 const Help = () => {
   const router = useRouter();
   function returnClick(e) {
@@ -32,43 +32,43 @@ const Help = () => {
               style={{ cursor: "pointer" }}
               onClick={returnClick}
             ></Icon>
-            <strong
-              style={{ cursor: "pointer" }}
-              onClick={returnClick}
-            >
+            <strong style={{ cursor: "pointer" }} onClick={returnClick}>
               뒤로가기
             </strong>
           </div>
-          <Divider horizontal style={{ marginBottom:30 }}>
+          <Divider horizontal style={{ marginBottom: 30 }}>
             <Header as="h4">
               <Icon name="tag" />
               Kinds
             </Header>
           </Divider>
-          <Grid columns={3} style={{marginLeft : 10}}>
+          <Grid columns={3} style={{ marginLeft: 10 }}>
             <Grid.Row centered columns={4} color="black" textAlign="center">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>COMMUNITY</Card.Header>
-                        <Card.Description>사용자와 대화하기</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>
-                    커뮤니티 이용 방법에 대해 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={5} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+              <Link href="./helps/help_community">
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>COMMUNITY</Card.Header>
+                          <Card.Description>사용자와 대화하기</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 300 }}>
+                      커뮤니티 이용 방법에 대해 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={5} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
+              </Link>
+
               <Grid.Column>
                 <Popup
                   trigger={
