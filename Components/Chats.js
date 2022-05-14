@@ -2,14 +2,21 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Button, Icon, Label, Image, Item } from "semantic-ui-react";
+import {
+  Button,
+  Icon,
+  Label,
+  Image,
+  Item,
+  Container,
+  Header,
+} from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
 import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
 
 export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
-
   const [editing, setEditing] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
@@ -17,8 +24,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [doLike, setDoLike] = useState(false);
 
   const displayName = useUserDisplayName(chat.createrId);
-  const collectionName = detailbook_chat ? detailbook_chat : (genre_chat ? genre_chat : "chat");
-  
+  const collectionName = detailbook_chat
+    ? detailbook_chat
+    : genre_chat
+    ? genre_chat
+    : "chat";
+
   const router = useRouter();
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -45,7 +56,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       }
     }
 
-    if(genre_chat){
+    if (genre_chat) {
       router.back();
     }
   };
@@ -77,9 +88,11 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     <>
       {genre_chat ? (
         <div>
-          genre_chat에 알맞은 css를 제작하세요. 사진 갖고오는 기능이 필요함
-          <div style={{ marginBottom: 10 }}>
-            <Item style={{ display: "flex", alignItems: "center" }}>
+          <Container centered>
+            <Header as="h2" style={{ marginTop: "10%" }}>
+              {chat.title}
+            </Header>
+            <p style={{ textAlign: "left", display: "flex" }}>
               <Link href={`/profile/${chat.createrId}`}>
                 <a>
                   <Label
@@ -95,81 +108,20 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
                       size="large"
                     />
-                    <p style={{ marginTop: 3 }}> {displayName} </p>
                   </Label>
                 </a>
               </Link>
-              <Item.Content style={{ marginLeft: 3, marginBottom: 5 }}>
-                <Item.Description>
-                  <strong>{chat.text}</strong>
-                  <p style={{ marginTop: 3 }}>
-                    <Icon name="clock" />
-                    {new Date(chat.createdAt).toLocaleString()}
-                  </p>
-                </Item.Description>
-              </Item.Content>
-            </Item>
-
-            {chat.fileUrl && (
-              <Image
-                src={chat.fileUrl}
-                style={{
-                  width: "40%",
-                  height: "40%",
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}
-              />
-            )}
-          </div>
-          <Button
-            labelPosition="right"
-            onClick={onLikeClick}
-            style={{ marginRight: 10 }}
-          >
-            <Button color={doLike ? "red" : "grey"}>
-              <Icon name="heart" />
-            </Button>
-            <Label as="a" basic color={doLike ? "red" : "grey"} pointing="left">
-              {chat.users.length}
-            </Label>
-          </Button>
-          <Button inverted color="blue" onClick={onReplyClick}>
-            댓글
-          </Button>
-
-          {isOwner && (
-            <>
-              <Button inverted color="red" onClick={onDeleteClick}>
-                삭제
-              </Button>
-              <Button inverted color="green" onClick={onEditClick}>
-                편집
-              </Button>
-            </>
-          )}
-
-          {editing && (
-            <div>
-              <PostEditor
-                chat={chat}
-                purpose={"edit"}
-                uid={currentUid}
-                detailbook_chat={detailbook_chat}
-                genre_chat={genre_chat}
-              />
-            </div>
-          )}
-
-          {replying && (
-            <PostEditor
-              chat={chat}
-              purpose={"reply"}
-              uid={currentUid}
-              detailbook_chat={detailbook_chat}
-              genre_chat={genre_chat}
-            />
-          )}
+              <p style={{ marginTop: 3, fontWeight: "bold" }}>
+                {" "}
+                {displayName}{" "}
+              </p>
+              <span style={{ marginTop: 25, marginLeft: -40 }}>
+                <Icon name="clock" />
+                {new Date(chat.createdAt).toLocaleString()}
+              </span>
+            </p>
+            <p>{chat.text}</p>
+          </Container>
         </div>
       ) : (
         <div>
