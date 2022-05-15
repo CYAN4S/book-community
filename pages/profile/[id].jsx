@@ -130,12 +130,15 @@ export default function Profile() {
   return (
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
-        <Label color={"teal"} size="massive">
+        <Label color={"teal"} size="massive" style= {{marginLeft : 10}}>
+          <span style={{letterSpacing : 1.2, fontFamily : "GothicA1-Bold"}}>
           {displayName
             ? `${displayName}님의 프로필`
             : isMe()
             ? "닉네임을 설정해주세요."
             : "닉네임을 아직 설정하지 않은 사용자입니다."}
+          </span>
+
         </Label>
 
         {!isMe() && (
@@ -169,9 +172,11 @@ export default function Profile() {
         <Grid.Column>
           <Segment raised>
             <Label as="a" color="red" ribbon>
-              상태메시지
+             상태메시지
             </Label>
-            <span>{statusMsg ? statusMsg : "상태메시지를 입력해보세요"}</span>
+            <span>
+              {statusMsg ? statusMsg : "상태메시지를 입력해보세요"}
+            </span>
             <Image
               src="https://markettraders.kr/wp-content/uploads/2020/04/stock.jpg"
               size="medium"

@@ -109,11 +109,19 @@ export default function AuthForm() {
 
   return (
     <>
-      <Container style={{width: "85%"}}>
-      <Header style={{marginTop : 20}}><p style={{fontSize : 20, fontFamily:"GothicA1-ExtraBold"}}>{getTitle()}</p></Header>
+      <Container style={{ width: "85%" }}>
+        <Header style={{ marginTop: 20 }}>
+          <p style={{ fontSize: 20, fontFamily: "GothicA1-ExtraBold" }}>
+            {getTitle()}
+          </p>
+        </Header>
         <Form onSubmit={onSubmit}>
           <Form.Field>
-            <label> <Icon name = "mail" style={{marginRight:5}}/>이메일</label>
+            <label>
+              {" "}
+              <Icon name="mail" style={{ marginRight: 5 }} />
+              이메일
+            </label>
             <input
               type="email"
               value={email}
@@ -123,7 +131,11 @@ export default function AuthForm() {
           </Form.Field>
 
           <Form.Field style={showPasswordForm() ? {} : { display: "none" }}>
-            <label> <Icon name = "user secret" style={{marginRight:5}}/>비밀번호</label>
+            <label>
+              {" "}
+              <Icon name="user secret" style={{ marginRight: 5 }} />
+              비밀번호
+            </label>
             <input
               type="password"
               value={password}
@@ -132,19 +144,26 @@ export default function AuthForm() {
           </Form.Field>
 
           {progress == "signup" && (
-            <p style={{marginLeft : 10, fontFamily:"GothicA1-Regular"}}> - 회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>
+            <p style={{ marginLeft: 10, fontFamily: "GothicA1-Regular" }}>
+              {" "}
+              - 회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.
+            </p>
           )}
 
           <Button
             type="submit"
             color="teal"
-            style={{ fontFamily: "GothicA1-Medium", fontSize : 15 }}
+            style={{ fontFamily: "GothicA1-Medium", fontSize: 15 }}
           >
             {getButtonText()}
           </Button>
 
           {showPasswordForm() && (
-            <Button onClick={goPrev} color="teal" style={{ fontFamily: "GothicA1-Medium", fontSize : 15 }}>
+            <Button
+              onClick={goPrev}
+              color="teal"
+              style={{ fontFamily: "GothicA1-Medium", fontSize: 15 }}
+            >
               다른 이메일로 시작
             </Button>
           )}
@@ -152,7 +171,12 @@ export default function AuthForm() {
 
         <Divider horizontal>또는</Divider>
 
-        <Button name="google" onClick={onSocialClick} color="violet"  style={{ fontFamily: "Stylish-Regular", fontSize : 15 }}>
+        <Button
+          name="google"
+          onClick={onSocialClick}
+          color="violet"
+          style={{ fontFamily: "Stylish-Regular", fontSize: 15 }}
+        >
           Continue with Google
         </Button>
 
