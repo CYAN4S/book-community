@@ -23,10 +23,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <RecoilRoot>
       <RecoilComponent />
-      <div>
+      <div >
         <div className="main">
-          <Header as="h1" inverted color="blue">
-            BOOKSTAMP
+          <Header as="h1" inverted color="blue" style={{marginTop : 30, marginLeft : 10}}>
+          <Header.Content style={{marginLeft : -50, fontSize: 20, fontFamily : "Gugi-Regular"}}>새로운 소통을 꿈꾸는</Header.Content>
+            <p style = {{fontFamily: "GamjaFlower-Regular", marginTop : -15, marginBottom:30, fontSize: 40}}>BOOKSTAMP</p>
+            
           </Header>
         </div>
 
