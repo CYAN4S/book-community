@@ -214,16 +214,21 @@ export default function Lib({ infoData }) {
             <Header as="h2" color="blue">
               전체 위치 확인하기
             </Header>
+            <div>
             {entire ? (
               <>
                 <Entire infoData={infoData} />
-                <Icon name="arrow alternate circle up" size = "big" onClick={onClick}></Icon>
+                <Icon name="arrow alternate circle up" size = "big" onClick={onClick} ></Icon>
+                
               </>
             ) : (
               <>
                 <Icon name="arrow alternate circle down" size = "big" onClick={onClick}></Icon>
               </>
             )}
+            </div>
+
+            
           </>
         )}
       </div>

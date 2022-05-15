@@ -28,17 +28,6 @@ export default function LibMap({ MapData }) {
             }}
             draggable={true}
           ></MapMarker>
-
-          {/* MapInfoWindow : 지정된 POS위치 위에 인포윈도우 설정*/}
-          <MapInfoWindow
-            position={{
-              lat: MapData.latitude,
-              lng: MapData.longitude,
-            }}
-            removable={true} // removeable = true : 인포윈도우를 닫을 수 있는 x버튼 표시
-          >
-            <div style={{ padding: "5px", color: "#000" }}>{MapData.name}</div>
-          </MapInfoWindow>
         </Map>
 
         <Button color = "black" onClick={returnClick} style={{ marginTop: 10, marginBottom: 20 }}>

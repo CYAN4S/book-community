@@ -100,7 +100,7 @@ export default function Entire({ infoData }) {
                     removable={true} // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
                   >
                     <div style={{ padding: "5px", color: "#000" }}>
-                      {position.name}
+                      <p style={{fontSize : 11, fontFamily : "GothicA1-Medium"}}>{position.name}</p>
                     </div>
                   </MapInfoWindow>
                 </>
@@ -138,9 +138,11 @@ export default function Entire({ infoData }) {
                       lng: position.lating.longitude,
                     }}
                     removable={true} 
+                    
+                    
                   >
                     <div style={{ padding: "5px", color: "#000" }}>
-                      {position.name}
+                      <p style={{fontSize : 11, fontFamily : "GothicA1-Medium"}}>{position.name}</p>
                     </div>
                   </MapInfoWindow>
                 </>
@@ -180,7 +182,7 @@ export default function Entire({ infoData }) {
                     removable={true} 
                   >
                     <div style={{ padding: "5px", color: "#000" }}>
-                      {position.name}
+                      <p style={{fontSize : 10, fontFamily : "GothicA1-Medium"}}>{position.name}</p>
                     </div>
                   </MapInfoWindow>
                 </>
