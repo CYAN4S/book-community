@@ -228,7 +228,7 @@ const Post = () => {
     <>
       <Container textAlign="center">
         <Header as="h2" icon>
-          <Icon name="book" />
+          <Icon name="paste" />
           게시글 작성하기
           <Header.Subheader>
             작성할 게시글의 장르를 먼저 선택해주세요.
