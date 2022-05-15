@@ -21,16 +21,16 @@ import { addDoc, collection } from "firebase/firestore";
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
   // 0513_0849 코드 추가 시작
-  const [badUserChat, setBadUserChat] = useState("");
+  const [reportUserName, setReportUserName] = useState("");
   const [badUserName, setBadUserName] = useState("");
   const [badUserContext, setBadUserContext] = useState("");
   const [badChatWhy, setBadChatWhy] = useState("");
   const badChatWhys = [
-    { key: "i", text: "부적절한 게시글", value: "inapposite" },
-    { key: "u", text: "불건전한 게시글", value: "unwholesome" },
-    { key: "c", text: "상업적인 게시글", value: "commercial" },
-    { key: "a", text: "계정 도용", value: "account hijacking" },
-    { key: "p", text: "도배", value: "papering" },
+    { key: "i", text: "부적절한 게시글", value: "부적절한 게시글" },
+    { key: "u", text: "불건전한 게시글", value: "불건전한 게시글" },
+    { key: "c", text: "상업적인 게시글", value: "상업적인 게시글" },
+    { key: "a", text: "계정 도용", value: "계정 도용" },
+    { key: "p", text: "도배", value: "도배" },
   ];
   
   const [userObj, setUserObj] = useState(null);
@@ -54,15 +54,15 @@ const Report = () => {
     const reportObj = {
       createdAt: Date.now(),
       createrId: userObj.uid,
-      badUserChat: badUserChat,
+      reportUserName: reportUserName,
       badUserName: badUserName,
-      badUserContext:badUserChat,
+      badUserContext:badUserContext,
       badChatWhy:badChatWhy,
     };
     await addDoc(collection(dbService, collectionName), reportObj)
       .then(() => console.log("전송완료"))
       .catch((error) => alert(error));
-    setBadUserChat("");
+    setReportUserName("");
     setBadUserName("");
     setBadUserContext("");
     setBadChatWhy("");
@@ -169,8 +169,8 @@ const Report = () => {
                       control={Input}
                       label="신고자 닉네임"
                       placeholder="신고자 닉네임"
-                      value={badUserName}
-                      onChange={(e) => setBadUserName(e.target.value)}
+                      value={reportUserName}
+                      onChange={(e) => setReportUserName(e.target.value)}
                       required
                     />
 
@@ -180,19 +180,17 @@ const Report = () => {
                       label="신고 대상 닉네임"
                       placeholder="신고 대상 닉네임"
                       style={{ marginBottom: 20 }}
-                      value={badUserChat}
-                      onChange={(e) => setBadUserChat(e.target.value)}
+                      value={badUserName}
+                      onChange={(e) => setBadUserName(e.target.value)}
                       required
                     />
-
                     <Form.Field
                       control={Select}
                       options={badChatWhys}
                       label={"신고 사유"}
                       placeholder="신고 사유"
                       value = {badChatWhy}
-                      onChange={(e) => setBadChatWhy(e.target.value)}
-
+                      onChange={(e,data) => setBadChatWhy(data.value)}
                       required
                     />
                   </Form.Group>
