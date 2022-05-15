@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import "semantic-ui-css/semantic.min.css";
 import Navigation from "../Components/Navigation";
 import Script from "next/script";
-import { Header, Icon } from "semantic-ui-react";
+import { Header, Icon, Segment } from "semantic-ui-react";
 import "../public/static/fonts/style.css";
 // React
 import React from "react";
@@ -25,11 +25,11 @@ function MyApp({ Component, pageProps }) {
       <RecoilComponent />
       <div >
         <div className="main">
-          <Header as="h1" inverted color="violet" style={{marginTop : 30, marginLeft : -30}}>
+          <Header as="h1" inverted color="violet" style={{marginTop : 50, marginLeft : -30}}>
           <Header.Content style={{marginLeft : -50, fontSize: 20, fontFamily : "Gugi-Regular"}}>새로운 소통을 꿈꾸는</Header.Content>
             <p style = {{fontFamily: "GamjaFlower-Regular", marginTop : -15, marginLeft : 70, marginBottom:30, fontSize: 40}}>BOOKSTAMP</p>
-            
           </Header>
+          
         </div>
 
         {/* 카카오 맵 API를 사용하기 위함 */}
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
             `&libraries=services,clusterer&autoload=false`
           }
         ></Script>
-        <div style={{ margin: 10 }}>
+        <div style={{ marginTop: 20, marginLeft : 10, marginRight : 10 }}>
           <Navigation />
           <div style={{ marginTop: 35 }}>
             <Component {...pageProps} style={{ marginTop: 10 }} />

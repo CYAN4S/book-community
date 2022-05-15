@@ -33,7 +33,7 @@ export default function Book_home() {
 
   return (
     <>
-      <div>
+      <div style={{marginLeft : 5}}>
         <Head>
           <title>Home pages</title>
         </Head>
@@ -41,7 +41,7 @@ export default function Book_home() {
          
         </div>
         <div>
-          <Header as="h2">
+          <Header as="h2" style ={{marginTop : -40}}>
             <Icon name="chat" />
             <Header.Content>
               의견남기기

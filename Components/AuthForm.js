@@ -12,6 +12,7 @@ import {
   Message,
   Divider,
   Container,
+  Icon,
 } from "semantic-ui-react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -112,7 +113,7 @@ export default function AuthForm() {
       <Header style={{marginTop : 20}}><p style={{fontSize : 20, fontFamily:"GothicA1-ExtraBold"}}>{getTitle()}</p></Header>
         <Form onSubmit={onSubmit}>
           <Form.Field>
-            <label>이메일</label>
+            <label> <Icon name = "mail" style={{marginRight:5}}/>이메일</label>
             <input
               type="email"
               value={email}
@@ -122,7 +123,7 @@ export default function AuthForm() {
           </Form.Field>
 
           <Form.Field style={showPasswordForm() ? {} : { display: "none" }}>
-            <label>비밀번호</label>
+            <label> <Icon name = "user secret" style={{marginRight:5}}/>비밀번호</label>
             <input
               type="password"
               value={password}
