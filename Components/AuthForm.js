@@ -25,7 +25,7 @@ export default function AuthForm() {
 
   const getTitle = () =>
     progress == "email"
-      ? "더 넓은 세상이 기다리고 있습니다."
+      ? "더 넓은 세상이 여러분을 기다리고 있습니다."
       : progress == "signup"
       ? "새로 오셨군요! 환영합니다."
       : "돌아오셨군요! 환영합니다.";
@@ -109,7 +109,7 @@ export default function AuthForm() {
   return (
     <>
       <Container style={{width: "85%"}}>
-      <Header>{getTitle()}</Header>
+      <Header style={{marginTop : 20}}><p style={{fontSize : 20, fontFamily:"GothicA1-ExtraBold"}}>{getTitle()}</p></Header>
         <Form onSubmit={onSubmit}>
           <Form.Field>
             <label>이메일</label>
@@ -131,19 +131,19 @@ export default function AuthForm() {
           </Form.Field>
 
           {progress == "signup" && (
-            <p>회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>
+            <p style={{marginLeft : 10, fontFamily:"GothicA1-Regular"}}> - 회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>
           )}
 
           <Button
             type="submit"
             color="teal"
-            style={{ fontFamily: "SingleDay-Regular", fontSize : 15 }}
+            style={{ fontFamily: "GothicA1-Medium", fontSize : 15 }}
           >
             {getButtonText()}
           </Button>
 
           {showPasswordForm() && (
-            <Button onClick={goPrev} color="teal"  style={{ fontFamily: "SingleDay-Regular", fontSize : 15 }}>
+            <Button onClick={goPrev} color="teal" style={{ fontFamily: "GothicA1-Medium", fontSize : 15 }}>
               다른 이메일로 시작
             </Button>
           )}
@@ -151,7 +151,7 @@ export default function AuthForm() {
 
         <Divider horizontal>또는</Divider>
 
-        <Button name="google" onClick={onSocialClick} color="violet"  style={{ fontFamily: "SingleDay-Regular", fontSize : 15 }}>
+        <Button name="google" onClick={onSocialClick} color="violet"  style={{ fontFamily: "Stylish-Regular", fontSize : 15 }}>
           Continue with Google
         </Button>
 
