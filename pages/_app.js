@@ -26,7 +26,6 @@ function MyApp({ Component, pageProps }) {
       <div >
         <div className="main">
           <Header as="h1" inverted color="violet" style={{marginTop : 30, marginLeft : -30}}>
-          <Icon name ="volume up" size='small'/>
           <Header.Content style={{marginLeft : -50, fontSize: 20, fontFamily : "Gugi-Regular"}}>새로운 소통을 꿈꾸는</Header.Content>
             <p style = {{fontFamily: "GamjaFlower-Regular", marginTop : -15, marginLeft : 70, marginBottom:30, fontSize: 40}}>BOOKSTAMP</p>
             
