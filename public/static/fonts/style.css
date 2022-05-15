@@ -67,4 +67,16 @@
 }@font-face {
     font-family: 'GamjaFlower-Regular';
     src: url('GamjaFlower-Regular.ttf');
+}@font-face {
+    font-family: 'Dongle-Bold';
+    src: url('Dongle-Bold.ttf');
+}@font-face {
+    font-family: 'Dongle-Light';
+    src: url('Dongle-Light.ttf');
+}@font-face {
+    font-family: 'Dongle-Regular';
+    src: url('Dongle-Regular.ttf');
+}@font-face{
+    font-family: 'SingleDay-Regular';
+    src:url('SingleDay-Regular.ttf');
 }

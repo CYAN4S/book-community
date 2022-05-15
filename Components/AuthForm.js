@@ -5,7 +5,14 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { authService as auth } from "../firebaseConfig";
-import { Button, Form, Header, Message, Divider } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Header,
+  Message,
+  Divider,
+  Container,
+} from "semantic-ui-react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { dbService as db } from "../firebaseConfig";
@@ -101,45 +108,55 @@ export default function AuthForm() {
 
   return (
     <>
+      <Container style={{width: "85%"}}>
       <Header>{getTitle()}</Header>
-      <Form onSubmit={onSubmit}>
-        <Form.Field>
-          <label>이메일</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={progress != "email"}
-          />
-        </Form.Field>
+        <Form onSubmit={onSubmit}>
+          <Form.Field>
+            <label>이메일</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={progress != "email"}
+            />
+          </Form.Field>
 
-        <Form.Field style={showPasswordForm() ? {} : { display: "none" }}>
-          <label>비밀번호</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Field>
+          <Form.Field style={showPasswordForm() ? {} : { display: "none" }}>
+            <label>비밀번호</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Field>
 
-        {progress == "signup" && (
-          <p>회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>
-        )}
+          {progress == "signup" && (
+            <p>회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.</p>
+          )}
 
-        <Button type="submit">{getButtonText()}</Button>
+          <Button
+            type="submit"
+            color="teal"
+            style={{ fontFamily: "SingleDay-Regular", fontSize : 15 }}
+          >
+            {getButtonText()}
+          </Button>
 
-        {showPasswordForm() && (
-          <Button onClick={goPrev}>다른 이메일로 시작</Button>
-        )}
-      </Form>
+          {showPasswordForm() && (
+            <Button onClick={goPrev} color="teal"  style={{ fontFamily: "SingleDay-Regular", fontSize : 15 }}>
+              다른 이메일로 시작
+            </Button>
+          )}
+        </Form>
 
-      <Divider horizontal>또는</Divider>
+        <Divider horizontal>또는</Divider>
 
-      <Button name="google" onClick={onSocialClick}>
-        Continue with Google
-      </Button>
+        <Button name="google" onClick={onSocialClick} color="violet"  style={{ fontFamily: "SingleDay-Regular", fontSize : 15 }}>
+          Continue with Google
+        </Button>
 
-      {error && <Message error header={error[0]} content={error[1]} />}
+        {error && <Message error header={error[0]} content={error[1]} />}
+      </Container>
     </>
   );
 }
