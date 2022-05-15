@@ -298,8 +298,8 @@ export default function Title({ books }) {
                       Description
                     </Header>
 
-                    <p style={{ paddingBottom: 20, fontSize: 15 }}>
-                      {decode(description)}
+                    <p style={{ marginTop : 20, paddingBottom: 20, fontSize: 15, lineHeight : 1.5}}>
+                    {decode(description).length > 200 ? `${decode(description).substring(0,200)}...` : decode(description)}
                     </p>
                   </div>
                 </div>
