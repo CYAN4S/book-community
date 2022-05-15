@@ -298,7 +298,7 @@ export default function Title({ books }) {
                       Description
                     </Header>
 
-                    <p style={{ marginTop : 20, paddingBottom: 20, fontSize: 15, lineHeight : 1.5}}>
+                    <p style={{ marginTop : 25, paddingBottom: 20, fontSize: 15, lineHeight : 1.7}}>
                     {decode(description).length > 200 ? `${decode(description).substring(0,200)}...` : decode(description)}
                     </p>
                   </div>
@@ -327,8 +327,8 @@ export default function Title({ books }) {
                   >
                     <div>
                       {checkItems.size ? (
-                        <div style={{ textAlign: "center", marginBottom: 10 }}>
-                          <strong style={{ marginRight: 10 }}>
+                        <div style={{ textAlign: "center", marginBottom: 10, marginTop : 70 }}>
+                          <strong style={{ marginRight: 10, }}>
                             {`"${name}"`} 선택되었습니다.
                           </strong>
                           <Icon
