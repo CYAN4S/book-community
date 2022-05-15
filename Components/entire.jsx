@@ -65,9 +65,9 @@ export default function Entire({ infoData }) {
     <>
       <div style={{ width: "100%", height: "540px" }}>
         <div className="btnSet">
-          <Button color = "red" onClick={checkDefault}> 전체 확인하기 </Button>
-          <Button color = "teal" onClick={checkHasBook}> 소장된 도서관 확인하기 </Button>
-          <Button color = "violet"onClick={checkAvailLoan}> 대출 가능한 도서관 확인하기 </Button>
+          <Button color = "red" onClick={checkDefault} style={{fontFamily : "Stylish-Regular", fontSize : 15}}> 전체 확인하기 </Button>
+          <Button color = "teal" onClick={checkHasBook} style={{fontFamily : "Stylish-Regular", fontSize : 15}}> 소장된 도서관 확인하기 </Button>
+          <Button color = "violet"onClick={checkAvailLoan} style={{fontFamily : "Stylish-Regular", fontSize : 15}}> 대출 가능한 도서관 확인하기 </Button>
         </div>
         {defaultCheck && (
           <>

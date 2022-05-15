@@ -212,7 +212,7 @@ export default function Lib({ infoData }) {
           <>
             <Divider style={{ marginTop: 30 }} inverted />
             <Header as="h2" color="blue">
-              전체 위치 확인하기
+              <p style={{fontFamily : "Stylish-Regular"}}>전체 위치 확인하기</p>
             </Header>
             <div>
             {entire ? (
