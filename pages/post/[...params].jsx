@@ -98,10 +98,10 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
           <Button icon="pencil alternate" content="글 작성하기" />
         </Link>
         <Button icon="redo" content="새로고침" onClick={refreshPage} />
-        <Link href={`../view/inquire`}>        
+        <Link href={`../view/inquire`}>
           <Button icon="comment alternate outline" content="문의하기" />
         </Link>
-        <Link href={`../view/report`}>        
+        <Link href={`../view/report`}>
           <Button icon="warning" content="신고하기" />
         </Link>
         <Link href={`../view/help`}>
@@ -112,23 +112,53 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {/* 게시글 */}
 
       {chats.length ? (
-        <Segment inverted style={{ textAlign: "center", marginLeft:20, marginRight:20, borderRadius : "30px" }} >
+        <Segment
+          inverted
+          style={{
+            textAlign: "center",
+            marginLeft: 20,
+            marginRight: 20,
+            borderRadius: "30px",
+          }}
+        >
           <Card.Group itemsPerRow={5} centered>
             {chats.map((chat) => (
-              <span key={chat.id} style={{marginLeft : 10, marginRight : 10}}>
-                    <CardChats
-                      chat={chat}
-                      id={chat.id}
-                      isOwner={chat.createrId === userId}
-                      genre_chat={collectionName}
-                    />
-     
+              <span key={chat.id} style={{ marginLeft: 10, marginRight: 10 }}>
+                <CardChats
+                  chat={chat}
+                  id={chat.id}
+                  isOwner={chat.createrId === userId}
+                  genre_chat={collectionName}
+                />
               </span>
             ))}
           </Card.Group>
         </Segment>
       ) : (
-        <p>채팅목록이 없습니다</p>
+        <>
+          <p
+            style={{
+              fontFamily: "GothicA1-SemiBold",
+              fontSize: 30,
+              textAlign: "center",
+              marginTop: 50,
+              color: "red",
+            }}
+          >
+            아직 올라온 글이 없어요!
+          </p>
+          <p
+            style={{
+              fontFamily: "GothicA1-Regular",
+              fontSize: 18,
+              textAlign: "center",
+              marginTop: -20,
+              color: "teal",
+            }}
+          >
+            글을 작성해보세요
+          </p>
+        </>
       )}
     </>
   );

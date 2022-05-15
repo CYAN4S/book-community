@@ -125,6 +125,8 @@ const Help_Community = () => {
         p {
           font-family: FredokaOne-Regular;
         }
+
+        
       `}</style>
     </>
   );
