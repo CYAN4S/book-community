@@ -11,6 +11,7 @@ import {
   Container,
   Accordion,
   Select,
+  Image,
 } from "semantic-ui-react";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -20,6 +21,46 @@ import { addDoc, collection } from "firebase/firestore";
 
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
+  // 0516_0932 코드 추가 시작
+  // reportPhotoUpload code start
+  const [imgFileString, setImgFileString] = useState("");
+  const onNewPhotoSubmit = async (e, data) => {
+    e.preventDefault();
+
+    let userPhoto = "";
+    if (imgFileString !== "") {
+      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
+      const response = await uploadString(fileRef, imgFileString, "data_url");
+      userPhoto = await getDownloadURL(response.ref);
+    }
+    const userPhotoObj = {
+      userPhoto,
+    };
+    updateUserDoc(userPhotoObj)
+      .then(() => console.log("전송완료"))
+      .catch((error) => alert(error));
+    setImgFileString("");
+  };
+
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setImgFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onClearPhotoClick = () => setImgFileString("");
+  // reportPhotoUpload code end
+  // 0516_0932 코드 추가 끝
   // 0513_0849 코드 추가 시작
   const [reportUserName, setReportUserName] = useState("");
   const [badUserName, setBadUserName] = useState("");
@@ -32,7 +73,7 @@ const Report = () => {
     { key: "a", text: "계정 도용", value: "계정 도용" },
     { key: "p", text: "도배", value: "도배" },
   ];
-  
+
   const [userObj, setUserObj] = useState(null);
   const collectionName = `userReport`;
   useEffect(() => {
@@ -56,8 +97,8 @@ const Report = () => {
       createrId: userObj.uid,
       reportUserName: reportUserName,
       badUserName: badUserName,
-      badUserContext:badUserContext,
-      badChatWhy:badChatWhy,
+      badUserContext: badUserContext,
+      badChatWhy: badChatWhy,
     };
     await addDoc(collection(dbService, collectionName), reportObj)
       .then(() => console.log("전송완료"))
@@ -189,8 +230,8 @@ const Report = () => {
                       options={badChatWhys}
                       label={"신고 사유"}
                       placeholder="신고 사유"
-                      value = {badChatWhy}
-                      onChange={(e,data) => setBadChatWhy(data.value)}
+                      value={badChatWhy}
+                      onChange={(e, data) => setBadChatWhy(data.value)}
                       required
                     />
                   </Form.Group>
@@ -202,6 +243,49 @@ const Report = () => {
                     value={badUserContext}
                     onChange={(e) => setBadUserContext(e.target.value)}
                   />
+                  <strong>
+                    <p>파일 첨부</p>
+                  </strong>
+                  <Form onSubmit={onNewPhotoSubmit}>
+                    <div
+                      style={{ marginTop: 5, marginBottom: 10 }}
+                      className="ui segment"
+                    >
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={onFileChange}
+                        id="attach-file"
+                        icon="file image"
+                      />
+                    </div>
+
+                    {imgFileString && (
+                      <div style ={{                            marginTop: 10,
+                        marginBottom: 20, }}className="ui segment">
+                        <Image
+                          label={{
+                            color: "red",
+                            onClick: onClearPhotoClick,
+                            icon: "remove circle",
+                            size: "medium",
+                            ribbon: true,
+                          }}
+                          src={imgFileString}
+                          style={{
+                            backgroundImage: imgFileString,
+                            flex:1,
+                            width: "50%",
+                            height: "50%",
+                          
+                            marginLeft: 20,
+                        
+                          }}
+                        />
+                      </div>
+                    )}
+                  </Form>
+
                   <Form.Field
                     id="form-button-control-public"
                     control={Button}
