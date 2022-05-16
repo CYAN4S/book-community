@@ -69,28 +69,30 @@ const Help = () => {
                 </Grid.Column>
               </Link>
 
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>PROFILE</Card.Header>
-                        <Card.Description>프로필 설정</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>
-                    내 프로필 설정을 위한 내용을 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={4} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+              <Link href="./helps/help_profile">
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>PROFILE</Card.Header>
+                          <Card.Description>프로필 설정</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 300 }}>
+                      내 프로필 설정을 위한 내용을 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={4} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
+              </Link>
               <Grid.Column>
                 <Popup
                   trigger={
