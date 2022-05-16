@@ -48,9 +48,9 @@ import {
           <Header as="h2">
             <Icon name="question" />
             <Header.Content>
-              북스탬프의 커뮤니티는?
+              북스탬프의 프로필 페이지는?
               <Header.Subheader>
-                What is the community of Bookstamp?
+              What is Bookstamp's profile page?
               </Header.Subheader>
             </Header.Content>
           </Header>
