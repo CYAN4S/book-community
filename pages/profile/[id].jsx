@@ -250,7 +250,7 @@ export default function Profile() {
         </Grid.Column>
         <Grid.Column>
           {isMe() && (
-            <Segment raised>
+            <Segment raised style={{marginRight : 30}}>
               <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
                 <Form.Field>
                   <Label as="a" color="red" ribbon="right">
