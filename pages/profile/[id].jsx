@@ -144,7 +144,11 @@ export default function Profile() {
     e.preventDefault();
 
     let userPhoto = "";
-    if (imgFileString !== "") {
+    if (imgFileString == ""){
+      alert("업로드할 사진을 선택하세요!");
+    return;
+    }
+    else {
       const fileRef = ref(storageService, `${data.uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
       userPhoto = await getDownloadURL(response.ref);
@@ -307,6 +311,7 @@ export default function Profile() {
 
                       {imgFileString && (
                         <div>
+                          <Divider></Divider>
                           <Image
                             fluid
                             label={{
