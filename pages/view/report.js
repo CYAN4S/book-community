@@ -18,29 +18,15 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { updateProfile } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
+// 0516_0944 import 추가
+import { v4 } from "uuid";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
   // 0516_0932 코드 추가 시작
   // reportPhotoUpload code start
-  const [imgFileString, setImgFileString] = useState("");
-  const onNewPhotoSubmit = async (e, data) => {
-    e.preventDefault();
 
-    let userPhoto = "";
-    if (imgFileString !== "") {
-      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
-      const response = await uploadString(fileRef, imgFileString, "data_url");
-      userPhoto = await getDownloadURL(response.ref);
-    }
-    const userPhotoObj = {
-      userPhoto,
-    };
-    updateUserDoc(userPhotoObj)
-      .then(() => console.log("전송완료"))
-      .catch((error) => alert(error));
-    setImgFileString("");
-  };
 
   const onFileChange = (event) => {
     const {
@@ -66,6 +52,8 @@ const Report = () => {
   const [badUserName, setBadUserName] = useState("");
   const [badUserContext, setBadUserContext] = useState("");
   const [badChatWhy, setBadChatWhy] = useState("");
+  const [imgFileString, setImgFileString] = useState("");
+  const [saveReportPhoto, setSaveReportPhoto] = useState("");
   const badChatWhys = [
     { key: "i", text: "부적절한 게시글", value: "부적절한 게시글" },
     { key: "u", text: "불건전한 게시글", value: "불건전한 게시글" },
@@ -89,8 +77,14 @@ const Report = () => {
     });
   }, []);
 
-  const onNewReportSubmit = async (e) => {
+  const onNewReportSubmit = async (e,data) => {
     e.preventDefault();
+    if (imgFileString !== "") {
+      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
+      const response = await uploadString(fileRef, imgFileString, "data_url");
+      saveReportPhoto = await getDownloadURL(response.ref);
+    }
+    console.log("데이터확인", saveReportPhoto);
 
     const reportObj = {
       createdAt: Date.now(),
@@ -99,14 +93,23 @@ const Report = () => {
       badUserName: badUserName,
       badUserContext: badUserContext,
       badChatWhy: badChatWhy,
+      reportPhoto: saveReportPhoto,
     };
+    console.log(reportObj);
     await addDoc(collection(dbService, collectionName), reportObj)
-      .then(() => console.log("전송완료"))
-      .catch((error) => alert(error));
+      .then(() => {
+        alert("신고되었습니다!");
+      })
+      .catch((error) => {
+        alert(error);
+      });
     setReportUserName("");
     setBadUserName("");
     setBadUserContext("");
     setBadChatWhy("");
+    setSaveReportPhoto("");
+    setImgFileString("");
+    router.push("/view_more");
   };
   // 0513_0849 코드 추가 끝
 
@@ -246,45 +249,43 @@ const Report = () => {
                   <strong>
                     <p>파일 첨부</p>
                   </strong>
-                  <Form onSubmit={onNewPhotoSubmit}>
+                  <div
+                    style={{ marginTop: 5, marginBottom: 10 }}
+                    className="ui segment"
+                  >
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={onFileChange}
+                      id="attach-file"
+                      icon="file image"
+                    />
+                  </div>
+
+                  {imgFileString && (
                     <div
-                      style={{ marginTop: 5, marginBottom: 10 }}
+                      style={{ marginTop: 10, marginBottom: 20 }}
                       className="ui segment"
                     >
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={onFileChange}
-                        id="attach-file"
-                        icon="file image"
+                      <Image
+                        label={{
+                          color: "red",
+                          onClick: onClearPhotoClick,
+                          icon: "remove circle",
+                          size: "medium",
+                          ribbon: true,
+                        }}
+                        src={imgFileString}
+                        style={{
+                          backgroundImage: imgFileString,
+                          flex: 1,
+                          width: "50%",
+                          height: "50%",
+                          marginLeft: 20,
+                        }}
                       />
                     </div>
-
-                    {imgFileString && (
-                      <div style ={{                            marginTop: 10,
-                        marginBottom: 20, }}className="ui segment">
-                        <Image
-                          label={{
-                            color: "red",
-                            onClick: onClearPhotoClick,
-                            icon: "remove circle",
-                            size: "medium",
-                            ribbon: true,
-                          }}
-                          src={imgFileString}
-                          style={{
-                            backgroundImage: imgFileString,
-                            flex:1,
-                            width: "50%",
-                            height: "50%",
-                          
-                            marginLeft: 20,
-                        
-                          }}
-                        />
-                      </div>
-                    )}
-                  </Form>
+                  )}
 
                   <Form.Field
                     id="form-button-control-public"
