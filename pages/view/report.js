@@ -50,7 +50,7 @@ const Report = () => {
   // 0513_0849 코드 추가 시작
   const [reportUserName, setReportUserName] = useState("");
   const [badUserName, setBadUserName] = useState("");
-  const [badUserContext, setBadUserContext] = useState("");
+  const [reportUserContext, setReportUserContext] = useState("");
   const [badChatWhy, setBadChatWhy] = useState("");
   const [imgFileString, setImgFileString] = useState("");
   const [saveReportPhoto, setSaveReportPhoto] = useState("");
@@ -91,7 +91,7 @@ const Report = () => {
       createrId: userObj.uid,
       reportUserName: reportUserName,
       badUserName: badUserName,
-      badUserContext: badUserContext,
+      reportUserContext: reportUserContext,
       badChatWhy: badChatWhy,
       reportPhoto: saveReportPhoto,
     };
@@ -105,7 +105,7 @@ const Report = () => {
       });
     setReportUserName("");
     setBadUserName("");
-    setBadUserContext("");
+    setReportUserContext("");
     setBadChatWhy("");
     setSaveReportPhoto("");
     setImgFileString("");
@@ -243,8 +243,8 @@ const Report = () => {
                     control={TextArea}
                     label="세부 신고 내용"
                     placeholder="세부 신고 내용"
-                    value={badUserContext}
-                    onChange={(e) => setBadUserContext(e.target.value)}
+                    value={reportUserContext}
+                    onChange={(e) => setReportUserContext(e.target.value)}
                   />
                   <strong>
                     <p>파일 첨부</p>
