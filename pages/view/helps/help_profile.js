@@ -57,146 +57,121 @@ const Help_Profile = () => {
         </Header>
 
         <Segment>
-          <Grid columns={4} divided >
-            <Grid.Row textAlign ='center' >
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    사용자의 닉네임이 표시됩니다.
-                  </span>
+          <Grid columns={4} divided>
+            <Grid.Row textAlign="center">
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>내 닉네임을 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    나를 대표할 수 있는 사진을 업로드 할 수 있습니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>내 상태메시지를 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    내가 구독한 사용자를 확인할 수 있습니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>나를 대표할 수 있는 사진을 업로드 할 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    내가 등록한 책 목록을 확인할 수 있습니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>내가 구독한 사용자를 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              
             </Grid.Row>
             <Divider style={{ marginTop: -5 }} />
             <Grid.Row style={{ marginTop: -20 }}>
-            <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    사용자의 닉네임이 표시됩니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>내가 등록한 책 목록을 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    사용자의 닉네임이 표시됩니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>내 닉네임을 바꿀 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    사용자의 닉네임이 표시됩니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>내 상태 메시지를 바꿀 수 있습니다.</span>
                 </div>
               </Grid.Column>
-              <Grid.Column style={{ width: "25%"}}>
-              <div style={{ marginTop: 0, textAlign: "center", display:"flex", alignItems : "center" }}>
-                <Image src="/bookstamp.png" size="small" />
-                <Icon name="left arrow" style={{marginLeft : 30}}/>
-                  <span
-                    style={{
-                      marginBottom : -8,
-                      marginLeft : 10,
-                      marginRight: 3,
-                      fontSize: 20,
-                      fontFamily: "NanumBrushScript-Regular",
-                    }}
-                  >
-                    사용자의 닉네임이 표시됩니다.
-                  </span>
+              <Grid.Column style={{ width: "25%" }}>
+                <div
+                  style={{
+                    marginTop: 0,
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image src="/bookstamp.png" size="small" />
+                  <Icon name="left arrow" style={{ marginLeft: 30 }} />
+                  <span>로그아웃 할 수 있습니다.</span>
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -212,6 +187,14 @@ const Help_Profile = () => {
 
         p {
           font-family: FredokaOne-Regular;
+        }
+
+        span{
+          margin-bottom : -8px;
+          margin-left : 10px;
+          margin-right: 3px;
+          font-size: 17px;
+          font-family: "DoHyeon-Regular";
         }
       `}</style>
     </>
