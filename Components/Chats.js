@@ -27,11 +27,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
 
-  const collectionName = detailbook_chat
-    ? detailbook_chat
-    : "genre_chat"
-    ? genre_chat
-    : "chat";
+  const collectionName = detailbook_chat ?? genre_chat ?? "chat"
 
   const router = useRouter();
   useEffect(() => {
@@ -46,6 +42,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
+      console.log(collectionName, chat.id);
       await deleteDoc(doc(dbService, collectionName, `${chat.id}`))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
