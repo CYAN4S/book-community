@@ -209,13 +209,31 @@ export default function Title({ books }) {
                   >
                     <img
                       style={{
-                        width: 180,
-                        height: 210,
+                        width: 110,
+                        height: 160,
                       }}
                       src={image}
                       alt="DON'T HAVE IMAGE"
                       className="img_book"
                     />
+
+                    {!isMe() && (
+                    <span>
+                      <Button
+                        size="mini"
+                        basic
+                        color="orange"
+                        onClick={onRegisterClick}
+                      >
+                        {wasRegisterBookCheck
+                          ? "등록 해제"
+                          : "내 책으로 등록하기"}
+                      </Button>
+                      <p style={{marginTop : 6, fontSize : 11, cursor : "pointer"}}> <Icon name = "undo" onClick={returnClick}/> 돌아가기</p>
+                     
+                      </span>
+                    )}
+                    
                   </div>
                 </Grid.Column>
 
@@ -254,23 +272,6 @@ export default function Title({ books }) {
                           </strong>
                         </List.Item>
                       </List>
-                      <div style={{ marginTop: 10 }}>
-                        {!isMe() && (
-                          <Button
-                            style={{ marginTop: 10 }}
-                            basic
-                            color="orange"
-                            onClick={onRegisterClick}
-                          >
-                            {wasRegisterBookCheck
-                              ? "등록 해제"
-                              : "내 책으로 등록하기"}
-                          </Button>
-                        )}
-                        <Button basic color="black" onClick={returnClick}>
-                          돌아가기
-                        </Button>
-                      </div>
                     </div>
                   </div>
                 </Grid.Column>
@@ -298,8 +299,17 @@ export default function Title({ books }) {
                       Description
                     </Header>
 
-                    <p style={{ marginTop : 25, paddingBottom: 20, fontSize: 15, lineHeight : 1.9}}>
-                    {decode(description).length > 200 ? `${decode(description).substring(0,200)}...` : decode(description)}
+                    <p
+                      style={{
+                        marginTop: 25,
+                        paddingBottom: 20,
+                        fontSize: 15,
+                        lineHeight: 1.9,
+                      }}
+                    >
+                      {decode(description).length > 200
+                        ? `${decode(description).substring(0, 200)}...`
+                        : decode(description)}
                     </p>
                   </div>
                 </div>
@@ -307,7 +317,7 @@ export default function Title({ books }) {
             </Grid.Row>
           </Grid>
         </div>
-        <div className="ui center aligned container">
+        <div className="ui center aligned container" style={{ marginTop: -10 }}>
           <Grid style={{ marginTop: -10 }} columns={3}>
             <Grid.Row>
               <div
@@ -327,8 +337,14 @@ export default function Title({ books }) {
                   >
                     <div>
                       {checkItems.size ? (
-                        <div style={{ textAlign: "center", marginBottom: 10, marginTop : 70 }}>
-                          <strong style={{ marginRight: 10, }}>
+                        <div
+                          style={{
+                            textAlign: "center",
+                            marginBottom: 10,
+                            marginTop: 70,
+                          }}
+                        >
+                          <strong style={{ marginRight: 10 }}>
                             {`"${name}"`} 선택되었습니다.
                           </strong>
                           <Icon
