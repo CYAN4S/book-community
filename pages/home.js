@@ -9,8 +9,7 @@ import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Book_home() {
-  // userPhoto Real-time synchronization
-  const [userPhotos, setUserPhotos] = useState([]);
+
 
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
@@ -34,20 +33,7 @@ export default function Book_home() {
     });
   }, []);
 
-  // 0517_2145 home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code START
-  const userPhotoQuery = query(collection(dbService, "profile"));
-  useEffect(() => {
-    onSnapshot(userPhotoQuery, (snapshot) => {
-      const userPhotoArray = [];
-      snapshot.forEach((doc) => {
-        userPhotoArray.push(doc.data().userPhoto);
-      });
-      setUserPhotos(userPhotoArray);
-      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
-    });
-  }, []);
-  // 0517_2145 home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code END
-  console.log(userPhotos);
+  
   return (
     <>
       <div style={{ marginLeft: 5 }}>
