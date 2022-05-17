@@ -102,11 +102,11 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     <div>
       {genre_chat ? (
         <>
-        <Header as='h2' icon textAlign='center' >
-          <Icon name='book' circular />
-          <Header.Content>글 쓰기</Header.Content>
-          <p style={{fontSize : 12, marginTop: 3}}>게시글을 작성해보세요!</p>
-        </Header>
+          <Header as="h2" icon textAlign="center">
+            <Icon name="book" circular />
+            <Header.Content>글 쓰기</Header.Content>
+            <p style={{ fontSize: 12, marginTop: 3 }}>게시글을 작성해보세요!</p>
+          </Header>
           <Container textAlign="left">
             <Form onSubmit={onNewPostSubmit}>
               <Form.Field>

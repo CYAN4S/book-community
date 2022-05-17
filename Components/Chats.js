@@ -13,7 +13,7 @@ import {
   Divider,
 } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
-import { useUserDisplayName } from "../utils/functions";
+import { useUserDisplayName, useUserPhoto } from "../utils/functions";
 import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
 
@@ -23,11 +23,13 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
-
+  // syncUserPhoto
+  const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
+
   const collectionName = detailbook_chat
     ? detailbook_chat
-    : genre_chat
+    : "genre_chat"
     ? genre_chat
     : "chat";
 
@@ -103,25 +105,26 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       height: 60,
                     }}
                   >
-                    <Item.Image
-                      avatar
-                      spaced="right"
-                      src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
-                      size="large"
-                    />
+                    <Image
+                      className="ui medium circular image"
+                      src={userPhoto}
+                      size="big"
+                      style={{ marginTop: 10, marginBottom: 10 }}
+                    ></Image>
+                    <p style={{ marginTop: 3 }}> {displayName} </p>
                   </Label>
                 </a>
               </Link>
-              <p style={{ marginTop: 3, fontWeight: "bold" }}>
-                {displayName}
-              </p>
+              <p style={{ marginTop: 3, fontWeight: "bold" }}>{displayName}</p>
               <span style={{ marginTop: 25, marginLeft: -40 }}>
                 <Icon name="clock" />
                 {new Date(chat.createdAt).toLocaleString()}
               </span>
             </p>
-            <Divider style={{marginTop : -10, marginBottom : 15, width:"40%"}}/>
-            <p style={{marginBottom : 10}}>{chat.text}</p>
+            <Divider
+              style={{ marginTop: -10, marginBottom: 15, width: "40%" }}
+            />
+            <p style={{ marginBottom: 10 }}>{chat.text}</p>
 
             {chat.fileUrl && (
               <Image
@@ -134,58 +137,59 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 }}
               />
             )}
-            <Container textAlign='right' style={{marginBottom : 100}}>
-            <Button
-            labelPosition="right"
-            onClick={onLikeClick}
-            style={{ marginRight: 10 }}
-          >
-            <Button color={doLike ? "red" : "grey"}>
-              <Icon name="heart" />
-            </Button>
-            <Label as="a" basic color={doLike ? "red" : "grey"} pointing="left">
-              {chat.users.length}
-            </Label>
-          </Button>
-          <Button inverted color="blue" onClick={onReplyClick}>
-            댓글
-          </Button>
-
-          {isOwner && (
-            <>
-              <Button inverted color="red" onClick={onDeleteClick}>
-                삭제
+            <Container textAlign="right" style={{ marginBottom: 100 }}>
+              <Button
+                labelPosition="right"
+                onClick={onLikeClick}
+                style={{ marginRight: 10 }}
+              >
+                <Button color={doLike ? "red" : "grey"}>
+                  <Icon name="heart" />
+                </Button>
+                <Label
+                  as="a"
+                  basic
+                  color={doLike ? "red" : "grey"}
+                  pointing="left"
+                >
+                  {chat.users.length}
+                </Label>
               </Button>
-              <Button inverted color="green" onClick={onEditClick}>
-                편집
+              <Button inverted color="blue" onClick={onReplyClick}>
+                댓글
               </Button>
-            </>
-          )}
-
-          {editing && (
-            <div>
-              <PostEditor
-                chat={chat}
-                purpose={"edit"}
-                uid={currentUid}
-                detailbook_chat={detailbook_chat}
-                genre_chat={genre_chat}
-              />
-            </div>
-          )}
-
-          {replying && (
-            <PostEditor
-              chat={chat}
-              purpose={"reply"}
-              uid={currentUid}
-              detailbook_chat={detailbook_chat}
-              genre_chat={genre_chat}
-            />
-          )}
+              {isOwner && (
+                <>
+                  <Button inverted color="red" onClick={onDeleteClick}>
+                    삭제
+                  </Button>
+                  <Button inverted color="green" onClick={onEditClick}>
+                    편집
+                  </Button>
+                </>
+              )}
+              {editing && (
+                <div>
+                  <PostEditor
+                    chat={chat}
+                    purpose={"edit"}
+                    uid={currentUid}
+                    detailbook_chat={detailbook_chat}
+                    genre_chat={genre_chat}
+                  />
+                </div>
+              )}
+              {replying && (
+                <PostEditor
+                  chat={chat}
+                  purpose={"reply"}
+                  uid={currentUid}
+                  detailbook_chat={detailbook_chat}
+                  genre_chat={genre_chat}
+                />
+              )}
             </Container>
           </Container>
-          
         </div>
       ) : (
         <div>
@@ -200,12 +204,14 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       height: 60,
                     }}
                   >
-                    <Item.Image
-                      avatar
-                      spaced="right"
-                      src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" // 이미지 넣을거임
-                      size="large"
-                    />
+                    {/* test */}
+                    <Image
+                      className="ui medium circular image"
+                      src={userPhoto}
+                      size="big"
+                      style={{ marginTop: 10, marginBottom: 10 }}
+                    ></Image>
+
                     <p style={{ marginTop: 3 }}> {displayName} </p>
                   </Label>
                 </a>

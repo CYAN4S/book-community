@@ -19,3 +19,10 @@ export const usersDisplayNameState = atom({
   key: "usersDisplayNameName",
   default: {},
 });
+
+// 05121957 추가
+export const usersPhotoState = atom({
+  key: "usersPhotoState",
+  default: {},
+});
+

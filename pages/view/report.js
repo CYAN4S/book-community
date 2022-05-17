@@ -1,3 +1,4 @@
+import { authService, dbService, storageService } from "../../firebaseConfig";
 import {
   Button,
   Divider,
@@ -9,13 +10,109 @@ import {
   Icon,
   Container,
   Accordion,
+  Select,
+  Image,
 } from "semantic-ui-react";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+// 0516_0944 import 추가
+import { v4 } from "uuid";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
+  // 0516_0932 코드 추가 시작
+  // reportPhotoUpload code start
+
+
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setImgFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onClearPhotoClick = () => setImgFileString("");
+  // reportPhotoUpload code end
+  // 0516_0932 코드 추가 끝
+  // 0513_0849 코드 추가 시작
+  const [reportUserName, setReportUserName] = useState("");
+  const [badUserName, setBadUserName] = useState("");
+  const [reportUserContext, setReportUserContext] = useState("");
+  const [badChatWhy, setBadChatWhy] = useState("");
+  const [imgFileString, setImgFileString] = useState("");
+  const [saveReportPhoto, setSaveReportPhoto] = useState("");
+  const badChatWhys = [
+    { key: "i", text: "부적절한 게시글", value: "부적절한 게시글" },
+    { key: "u", text: "불건전한 게시글", value: "불건전한 게시글" },
+    { key: "c", text: "상업적인 게시글", value: "상업적인 게시글" },
+    { key: "a", text: "계정 도용", value: "계정 도용" },
+    { key: "p", text: "도배", value: "도배" },
+  ];
+
+  const [userObj, setUserObj] = useState(null);
+  const collectionName = `userReport`;
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj({
+          uid: user.uid,
+          updateProfile: (args) => updateProfile(args),
+        });
+      } else {
+        setUserObj(null);
+      }
+    });
+  }, []);
+
+  const onNewReportSubmit = async (e,data) => {
+    e.preventDefault();
+    if (imgFileString !== "") {
+      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
+      const response = await uploadString(fileRef, imgFileString, "data_url");
+      saveReportPhoto = await getDownloadURL(response.ref);
+    }
+    console.log("데이터확인", saveReportPhoto);
+
+    const reportObj = {
+      createdAt: Date.now(),
+      createrId: userObj.uid,
+      reportUserName: reportUserName,
+      badUserName: badUserName,
+      reportUserContext: reportUserContext,
+      badChatWhy: badChatWhy,
+      reportPhoto: saveReportPhoto,
+    };
+    console.log(reportObj);
+    await addDoc(collection(dbService, collectionName), reportObj)
+      .then(() => {
+        alert("신고되었습니다!");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    setReportUserName("");
+    setBadUserName("");
+    setReportUserContext("");
+    setBadChatWhy("");
+    setSaveReportPhoto("");
+    setImgFileString("");
+    router.push("/view_more");
+  };
+  // 0513_0849 코드 추가 끝
+
   const router = useRouter();
   const panels = [
     {
@@ -109,13 +206,16 @@ const Report = () => {
             <>
               <Icon name="caret up" onClick={onToggleForm} size="big"></Icon>
               <Segment>
-                <Form>
+                <Form onSubmit={onNewReportSubmit}>
                   <Form.Group widths="equal">
                     <Form.Field
                       id="form-input-control-report-name"
                       control={Input}
                       label="신고자 닉네임"
                       placeholder="신고자 닉네임"
+                      value={reportUserName}
+                      onChange={(e) => setReportUserName(e.target.value)}
+                      required
                     />
 
                     <Form.Field
@@ -124,22 +224,69 @@ const Report = () => {
                       label="신고 대상 닉네임"
                       placeholder="신고 대상 닉네임"
                       style={{ marginBottom: 20 }}
+                      value={badUserName}
+                      onChange={(e) => setBadUserName(e.target.value)}
+                      required
                     />
-
                     <Form.Field
-                      id="form-input-control-target-name"
-                      control={Input}
-                      label="신고 일자"
-                      placeholder="2000-01-01"
-                      style={{ marginBottom: 20 }}
+                      control={Select}
+                      options={badChatWhys}
+                      label={"신고 사유"}
+                      placeholder="신고 사유"
+                      value={badChatWhy}
+                      onChange={(e, data) => setBadChatWhy(data.value)}
+                      required
                     />
                   </Form.Group>
                   <Form.Field
                     id="form-textarea-control-opinion"
                     control={TextArea}
-                    label="신고 내용"
-                    placeholder="신고 내용"
+                    label="세부 신고 내용"
+                    placeholder="세부 신고 내용"
+                    value={reportUserContext}
+                    onChange={(e) => setReportUserContext(e.target.value)}
                   />
+                  <strong>
+                    <p>파일 첨부</p>
+                  </strong>
+                  <div
+                    style={{ marginTop: 5, marginBottom: 10 }}
+                    className="ui segment"
+                  >
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={onFileChange}
+                      id="attach-file"
+                      icon="file image"
+                    />
+                  </div>
+
+                  {imgFileString && (
+                    <div
+                      style={{ marginTop: 10, marginBottom: 20 }}
+                      className="ui segment"
+                    >
+                      <Image
+                        label={{
+                          color: "red",
+                          onClick: onClearPhotoClick,
+                          icon: "remove circle",
+                          size: "medium",
+                          ribbon: true,
+                        }}
+                        src={imgFileString}
+                        style={{
+                          backgroundImage: imgFileString,
+                          flex: 1,
+                          width: "50%",
+                          height: "50%",
+                          marginLeft: 20,
+                        }}
+                      />
+                    </div>
+                  )}
+
                   <Form.Field
                     id="form-button-control-public"
                     control={Button}

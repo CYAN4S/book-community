@@ -1,10 +1,16 @@
-import { authService as auth, dbService as db } from "../../firebaseConfig";
+import {
+  authService as auth,
+  dbService as db,
+  storageService,
+} from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
-import { doc, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 
 import {
+  Divider,
   Button,
   Form,
   Grid,
@@ -15,6 +21,7 @@ import {
   Label,
   List,
   Segment,
+  TextArea,
 } from "semantic-ui-react";
 
 import { v4 } from "uuid";
@@ -45,6 +52,11 @@ export default function Profile() {
   const isMe = () => currentUser?.uid == queryId;
   const [myBooks, setMyBooks] = useState([]);
 
+  // ProfilePhoto Code
+  const [imgFileString, setImgFileString] = useState("");
+  const [currentUserPhotoUri, setCurrentUserPhotoUri] = useState("");
+  const [doUploadPhoto, setDoUploadPhoto] = useState(false);
+
   const onLogOutClick = () => {
     auth.signOut();
     router.push("/");
@@ -58,12 +70,12 @@ export default function Profile() {
   const onUser = async (data) => {
     setDisplayName(data?.displayName);
     setStatusMsg(data?.statusMsg);
+    setCurrentUserPhotoUri(data?.userPhoto);
 
     if (data?.users) {
       const x = await Promise.all(
         data.users.map(async (uid) => await getUserDoc(uid))
       );
-      console.log(x);
       setSubscribers(x);
     } else {
       setSubscribers([]);
@@ -127,18 +139,59 @@ export default function Profile() {
     }
   };
 
+  // profilePhoto code start
+  const onNewPhotoSubmit = async (e, data) => {
+    e.preventDefault();
+
+    let userPhoto = "";
+    if (imgFileString == "") {
+      alert("업로드할 사진을 선택하세요!");
+      return;
+    } else {
+      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
+      const response = await uploadString(fileRef, imgFileString, "data_url");
+      userPhoto = await getDownloadURL(response.ref);
+    }
+    const userPhotoObj = {
+      userPhoto,
+    };
+    updateUserDoc(userPhotoObj)
+      .then(() => console.log("프로필사진 전송완료"))
+      .catch((error) => alert(error));
+    setImgFileString("");
+    router.push("/profile");
+  };
+
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setImgFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onClearPhotoClick = () => setImgFileString("");
+  const onUploadPhotoClick = () => setDoUploadPhoto((prev) => !prev);
+  // profilePhoto code end
   return (
     <div id="profile">
       <Header style={{ marginTop: 30 }}>
-        <Label color={"teal"} size="massive" style= {{marginLeft : 10}}>
-          <span style={{letterSpacing : 1.2, fontFamily : "GothicA1-Bold"}}>
-          {displayName
-            ? `${displayName}님의 프로필`
-            : isMe()
-            ? "닉네임을 설정해주세요."
-            : "닉네임을 아직 설정하지 않은 사용자입니다."}
+        <Label color={"teal"} size="massive" style={{ marginLeft: 10 }}>
+          <span style={{ letterSpacing: 1.2, fontFamily: "GothicA1-Bold" }}>
+            {displayName
+              ? `${displayName}님의 프로필`
+              : isMe()
+              ? "닉네임을 설정해주세요."
+              : "닉네임을 아직 설정하지 않은 사용자입니다."}
           </span>
-
         </Label>
 
         {!isMe() && (
@@ -172,19 +225,131 @@ export default function Profile() {
         <Grid.Column>
           <Segment raised>
             <Label as="a" color="red" ribbon>
-             상태메시지
+              상태메시지
             </Label>
             <span>
-              {statusMsg ? statusMsg : "상태메시지를 입력해보세요"}
+              {statusMsg ? <>{statusMsg}</> : <>상태메시지를 입력해보세요</>}
             </span>
-            <Image
-              src="https://markettraders.kr/wp-content/uploads/2020/04/stock.jpg"
-              size="medium"
-              style={{ marginTop: 10, marginBottom: 30 }}
-            />
+            <Divider></Divider>
+            <Label as="a" color="orange" ribbon>
+              프로필사진
+            </Label>
+            {currentUserPhotoUri ? (
+              <>
+                <Image
+                  src={currentUserPhotoUri}
+                  width="50%"
+                  height="50%"
+                  style={{ marginTop: 10, marginBottom: 10 }}
+                ></Image>
+              </>
+            ) : (
+              <>
+                {isMe() ? (
+                  <> 나만의 프로필 사진을 꾸며봐요 </>
+                ) : (
+                  <> 사진을 등록하지 않은 사용자입니다. </>
+                )}
+              </>
+            )}
 
+            {/* userPhotoUpload */}
+            {isMe() ? (
+              <>
+                {!doUploadPhoto ? (
+                  <>
+                    {" "}
+                    <Button
+                      color="black"
+                      //floated ="right"
+                      onClick={onUploadPhotoClick}
+                      style={{ marginTop: 20 }}
+                    >
+                      바꾸기
+                    </Button>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
+
+            {isMe() ? (
+              <>
+                {doUploadPhoto ? (
+                  <>
+                    <Form onSubmit={onNewPhotoSubmit}>
+                      <div>
+                        <Label
+                          basic
+                          color="orange"
+                          pointing="right"
+                          htmlFor="attach-file"
+                        >
+                          <p>Add photos</p>
+                        </Label>
+
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={onFileChange}
+                          id="attach-file"
+                          icon="file image"
+                        />
+                      </div>
+
+                      {imgFileString && (
+                        <div>
+                          <Divider></Divider>
+                          <Image
+                            fluid
+                            label={{
+                              color: "red",
+                              onClick: onClearPhotoClick,
+                              icon: "remove circle",
+                              size: "medium",
+                              ribbon: true,
+                            }}
+                            src={imgFileString}
+                            style={{
+                              backgroundImage: imgFileString,
+                              width: "40%",
+                              height: "40%",
+                              marginTop: 10,
+                              marginLeft: 20,
+                              marginBottom: 20,
+                            }}
+                          />
+                        </div>
+                      )}
+                      <Button color="teal" style={{ marginTop: 10 }}>
+                        프로필 사진 바꾸기
+                      </Button>
+                      <Button
+                        color="teal"
+                        onClick={onUploadPhotoClick}
+                        style={{ marginTop: 10 }}
+                      >
+                        돌아가기
+                      </Button>
+                    </Form>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <> </>
+            )}
+            <Divider></Divider>
             <Label as="a" color="blue" ribbon>
-              {isMe() ? <> 내가 구독한 사용자 </> : <> 해당 사용자가 구독한 사용자 </>}
+              {isMe() ? (
+                <> 내가 구독한 사용자 </>
+              ) : (
+                <> 해당 사용자가 구독한 사용자 </>
+              )}
             </Label>
 
             {subscribers.length == 0 ? (
@@ -195,37 +360,51 @@ export default function Profile() {
             ) : (
               <List>
                 {subscribers.map((user) => (
-                  <List.Item key={v4()} style={{marginBottom : 5}}>
+                  <List.Item key={v4()} style={{ marginBottom: 5 }}>
                     {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
-                      {
-                        user.uid === currentUser.uid ?
+                      {user.uid === currentUser.uid ? (
                         <>
                           <List.Header>
-                            <strong style={{fontSize : 15}}> ✅ {user.displayName ?? "게스트"} </strong>
+                            <strong style={{ fontSize: 15 }}>
+                              {" "}
+                              ✅ {user.displayName ?? "게스트"}{" "}
+                            </strong>
                           </List.Header>
                         </>
-                        :
+                      ) : (
                         <>
                           <Link href={`/profile/${user.uid}`}>
                             <List.Header as="a">
-                              <strong style={{fontSize : 15}}> ✅ {user.displayName ?? "게스트"} </strong>
+                              <strong style={{ fontSize: 15 }}>
+                                {" "}
+                                ✅ {user.displayName ?? "게스트"}{" "}
+                              </strong>
                             </List.Header>
                           </Link>
                         </>
-                      }
-                      
+                      )}
+
                       <List.Description>
-                        <p style={{fontSize : 12, marginLeft : 30}}> { user.statusMsg ? `상태메시지 : ${user.statusMsg}` : "상태메시지가 없습니다."} </p>
+                        <p style={{ fontSize: 12, marginLeft: 30 }}>
+                          {" "}
+                          {user.statusMsg
+                            ? `상태메시지 : ${user.statusMsg}`
+                            : "상태메시지가 없습니다."}{" "}
+                        </p>
                       </List.Description>
                     </List.Content>
                   </List.Item>
                 ))}
               </List>
             )}
-
-            <Label style={{ marginTop: 15 }} as="a" color="purple" ribbon>
-              {isMe() ? <> 내가 등록한 책 목록 </> : <> 해당 사용자가 등록한 책 목록 </>}
+            <Divider></Divider>
+            <Label style={{ marginTop: 5 }} as="a" color="purple" ribbon>
+              {isMe() ? (
+                <> 내가 등록한 책 목록 </>
+              ) : (
+                <> 해당 사용자가 등록한 책 목록 </>
+              )}
             </Label>
 
             {myBooks.length == 0 ? (
@@ -250,7 +429,7 @@ export default function Profile() {
         </Grid.Column>
         <Grid.Column>
           {isMe() && (
-            <Segment raised style={{marginRight : 30}}>
+            <Segment raised style={{ marginRight: 30 }}>
               <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
                 <Form.Field>
                   <Label as="a" color="red" ribbon="right">

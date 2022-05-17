@@ -1,3 +1,6 @@
+import { authService, dbService,  } from "../../firebaseConfig";
+import { updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 import {
   Button,
   Divider,
@@ -9,12 +12,59 @@ import {
   Icon,
   Container,
   Accordion,
+  Select,
 } from "semantic-ui-react";
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 
 const Inquire = () => {
+  // 0515_1623 코드 추가 시작
+const [inquireUserName, setInquireUserName] = useState("");
+const [userContext, setUserContext] = useState("");
+const [category, setCategory] = useState("");
+const categories = [
+  { key: "a", text: "시스템 문의", value: "시스템 문의" },
+  { key: "b", text: "시스템 개선", value: "시스템 개선" },
+  { key: "c", text: "기타", value: "기타" },
+];
+
+const [userObj, setUserObj] = useState(null);
+const collectionName = `userInquire`;
+useEffect(() => {
+  authService.onAuthStateChanged((user) => {
+    if (user) {
+      setUserObj({
+        uid: user.uid,
+        updateProfile: (args) => updateProfile(args),
+      });
+    } else {
+      setUserObj(null);
+    }
+  });
+}, []);
+
+const onNewInquireSubmit = async (e) => {
+  e.preventDefault();
+
+  const inquireObj = {
+    createdAt: Date.now(),
+    createrId: userObj.uid,
+    inquireUserName: inquireUserName,
+    userContext:userContext,
+    category: category,
+    
+  };
+
+  console.log(category,userContext);
+  await addDoc(collection(dbService, collectionName), inquireObj)
+    .then(() => console.log("전송완료"))
+    .catch((error) => alert(error));
+  setInquireUserName("");
+  setUserContext("");
+  setCategory("");
+};
+// 0515_1623 코드 끝
   const [formOpen, setFormOpen] = useState(false);
   const router = useRouter();
   const panels = [
@@ -107,21 +157,28 @@ const Inquire = () => {
             <>
               <Icon name="caret up" onClick={onToggleForm} size="big"></Icon>
               <Segment>
-                <Form>
+                <Form onSubmit={onNewInquireSubmit}>
                   <Form.Group widths="equal">
                     <Form.Field
                       id="form-input-control-report-name"
                       control={Input}
                       label="문의자 닉네임"
                       placeholder="문의자 닉네임"
+                      value={inquireUserName}
+                      onChange={(e) => setInquireUserName(e.target.value)}
+                      required
                     />
 
                     <Form.Field
                       id="form-input-control-target-name"
-                      control={Input}
-                      label="문의 일자"
-                      placeholder="2000-01-01"
+                      label="카테고리"
+                      placeholder="카테고리"
                       style={{ marginBottom: 20 }}
+                      control={Select}
+                      options={categories}
+                      value = {category}
+                      onChange={(e,data) => setCategory(data.value)}
+                      required
                     />
                   </Form.Group>
                   <Form.Field
@@ -129,6 +186,9 @@ const Inquire = () => {
                     control={TextArea}
                     label="문의 내용"
                     placeholder="문의 내용"
+                    value={userContext}
+                    onChange={(e) => setUserContext(e.target.value)}
+                    required
                   />
                   <Form.Field
                     id="form-button-control-public"
