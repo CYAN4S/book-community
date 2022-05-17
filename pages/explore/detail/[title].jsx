@@ -37,7 +37,7 @@ export default function Title({ books }) {
     isbn,
     description,
   } = books.items[0];
-
+  console.log(title);
   const collectionName = `chat${isbn}`;
   const [isChecked, setIsChecked] = useState(false);
   const [checkItems, setCheckItems] = useState(new Set());
@@ -478,7 +478,7 @@ export default function Title({ books }) {
 }
 
 export async function getServerSideProps(props) {
-  const title = props.query.title;
+  const title = encodeURIComponent(props.query.title);
   const res = await fetch(
     `https://openapi.naver.com/v1/search/book.json?query=${title}`,
     {
@@ -490,7 +490,7 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
-
+    console.log(books);
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
