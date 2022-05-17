@@ -21,6 +21,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [editing, setEditing] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
+  const [isMe, setIsMe] = useState(false);
   const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
   // syncUserPhoto
@@ -35,6 +36,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       if (user) {
         setCurrentUid(user.uid);
         setDoLike(chat.users.includes(user.uid));
+        
+        setIsMe(user.uid == chat.createrId);
       }
     });
   }, []);
