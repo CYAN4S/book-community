@@ -89,7 +89,7 @@ export default function SearchKeyword({ books }) {
                                     style={{ width: 110, height: 145 }}
                                     className="ui orange segment"
                                   >
-                                    <Link href={`./detail/${book.title}`}>
+                                    <Link href={`./detail/${book.title.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')}`}>
                                       <a>
                                         <img
                                           style={{
@@ -155,7 +155,7 @@ export default function SearchKeyword({ books }) {
                                     style={{ width: 110, height: 145 }}
                                     className="ui orange segment"
                                   >
-                                    <Link href={`./detail/${book.title}`}>
+                                    <Link href={`./detail/${book.title.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')}`}>
                                       <a>
                                         <img
                                           style={{
@@ -221,7 +221,7 @@ export default function SearchKeyword({ books }) {
                                     style={{ width: 110, height: 145 }}
                                     className="ui orange segment"
                                   >
-                                    <Link href={`./detail/${book.title}`}>
+                                    <Link href={`./detail/${book.title.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')}`}>
                                       <a>
                                         <img
                                           style={{
@@ -287,7 +287,7 @@ export default function SearchKeyword({ books }) {
                                     style={{ width: 110, height: 145 }}
                                     className="ui orange segment"
                                   >
-                                    <Link href={`./detail/${book.title}`}>
+                                    <Link href={`./detail/${book.title.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')}`}>
                                       <a>
                                         <img
                                           style={{

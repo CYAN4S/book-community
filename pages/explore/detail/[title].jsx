@@ -479,7 +479,7 @@ export default function Title({ books }) {
 }
 
 export async function getServerSideProps(props) {
-  const title = props.query.title;
+  const title = encodeURIComponent(props.query.title);
   const res = await fetch(
     `https://openapi.naver.com/v1/search/book.json?query=${title}`,
     {
