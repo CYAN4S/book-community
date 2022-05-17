@@ -323,9 +323,10 @@ export default function Title({ books }) {
             <Grid.Row>
               <div
                 style={{
-                  width: 600,
+                  width: 590,
                   height: 380,
                   marginLeft: 25,
+                  marginRight : -20,
                 }}
                 className="ui basic segment"
               >
@@ -414,7 +415,7 @@ export default function Title({ books }) {
                   </div>
                 </Grid.Column>
               </div>
-              <Grid.Column  style={{marginLeft : -25}}>
+              <Grid.Column  style={{marginLeft : 10}}>
                 <div
                   style={{
                     width: 590,
