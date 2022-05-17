@@ -212,14 +212,15 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       style={{ marginTop: 10, marginBottom: 10 }}
                     ></Image>
 
-                    <p style={{ marginTop: 3 }}> {displayName} </p>
+                    <p style={{ textAlign : "center", marginLeft : -31, marginTop: 3, width: 100, fontSize : 13, fontFamily : "GothicA1-ExtraLight" }}> {displayName?.length > 5 ? `${displayName.substring(0,5)}...` : displayName} </p>
                   </Label>
                 </a>
               </Link>
-              <Item.Content style={{ marginLeft: 3, marginBottom: 5 }}>
+              <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
                   <strong>{chat.title}</strong>
                   <strong>{chat.text}</strong>
+                  <Divider style={{marginBottom : 5, marginTop : 5}}/>
                   <p style={{ marginTop: 3 }}>
                     <Icon name="clock" />
                     {new Date(chat.createdAt).toLocaleString()}
