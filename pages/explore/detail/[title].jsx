@@ -281,7 +281,7 @@ export default function Title({ books }) {
               <Grid.Column>
                 <div
                   style={{
-                    width: 600,
+                    width: 587,
                     height: 270,
                     marginLeft: 10,
                     marginRight: 20,
@@ -289,7 +289,7 @@ export default function Title({ books }) {
                   className="ui basic segment"
                 >
                   <div
-                    style={{ height: 240, marginLeft: 5 }}
+                    style={{ height: 240, marginLeft: -5 }}
                     className="ui orange segment"
                   >
                     <Header
@@ -414,10 +414,10 @@ export default function Title({ books }) {
                   </div>
                 </Grid.Column>
               </div>
-              <Grid.Column  style={{marginLeft : -15}}>
+              <Grid.Column  style={{marginLeft : -25}}>
                 <div
                   style={{
-                    width: 600,
+                    width: 590,
                     height: 380,
                   }}
                   className="ui basic segment"
