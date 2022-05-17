@@ -238,8 +238,8 @@ export default function Profile() {
               <>
                 <Image
                   src={currentUserPhotoUri}
-                  width="50%"
-                  height="50%"
+                  width="40%"
+                  height="40%"
                   style={{ marginTop: 10, marginBottom: 10 }}
                 ></Image>
               </>
