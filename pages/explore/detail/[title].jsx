@@ -254,16 +254,16 @@ export default function Title({ books }) {
                           </div>
                         </List.Item>
 
-                        <List.Item style={{height : 30, lineHeight : "25px"}}>
-                          <strong>출판사</strong> {publisher}
+                        <List.Item style={{height : 30, lineHeight : "25px", fontSize : 12}}>
+                          <strong>출판사</strong> {publisher?.length > 60 ? `${publisher.substring(0,60)}...` : publisher}
                         </List.Item>
-                        <List.Item  style={{height : 30, lineHeight : "25px"}}>
+                        <List.Item  style={{height : 30, lineHeight : "25px", fontSize : 12}}>
                           <strong>출간일</strong> {pubdate}
                         </List.Item>
-                        <List.Item  style={{height : 30, lineHeight : "25px"}}>
-                          <strong>작가</strong> {author}
+                        <List.Item  style={{height : 30, lineHeight : "25px", fontSize : 12}}>
+                          <strong>작가</strong> {author?.length > 50 ? `${author.substring(0,50)}...` : author}
                         </List.Item>
-                        <List.Item  style={{height : 30, lineHeight : "25px"}}>
+                        <List.Item  style={{height : 30, lineHeight : "25px", fontSize : 12}}>
                           <strong className="num_price">
                             {new Intl.NumberFormat("ko", {
                               style: "currency",
