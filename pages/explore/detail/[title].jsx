@@ -1,5 +1,6 @@
 import {
   Button,
+  Container,
   Divider,
   Grid,
   Header,
@@ -189,7 +190,7 @@ export default function Title({ books }) {
 
   return (
     <>
-      <>
+      <Container textAlign="centered">
         <div className="ui center aligned container">
           <Grid style={{}} columns={3}>
             <Grid.Row>
@@ -445,7 +446,7 @@ export default function Title({ books }) {
             </Grid.Row>
           </Grid>
         </div>
-      </>
+      </Container>
 
       {/* <Divider inverted style={{ marginTop: 40 }} /> */}
       <div style={{ marginTop: -70 }} className="ui center aligned container">
@@ -458,7 +459,7 @@ export default function Title({ books }) {
         <div style={{ marginLeft: 20, textAlign: "left" }}>
           {chats.length ? (
             chats.map((chat) => (
-              <div className="chat_space" key={chat.id}>
+              <div className="chat_space" key={chat.id} style={{marginBottom : 30}}>
                 <Chats
                   chat={chat}
                   isOwner={chat.createrId === userId}
