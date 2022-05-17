@@ -192,7 +192,7 @@ export default function Title({ books }) {
     <>
       <Container textAlign="centered">
         <div className="ui center aligned container">
-          <Grid style={{}} columns={3}>
+          <Grid columns={3}>
             <Grid.Row>
               <div
                 style={{
@@ -319,7 +319,7 @@ export default function Title({ books }) {
           </Grid>
         </div>
         <div className="ui center aligned container" style={{ marginTop: -10 }}>
-          <Grid style={{ marginTop: -10 }} columns={3}>
+          <Grid style={{ marginTop: -10, marginLeft : -20 }} columns={3}>
             <Grid.Row>
               <div
                 style={{
@@ -414,7 +414,7 @@ export default function Title({ books }) {
                   </div>
                 </Grid.Column>
               </div>
-              <Grid.Column>
+              <Grid.Column  style={{marginLeft : -15}}>
                 <div
                   style={{
                     width: 600,
