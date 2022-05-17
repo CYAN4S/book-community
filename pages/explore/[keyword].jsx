@@ -439,7 +439,7 @@ export async function getServerSideProps({ query }) {
   const res = await fetch(
     "https://openapi.naver.com/v1/search/book.json?query=" +
       text +
-      "&display=20",
+      "&display=100",
     {
       headers: {
         "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,

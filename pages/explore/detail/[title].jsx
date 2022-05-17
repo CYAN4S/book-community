@@ -480,7 +480,7 @@ export default function Title({ books }) {
 export async function getServerSideProps(props) {
   const title = props.query.title;
   const res = await fetch(
-    "https://openapi.naver.com/v1/search/book.json?query=" + title,
+    `https://openapi.naver.com/v1/search/book.json?query=${title}`,
     {
       headers: {
         "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
@@ -490,6 +490,7 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
+  console.log(books);
 
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
