@@ -58,7 +58,7 @@ const Help_Community = () => {
         <Segment>
           <Grid columns={2} relaxed="very" style={{ textAlign: "center" }}>
             <Grid.Column>
-              <p style={{ fontSize: 18 }}> first space for you</p>
+              <p style={{ fontSize: 18 }}> first space for you!</p>
               <Icon
                 name="hand point down"
                 size="big"
@@ -85,7 +85,7 @@ const Help_Community = () => {
               </Link>
             </Grid.Column>
             <Grid.Column>
-              <p style={{ fontSize: 18 }}>second space for you</p>
+              <p style={{ fontSize: 18 }}>second space for you!</p>
               <Icon
                 name="hand point down outline"
                 size="big"
