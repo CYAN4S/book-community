@@ -229,7 +229,7 @@ export default function Title({ books }) {
                           ? "등록 해제"
                           : "내 책으로 등록하기"}
                       </Button>
-                      <p style={{marginTop : 6, fontSize : 11, cursor : "pointer"}}> <Icon name = "undo" onClick={returnClick}/> 돌아가기</p>
+                      <p onClick={returnClick} style={{marginTop : 6, fontSize : 11, cursor : "pointer"}}> <Icon name = "undo" /> 돌아가기</p>
                      
                       </span>
                     )}
@@ -239,31 +239,31 @@ export default function Title({ books }) {
 
                 <Grid.Column>
                   <div
-                    style={{ width: 330, height: 240, marginLeft: -50 }}
+                    style={{ width: 330, height: 240, marginLeft: -50}}
                     className="ui orange segment"
                   >
-                    <Header as="h3" color="blue">
+                    <Header as="h3" color="blue" style={{marginTop: 5, marginBottom : 5}}>
                       책 정보
                     </Header>
 
                     <div>
                       <List divided vertical>
                         <List.Item>
-                          <div style={{ fontSize: 16 }}>
-                            <strong className="book_item"> {title} </strong>
+                          <div style={{ fontSize: 13, margin: "5px 0px" }}>
+                            <strong className="book_item"> {title?.length > 140 ? `${title.substring(0,140)}...` : title} </strong>
                           </div>
                         </List.Item>
 
-                        <List.Item>
+                        <List.Item style={{height : 30, lineHeight : "25px"}}>
                           <strong>출판사</strong> {publisher}
                         </List.Item>
-                        <List.Item>
+                        <List.Item  style={{height : 30, lineHeight : "25px"}}>
                           <strong>출간일</strong> {pubdate}
                         </List.Item>
-                        <List.Item>
+                        <List.Item  style={{height : 30, lineHeight : "25px"}}>
                           <strong>작가</strong> {author}
                         </List.Item>
-                        <List.Item>
+                        <List.Item  style={{height : 30, lineHeight : "25px"}}>
                           <strong className="num_price">
                             {new Intl.NumberFormat("ko", {
                               style: "currency",
