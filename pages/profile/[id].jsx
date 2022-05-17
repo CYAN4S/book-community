@@ -231,9 +231,35 @@ export default function Profile() {
               {statusMsg ? <>{statusMsg}</> : <>상태메시지를 입력해보세요</>}
             </span>
             <Divider></Divider>
-            <Label as="a" color="orange" ribbon>
+            <Label as="a" color="orange" ribbon style={{height:25}}>
               프로필사진
             </Label>
+            {/* userPhotoUpload */}
+            {isMe() ? (
+              <>
+                {!doUploadPhoto ? (
+                  <>
+                    <Button
+                      color='purple'
+                      inverted
+                      size="mini"
+                      //floated ="right"
+                      onClick={onUploadPhotoClick}
+                      style={{marginLeft : -8, height : 25}}
+                    >
+                      <Icon
+                        name="exchange"
+                        style={{ marginLeft: -10, marginRight: -10} }
+                      />
+                    </Button>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
             {currentUserPhotoUri ? (
               <>
                 <Image
@@ -253,28 +279,7 @@ export default function Profile() {
               </>
             )}
 
-            {/* userPhotoUpload */}
-            {isMe() ? (
-              <>
-                {!doUploadPhoto ? (
-                  <>
-                    {" "}
-                    <Button
-                      color="black"
-                      //floated ="right"
-                      onClick={onUploadPhotoClick}
-                      style={{ marginTop: 20 }}
-                    >
-                      바꾸기
-                    </Button>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
+            
 
             {isMe() ? (
               <>
@@ -287,6 +292,7 @@ export default function Profile() {
                           color="orange"
                           pointing="right"
                           htmlFor="attach-file"
+                          style={{ marginTop: 10 }}
                         >
                           <p>Add photos</p>
                         </Label>
@@ -297,6 +303,7 @@ export default function Profile() {
                           onChange={onFileChange}
                           id="attach-file"
                           icon="file image"
+                          style={{ marginLeft: 10, marginBottom: 5 }}
                         />
                       </div>
 
@@ -324,15 +331,22 @@ export default function Profile() {
                           />
                         </div>
                       )}
-                      <Button color="teal" style={{ marginTop: 10 }}>
-                        프로필 사진 바꾸기
+                      <Button color="violet" inverted style={{ marginTop: 10 }}>
+                        <Icon
+                          name="upload"
+                          style={{ marginLeft: -11, marginRight: -10 }}
+                        />
                       </Button>
                       <Button
-                        color="teal"
+                        color="red"
                         onClick={onUploadPhotoClick}
                         style={{ marginTop: 10 }}
+                        inverted
                       >
-                        돌아가기
+                        <Icon
+                          name="undo"
+                          style={{ marginLeft: -11, marginRight: -10 }}
+                        />
                       </Button>
                     </Form>
                   </>
@@ -344,7 +358,7 @@ export default function Profile() {
               <> </>
             )}
             <Divider></Divider>
-            <Label as="a" color="blue" ribbon>
+            <Label as="a" color="yellow" ribbon>
               {isMe() ? (
                 <> 내가 구독한 사용자 </>
               ) : (
@@ -399,7 +413,7 @@ export default function Profile() {
               </List>
             )}
             <Divider></Divider>
-            <Label style={{ marginTop: 5 }} as="a" color="purple" ribbon>
+            <Label style={{ marginTop: 5 }} as="a" color="green" ribbon>
               {isMe() ? (
                 <> 내가 등록한 책 목록 </>
               ) : (
@@ -432,7 +446,7 @@ export default function Profile() {
             <Segment raised style={{ marginRight: 30 }}>
               <Form onSubmit={onSubmit(() => updateDisplayName(newName))}>
                 <Form.Field>
-                  <Label as="a" color="red" ribbon="right">
+                  <Label as="a" color="blue" ribbon="right">
                     닉네임 바꾸기
                   </Label>
                   <Input
@@ -441,17 +455,25 @@ export default function Profile() {
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     style={{ marginTop: 10 }}
+                    required
                   />
                 </Form.Field>
 
-                <Button type="submit" color="black">
-                  바꾸기
+                <Button type="submit" inverted size="mini" color="purple">
+                  <Icon
+                    name="exchange"
+                    style={{ marginLeft: -10, marginRight: -10 }}
+                  />
                 </Button>
               </Form>
 
               <Form onSubmit={onSubmit(() => updateStatusMsg(newStatusMsg))}>
                 <Form.Field>
-                  <Label as="a" color="yellow" ribbon="right">
+                  <Label
+                    as="a"
+                    style={{ backgroundColor: "#100955", color: "white" }}
+                    ribbon="right"
+                  >
                     상태메시지 바꾸기
                   </Label>
                   <input
@@ -460,17 +482,21 @@ export default function Profile() {
                     value={newStatusMsg}
                     onChange={(e) => setNewStatusMsg(e.target.value)}
                     style={{ marginTop: 10 }}
+                    required
                   />
                 </Form.Field>
 
-                <Button type="submit" color="black">
-                  바꾸기
+                <Button type="submit" inverted size="mini" color="purple">
+                  <Icon
+                    name="exchange"
+                    style={{ marginLeft: -10, marginRight: -10 }}
+                  />
                 </Button>
               </Form>
 
               <Label
                 as="a"
-                color="black"
+                color="violet"
                 ribbon="right"
                 onClick={onLogOutClick}
               >
