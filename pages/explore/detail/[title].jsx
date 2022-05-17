@@ -490,7 +490,6 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
-  console.log(books);
 
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
