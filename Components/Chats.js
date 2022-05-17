@@ -1,4 +1,4 @@
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc,collection, onSnapshot, query } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -16,6 +16,7 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName, useUserPhoto } from "../utils/functions";
 import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
+import {  } from "firebase/firestore";
 
 export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [editing, setEditing] = useState(false);
@@ -28,7 +29,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
 
-  const collectionName = detailbook_chat ?? genre_chat ?? "chat"
+  const collectionName = detailbook_chat ?? genre_chat ?? "chat";
+  // 0517_2145 home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code START
+  const userPhotoQuery = query(collection(dbService, "profile"));
+  useEffect(() => {
+    onSnapshot(userPhotoQuery, (snapshot) => {
+      const userPhotoArray = [];
+      snapshot.forEach((doc) => {
+        userPhotoArray.push(doc.data().userPhoto);
+      });
+      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
+    });
+  }, []);
+  // 0517_2145 home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code END
 
   const router = useRouter();
   useEffect(() => {
@@ -36,7 +49,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       if (user) {
         setCurrentUid(user.uid);
         setDoLike(chat.users.includes(user.uid));
-        
+
         setIsMe(user.uid == chat.createrId);
       }
     });
@@ -212,7 +225,21 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       style={{ marginTop: 10, marginBottom: 10 }}
                     ></Image>
 
-                    <p style={{ textAlign : "center", marginLeft : -31, marginTop: 3, width: 100, fontSize : 13, fontFamily : "GothicA1-ExtraLight" }}> {displayName?.length > 5 ? `${displayName.substring(0,5)}...` : displayName} </p>
+                    <p
+                      style={{
+                        textAlign: "center",
+                        marginLeft: -31,
+                        marginTop: 3,
+                        width: 100,
+                        fontSize: 13,
+                        fontFamily: "GothicA1-ExtraLight",
+                      }}
+                    >
+                      {" "}
+                      {displayName?.length > 5
+                        ? `${displayName.substring(0, 5)}...`
+                        : displayName}{" "}
+                    </p>
                   </Label>
                 </a>
               </Link>
@@ -220,7 +247,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 <Item.Description>
                   <strong>{chat.title}</strong>
                   <strong>{chat.text}</strong>
-                  <Divider style={{marginBottom : 5, marginTop : 5}}/>
+                  <Divider style={{ marginBottom: 5, marginTop: 5 }} />
                   <p style={{ marginTop: 3 }}>
                     <Icon name="clock" />
                     {new Date(chat.createdAt).toLocaleString()}
