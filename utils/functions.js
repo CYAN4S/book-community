@@ -1,5 +1,5 @@
 import { dbService as db } from "../firebaseConfig";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, collection, query } from "firebase/firestore";
 import { usersDisplayNameState, usersPhotoState } from "./hooks";
 import { useRecoilState } from "recoil";
 import { useState, useEffect } from "react";
@@ -42,7 +42,10 @@ export const useUserDisplayName = (targetUid) => {
   useEffect(async () => {
     if (!users.hasOwnProperty(targetUid)) {
       const userDoc = await getUserDoc(targetUid);
-      setUsers((prev) => ({ ...prev, [targetUid]: userDoc?.displayName ?? "게스트" }));
+      setUsers((prev) => ({
+        ...prev,
+        [targetUid]: userDoc?.displayName ?? "게스트",
+      }));
       setName(userDoc?.displayName ?? "게스트");
     } else {
       setName(users[targetUid]);
@@ -52,7 +55,7 @@ export const useUserDisplayName = (targetUid) => {
   return name;
 };
 
-export const useUserPhoto= (targetUid) => {
+export const useUserPhoto = (targetUid) => {
   const [users, setUsers] = useRecoilState(usersPhotoState);
   const [userPhoto, setUserPhoto] = useState(null);
 
@@ -60,12 +63,31 @@ export const useUserPhoto= (targetUid) => {
     if (!users.hasOwnProperty(targetUid)) {
       const userDoc = await getUserDoc(targetUid);
 
-      setUsers((prev) => ({ ...prev, [targetUid]: userDoc?.userPhoto ??  "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"}));
-      setUserPhoto(userDoc?.userPhoto ?? "https://react.semantic-ui.com/images/avatar/small/elliot.jpg");
+      setUsers((prev) => ({
+        ...prev,
+        [targetUid]:
+          userDoc?.userPhoto ??
+          "https://react.semantic-ui.com/images/avatar/small/elliot.jpg",
+      }));
+      setUserPhoto(
+        userDoc?.userPhoto ??
+          "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
+      );
     } else {
       setUserPhoto(users[targetUid]);
     }
   }, []);
+  // // 0517_2145(최종 수정: 0518_1242) home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code START
+  // const userPhotoQuery = query(collection(db, "profile"));
 
+  // onSnapshot(userPhotoQuery, (snapshot) => {
+  //   const userPhotoArray = [];
+  //   snapshot.forEach((doc) => {
+  //     userPhotoArray.push(doc.data().userPhoto);
+  //   });
+  //   console.log(userPhotoArray);
+  //   setUserPhoto(userPhotoArray);
+  //   // 0517_2145(최종 수정: 0518_1242) home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code END
+  // });
   return userPhoto;
 };

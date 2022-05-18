@@ -1,4 +1,4 @@
-import { deleteDoc, doc, updateDoc,collection, onSnapshot, query } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc, } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -30,19 +30,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
-  // 0517_2145 home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code START
-  const userPhotoQuery = query(collection(dbService, "profile"));
-  useEffect(() => {
-    onSnapshot(userPhotoQuery, (snapshot) => {
-      const userPhotoArray = [];
-      snapshot.forEach((doc) => {
-        userPhotoArray.push(doc.data().userPhoto);
-      });
-      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
-    });
-  }, []);
-  // 0517_2145 home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code END
-
+  
   const router = useRouter();
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -58,7 +46,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
-      console.log(collectionName, chat.id);
       await deleteDoc(doc(dbService, collectionName, `${chat.id}`))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
