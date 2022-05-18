@@ -42,7 +42,10 @@ export const useUserDisplayName = (targetUid) => {
   useEffect(async () => {
     if (!users.hasOwnProperty(targetUid)) {
       const userDoc = await getUserDoc(targetUid);
-      setUsers((prev) => ({ ...prev, [targetUid]: userDoc?.displayName ?? "게스트" }));
+      setUsers((prev) => ({
+        ...prev,
+        [targetUid]: userDoc?.displayName ?? "게스트",
+      }));
       setName(userDoc?.displayName ?? "게스트");
     } else {
       setName(users[targetUid]);
@@ -52,7 +55,7 @@ export const useUserDisplayName = (targetUid) => {
   return name;
 };
 
-export const useUserPhoto= (targetUid) => {
+export const useUserPhoto = (targetUid) => {
   const [users, setUsers] = useRecoilState(usersPhotoState);
   const [userPhoto, setUserPhoto] = useState(null);
 
@@ -60,8 +63,16 @@ export const useUserPhoto= (targetUid) => {
     if (!users.hasOwnProperty(targetUid)) {
       const userDoc = await getUserDoc(targetUid);
 
-      setUsers((prev) => ({ ...prev, [targetUid]: userDoc?.userPhoto ??  "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"}));
-      setUserPhoto(userDoc?.userPhoto ?? "https://react.semantic-ui.com/images/avatar/small/elliot.jpg");
+      setUsers((prev) => ({
+        ...prev,
+        [targetUid]:
+          userDoc?.userPhoto ??
+          "https://react.semantic-ui.com/images/avatar/small/elliot.jpg",
+      }));
+      setUserPhoto(
+        userDoc?.userPhoto ??
+          "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
+      );
     } else {
       setUserPhoto(users[targetUid]);
     }

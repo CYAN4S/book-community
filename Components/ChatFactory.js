@@ -1,50 +1,39 @@
+import React, { useState, useEffect } from "react";
+
+import { useRouter } from "next/router";
+
 import { authService, dbService, storageService } from "../firebaseConfig";
+import { updateProfile } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+
+import { useRecoilState } from "recoil";
+import { currentUserState, useImageUploader } from "../utils/hooks";
+
 import {
   Button,
   Form,
   Icon,
   Input,
   Label,
-  Segment,
   TextArea,
   Image,
   Container,
   Header,
 } from "semantic-ui-react";
-import React, { useState, useEffect } from "react";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+
 import { v4 } from "uuid";
-import { addDoc, collection } from "firebase/firestore";
-import { updateProfile } from "firebase/auth";
-import { useRouter } from "next/router";
 
 export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [chat, setChat] = useState("");
   const [title, setTitle] = useState("");
-  const [userObj, setUserObj] = useState(null);
-  const [imgFileString, setImgFileString] = useState("");
+
+  const [currentUser] = useRecoilState(currentUserState);
+  const [imageFile, onImageChange, clearImage] = useImageUploader("");
 
   const router = useRouter();
 
-  const collectionName = detailbook_chat
-    ? detailbook_chat
-    : genre_chat
-    ? genre_chat
-    : "chat";
-  // const collectionName = detailbook_chat ?? "chat"
-
-  useEffect(() => {
-    authService.onAuthStateChanged((user) => {
-      if (user) {
-        setUserObj({
-          uid: user.uid,
-          updateProfile: (args) => updateProfile(args),
-        });
-      } else {
-        setUserObj(null);
-      }
-    });
-  }, []);
+  const collectionName = detailbook_chat ?? genre_chat ?? "chat";
 
   const onNewPostSubmit = async (e) => {
     e.preventDefault();
@@ -53,9 +42,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     if (chat === "") {
       return;
     }
-    if (imgFileString !== "") {
-      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
-      const response = await uploadString(fileRef, imgFileString, "data_url");
+    if (imageFile !== "") {
+      const fileRef = ref(storageService, `${currentUser.uid}/${v4()}`);
+      const response = await uploadString(fileRef, imageFile, "data_url");
       fileUrl = await getDownloadURL(response.ref);
     }
 
@@ -63,7 +52,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       title: title,
       text: chat,
       createdAt: Date.now(),
-      createrId: userObj.uid,
+      createrId: currentUser.uid,
       fileUrl,
       users: [],
     };
@@ -73,30 +62,17 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       .catch((error) => alert(error));
 
     setChat("");
-    setImgFileString("");
+    clearImage();
 
     if (genre_chat) {
       router.back();
     }
   };
 
-  const onFileChange = (event) => {
-    const {
-      target: { files },
-    } = event;
-    const file = files[0];
-
-    const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
-      const result = finishedEvent.currentTarget.result;
-      setImgFileString(result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+  const onClearPhotoClick = (e) => {
+    e.preventDefault();
+    clearImage();
   };
-
-  const onClearPhotoClick = () => setImgFileString("");
 
   return (
     <div>
@@ -139,13 +115,13 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 <Input
                   type="file"
                   accept="image/*"
-                  onChange={onFileChange}
+                  onChange={onImageChange}
                   id="attach-file"
                   icon="file image"
                 />
               </div>
 
-              {imgFileString && (
+              {imageFile && (
                 <div>
                   <Image
                     fluid
@@ -156,9 +132,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       size: "large",
                       ribbon: true,
                     }}
-                    src={imgFileString}
+                    src={imageFile}
                     style={{
-                      backgroundImage: imgFileString,
+                      backgroundImage: imageFile,
                       width: "40%",
                       height: "40%",
                       marginTop: 10,
@@ -205,13 +181,13 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
               <Input
                 type="file"
                 accept="image/*"
-                onChange={onFileChange}
+                onChange={onImageChange}
                 id="attach-file"
                 icon="file image"
               />
             </div>
 
-            {imgFileString && (
+            {imageFile && (
               <div>
                 <Image
                   fluid
@@ -222,9 +198,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     size: "large",
                     ribbon: true,
                   }}
-                  src={imgFileString}
+                  src={imageFile}
                   style={{
-                    backgroundImage: imgFileString,
+                    backgroundImage: imageFile,
                     width: "40%",
                     height: "40%",
                     marginTop: 10,
