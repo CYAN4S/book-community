@@ -77,17 +77,23 @@ export const useUserPhoto = (targetUid) => {
       setUserPhoto(users[targetUid]);
     }
   }, []);
-  // // 0517_2145(최종 수정: 0518_1242) home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code START
-  // const userPhotoQuery = query(collection(db, "profile"));
-
-  // onSnapshot(userPhotoQuery, (snapshot) => {
-  //   const userPhotoArray = [];
-  //   snapshot.forEach((doc) => {
-  //     userPhotoArray.push(doc.data().userPhoto);
-  //   });
-  //   console.log(userPhotoArray);
-  //   setUserPhoto(userPhotoArray);
-  //   // 0517_2145(최종 수정: 0518_1242) home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code END
-  // });
+  useEffect(async () => {
+    // 0517_2145(최종 수정: 0518_1242) home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code START
+    const userPhotoQuery = query(collection(db, "profile"));
+    const userDoc = getUserDoc(targetUid);
+    onSnapshot(userPhotoQuery, (snapshot) => {
+      
+      const userPhotoArray = [];
+      snapshot.forEach((doc) => {
+        userPhotoArray.push(doc.data().userPhoto);
+      });
+      
+      // 0517_2145(최종 수정: 0518_1242) home snapshot(사용자프로필, 닉네임 부분 useEffect 활성화) code END
+    });
+    setUserPhoto(
+      userDoc?.userPhoto ??
+        "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
+    );
+  }, []);
   return userPhoto;
 };
