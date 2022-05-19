@@ -24,7 +24,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
   const [vidFileString, setVidFileString] = useState("");
-  const [textVidUploadComplete, setTextVidUploadComplete] = useState("");
 
   const router = useRouter();
 
@@ -172,25 +171,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   icon="file image"
                 />
               </div>
-              <div>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add videos</p>
-                </Label>
-
-                <Input
-                  type="file"
-                  accept="video/*"
-                  onChange={onFileChangeVideo}
-                  id="attach-file"
-                  icon="file image"
-                />
-              </div>
-              {vidFileString && <div>{textVidUploadComplete}</div>}
               {imgFileString && (
                 <div>
                   <Image
@@ -213,6 +193,41 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   />
                 </div>
               )}
+              <div>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add videos</p>
+                </Label>
+
+                <Input
+                  type="file"
+                  accept="video/*"
+                  onChange={onFileChangeVideo}
+                  id="attach-file"
+                  icon="video image"
+                />
+              </div>
+              {vidFileString && (
+                <div>
+                  <video
+                    loop={true}
+                    style={{
+                      width: 400,
+                      marginTop: 10,
+                      marginLeft: 20,
+                      marginBottom: 15,
+                    }}
+                    controls={true}
+                  >
+                    <source src={vidFileString}></source>
+                  </video>
+                </div>
+              )}
+
               <Button
                 icon
                 labelPosition="right"
@@ -256,25 +271,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 icon="file image"
               />
             </div>
-            <div>
-              <Label
-                basic
-                color="orange"
-                pointing="right"
-                htmlFor="attach-file"
-              >
-                <p>Add videos</p>
-              </Label>
-
-              <Input
-                type="file"
-                accept="video/*"
-                onChange={onFileChangeVideo}
-                id="attach-file"
-                icon="file image"
-              />
-            </div>
-            {vidFileString && <div>{textVidUploadComplete}</div>}
             {imgFileString && (
               <div>
                 <Image
@@ -297,6 +293,41 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 />
               </div>
             )}
+            <div>
+              <Label
+                basic
+                color="orange"
+                pointing="right"
+                htmlFor="attach-file"
+              >
+                <p>Add videos</p>
+              </Label>
+
+              <Input
+                type="file"
+                accept="video/*"
+                onChange={onFileChangeVideo}
+                id="attach-file"
+                icon="video image"
+              />
+            </div>
+            {vidFileString && (
+              <div>
+                <video
+                  loop={true}
+                  style={{
+                    width: 400,
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginBottom: 15,
+                  }}
+                  controls={true}
+                >
+                  <source src={vidFileString}></source>
+                </video>
+              </div>
+            )}
+
             <Button
               icon
               labelPosition="right"

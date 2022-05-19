@@ -32,7 +32,6 @@ export default function PostEditor({
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
   // 0519_1929 비디오 업로드 편집/삭제 관련 버그 해결 코드 시작
-  const [textVidUploadComplete, setTextVidUploadComplete] = useState("");
   const [vidFileString, setVidFileString] = useState("");
   const [vidEdit, setVidEdit] = useState(false);
   // 0519_1929비디오 업로드 편집/삭제 관련 버그 해결 코드 끝
@@ -54,9 +53,7 @@ export default function PostEditor({
         text: newChat,
         fileUrl: temp_fileUrl,
       })
-        .then(() => {
-          alert("수정되었습니다!");
-        })
+        .then(() => {})
         .catch((error) => {
           alert(error);
         });
@@ -65,9 +62,7 @@ export default function PostEditor({
         title: newTitle,
         text: newChat,
       })
-        .then(() => {
-          alert("수정되었습니다!");
-        })
+        .then(() => {})
         .catch((error) => {
           alert(error);
         });
@@ -82,9 +77,7 @@ export default function PostEditor({
         text: newChat,
         vidFileUrl: temp_vidFileUrl,
       })
-        .then(() => {
-          alert("수정되었습니다!");
-        })
+        .then(() => {})
         .catch((error) => {
           alert(error);
         });
@@ -93,9 +86,7 @@ export default function PostEditor({
         title: newTitle,
         text: newChat,
       })
-        .then(() => {
-          alert("수정되었습니다!");
-        })
+        .then(() => {})
         .catch((error) => {
           alert(error);
         });
@@ -104,6 +95,7 @@ export default function PostEditor({
     setImgFileString("");
     setVidEdit(false);
     setVidFileString("");
+    alert("수정되었습니다!");
   };
 
   const onReplySubmit = async () => {
@@ -182,9 +174,7 @@ export default function PostEditor({
     }
   };
   const OnVideoDeleteClick = async () => {
-    const ok = window.confirm(
-      "등록된 비디오를 삭제하시겠습니까?"
-    );
+    const ok = window.confirm("등록된 비디오를 삭제하시겠습니까?");
     if (ok) {
       if (chat.vidFileUrl === "") {
         alert("채팅에 올려놓은 동영상이 없습니다.");
@@ -235,7 +225,6 @@ export default function PostEditor({
     if (file) {
       reader.readAsDataURL(file);
     }
-    setTextVidUploadComplete("영상이 선택되었습니다!");
   };
   return (
     <>
@@ -302,6 +291,28 @@ export default function PostEditor({
                 />
               </div>
             )}
+            {imgFileString && (
+              <div className="temp">
+                <Image
+                  fluid
+                  label={{
+                    color: "red",
+                    onClick: onDeleteTempImageClick,
+                    icon: "remove circle",
+                    size: "large",
+                    ribbon: true,
+                  }}
+                  src={imgFileString}
+                  style={{
+                    backgroundImage: imgFileString,
+                    width: 300,
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginBottom: 15,
+                  }}
+                />
+              </div>
+            )}
             {!chat?.vidFileUrl && (
               <div style={{ marginTop: 10 }}>
                 <Label
@@ -317,34 +328,29 @@ export default function PostEditor({
                   accept="video/*"
                   onChange={onFileChangeVideo}
                   id="attach-file"
-                  icon="file image"
+                  icon="video image"
+                  style={{ width: 300 }}
                 />
               </div>
             )}
           </Form.Field>
-          {imgFileString && (
-            <div className="temp">
-              <Image
-                fluid
-                label={{
-                  color: "red",
-                  onClick: onDeleteTempImageClick,
-                  icon: "remove circle",
-                  size: "large",
-                  ribbon: true,
-                }}
-                src={imgFileString}
+          {vidFileString && (
+            <div>
+              <video
+                loop={true}
                 style={{
-                  backgroundImage: imgFileString,
-                  width: "30%",
-                  height: "30%",
+                  width: 400,
                   marginTop: 10,
                   marginLeft: 20,
                   marginBottom: 15,
                 }}
-              />
+                controls={true}
+              >
+                <source src={vidFileString}></source>
+              </video>
             </div>
           )}
+
           {chat?.fileUrl && (
             <div
               onClick={OnImageDeleteClick}

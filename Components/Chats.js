@@ -128,13 +128,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               style={{ marginTop: -10, marginBottom: 15, width: "40%" }}
             />
             <p style={{ marginBottom: 10 }}>{chat.text}</p>
-
+            
             {chat.fileUrl && (
               <Image
                 src={chat.fileUrl}
                 style={{
-                  width: "40%",
-                  height: "40%",
+                  width: 300,
                   marginTop: 10,
                   marginBottom: 25,
                 }}
@@ -251,13 +250,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 </Item.Description>
               </Item.Content>
             </Item>
-
+                          
             {chat.fileUrl && (
               <Image
                 src={chat.fileUrl}
                 style={{
-                  width: "40%",
-                  height: "40%",
+                  width: 300,
                   marginTop: 10,
                   marginBottom: 5,
                 }}
