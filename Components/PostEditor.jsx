@@ -17,6 +17,7 @@ import {
 } from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
+import Chats from "./Chats";
 
 export default function PostEditor({
   chat,
@@ -131,7 +132,6 @@ export default function PostEditor({
 
     setImgFileString("");
     setVidFileString("");
-    setTextVidUploadComplete("");
   };
 
   const onSubmit = async (e) => {
@@ -348,6 +348,13 @@ export default function PostEditor({
               >
                 <source src={vidFileString}></source>
               </video>
+              <div
+                onClick={OnVideoDeleteClick}
+                style={{ width: 100, height: 30, cursor: "pointer" }}
+              >
+                <Icon color="red" name="remove circle" />{" "}
+                <span>비디오 삭제</span>
+              </div>
             </div>
           )}
 
@@ -369,7 +376,17 @@ export default function PostEditor({
           )}
           <Button type="submit" value="update" inverted color="green">
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
+            {/*onClick = {{onCloseTap}}*/}
           </Button>
+          {/*
+          {closeTap && (
+                <div>
+                  <Chats
+                    closeStatus = {"close"}
+                  />
+                </div>
+              )}
+              */}
         </Form>
       </div>
     </>

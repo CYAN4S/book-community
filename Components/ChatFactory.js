@@ -26,7 +26,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [vidFileString, setVidFileString] = useState("");
 
   const router = useRouter();
-
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
@@ -83,7 +82,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     setChat("");
     setImgFileString("");
     setVidFileString("");
-    setTextVidUploadComplete("");
 
     if (genre_chat) {
       router.back();
@@ -120,11 +118,10 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     if (file) {
       reader.readAsDataURL(file);
     }
-    setTextVidUploadComplete("영상이 선택되었습니다!");
   };
 
   const onClearPhotoClick = () => setImgFileString("");
-
+  const onDeleteVideo = () => setVidFileString("");
   return (
     <div>
       {genre_chat ? (
@@ -312,19 +309,31 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
               />
             </div>
             {vidFileString && (
-              <div>
+              <div >
                 <video
                   loop={true}
                   style={{
                     width: 400,
                     marginTop: 10,
                     marginLeft: 20,
-                    marginBottom: 15,
+                    marginBottom: 5,
                   }}
                   controls={true}
                 >
                   <source src={vidFileString}></source>
                 </video>
+                <div>
+                  <Button 
+                    icon
+                    labelPosition="right"
+                    color="red"
+                    onClick={onDeleteVideo}
+                    style={{marginLeft: 20, }}
+                  >
+                    영상 삭제
+                    <Icon name="delete" />
+                  </Button>
+                </div>
               </div>
             )}
 
