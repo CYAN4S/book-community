@@ -30,8 +30,8 @@ const Help_SearchBook = () => {
     <>
       <Container fluid textAlign="center" style={{ width: "90%" }}>
         <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
-          <Icon name="comment alternate" circular />
-          <Header.Content> PROFILE </Header.Content>
+          <Icon name="search" circular />
+          <Header.Content> SEARCH </Header.Content>
         </Header>
         <div>
           <Icon
@@ -49,18 +49,15 @@ const Help_SearchBook = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프의 프로필 페이지는?`}
+            {`북스탬프에서 책 검색을 하고싶다면?`}
             <Header.Subheader>
-              {`What is Bookstamp's profile page?`}
+              {`Do you want to search for books in Bookstamp?`}
             </Header.Subheader>
           </Header.Content>
         </Header>
-
       </Container>
 
-      <style jsx>{`
-        
-      `}</style>
+      <style jsx>{``}</style>
     </>
   );
 };
