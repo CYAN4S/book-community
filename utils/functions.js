@@ -73,22 +73,14 @@ export const useUserPhoto = (targetUid) => {
           "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
       );
     } else {
-      
       const userDoc = await getUserDoc(targetUid);
-      console.log(
-        "실제 저장 값",
-        userDoc?.userPhoto           
-      );
+
       console.log("users[targetUid] 값", users[targetUid]);
       if (userDoc?.userPhoto != users[targetUid]) {
         setUserPhoto(userDoc?.userPhoto);
-        console.log("if 구문 작동2",userDoc?.userPhoto != users[targetUid]);
       } else {
         setUserPhoto(users[targetUid]);
-        console.log("else 구문 작동2");
       }
-
-      console.log("else 구문 작동", userPhoto);
     }
   }, []);
 
