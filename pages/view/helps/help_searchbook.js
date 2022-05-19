@@ -61,13 +61,13 @@ const Help_SearchBook = () => {
           </Header.Content>
         </Header>
 
-        <Grid celled>
+        <Grid celled  verticalAlign='middle' >
           <Grid.Row>
             <Grid.Column width={9}>
               <Image src={help1} width={800} height={100}/>
             </Grid.Column>
-            <Grid.Column width={6}>
-       
+            <Grid.Column centered width={6}>
+              <p>hello</p>
             </Grid.Column>
           </Grid.Row>
 
@@ -75,8 +75,8 @@ const Help_SearchBook = () => {
             <Grid.Column width={9}>
             <Image src={help2} width={800} height={170}/>
             </Grid.Column>
-            <Grid.Column width={6}>
-            
+            <Grid.Column centered width={6}>
+            <p>hello</p>
             </Grid.Column>
           </Grid.Row>
 
@@ -84,8 +84,8 @@ const Help_SearchBook = () => {
             <Grid.Column width={9}>
             <Image src={help3} width={800} height={270}/>
             </Grid.Column>
-            <Grid.Column width={6}>
-            
+            <Grid.Column centered width={6}>
+            <p>hello</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>
