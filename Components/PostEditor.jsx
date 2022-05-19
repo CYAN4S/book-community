@@ -31,6 +31,11 @@ export default function PostEditor({
   );
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
+  // 0519_1929 비디오 업로드 편집/삭제 관련 버그 해결 코드 시작
+  const [textVidUploadComplete, setTextVidUploadComplete] = useState("");
+  const [vidFileString, setVidFileString] = useState("");
+  const [vidEdit, setVidEdit] = useState(false);
+  // 0519_1929비디오 업로드 편집/삭제 관련 버그 해결 코드 끝
 
   const collectionName = detailbook_chat
     ? detailbook_chat
@@ -39,9 +44,6 @@ export default function PostEditor({
     : "chat";
 
   const onEditSubmit = async () => {
-    console.log(chat);
-    console.log(newChat, newTitle);
-    console.log(collectionName);
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
@@ -70,12 +72,43 @@ export default function PostEditor({
           alert(error);
         });
     }
+    if (vidEdit) {
+      const fileRef = ref(storageService, `${uid}/${v4()}`);
+      const response = await uploadString(fileRef, vidFileString, "data_url");
+      const temp_vidFileUrl = await getDownloadURL(response.ref);
+
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+        title: newTitle,
+        text: newChat,
+        vidFileUrl: temp_vidFileUrl,
+      })
+        .then(() => {
+          alert("수정되었습니다!");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+        title: newTitle,
+        text: newChat,
+      })
+        .then(() => {
+          alert("수정되었습니다!");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
     setImgEdit(false);
     setImgFileString("");
+    setVidEdit(false);
+    setVidFileString("");
   };
 
   const onReplySubmit = async () => {
     let fileUrl = "";
+    let vidFileUrl = "";
     if (newChat === "") {
       return;
     }
@@ -84,7 +117,11 @@ export default function PostEditor({
       const response = await uploadString(fileRef, imgFileString, "data_url");
       fileUrl = await getDownloadURL(response.ref);
     }
-
+    if (vidFileString !== "") {
+      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const response = await uploadString(fileRef, vidFileString, "data_url");
+      vidFileUrl = await getDownloadURL(response.ref);
+    }
     const chatObj = {
       title: newTitle,
       text: newChat,
@@ -92,6 +129,7 @@ export default function PostEditor({
       createrId: uid,
       fileUrl,
       users: [],
+      vidFileUrl,
       replyTo: chat.id,
     };
 
@@ -99,9 +137,9 @@ export default function PostEditor({
       .then(() => console.log("전송완료"))
       .catch((error) => alert(error));
 
-    setNewChat("");
-    setNewTitle("");
     setImgFileString("");
+    setVidFileString("");
+    setTextVidUploadComplete("");
   };
 
   const onSubmit = async (e) => {
@@ -143,6 +181,28 @@ export default function PostEditor({
       }
     }
   };
+  const OnVideoDeleteClick = async () => {
+    const ok = window.confirm(
+      "등록된 비디오를 삭제하시겠습니까?"
+    );
+    if (ok) {
+      if (chat.vidFileUrl === "") {
+        alert("채팅에 올려놓은 동영상이 없습니다.");
+      } else {
+        await deleteObject(ref(storageService, chat.vidFileUrl)).then(() => {
+          updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+            title: newTitle,
+            text: newChat,
+            vidFileUrl: "",
+          })
+            .then(alert("삭제되었습니다!"))
+            .catch((error) => {
+              alert(error);
+            });
+        });
+      }
+    }
+  };
 
   const onFileChange = async (event) => {
     setImgEdit(true);
@@ -160,7 +220,23 @@ export default function PostEditor({
       reader.readAsDataURL(file);
     }
   };
+  const onFileChangeVideo = (event) => {
+    setVidEdit(true);
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
 
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setVidFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+    setTextVidUploadComplete("영상이 선택되었습니다!");
+  };
   return (
     <>
       <div>
@@ -226,6 +302,25 @@ export default function PostEditor({
                 />
               </div>
             )}
+            {!chat?.vidFileUrl && (
+              <div style={{ marginTop: 10 }}>
+                <Label
+                  basic
+                  color="violet"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add/Edit videos</p>
+                </Label>
+                <Input
+                  type="file"
+                  accept="video/*"
+                  onChange={onFileChangeVideo}
+                  id="attach-file"
+                  icon="file image"
+                />
+              </div>
+            )}
           </Form.Field>
           {imgFileString && (
             <div className="temp">
@@ -255,7 +350,15 @@ export default function PostEditor({
               onClick={OnImageDeleteClick}
               style={{ width: 100, height: 30, cursor: "pointer" }}
             >
-              <Icon color="red" name="remove circle" /> <span>DEL IMG</span>
+              <Icon color="red" name="remove circle" /> <span>이미지 삭제</span>
+            </div>
+          )}
+          {chat?.vidFileUrl && (
+            <div
+              onClick={OnVideoDeleteClick}
+              style={{ width: 100, height: 30, cursor: "pointer" }}
+            >
+              <Icon color="red" name="remove circle" /> <span>비디오 삭제</span>
             </div>
           )}
           <Button type="submit" value="update" inverted color="green">

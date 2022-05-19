@@ -52,7 +52,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     e.preventDefault();
 
     let fileUrl = "";
-    let vidFileUrl ="";
+    let vidFileUrl = "";
     if (chat === "") {
       return;
     }
@@ -121,7 +121,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     if (file) {
       reader.readAsDataURL(file);
     }
-    setTextVidUploadComplete("영상이 입력되었음");
+    setTextVidUploadComplete("영상이 선택되었습니다!");
   };
 
   const onClearPhotoClick = () => setImgFileString("");
@@ -172,7 +172,25 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   icon="file image"
                 />
               </div>
+              <div>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add videos</p>
+                </Label>
 
+                <Input
+                  type="file"
+                  accept="video/*"
+                  onChange={onFileChangeVideo}
+                  id="attach-file"
+                  icon="file image"
+                />
+              </div>
+              {vidFileString && <div>{textVidUploadComplete}</div>}
               {imgFileString && (
                 <div>
                   <Image
@@ -256,11 +274,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 icon="file image"
               />
             </div>
-            {vidFileString && (
-            <div>
-              {textVidUploadComplete}
-              </div>
-            )}
+            {vidFileString && <div>{textVidUploadComplete}</div>}
             {imgFileString && (
               <div>
                 <Image
