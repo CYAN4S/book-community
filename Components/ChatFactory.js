@@ -23,6 +23,8 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [title, setTitle] = useState("");
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
+  const [vidFileString, setVidFileString] = useState("");
+  const [textVidUploadComplete, setTextVidUploadComplete] = useState("");
 
   const router = useRouter();
 
@@ -58,6 +60,11 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       const response = await uploadString(fileRef, imgFileString, "data_url");
       fileUrl = await getDownloadURL(response.ref);
     }
+    if (vidFileString !== "") {
+      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const response = await uploadString(fileRef, vidFileString, "data_url");
+      fileUrl = await getDownloadURL(response.ref);
+    }
 
     const chatObj = {
       title: title,
@@ -74,6 +81,8 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
     setChat("");
     setImgFileString("");
+    setVidFileString("");
+    setTextVidUploadComplete("");
 
     if (genre_chat) {
       router.back();
@@ -94,6 +103,23 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     if (file) {
       reader.readAsDataURL(file);
     }
+  };
+
+  const onFileChangeVideo = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setVidFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+    setTextVidUploadComplete("영상이 입력되었음");
   };
 
   const onClearPhotoClick = () => setImgFileString("");
@@ -210,7 +236,29 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 icon="file image"
               />
             </div>
+            <div>
+              <Label
+                basic
+                color="orange"
+                pointing="right"
+                htmlFor="attach-file"
+              >
+                <p>Add videos</p>
+              </Label>
 
+              <Input
+                type="file"
+                accept="video/*"
+                onChange={onFileChangeVideo}
+                id="attach-file"
+                icon="file image"
+              />
+            </div>
+            {vidFileString && (
+            <div>
+              {textVidUploadComplete}
+              </div>
+            )}
             {imgFileString && (
               <div>
                 <Image
