@@ -16,7 +16,7 @@ export const currentUserUidState = selector({
 });
 
 export const usersDisplayNameState = atom({
-  key: "usersDisplayNameName",
+  key: "usersDisplayName",
   default: {},
 });
 

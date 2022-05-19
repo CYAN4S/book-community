@@ -1,5 +1,5 @@
 import { dbService as db } from "../firebaseConfig";
-import { doc, getDoc, onSnapshot, collection, query } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { usersDisplayNameState, usersPhotoState } from "./hooks";
 import { useRecoilState } from "recoil";
 import { useState, useEffect } from "react";
@@ -58,10 +58,10 @@ export const useUserDisplayName = (targetUid) => {
 export const useUserPhoto = (targetUid) => {
   const [users, setUsers] = useRecoilState(usersPhotoState);
   const [userPhoto, setUserPhoto] = useState(null);
+
   useEffect(async () => {
     if (!users.hasOwnProperty(targetUid)) {
       const userDoc = await getUserDoc(targetUid);
-
       setUsers((prev) => ({
         ...prev,
         [targetUid]:
@@ -73,10 +73,24 @@ export const useUserPhoto = (targetUid) => {
           "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
       );
     } else {
-      setUserPhoto(users[targetUid]);
+      
+      const userDoc = await getUserDoc(targetUid);
+      console.log(
+        "실제 저장 값",
+        userDoc?.userPhoto           
+      );
+      console.log("users[targetUid] 값", users[targetUid]);
+      if (userDoc?.userPhoto != users[targetUid]) {
+        setUserPhoto(userDoc?.userPhoto);
+        console.log("if 구문 작동2",userDoc?.userPhoto != users[targetUid]);
+      } else {
+        setUserPhoto(users[targetUid]);
+        console.log("else 구문 작동2");
+      }
+
+      console.log("else 구문 작동", userPhoto);
     }
-    console.log("check1");
   }, []);
-  
+
   return userPhoto;
 };

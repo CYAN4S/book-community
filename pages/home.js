@@ -31,6 +31,7 @@ export default function Book_home() {
       setChats(chatArray);
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
+    console.log("useEffect 실시간 작동_setChats");
   }, []);
 
   

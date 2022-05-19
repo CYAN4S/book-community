@@ -1,4 +1,8 @@
-import { deleteDoc, doc, updateDoc, } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -16,7 +20,7 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName, useUserPhoto } from "../utils/functions";
 import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
-import {  } from "firebase/firestore";
+import {} from "firebase/firestore";
 
 export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [editing, setEditing] = useState(false);
@@ -30,7 +34,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
-  
+
   const router = useRouter();
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -42,7 +46,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       }
     });
   }, []);
-
+  
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
