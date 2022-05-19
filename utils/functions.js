@@ -48,7 +48,12 @@ export const useUserDisplayName = (targetUid) => {
       }));
       setName(userDoc?.displayName ?? "게스트");
     } else {
-      setName(users[targetUid]);
+      const userDoc = await getUserDoc(targetUid);
+      if (userDoc?.displayName != users[targetUid]) {
+        setName(userDoc?.displayName);
+      } else {
+        setName(users[targetUid]);
+      }
     }
   }, []);
 
@@ -74,8 +79,6 @@ export const useUserPhoto = (targetUid) => {
       );
     } else {
       const userDoc = await getUserDoc(targetUid);
-
-      console.log("users[targetUid] 값", users[targetUid]);
       if (userDoc?.userPhoto != users[targetUid]) {
         setUserPhoto(userDoc?.userPhoto);
       } else {
