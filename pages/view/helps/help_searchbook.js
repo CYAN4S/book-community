@@ -4,7 +4,7 @@ import {
   Form,
   Header,
   Input,
-  Image,
+
   Segment,
   TextArea,
   Icon,
@@ -18,6 +18,11 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
+import help1 from "../../../public/help/help_searchbook1.jpg";
+import help2 from "../../../public/help/help_searchbook2.jpg";
+import help3 from "../../../public/help/help_searchbook3.jpg";
+
 const Help_SearchBook = () => {
   const router = useRouter();
 
@@ -55,6 +60,36 @@ const Help_SearchBook = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
+
+        <Grid celled>
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help1} width={800} height={100}/>
+            </Grid.Column>
+            <Grid.Column width={6}>
+       
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+            <Image src={help2} width={800} height={170}/>
+            </Grid.Column>
+            <Grid.Column width={6}>
+            
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+            <Image src={help3} width={800} height={270}/>
+            </Grid.Column>
+            <Grid.Column width={6}>
+            
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
       </Container>
 
       <style jsx>{``}</style>
