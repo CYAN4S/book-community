@@ -18,7 +18,7 @@ import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
 import {} from "firebase/firestore";
 
-export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
+export default function Chats({ closeReplyTap, closeEditTap, chat, isOwner, detailbook_chat, genre_chat }) {
   const [editing, setEditing] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
@@ -89,6 +89,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   // recomment edit mode
   const onReplyClick = () => setReplying((prev) => !prev);
+
+  
 
   return (
     <>
