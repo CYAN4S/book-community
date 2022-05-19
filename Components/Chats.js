@@ -1,8 +1,4 @@
-import {
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -46,7 +42,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       }
     });
   }, []);
-  
+
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
@@ -60,6 +56,9 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
       if (chat.fileUrl !== "") {
         await deleteObject(ref(storageService, chat.fileUrl));
+      }
+      if (chat.vidFileUrl !== "") {
+        await deleteObject(ref(storageService, chat.vidFileUrl));
       }
     }
 
@@ -141,6 +140,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 }}
               />
             )}
+            {chat.vidFileUrl && (
+              <video loop={true} style={{ width: 400 }} controls={true}>
+                <source src={chat.vidFileUrl}></source>
+              </video>
+            )}
+
             <Container textAlign="right" style={{ marginBottom: 100 }}>
               <Button
                 labelPosition="right"
@@ -257,6 +262,11 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                   marginBottom: 5,
                 }}
               />
+            )}
+            {chat.vidFileUrl && (
+              <video loop={true} style={{ width: 400 }} controls={true}>
+                <source src={chat.vidFileUrl}></source>
+              </video>
             )}
           </div>
           <Button

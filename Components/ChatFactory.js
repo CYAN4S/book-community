@@ -52,6 +52,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     e.preventDefault();
 
     let fileUrl = "";
+    let vidFileUrl ="";
     if (chat === "") {
       return;
     }
@@ -63,15 +64,16 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     if (vidFileString !== "") {
       const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
       const response = await uploadString(fileRef, vidFileString, "data_url");
-      fileUrl = await getDownloadURL(response.ref);
+      vidFileUrl = await getDownloadURL(response.ref);
     }
-
+    console.log(vidFileUrl);
     const chatObj = {
       title: title,
       text: chat,
       createdAt: Date.now(),
       createrId: userObj.uid,
       fileUrl,
+      vidFileUrl,
       users: [],
     };
 
