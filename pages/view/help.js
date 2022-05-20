@@ -168,51 +168,53 @@ const Help = () => {
                 </Grid.Column>
               </Link>
               <Link href="./helps/help_help">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>INQUIRE/REPORT</Card.Header>
-                        <Card.Description>문의/신고</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 270 }}>
-                    문의/신고에 대한 내용을 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={2} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>INQUIRE/REPORT</Card.Header>
+                          <Card.Description>문의/신고</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 270 }}>
+                      문의/신고에 대한 내용을 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={2} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
               </Link>
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>SUBSCRIBER</Card.Header>
-                        <Card.Description>구독자 관리</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 310 }}>
-                    구독자 관리에 대한 방법에 대해 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={3} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+              <Link href="./helps/help_subscriber">
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>SUBSCRIBER</Card.Header>
+                          <Card.Description>구독자 관리</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 310 }}>
+                      구독자 관리에 대한 방법에 대해 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={3} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
+              </Link>
             </Grid.Row>
             <Grid.Row centered columns={4} color="black" textAlign="center">
               <Grid.Column>
