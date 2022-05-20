@@ -32,8 +32,8 @@ import {
       <>
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
-            <Icon name="search" circular />
-            <Header.Content> SEARCH </Header.Content>
+            <Icon name="magic" circular />
+            <Header.Content> SUGGESTION </Header.Content>
           </Header>
           <div>
             <Icon
@@ -53,7 +53,7 @@ import {
             <Header.Content>
               {`북스탬프에서의 책 추천을 어떻게 활용할 수 있을까?`}
               <Header.Subheader>
-                {`Do you want to search for books in Bookstamp?`}
+                {`How can I use book recommendations from Bookstamp?`}
               </Header.Subheader>
             </Header.Content>
           </Header>
