@@ -17,7 +17,7 @@ import {
 } from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
-import Chats from "./Chats";
+import { useRouter } from "next/router";
 
 export default function PostEditor({
   chat,
@@ -35,7 +35,8 @@ export default function PostEditor({
   // 0519_1929 비디오 업로드 편집/삭제 관련 버그 해결 코드 시작
   const [vidFileString, setVidFileString] = useState("");
   const [vidEdit, setVidEdit] = useState(false);
-  // 0519_1929비디오 업로드 편집/삭제 관련 버그 해결 코드 끝
+  // 0520_1100 편집/댓글 달고 나서 편집/댓글 창 그대로 유지되는 현상 방지
+  const router = useRouter();
 
   const collectionName = detailbook_chat
     ? detailbook_chat
@@ -141,6 +142,13 @@ export default function PostEditor({
       onEditSubmit();
     } else {
       onReplySubmit();
+    }
+    const url = window.location.href; 
+    if(!url.includes("home")){
+      router.push(window.location.reload());
+    }
+    else{
+      router.push("/");
     }
   };
 
@@ -376,17 +384,8 @@ export default function PostEditor({
           )}
           <Button type="submit" value="update" inverted color="green">
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
-            {/*onClick = {{onCloseTap}}*/}
           </Button>
-          {/*
-          {closeTap && (
-                <div>
-                  <Chats
-                    closeStatus = {"close"}
-                  />
-                </div>
-              )}
-              */}
+
         </Form>
       </div>
     </>
