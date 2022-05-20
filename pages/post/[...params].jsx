@@ -136,28 +136,14 @@ export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
         </Segment>
       ) : (
         <>
-          <p
-            style={{
-              fontFamily: "GothicA1-SemiBold",
-              fontSize: 30,
-              textAlign: "center",
-              marginTop: 50,
-              color: "red",
-            }}
-          >
-            아직 올라온 글이 없어요!
-          </p>
-          <p
-            style={{
-              fontFamily: "GothicA1-Regular",
-              fontSize: 18,
-              textAlign: "center",
-              marginTop: -20,
-              color: "teal",
-            }}
-          >
-            글을 작성해보세요
-          </p>
+         
+            <Message icon color="blue">
+              <Icon name="circle notched" loading />
+              <Message.Content>
+                <Message.Header>누군가 글을 올리기를 기다리고 있어요!</Message.Header>
+                <p style={{fontSize : 13, marginBottom : -5}}>글 작성하기 버튼을 눌러 글을 올려보세요!</p>
+              </Message.Content>
+            </Message>
         </>
       )}
     </>
