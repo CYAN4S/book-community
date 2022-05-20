@@ -94,79 +94,80 @@ const Help = () => {
                 </Grid.Column>
               </Link>
               <Link href="./helps/help_searchbook">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>SEARCH BOOK</Card.Header>
-                        <Card.Description>책 검색</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>
-                    특정 책의 검색과 그의 내용을 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={4} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>SEARCH BOOK</Card.Header>
+                          <Card.Description>책 검색</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 300 }}>
+                      특정 책의 검색과 그의 내용을 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={4} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
               </Link>
               <Link href="./helps/help_suggestion">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>BOOK SUGGESTION</Card.Header>
-                        <Card.Description>책 추천</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>
-                    책 추천 시스템에 대한 내용을 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={4} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>BOOK SUGGESTION</Card.Header>
+                          <Card.Description>책 추천</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 300 }}>
+                      책 추천 시스템에 대한 내용을 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={4} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
               </Link>
             </Grid.Row>
             <Grid.Row centered columns={4} color="black" textAlign="center">
-            <Link href="./helps/help_searchLib">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>SEARCH LIB</Card.Header>
-                        <Card.Description>도서관 검색</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 270 }}>
-                    특정 책과 관련된 도서관 확인에 대한 내용을 안내합니다.
-                  </Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={3} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
+              <Link href="./helps/help_searchLib">
+                <Grid.Column>
+                  <Popup
+                    trigger={
+                      <Card>
+                        <Image src="/bookstamp.png" />
+                        <Card.Content>
+                          <Card.Header>SEARCH LIB</Card.Header>
+                          <Card.Description>도서관 검색</Card.Description>
+                        </Card.Content>
+                      </Card>
+                    }
+                  >
+                    <Popup.Header style={{ width: 270 }}>
+                      특정 책과 관련된 도서관 확인에 대한 내용을 안내합니다.
+                    </Popup.Header>
+                    <Popup.Content>
+                      <Icon name="hand point right" />
+                      추천도{" "}
+                      <Rating icon="star" defaultRating={3} maxRating={5} />
+                    </Popup.Content>
+                  </Popup>
+                </Grid.Column>
               </Link>
+              <Link href="./helps/help_help">
               <Grid.Column>
                 <Popup
                   trigger={
@@ -189,6 +190,7 @@ const Help = () => {
                   </Popup.Content>
                 </Popup>
               </Grid.Column>
+              </Link>
               <Grid.Column>
                 <Popup
                   trigger={
