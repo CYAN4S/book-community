@@ -73,7 +73,7 @@ const Help_SearchBook = () => {
         </Header>
       </Container>
 
-      <Container textAlign="left" fluid>
+      <Container textAlign="left" fluid  style={{width : "95%"}}>
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row>
             <Grid.Column width={9}>

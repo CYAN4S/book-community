@@ -75,7 +75,7 @@ import {
         </Header>
       </Container>
 
-      <Container textAlign="left" fluid >
+      <Container textAlign="left" fluid style={{width : "95%"}}>
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row>
             <Grid.Column width={9}>
@@ -83,43 +83,33 @@ import {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-                {`1. Explore 탭을 통해, 검색 창으로 이동할 수 있습니다.`}
+                {`1. 특정 책 검색을 통한 상세페이지에서, "어디에 있을까?" 탭의 지역을 선택할 수 있습니다.`}
               </p>
              
             </Grid.Column>
           </Grid.Row>
           <Grid.Row >
             <Grid.Column width={9} textAlign="center" >
-              <Image src={help2} width={400} height={200} />
+              <Image src={help2} width={700} height={350} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-              {`2. Explore 페이지의 검색박스와 검색 버튼의 클릭을 통해, 특정 도서의
-                검색 결과를 확인할 수 있습니다.`}
+              {`2. 원하는 지역을 선택하면, 선택한 지역을 표시합니다. (뒤로가기 아이콘 클릭 시, 다시 선택할 수 있습니다.)`}
               </p>
             </Grid.Column>
           </Grid.Row>
 
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help3} width={900} height={330} />
+              <Image src={help3} width={950} height={400} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
-                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              {`3. 소장도서관 확인버튼을 누르면, 지역 내 도서관의 정보와 현재 나의위치로부터의 거리를 확인할 수 있습니다.`}
               </p>
-            </Grid.Column>
-          </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column width={9}>
-              <Image src={help5} width={900} height={330} />
-            </Grid.Column>
-            <Grid.Column centered width={7}>
-              <p className="help_searchLib_text">
-              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
-                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              <p style={{fontSize : 11, textAlign : "left", marginLeft : 10, color : "teal"}}>
+              {`Tip) 주소 옆의 맵핀을 누르면, 도서관 위치를 확인할 수 있어요!`}
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -130,8 +120,22 @@ import {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
-                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              {`4. 주소 옆의 맵핀을 누르면, 다음과 같이 선택된 도서관의 지도 상 위치를 확인할 수 있습니다.`}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help5} width={900} height={400} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchLib_text">
+              {`5. 또한 도서관들의 정보를 출력하는 [3번째 이미지] 화면에서 스크롤을 아래로 내려, 화살표 아이콘을 클릭하면, 도서관들의 전체 위치를 확인할 수도 있습니다.`}
+              </p>
+
+              <p style={{fontSize : 11, textAlign : "left", marginLeft : 10, color : "teal"}}>
+              {`Tip) 특정 책의 소장여부와 대출 가능여부에 따라 필터를 달리 적용할 수 있어요!`}
               </p>
             </Grid.Column>
           </Grid.Row>
