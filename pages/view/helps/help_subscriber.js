@@ -32,8 +32,8 @@ import {
       <>
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
-            <Icon name="magic" circular />
-            <Header.Content> SUGGESTION </Header.Content>
+            <Icon name="users" circular />
+            <Header.Content> SUBSCRIBER </Header.Content>
           </Header>
           <div>
             <Icon
@@ -51,9 +51,9 @@ import {
           <Header as="h2">
             <Icon name="question" />
             <Header.Content>
-              {`북스탬프에서의 책 추천을 어떻게 활용할 수 있을까?`}
+              {`북스탬프에서의 구독자 관리는 어떻게 할까?`}
               <Header.Subheader>
-                {`How can I use book recommendations from Bookstamp?`}
+                {`How to manage subscribers in Bookstamp?`}
               </Header.Subheader>
             </Header.Content>
           </Header>
