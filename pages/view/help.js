@@ -117,6 +117,7 @@ const Help = () => {
                 </Popup>
               </Grid.Column>
               </Link>
+              <Link href="./helps/help_suggestion">
               <Grid.Column>
                 <Popup
                   trigger={
@@ -139,6 +140,7 @@ const Help = () => {
                   </Popup.Content>
                 </Popup>
               </Grid.Column>
+              </Link>
             </Grid.Row>
             <Grid.Row centered columns={4} color="black" textAlign="center">
               <Grid.Column>
