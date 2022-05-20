@@ -64,10 +64,7 @@ import {
             margin-top: 30px;
             text-align: right;
           }
-          .help_searchbook_text {
-            font-size: 15px;
-            font-family: GothicA1-Medium;
-          }
+          
         `}</style>
       </>
     );

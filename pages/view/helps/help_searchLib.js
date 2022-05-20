@@ -18,7 +18,11 @@ import {
   import { useRouter } from "next/router";
   import Link from "next/link";
   import Image from "next/image";
-
+  import help1 from "../../../public/help/help_searchLib1.jpg";
+  import help2 from "../../../public/help/help_searchLib2.jpg";
+  import help3 from "../../../public/help/help_searchLib3.jpg";
+  import help4 from "../../../public/help/help_searchLib4.jpg";
+  import help5 from "../../../public/help/help_searchLib5.jpg";
   
   const Help_Search = () => {
     const router = useRouter();
@@ -32,7 +36,7 @@ import {
       <>
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
-            <Icon name="magic" circular />
+            <Icon name="database" circular />
             <Header.Content> SEARCH LIB </Header.Content>
           </Header>
           <div>
@@ -49,7 +53,7 @@ import {
   
         <Container textAlign="left" fluid style={{ marginTop: 30 }}>
           <Header as="h2">
-            <Icon name="database" />
+            <Icon name="question" />
             <Header.Content>
               {`북스탬프에서 특정 책에 대한 도서관을 어떻게 찾을까?`}
               <Header.Subheader>
@@ -58,13 +62,90 @@ import {
             </Header.Content>
           </Header>
         </Container>
+
+        <Container textAlign="center" fluid style={{ marginTop: 10 }}>
+        <Header as="h4">
+          <Header.Content>
+            <Header.Subheader>
+              <p
+                style={{ fontSize: 11, color: "red", marginTop : 30 }}
+              >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+      </Container>
+
+      <Container textAlign="left" fluid >
+        <Grid celled verticalAlign="middle" centered>
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help1} width={900} height={450} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchLib_text">
+                {`1. Explore 탭을 통해, 검색 창으로 이동할 수 있습니다.`}
+              </p>
+             
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row >
+            <Grid.Column width={9} textAlign="center" >
+              <Image src={help2} width={400} height={200} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchLib_text">
+              {`2. Explore 페이지의 검색박스와 검색 버튼의 클릭을 통해, 특정 도서의
+                검색 결과를 확인할 수 있습니다.`}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help3} width={900} height={330} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchLib_text">
+              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
+                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help5} width={900} height={330} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchLib_text">
+              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
+                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help4} width={900} height={330} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchLib_text">
+              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
+                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        </Container>
+  
   
         <style jsx>{`
           div {
             margin-top: 30px;
             text-align: right;
           }
-          .help_searchbook_text {
+
+          .help_searchLib_text {
             font-size: 15px;
             font-family: GothicA1-Medium;
           }
