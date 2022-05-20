@@ -49,11 +49,11 @@ import {
   
         <Container textAlign="left" fluid style={{ marginTop: 30 }}>
           <Header as="h2">
-            <Icon name="question" />
+            <Icon name="database" />
             <Header.Content>
-              {`북스탬프에서의 책 추천을 어떻게 활용할 수 있을까?`}
+              {`북스탬프에서 특정 책에 대한 도서관을 어떻게 찾을까?`}
               <Header.Subheader>
-                {`How can I use book recommendations from Bookstamp?`}
+                {`How do I find the library for a specific book in Bookstamp?`}
               </Header.Subheader>
             </Header.Content>
           </Header>

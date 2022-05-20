@@ -143,6 +143,7 @@ const Help = () => {
               </Link>
             </Grid.Row>
             <Grid.Row centered columns={4} color="black" textAlign="center">
+            <Link href="./helps/help_searchLib">
               <Grid.Column>
                 <Popup
                   trigger={
@@ -165,6 +166,7 @@ const Help = () => {
                   </Popup.Content>
                 </Popup>
               </Grid.Column>
+              </Link>
               <Grid.Column>
                 <Popup
                   trigger={
