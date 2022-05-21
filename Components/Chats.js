@@ -41,7 +41,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
-
   const router = useRouter();
   useEffect(() => {
     authService.onAuthStateChanged((user) => {

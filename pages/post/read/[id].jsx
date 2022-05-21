@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 export default function ReadWriting({ chat_data }) {
   // 게시글 출력 페이지 : 게시글 수정 시, 바로 출력되게끔 구성 
   const [chats, setChats] = useState({})
-
   const q = query(
     collection(dbService, chat_data.genre_chat),
     orderBy("createdAt", "desc")
@@ -19,12 +18,17 @@ export default function ReadWriting({ chat_data }) {
         id: doc.id,
         ...doc.data(),
       }));
-
+      chatArray.map((item)=> {
+        if(!item.title){
+          item.title = chat_data.chat.title;
+        }
+      });
       setChats(chatArray.filter((item) => chat_data.chat.id === item.id));
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
 
+  console.log()
   return (
     <>
     {chats.length ? 

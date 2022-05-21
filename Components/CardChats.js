@@ -1,9 +1,16 @@
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { Card, Container, Divider, Icon, Label, List } from "semantic-ui-react";
+import { dbService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
 
 export default function CardChats({ chat, id, isOwner, genre_chat }) {
+
+  const [chats, setChats] = useState([]);
+  const [extractText, setExtractText] = useState("답글");
+
+  const q = query(collection(dbService, genre_chat), orderBy("createdAt", "desc"));
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
@@ -11,11 +18,19 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
         ...doc.data(),
       }));
       setChats(chatArray);
+      
+      const checkExistOrginal = chatArray.map((x) => x.id).includes(chat.replyTo);
+      if (checkExistOrginal == false) {
+      } else{
+        if(chats.filter((x) => x.id === chat.replyTo)[0]){
+          setExtractText(`원문 "${chats.filter((x) => x.id === chat.replyTo)[0].title}"의 답글`);
+          chat.title = `원문 "${chats.filter((x) => x.id === chat.replyTo)[0].title}"의 답글`;
+        }
+      }
     });
-  }, []);
+  });
 
-  // Detail book page chatting query
-  const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
+
   // check replyChat Exist
   const onCheckExistOriginal = () => {
     //(id) => id != `${isbn}${title}`
@@ -24,7 +39,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
       alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
     }
   };
-
+  
   return (
     <>
       <Link
@@ -75,7 +90,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           >
             {chat.replyTo ? 
             <>
-            답글
+            {extractText}
             </> : 
             <>
             {chat.title.length > 15
