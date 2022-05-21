@@ -1,4 +1,12 @@
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  updateDoc,
+  query,
+  collection,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -18,14 +26,15 @@ import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
 import {} from "firebase/firestore";
 
-export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
+export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
+  const [chats, setChats] = useState("");
   const [editing, setEditing] = useState(false);
   const [replying, setReplying] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
   const [isMe, setIsMe] = useState(false);
   const [doLike, setDoLike] = useState(false);
-  
+
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
@@ -91,7 +100,27 @@ export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
   // recomment edit mode
   const onReplyClick = () => setReplying((prev) => !prev);
 
-  
+  // query for CheckReply
+  // DB Real-time change check
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      const chatArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+      }));
+      setChats(chatArray);
+    });
+  }, []);
+
+  // Detail book page chatting query
+  const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
+  // check replyChat Exist
+  const onCheckExistOriginal = () => {
+    //(id) => id != `${isbn}${title}`
+    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
+    if (checkExistOrginal == false) {
+      alert("삭제된 메시지 입니다.");
+    }
+  };
 
   return (
     <>
@@ -131,7 +160,7 @@ export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
               style={{ marginTop: -10, marginBottom: 15, width: "40%" }}
             />
             <p style={{ marginBottom: 10 }}>{chat.text}</p>
-            
+
             {chat.fileUrl && (
               <Image
                 src={chat.fileUrl}
@@ -242,10 +271,15 @@ export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
               </Link>
               <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
-                {chat.replyTo ? (
+                  {chat.replyTo ? (
                     <>
-                      <Button name={`${chat.id}`} href={`#${chat.replyTo}`} title = {`답글이 삭제된 경우, 이동되지 않습니다.`}>
-                          {`글 보러가기`}
+                      <Button
+                        onClick={onCheckExistOriginal}
+                        name={`${chat.id}`}
+                        href={`#${chat.replyTo}`}
+                        title={`답글이 삭제된 경우, 이동되지 않습니다.`}
+                      >
+                        {`글 보러가기`}
                       </Button>
                     </>
                   ) : (
@@ -262,7 +296,7 @@ export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
                 </Item.Description>
               </Item.Content>
             </Item>
-                          
+
             {chat.fileUrl && (
               <Image
                 src={chat.fileUrl}
@@ -305,7 +339,7 @@ export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
               </Button>
             </>
           )}
-        
+
           {editing && (
             <div>
               <PostEditor
