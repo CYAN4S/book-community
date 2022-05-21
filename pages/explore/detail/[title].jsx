@@ -333,6 +333,7 @@ export default function Title({ books }) {
                 <Grid.Column>
                   <div
                     style={{
+                      width: 565,
                       height: 290,
                     }}
                     className="ui red segment"
@@ -385,7 +386,7 @@ export default function Title({ books }) {
                                 return (
                                   <Grid.Column
                                     key={item.id}
-                                    style={{ marginBottom: 12 }}
+                                    style={{ marginBottom: 12,}}
                                   >
                                     <div>
                                       <label

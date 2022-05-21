@@ -23,9 +23,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [title, setTitle] = useState("");
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
+  const [vidFileString, setVidFileString] = useState("");
 
   const router = useRouter();
-
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
@@ -50,6 +50,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     e.preventDefault();
 
     let fileUrl = "";
+    let vidFileUrl = "";
     if (chat === "") {
       return;
     }
@@ -58,13 +59,19 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       const response = await uploadString(fileRef, imgFileString, "data_url");
       fileUrl = await getDownloadURL(response.ref);
     }
-
+    if (vidFileString !== "") {
+      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const response = await uploadString(fileRef, vidFileString, "data_url");
+      vidFileUrl = await getDownloadURL(response.ref);
+    }
+    console.log(vidFileUrl);
     const chatObj = {
       title: title,
       text: chat,
       createdAt: Date.now(),
       createrId: userObj.uid,
       fileUrl,
+      vidFileUrl,
       users: [],
     };
 
@@ -74,6 +81,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
     setChat("");
     setImgFileString("");
+    setVidFileString("");
 
     if (genre_chat) {
       router.back();
@@ -96,8 +104,24 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     }
   };
 
-  const onClearPhotoClick = () => setImgFileString("");
+  const onFileChangeVideo = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const file = files[0];
 
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const result = finishedEvent.currentTarget.result;
+      setVidFileString(result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onClearPhotoClick = () => setImgFileString("");
+  const onDeleteVideo = () => setVidFileString("");
   return (
     <div>
       {genre_chat ? (
@@ -144,7 +168,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   icon="file image"
                 />
               </div>
-
               {imgFileString && (
                 <div>
                   <Image
@@ -167,6 +190,41 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   />
                 </div>
               )}
+              <div>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add videos</p>
+                </Label>
+
+                <Input
+                  type="file"
+                  accept="video/*"
+                  onChange={onFileChangeVideo}
+                  id="attach-file"
+                  icon="video image"
+                />
+              </div>
+              {vidFileString && (
+                <div>
+                  <video
+                    loop={true}
+                    style={{
+                      width: 400,
+                      marginTop: 10,
+                      marginLeft: 20,
+                      marginBottom: 15,
+                    }}
+                    controls={true}
+                  >
+                    <source src={vidFileString}></source>
+                  </video>
+                </div>
+              )}
+
               <Button
                 icon
                 labelPosition="right"
@@ -210,7 +268,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 icon="file image"
               />
             </div>
-
             {imgFileString && (
               <div>
                 <Image
@@ -233,6 +290,53 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 />
               </div>
             )}
+            <div>
+              <Label
+                basic
+                color="orange"
+                pointing="right"
+                htmlFor="attach-file"
+              >
+                <p>Add videos</p>
+              </Label>
+
+              <Input
+                type="file"
+                accept="video/*"
+                onChange={onFileChangeVideo}
+                id="attach-file"
+                icon="video image"
+              />
+            </div>
+            {vidFileString && (
+              <div >
+                <video
+                  loop={true}
+                  style={{
+                    width: 400,
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginBottom: 5,
+                  }}
+                  controls={true}
+                >
+                  <source src={vidFileString}></source>
+                </video>
+                <div>
+                  <Button 
+                    icon
+                    labelPosition="right"
+                    color="red"
+                    onClick={onDeleteVideo}
+                    style={{marginLeft: 20, }}
+                  >
+                    영상 삭제
+                    <Icon name="delete" />
+                  </Button>
+                </div>
+              </div>
+            )}
+
             <Button
               icon
               labelPosition="right"

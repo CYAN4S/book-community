@@ -8,6 +8,8 @@ import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Book_home() {
+
+
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
 
@@ -30,6 +32,7 @@ export default function Book_home() {
     });
   }, []);
 
+  
   return (
     <>
       <div style={{marginLeft : 5}}>
@@ -41,7 +44,7 @@ export default function Book_home() {
          
         </div>
         <div>
-          <Header as="h2" style ={{marginTop : -40}}>
+          <Header as="h2" style={{ marginTop: -40 }}>
             <Icon name="chat" />
             <Header.Content>
               의견남기기
@@ -56,13 +59,15 @@ export default function Book_home() {
             <Icon name="wechat" />
             <Header.Content>
               올라온 채팅
-              <Header.Subheader>다른 사용자의 채팅을 볼 수 있어요!</Header.Subheader>
+              <Header.Subheader>
+                다른 사용자의 채팅을 볼 수 있어요!
+              </Header.Subheader>
             </Header.Content>
           </Header>
-          <div style={{marginTop:30}}>
+          <div style={{ marginTop: 30 }}>
             {chats.length ? (
               chats.map((chat) => (
-                <div key={chat.id} style={{marginBottom:30}}>
+                <div key={chat.id} style={{ marginBottom: 30 }}>
                   <Chats chat={chat} isOwner={chat.createrId === userId} />
                 </div>
               ))

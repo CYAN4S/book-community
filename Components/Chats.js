@@ -16,13 +16,14 @@ import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName, useUserPhoto } from "../utils/functions";
 import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
+import {} from "firebase/firestore";
 
-export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
+export default function Chats({chat, isOwner, detailbook_chat, genre_chat }) {
   const [editing, setEditing] = useState(false);
+  const [replying, setReplying] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
 
   const [isMe, setIsMe] = useState(false);
-  const [replying, setReplying] = useState(false);
   const [doLike, setDoLike] = useState(false);
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
@@ -45,7 +46,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
-      console.log(collectionName, chat.id);
       await deleteDoc(doc(dbService, collectionName, `${chat.id}`))
         .then(() => {
           alert("채팅이 삭제되었습니다!");
@@ -56,6 +56,9 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
       if (chat.fileUrl !== "") {
         await deleteObject(ref(storageService, chat.fileUrl));
+      }
+      if (chat.vidFileUrl !== "") {
+        await deleteObject(ref(storageService, chat.vidFileUrl));
       }
     }
 
@@ -86,6 +89,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   // recomment edit mode
   const onReplyClick = () => setReplying((prev) => !prev);
+
+  
 
   return (
     <>
@@ -125,18 +130,23 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               style={{ marginTop: -10, marginBottom: 15, width: "40%" }}
             />
             <p style={{ marginBottom: 10 }}>{chat.text}</p>
-
+            
             {chat.fileUrl && (
               <Image
                 src={chat.fileUrl}
                 style={{
-                  width: "40%",
-                  height: "40%",
+                  width: 300,
                   marginTop: 10,
                   marginBottom: 25,
                 }}
               />
             )}
+            {chat.vidFileUrl && (
+              <video loop={true} style={{ width: 400 }} controls={true}>
+                <source src={chat.vidFileUrl}></source>
+              </video>
+            )}
+
             <Container textAlign="right" style={{ marginBottom: 100 }}>
               <Button
                 labelPosition="right"
@@ -224,7 +234,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                     >
                       {displayName?.length > 5
                         ? `${displayName.substring(0, 5)}...`
-                        : displayName}{" "}
+                        : displayName}
                     </p>
                   </Label>
                 </a>
@@ -251,17 +261,21 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 </Item.Description>
               </Item.Content>
             </Item>
-
+                          
             {chat.fileUrl && (
               <Image
                 src={chat.fileUrl}
                 style={{
-                  width: "40%",
-                  height: "40%",
+                  width: 300,
                   marginTop: 10,
                   marginBottom: 5,
                 }}
               />
+            )}
+            {chat.vidFileUrl && (
+              <video loop={true} style={{ width: 400 }} controls={true}>
+                <source src={chat.vidFileUrl}></source>
+              </video>
             )}
           </div>
           <Button
@@ -290,7 +304,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               </Button>
             </>
           )}
-
+        
           {editing && (
             <div>
               <PostEditor
