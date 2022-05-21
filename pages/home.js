@@ -31,11 +31,14 @@ export default function Book_home() {
     });
   }, []);
 
+  let name = `hello${4}`;
+
   return (
     <>
       <div style={{marginLeft : 5}}>
         <Head>
           <title>Home pages</title>
+          <a href={`#${name}`}> gd </a>
         </Head>
         <div style={{height:30}}>
          
@@ -72,6 +75,8 @@ export default function Book_home() {
           </div>
           <Divider />
         </div>
+
+        <a name={`${name}`}>여기ㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</a>
       </div>
     </>
   );
