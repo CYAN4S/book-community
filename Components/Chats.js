@@ -34,12 +34,13 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const [isMe, setIsMe] = useState(false);
   const [doLike, setDoLike] = useState(false);
-
+  const [extractText, setExtractText] = useState("다른 사용자의 글에 대한 답글입니다.");
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
+
 
   const router = useRouter();
   useEffect(() => {
@@ -106,11 +107,13 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
+        ...doc.data()
       }));
       setChats(chatArray);
     });
-  }, []);
 
+  }, []);
+  
   // Detail book page chatting query
   const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
   // check replyChat Exist
@@ -122,6 +125,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     }
   };
 
+  const onMouseEnter = () => {
+    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
+    const chat_data = chats.filter((x) => x.id === chat.replyTo);
+    console.log(chat_data)
+    if (checkExistOrginal == false) {
+    } else{
+      setExtractText((chats.filter((x) => x.id === chat.replyTo))[0].text);
+    }
+  }
+
+  const onMouseLeave = () => {
+    setExtractText("다른 사용자의 글에 대한 답글입니다.");
+  }
   return (
     <>
       {genre_chat ? (
@@ -275,16 +291,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                     <>
                       <Button
                         onClick={onCheckExistOriginal}
+                        onMouseEnter = {onMouseEnter}
+                        onMouseLeave = {onMouseLeave}
                         name={`${chat.id}`}
                         href={`#${chat.replyTo}`}
                         title={`답글이 삭제된 경우, 이동되지 않습니다.`}
                       >
-                        {`글 보러가기`}
+                        {extractText}
                       </Button>
                     </>
                   ) : (
                     <>
-                      <a name={`${chat.id}`} />
+                      <a name={`${chat.id}`}/>
+                      {chat.id ? <p>hello</p> : <></>}
                     </>
                   )}
                   <strong>{chat.text}</strong>
