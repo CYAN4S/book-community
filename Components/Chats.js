@@ -289,8 +289,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       <strong>{chat.text}</strong>
                       <Label 
                         color="teal"
-                        style={{marginLeft : 20}}
-                        tag
+                        style={{marginLeft : 10}}
+                        circular
                         onClick={onCheckExistOriginal}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
@@ -298,7 +298,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                         href={`#${chat.replyTo}`}
                         title={`답글이 삭제된 경우, 이동되지 않습니다.`}>
                         
-                        {extractText}
+                        <p style={{marginLeft : 10, marginRight : 10, fontSize : 13 , height : 17, fontFamily :"GothicA1-ExtraLight"}}>{extractText}</p>
                       </Label>
                     </>
                   ) : (
