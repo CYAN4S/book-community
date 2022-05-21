@@ -35,13 +35,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [isMe, setIsMe] = useState(false);
   const [doLike, setDoLike] = useState(false);
 
-  const [extractText, setExtractText] = useState("답글입니다.");
+  const [extractText, setExtractText] = useState("답글");
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
-
 
   const router = useRouter();
   useEffect(() => {
@@ -107,13 +106,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setChats(chatArray);
     });
-
   }, []);
-  
+
   // Detail book page chatting query
   const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
   // check replyChat Exist
@@ -121,21 +119,22 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     //(id) => id != `${isbn}${title}`
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
     if (checkExistOrginal == false) {
-      alert("삭제된 메시지 입니다.");
+      alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
     }
   };
 
   const onMouseEnter = () => {
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
     if (checkExistOrginal == false) {
-    } else{
-      setExtractText((chats.filter((x) => x.id === chat.replyTo))[0].text);
+    } else {
+      setExtractText(`원문 '${chats.filter((x) => x.id === chat.replyTo)[0].text}'으로 이동하기`);
     }
-  }
+  };
 
   const onMouseLeave = () => {
-    setExtractText("답글입니다.");
-  }
+    setExtractText("답글");
+  };
+  
   return (
     <>
       {genre_chat ? (
@@ -287,23 +286,28 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 <Item.Description>
                   {chat.replyTo ? (
                     <>
-                      <Button
+                      <strong>{chat.text}</strong>
+                      <Label 
+                        color="teal"
+                        style={{marginLeft : 20}}
+                        tag
                         onClick={onCheckExistOriginal}
-                        onMouseEnter = {onMouseEnter}
-                        onMouseLeave = {onMouseLeave}
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
                         name={`${chat.id}`}
                         href={`#${chat.replyTo}`}
-                        title={`답글이 삭제된 경우, 이동되지 않습니다.`}
-                      >
+                        title={`답글이 삭제된 경우, 이동되지 않습니다.`}>
+                        
                         {extractText}
-                      </Button>
+                      </Label>
                     </>
                   ) : (
                     <>
-                      <a name={`${chat.id}`}/>
+                      <strong>{chat.text}</strong>
+                      <a name={`${chat.id}`} />
                     </>
                   )}
-                  <strong>{chat.text}</strong>
+
                   <Divider style={{ marginBottom: 5, marginTop: 5 }} />
                   <p style={{ marginTop: 3 }}>
                     <Icon name="clock" />
@@ -383,7 +387,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       <style jsx>{`
         strong {
           font-size: 16px;
-          
         }
       `}</style>
     </>
