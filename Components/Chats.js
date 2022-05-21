@@ -28,7 +28,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
 
-  const collectionName = detailbook_chat ?? genre_chat ?? "chat"
+  const collectionName = detailbook_chat ?? genre_chat ?? "chat";
 
   const router = useRouter();
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       if (user) {
         setCurrentUid(user.uid);
         setDoLike(chat.users.includes(user.uid));
-        
+
         setIsMe(user.uid == chat.createrId);
       }
     });
@@ -212,15 +212,38 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       style={{ marginTop: 10, marginBottom: 10 }}
                     ></Image>
 
-                    <p style={{ textAlign : "center", marginLeft : -31, marginTop: 3, width: 100, fontSize : 13, fontFamily : "GothicA1-ExtraLight" }}> {displayName?.length > 5 ? `${displayName.substring(0,5)}...` : displayName} </p>
+                    <p
+                      style={{
+                        textAlign: "center",
+                        marginLeft: -31,
+                        marginTop: 3,
+                        width: 100,
+                        fontSize: 13,
+                        fontFamily: "GothicA1-ExtraLight",
+                      }}
+                    >
+                      {displayName?.length > 5
+                        ? `${displayName.substring(0, 5)}...`
+                        : displayName}{" "}
+                    </p>
                   </Label>
                 </a>
               </Link>
               <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
-                {chat.replyTo ? <> <Button name={`${chat.id}`} href={`#${chat.replyTo}`}> 답글로 이동하기 </Button> </> : <> <a name={`${chat.id}`}/></>}
+                {chat.replyTo ? (
+                    <>
+                      <Button name={`${chat.id}`} href={`#${chat.replyTo}`}>
+                          답글로 이동하기
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <a name={`${chat.id}`} />
+                    </>
+                  )}
                   <strong>{chat.text}</strong>
-                  <Divider style={{marginBottom : 5, marginTop : 5}}/>
+                  <Divider style={{ marginBottom: 5, marginTop: 5 }} />
                   <p style={{ marginTop: 3 }}>
                     <Icon name="clock" />
                     {new Date(chat.createdAt).toLocaleString()}

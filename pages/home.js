@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { authService, dbService } from "../firebaseConfig";
 
 import { Divider, Header, Icon } from "semantic-ui-react";
@@ -36,10 +35,10 @@ export default function Book_home() {
   return (
     <>
       <div style={{marginLeft : 5}}>
-        <Head>
+        <Header>
           <title>Home pages</title>
-          <a href={`#${name}`}> gd </a>
-        </Head>
+
+        </Header>
         <div style={{height:30}}>
          
         </div>
