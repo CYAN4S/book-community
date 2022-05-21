@@ -10,6 +10,9 @@ import {
   Image,
   Container,
   Header,
+  Embed,
+  Grid,
+  GridColumn,
 } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -24,7 +27,12 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [userObj, setUserObj] = useState(null);
   const [imgFileString, setImgFileString] = useState("");
   const [vidFileString, setVidFileString] = useState("");
-
+  // Youtube Url
+  const [input, setInput] = useState(false);
+  const [youtubeString, setYoutubeString] = useState("");
+  const [id, setId] = useState("");
+  // fix bug when push  YOUTUBE URL SUBMIT button
+  const [checkRealSubmit, setCheckRealSubmit] = useState(false);
   const router = useRouter();
   const collectionName = detailbook_chat
     ? detailbook_chat
@@ -45,46 +53,79 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       }
     });
   }, []);
-
+  const onYoutubeSubmit = () => {
+    if (youtubeString.includes("watch?v=")) {
+      let pos = youtubeString.indexOf("watch?v=");
+      // console.log(url.substring(pos+8,));
+      setId(youtubeString.substring(pos + 8));
+      setInput(true);
+    } else if (youtubeString.includes("/shorts/")) {
+      let pos = youtubeString.indexOf("/shorts/");
+      // console.log(url.substring(pos+8,));
+      setId(youtubeString.substring(pos + 8));
+      setInput(true);
+    } else if (youtubeString == "") {
+      setId("");
+      setInput(true);
+    } else {
+      setId("");
+      setYoutubeString("");
+      setInput(false);
+      alert("인식할 수 없는 URL입니다.");
+    }
+  };
   const onNewPostSubmit = async (e) => {
     e.preventDefault();
+    if (checkRealSubmit == true) {
+      let fileUrl = "";
+      let vidFileUrl = "";
+      let youtubeUrl = "";
+      if (chat === "") {
+        return;
+      }
+      if (imgFileString !== "") {
+        const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+        const response = await uploadString(fileRef, imgFileString, "data_url");
+        fileUrl = await getDownloadURL(response.ref);
+      }
+      if (vidFileString !== "") {
+        const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+        const response = await uploadString(fileRef, vidFileString, "data_url");
+        vidFileUrl = await getDownloadURL(response.ref);
+      }
+      // Lee's code 220521_1855 (youtube URL) code start
+      // 현재, short영상과 일반 영상만 지원됨.
+      if (id !== "") {
+      }
+      // Lee's code 220521_1855 (youtube URL) code end
 
-    let fileUrl = "";
-    let vidFileUrl = "";
-    if (chat === "") {
-      return;
+      const chatObj = {
+        title: title,
+        text: chat,
+        createdAt: Date.now(),
+        createrId: userObj.uid,
+        fileUrl,
+        vidFileUrl,
+        youtubeUrl,
+        users: [],
+      };
+
+      await addDoc(collection(dbService, collectionName), chatObj)
+        .then(() => console.log("전송완료"))
+        .catch((error) => alert(error));
+
+      setChat("");
+      setImgFileString("");
+      setVidFileString("");
+      setYoutubeString("");
+      setId("");
+      setInput(false);
+      if (genre_chat) {
+        router.back();
+      }
     }
-    if (imgFileString !== "") {
-      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
-      const response = await uploadString(fileRef, imgFileString, "data_url");
-      fileUrl = await getDownloadURL(response.ref);
-    }
-    if (vidFileString !== "") {
-      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
-      const response = await uploadString(fileRef, vidFileString, "data_url");
-      vidFileUrl = await getDownloadURL(response.ref);
-    }
-    console.log(vidFileUrl);
-    const chatObj = {
-      title: title,
-      text: chat,
-      createdAt: Date.now(),
-      createrId: userObj.uid,
-      fileUrl,
-      vidFileUrl,
-      users: [],
-    };
-
-    await addDoc(collection(dbService, collectionName), chatObj)
-      .then(() => console.log("전송완료"))
-      .catch((error) => alert(error));
-
-    setChat("");
-    setImgFileString("");
-    setVidFileString("");
-
-    if (genre_chat) {
-      router.back();
+    else{
+      return
     }
   };
 
@@ -122,6 +163,13 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
   const onClearPhotoClick = () => setImgFileString("");
   const onDeleteVideo = () => setVidFileString("");
+  const onDeleteYoutubeUrl = () => {
+    alert("삭제완료");
+    setId("");
+    setInput(false);
+  };
+
+  const onCheckRealSubmit = () => setCheckRealSubmit(true);
   return (
     <div>
       {genre_chat ? (
@@ -250,6 +298,67 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 required
               />
             </Form.Field>
+            <Grid columns={3}>
+              <Grid.Column style={{ width: 160 }}>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add Youtube URL</p>
+                </Label>
+              </Grid.Column>
+              <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+                <Form.Field>
+                  <Form.Input
+                    focus
+                    placeholder="Youtube URL을 입력해주세요"
+                    value={youtubeString}
+                    onChange={(e) => setYoutubeString(e.target.value)}
+                  />
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column style={{ marginLeft: -20, width: 200 }}>
+                <Button
+                  style={{ marginTop: 5 }}
+                  size="mini"
+                  onClick={onYoutubeSubmit}
+                >
+                  Submit
+                </Button>
+              </Grid.Column>
+            </Grid>
+            {input && (
+              <div style = {{width: "50%"}}>
+                <Embed
+                  loop={true}
+                  style={{
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginBottom: 5,
+                  }}
+                  controls={true}
+                  id={id}
+                  source="youtube"
+                />
+
+                <div
+                  onClick={onDeleteYoutubeUrl}
+                  style={{
+                    width: 150,
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginBottom: 5,
+                    height: 30,
+                    cursor: "pointer",
+                  }}
+                >
+                  <Icon color="red" name="remove circle" />{" "}
+                  <span>Youtube URL 삭제</span>
+                </div>
+              </div>
+            )}
             <div>
               <Label
                 basic
@@ -309,7 +418,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
               />
             </div>
             {vidFileString && (
-              <div >
+              <div>
                 <video
                   loop={true}
                   style={{
@@ -323,12 +432,12 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   <source src={vidFileString}></source>
                 </video>
                 <div>
-                  <Button 
+                  <Button
                     icon
                     labelPosition="right"
                     color="red"
                     onClick={onDeleteVideo}
-                    style={{marginLeft: 20, }}
+                    style={{ marginLeft: 20 }}
                   >
                     영상 삭제
                     <Icon name="delete" />
@@ -338,6 +447,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             )}
 
             <Button
+              onClick={onCheckRealSubmit}
               icon
               labelPosition="right"
               color="teal"
