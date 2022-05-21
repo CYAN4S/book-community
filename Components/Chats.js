@@ -301,7 +301,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                   ) : (
                     <>
                       <a name={`${chat.id}`}/>
-                      {chat.id ? <p>hello</p> : <></>}
                     </>
                   )}
                   <strong>{chat.text}</strong>
