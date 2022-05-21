@@ -34,7 +34,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const [isMe, setIsMe] = useState(false);
   const [doLike, setDoLike] = useState(false);
-  const [extractText, setExtractText] = useState("다른 사용자의 글에 대한 답글입니다.");
+
+  const [extractText, setExtractText] = useState("답글입니다.");
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
@@ -48,7 +49,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       if (user) {
         setCurrentUid(user.uid);
         setDoLike(chat.users.includes(user.uid));
-
         setIsMe(user.uid == chat.createrId);
       }
     });
@@ -127,8 +127,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const onMouseEnter = () => {
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
-    const chat_data = chats.filter((x) => x.id === chat.replyTo);
-    console.log(chat_data)
     if (checkExistOrginal == false) {
     } else{
       setExtractText((chats.filter((x) => x.id === chat.replyTo))[0].text);
@@ -136,7 +134,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   }
 
   const onMouseLeave = () => {
-    setExtractText("다른 사용자의 글에 대한 답글입니다.");
+    setExtractText("답글입니다.");
   }
   return (
     <>
@@ -386,8 +384,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       <style jsx>{`
         strong {
           font-size: 16px;
-          font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-            "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+          
         }
       `}</style>
     </>
