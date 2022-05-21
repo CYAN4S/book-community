@@ -218,7 +218,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               </Link>
               <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
-                  <strong>{chat.title}</strong>
+                {chat.replyTo ? <> <Button name={`${chat.id}`} href={`#${chat.replyTo}`}> 답글로 이동하기 </Button> </> : <> <a name={`${chat.id}`}/></>}
                   <strong>{chat.text}</strong>
                   <Divider style={{marginBottom : 5, marginTop : 5}}/>
                   <p style={{ marginTop: 3 }}>

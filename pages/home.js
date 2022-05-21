@@ -76,7 +76,6 @@ export default function Book_home() {
           <Divider />
         </div>
 
-        <a name={`${name}`}>여기ㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</a>
       </div>
     </>
   );
