@@ -30,8 +30,6 @@ export default function Book_home() {
     });
   }, []);
 
-  let name = `hello${4}`;
-
   return (
     <>
       <div style={{marginLeft : 5}}>

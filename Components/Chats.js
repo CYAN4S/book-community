@@ -233,8 +233,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 <Item.Description>
                 {chat.replyTo ? (
                     <>
-                      <Button name={`${chat.id}`} href={`#${chat.replyTo}`}>
-                          답글로 이동하기
+                      <Button name={`${chat.id}`} href={`#${chat.replyTo}`} title = {`답글이 삭제된 경우, 이동되지 않습니다.`}>
+                          {`글 보러가기`}
                       </Button>
                     </>
                   ) : (
