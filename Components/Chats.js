@@ -19,6 +19,7 @@ import {
   Container,
   Header,
   Divider,
+  Embed,
 } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName, useUserPhoto } from "../utils/functions";
@@ -41,7 +42,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const displayName = useUserDisplayName(chat.createrId);
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
-
 
   const router = useRouter();
   useEffect(() => {
@@ -107,13 +107,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setChats(chatArray);
     });
-
   }, []);
-  
+
   // Detail book page chatting query
   const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
   // check replyChat Exist
@@ -128,14 +127,14 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onMouseEnter = () => {
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
     if (checkExistOrginal == false) {
-    } else{
-      setExtractText((chats.filter((x) => x.id === chat.replyTo))[0].text);
+    } else {
+      setExtractText(chats.filter((x) => x.id === chat.replyTo)[0].text);
     }
-  }
+  };
 
   const onMouseLeave = () => {
     setExtractText("답글입니다.");
-  }
+  };
   return (
     <>
       {genre_chat ? (
@@ -190,7 +189,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 <source src={chat.vidFileUrl}></source>
               </video>
             )}
-
+            {chat.youtubeUrl && (
+              <div style={{ width: "50%" }}>
+                <Embed
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 5,
+                  }}
+                  placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/maxresdefault.jpg`}
+                  id={chat.youtubeUrl}
+                  source="youtube"
+                />
+              </div>
+            )}
             <Container textAlign="right" style={{ marginBottom: 100 }}>
               <Button
                 labelPosition="right"
@@ -289,8 +300,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                     <>
                       <Button
                         onClick={onCheckExistOriginal}
-                        onMouseEnter = {onMouseEnter}
-                        onMouseLeave = {onMouseLeave}
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
                         name={`${chat.id}`}
                         href={`#${chat.replyTo}`}
                         title={`답글이 삭제된 경우, 이동되지 않습니다.`}
@@ -300,7 +311,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                     </>
                   ) : (
                     <>
-                      <a name={`${chat.id}`}/>
+                      <a name={`${chat.id}`} />
                     </>
                   )}
                   <strong>{chat.text}</strong>
@@ -327,6 +338,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               <video loop={true} style={{ width: 400 }} controls={true}>
                 <source src={chat.vidFileUrl}></source>
               </video>
+            )}
+            {chat.youtubeUrl && (
+              <div style={{ width: "50%" }}>
+                <Embed
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 5,
+                  }}
+                  placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/maxresdefault.jpg`}
+                  id={chat.youtubeUrl}
+                  source="youtube"
+                />
+              </div>
             )}
           </div>
           <Button
@@ -383,7 +407,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       <style jsx>{`
         strong {
           font-size: 16px;
-          
         }
       `}</style>
     </>

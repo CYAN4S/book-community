@@ -54,6 +54,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     });
   }, []);
   const onYoutubeSubmit = () => {
+    console.log(youtubeString);
     if (youtubeString.includes("watch?v=")) {
       let pos = youtubeString.indexOf("watch?v=");
       // console.log(url.substring(pos+8,));
@@ -96,6 +97,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       // Lee's code 220521_1855 (youtube URL) code start
       // 현재, short영상과 일반 영상만 지원됨.
       if (id !== "") {
+        youtubeUrl = id;
       }
       // Lee's code 220521_1855 (youtube URL) code end
 
@@ -123,9 +125,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       if (genre_chat) {
         router.back();
       }
-    }
-    else{
-      return
+      setCheckRealSubmit(false);
+    } else {
+      return;
     }
   };
 
@@ -180,176 +182,175 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             <p style={{ fontSize: 12, marginTop: 3 }}>게시글을 작성해보세요!</p>
           </Header>
           <Container textAlign="left">
-          <Form onSubmit={onNewPostSubmit}>
-            <Form.Field>
-              <Label basic color="orange" pointing="below">
-                Please enter your text
-              </Label>
-              <TextArea
-                value={chat}
-                onChange={(e) => setChat(e.target.value)}
-                required
-              />
-            </Form.Field>
-            <Grid columns={3}>
-              <Grid.Column style={{ width: 160 }}>
+            <Form onSubmit={onNewPostSubmit}>
+              <Form.Field>
+                <Label basic color="orange" pointing="below">
+                  Please enter your text
+                </Label>
+                <TextArea
+                  value={chat}
+                  onChange={(e) => setChat(e.target.value)}
+                  required
+                />
+              </Form.Field>
+              <Grid columns={3}>
+                <Grid.Column style={{ width: 160 }}>
+                  <Label
+                    basic
+                    color="orange"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add Youtube URL</p>
+                  </Label>
+                </Grid.Column>
+                <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+                  <Form.Field>
+                    <Form.Input
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column style={{ marginLeft: -20, width: 200 }}>
+                  <Button
+                    style={{ marginTop: 5 }}
+                    size="mini"
+                    onClick={onYoutubeSubmit}
+                  >
+                    Submit
+                  </Button>
+                </Grid.Column>
+              </Grid>
+              {input && (
+                <div style={{ width: "50%" }}>
+                  <Embed
+                    style={{
+                      marginTop: 10,
+                      marginLeft: 20,
+                      marginBottom: 5,
+                    }}
+                    placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
+                    id={id}
+                    source="youtube"
+                  />
+
+                  <div
+                    onClick={onDeleteYoutubeUrl}
+                    style={{
+                      width: 150,
+                      marginTop: 10,
+                      marginLeft: 20,
+                      marginBottom: 5,
+                      height: 30,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Icon color="red" name="remove circle" />{" "}
+                    <span>Youtube URL 삭제</span>
+                  </div>
+                </div>
+              )}
+              <div>
                 <Label
                   basic
                   color="orange"
                   pointing="right"
                   htmlFor="attach-file"
                 >
-                  <p>Add Youtube URL</p>
+                  <p>Add photos</p>
                 </Label>
-              </Grid.Column>
-              <Grid.Column style={{ marginLeft: -30, width: 240 }}>
-                <Form.Field>
-                  <Form.Input
-                    focus
-                    placeholder="Youtube URL을 입력해주세요"
-                    value={youtubeString}
-                    onChange={(e) => setYoutubeString(e.target.value)}
-                  />
-                </Form.Field>
-              </Grid.Column>
-              <Grid.Column style={{ marginLeft: -20, width: 200 }}>
-                <Button
-                  style={{ marginTop: 5 }}
-                  size="mini"
-                  onClick={onYoutubeSubmit}
-                >
-                  Submit
-                </Button>
-              </Grid.Column>
-            </Grid>
-            {input && (
-              <div style = {{width: "50%"}}>
-                <Embed
-                  loop={true}
-                  style={{
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 5,
-                  }}
-                  controls={true}
-                  id={id}
-                  source="youtube"
-                />
 
-                <div
-                  onClick={onDeleteYoutubeUrl}
-                  style={{
-                    width: 150,
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 5,
-                    height: 30,
-                    cursor: "pointer",
-                  }}
-                >
-                  <Icon color="red" name="remove circle" />{" "}
-                  <span>Youtube URL 삭제</span>
-                </div>
-              </div>
-            )}
-            <div>
-              <Label
-                basic
-                color="orange"
-                pointing="right"
-                htmlFor="attach-file"
-              >
-                <p>Add photos</p>
-              </Label>
-
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={onFileChange}
-                id="attach-file"
-                icon="file image"
-              />
-            </div>
-            {imgFileString && (
-              <div>
-                <Image
-                  fluid
-                  label={{
-                    color: "red",
-                    onClick: onClearPhotoClick,
-                    icon: "remove circle",
-                    size: "large",
-                    ribbon: true,
-                  }}
-                  src={imgFileString}
-                  style={{
-                    backgroundImage: imgFileString,
-                    width: "40%",
-                    height: "40%",
-                    marginTop: 10,
-                    marginLeft: 20,
-                  }}
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                  id="attach-file"
+                  icon="file image"
                 />
               </div>
-            )}
-            <div>
-              <Label
-                basic
-                color="orange"
-                pointing="right"
-                htmlFor="attach-file"
-              >
-                <p>Add videos</p>
-              </Label>
-
-              <Input
-                type="file"
-                accept="video/*"
-                onChange={onFileChangeVideo}
-                id="attach-file"
-                icon="video image"
-              />
-            </div>
-            {vidFileString && (
-              <div>
-                <video
-                  loop={true}
-                  style={{
-                    width: 400,
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 5,
-                  }}
-                  controls={true}
-                >
-                  <source src={vidFileString}></source>
-                </video>
+              {imgFileString && (
                 <div>
-                  <Button
-                    icon
-                    labelPosition="right"
-                    color="red"
-                    onClick={onDeleteVideo}
-                    style={{ marginLeft: 20 }}
-                  >
-                    영상 삭제
-                    <Icon name="delete" />
-                  </Button>
+                  <Image
+                    fluid
+                    label={{
+                      color: "red",
+                      onClick: onClearPhotoClick,
+                      icon: "remove circle",
+                      size: "large",
+                      ribbon: true,
+                    }}
+                    src={imgFileString}
+                    style={{
+                      backgroundImage: imgFileString,
+                      width: "40%",
+                      height: "40%",
+                      marginTop: 10,
+                      marginLeft: 20,
+                    }}
+                  />
                 </div>
-              </div>
-            )}
+              )}
+              <div>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add videos</p>
+                </Label>
 
-            <Button
-              onClick={onCheckRealSubmit}
-              icon
-              labelPosition="right"
-              color="teal"
-              style={{ marginTop: 15 }}
-            >
-              보내기
-              <Icon name="right arrow" />
-            </Button>
-          </Form>
+                <Input
+                  type="file"
+                  accept="video/*"
+                  onChange={onFileChangeVideo}
+                  id="attach-file"
+                  icon="video image"
+                />
+              </div>
+              {vidFileString && (
+                <div>
+                  <video
+                    loop={true}
+                    style={{
+                      width: 400,
+                      marginTop: 10,
+                      marginLeft: 20,
+                      marginBottom: 5,
+                    }}
+                    controls={true}
+                  >
+                    <source src={vidFileString}></source>
+                  </video>
+                  <div>
+                    <Button
+                      icon
+                      labelPosition="right"
+                      color="red"
+                      onClick={onDeleteVideo}
+                      style={{ marginLeft: 20 }}
+                    >
+                      영상 삭제
+                      <Icon name="delete" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              <Button
+                onClick={onCheckRealSubmit}
+                icon
+                labelPosition="right"
+                color="teal"
+                style={{ marginTop: 15 }}
+              >
+                보내기
+                <Icon name="right arrow" />
+              </Button>
+            </Form>
           </Container>
         </>
       ) : (
@@ -397,15 +398,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
               </Grid.Column>
             </Grid>
             {input && (
-              <div style = {{width: "50%"}}>
+              <div style={{ width: "50%" }}>
                 <Embed
-                  loop={true}
                   style={{
                     marginTop: 10,
                     marginLeft: 20,
                     marginBottom: 5,
                   }}
-                  controls={true}
+                  placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
                   id={id}
                   source="youtube"
                 />
