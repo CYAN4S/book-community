@@ -151,20 +151,21 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       backgroundColor: "white",
                       width: 60,
                       height: 60,
+                      marginLeft : -15
                     }}
                   >
                     <Image
                       className="ui medium circular image"
                       src={userPhoto}
                       size="big"
-                      style={{ marginTop: 10, marginBottom: 10 }}
+                      style={{ marginTop: 0, marginBottom: 10 }}
                     ></Image>
-                    <p style={{ marginTop: 3 }}> {displayName} </p>
+                    <p style={{ marginTop: 3, marginLeft : 7 }}> {displayName} </p>
                   </Label>
                 </a>
               </Link>
               <p style={{ marginTop: 3, fontWeight: "bold" }}>{displayName}</p>
-              <span style={{ marginTop: 25, marginLeft: -40 }}>
+              <span style={{ marginTop: 25, marginLeft: -25 }}>
                 <Icon name="clock" />
                 {new Date(chat.createdAt).toLocaleString()}
               </span>

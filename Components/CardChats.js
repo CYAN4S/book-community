@@ -1,8 +1,30 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import { Card, Container, Divider, Icon, Label, List } from "semantic-ui-react";
 import { useUserDisplayName } from "../utils/functions";
 
 export default function CardChats({ chat, id, isOwner, genre_chat }) {
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      const chatArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setChats(chatArray);
+    });
+  }, []);
+
+  // Detail book page chatting query
+  const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
+  // check replyChat Exist
+  const onCheckExistOriginal = () => {
+    //(id) => id != `${isbn}${title}`
+    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
+    if (checkExistOrginal == false) {
+      alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
+    }
+  };
+
   return (
     <>
       <Link
@@ -51,9 +73,16 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
               textAlign: "left",
             }}
           >
+            {chat.replyTo ? 
+            <>
+            답글
+            </> : 
+            <>
             {chat.title.length > 15
               ? `${chat.title.substring(0, 15)}...`
               : `${chat.title}`}
+            </>}
+            
           </Card.Header>
           <Card.Description
             style={{
