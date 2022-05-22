@@ -187,7 +187,8 @@ export default function PostEditor({
       const url = window.location.href;
       if (!url.includes("home")) {
         if (!url.includes("post")){
-        router.push(window.location.reload());
+        //router.push(window.location.reload());
+        router.reload(window.location.pathname);
         }
         else{
           router.back();
