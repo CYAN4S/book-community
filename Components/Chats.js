@@ -133,7 +133,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const onMouseLeave = () => {
     setExtractText("답글");
   };
-  
+
   return (
     <>
       {genre_chat ? (

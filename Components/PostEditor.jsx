@@ -128,11 +128,13 @@ export default function PostEditor({
     };
 
     await addDoc(collection(dbService, collectionName), chatObj)
-      .then(() => console.log("전송완료"))
+      .then(() =>    
+      alert("댓글이 등록되었습니다."))
       .catch((error) => alert(error));
 
     setImgFileString("");
     setVidFileString("");
+    
   };
 
   const onSubmit = async (e) => {
@@ -143,13 +145,17 @@ export default function PostEditor({
     } else {
       onReplySubmit();
     }
-    const url = window.location.href; 
-    if(!url.includes("home")){
-      router.push(window.location.reload());
+    
+    if(!genre_chat){
+      const url = window.location.href; 
+      if(!url.includes("home")){
+        router.push(window.location.reload());
+      }
+      else{
+        router.push("/");
+      }
     }
-    else{
-      router.push("/");
-    }
+
   };
 
   const onDeleteTempImageClick = () => {
