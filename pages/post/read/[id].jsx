@@ -13,23 +13,16 @@ export default function ReadWriting({ chat_data }) {
     orderBy("createdAt", "desc")
   );
 
-
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      chatArray.map((item) => {
-        if (!item.title) {
-          item.title = chat_data.chat.title;
-        }
-      });
       setChats(chatArray.filter((item) => chat_data.chat.id === item.id));
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
-
   return (
     <>
       {chats.length ? (
@@ -37,6 +30,7 @@ export default function ReadWriting({ chat_data }) {
             chat={chats[0]}
             isOwner={chat_data.isOwner}
             genre_chat={chat_data.genre_chat}
+            extractTitle = {chat_data.extractTitle}
           />
 
       ) : (
@@ -51,10 +45,10 @@ export async function getServerSideProps(props) {
   const chat = props.query && JSON.parse(props.query.chat);
   const isOwner = props.query && JSON.parse(props.query.isOwner);
   const genre_chat = props.query && props.query.genre_chat;
-
+  const extractTitle = props.query && (props.query.extractTitle);
   return {
     props: {
-      chat_data: { chat: chat, isOwner: isOwner, genre_chat: genre_chat },
+      chat_data: { chat: chat, isOwner: isOwner, genre_chat: genre_chat, extractTitle: extractTitle },
     },
   };
 }

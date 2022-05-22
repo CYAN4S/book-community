@@ -57,6 +57,9 @@ export const useUserDisplayName = (targetUid) => {
     }
   }, []);
 
+  if(name===""){
+    setName("guest");
+  }
   return name;
 };
 

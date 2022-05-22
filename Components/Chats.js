@@ -26,7 +26,7 @@ import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
 import {} from "firebase/firestore";
 
-export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
+export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extractTitle }) {
   const [chats, setChats] = useState("");
   const [editing, setEditing] = useState(false);
   const [replying, setReplying] = useState(false);
@@ -36,6 +36,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   const [doLike, setDoLike] = useState(false);
 
   const [extractText, setExtractText] = useState("답글");
+  const [newExtractTitle, setNewExtractTitle] = useState(extractTitle);
   // syncUserPhoto
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
@@ -114,6 +115,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
         ...doc.data(),
       }));
       setChats(chatArray);
+
     });
   }, []);
 
@@ -145,11 +147,11 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
       {genre_chat ? (
         <div>
           <Container centered>
-            <Header as="h2" style={{ marginTop: "7%" }}>
-              {chat.title}
+            <Header as="h2">
+              {chat.replyTo ? `${newExtractTitle}의 답글` : chat.title}
             </Header>
-          
-            <div style={{textAlign : "right"}}>
+
+            <div style={{ textAlign: "right" }}>
               <Icon
                 name="caret left"
                 style={{ cursor: "pointer" }}
@@ -159,7 +161,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 뒤로가기
               </strong>
             </div>
-            <p style={{ textAlign: "left", display: "flex" }}>
+            <Item style={{ display: "flex", alignItems: "center" }}>
               <Link href={`/profile/${chat.createrId}`}>
                 <a>
                   <Label
@@ -167,28 +169,48 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                       backgroundColor: "white",
                       width: 60,
                       height: 60,
-                      marginLeft : -15
                     }}
                   >
+                    {/* test */}
                     <Image
                       className="ui medium circular image"
                       src={userPhoto}
                       size="big"
-                      style={{ marginTop: 0, marginBottom: 10 }}
+                      style={{ marginTop: 10, marginBottom: 10 }}
                     ></Image>
-                    <p style={{ marginTop: 3, marginLeft : 7 }}> {displayName} </p>
+
+                    <p
+                      style={{
+                        textAlign: "center",
+                        marginLeft: -31,
+                        marginTop: 3,
+                        width: 100,
+                        fontSize: 13,
+                        fontFamily: "GothicA1-ExtraLight",
+                      }}
+                    >
+                      {displayName ? <></> : <>guest</>}
+                      {displayName?.length > 5
+                        ? `${displayName.substring(0, 5)}...`
+                        : displayName}
+                    </p>
                   </Label>
                 </a>
               </Link>
-              <p style={{ marginTop: 3, fontWeight: "bold" }}>{displayName}</p>
-              <span style={{ marginTop: 25, marginLeft: -25 }}>
-                <Icon name="clock" />
-                {new Date(chat.createdAt).toLocaleString()}
-              </span>
-            </p>
-            
+              <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
+                <Item.Description>
+                  <p style={{marginBottom : -2}}>{displayName ? <>등록시간</> : <>프로필을 등록해주세요</>}</p>
+                  <Divider style={{ marginBottom: 5, marginTop: 5 }} />
+                  <p style={{ marginTop: 3 }}>
+                    <Icon name="clock" />
+                    {new Date(chat.createdAt).toLocaleString()}
+                  </p>
+                </Item.Description>
+              </Item.Content>
+            </Item>
+
             <Divider
-              style={{ marginTop: -10, marginBottom: 15, width: "40%" }}
+              style={{ marginBottom: 15, width: "40%" }}
             />
             <p style={{ marginBottom: 10 }}>{chat.text}</p>
 
@@ -226,9 +248,16 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                   {chat.users.length}
                 </Label>
               </Button>
-              <Button inverted color="blue" onClick={onReplyClick}>
-                댓글
-              </Button>
+              {chat.replyTo ? (
+                <></>
+              ) : (
+                <>
+                  <Button inverted color="blue" onClick={onReplyClick}>
+                    댓글
+                  </Button>
+                </>
+              )}
+
               {isOwner && (
                 <>
                   <Button inverted color="red" onClick={onDeleteClick}>
@@ -293,6 +322,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                         fontFamily: "GothicA1-ExtraLight",
                       }}
                     >
+                      {displayName ? <></> : <>guest</>}
                       {displayName?.length > 5
                         ? `${displayName.substring(0, 5)}...`
                         : displayName}
@@ -305,18 +335,28 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                   {chat.replyTo ? (
                     <>
                       <strong>{chat.text}</strong>
-                      <Label 
+                      <Label
                         color="teal"
-                        style={{marginLeft : 10}}
+                        style={{ marginLeft: 10 }}
                         circular
                         onClick={onCheckExistOriginal}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         name={`${chat.id}`}
                         href={`#${chat.replyTo}`}
-                        title={`답글이 삭제된 경우, 이동되지 않습니다.`}>
-                        
-                        <p style={{marginLeft : 10, marginRight : 10, fontSize : 13 , height : 17, fontFamily :"GothicA1-ExtraLight"}}>{extractText}</p>
+                        title={`답글이 삭제된 경우, 이동되지 않습니다.`}
+                      >
+                        <p
+                          style={{
+                            marginLeft: 10,
+                            marginRight: 10,
+                            fontSize: 13,
+                            height: 17,
+                            fontFamily: "GothicA1-ExtraLight",
+                          }}
+                        >
+                          {extractText}
+                        </p>
                       </Label>
                     </>
                   ) : (
@@ -363,6 +403,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
               {chat.users.length}
             </Label>
           </Button>
+
           <Button inverted color="blue" onClick={onReplyClick}>
             댓글
           </Button>

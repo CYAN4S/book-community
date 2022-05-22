@@ -1,13 +1,13 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Card, Container, Divider, Icon, Label, List } from "semantic-ui-react";
+import { Button, Card, Container, Divider, Icon, Label, List } from "semantic-ui-react";
 import { dbService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
 
 export default function CardChats({ chat, id, isOwner, genre_chat }) {
   const [chats, setChats] = useState([]);
-  const [extractText, setExtractText] = useState("답글");
+  const [extractText, setExtractText] = useState("이동하기");
 
   const q = query(
     collection(dbService, genre_chat),
@@ -26,18 +26,19 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
       if (checkExistOrginal) {
         if (chats.filter((x) => x.id === chat.replyTo)[0]) {
           setExtractText(
-            `원문 "${
+            `${
               chats.filter((x) => x.id === chat.replyTo)[0].title
-            }"의 답글`
+            }`
           );
-          chat.title = `원문 "${
+          chat.title = `${
             chats.filter((x) => x.id === chat.replyTo)[0].title
-          }"의 답글`;
+          }`;
         }
       }
+
       setChats(chatArray);
     });
-  });
+  },[chats]);
 
   // check replyChat Exist
   const onCheckExistOriginal = () => {
@@ -48,6 +49,18 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
     }
   };
 
+  const onMouseEnter = () => {
+    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
+    if (checkExistOrginal == false) {
+    } else {
+      setExtractText(`원문 '${chats.filter((x) => x.id === chat.replyTo)[0].text}'으로...`);
+    }
+  };
+
+  const onMouseLeave = () => {
+    setExtractText("이동하기");
+  };
+
   return (
     <>
       <Link
@@ -55,6 +68,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           pathname: `../post/read/${id}`,
           query: {
             chat: chat && JSON.stringify(chat),
+            extractTitle : extractText,
             isOwner: isOwner,
             genre_chat: genre_chat,
           },
@@ -87,6 +101,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             </Label>
           )}
 
+          {chat.replyTo && <Label color="blue">{extractText === "" ? <></> : `${extractText}의 답글` }</Label>}
           <Card.Header
             style={{
               fontSize: 17,
@@ -97,7 +112,9 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             }}
           >
             {chat.replyTo ? (
-              <>{extractText}</>
+              <>
+                <p>답글</p>
+              </>
             ) : (
               <>
                 {chat.title.length > 15
@@ -143,7 +160,10 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           </Card.Meta>
           <Card.Content extra>
             <Icon name="user" />
-            {`작성자 : ${useUserDisplayName(chat.createrId)}`}
+            {
+               `작성자 : ${useUserDisplayName(chat.createrId)}`
+            }
+           
           </Card.Content>
         </Card>
       </Link>
