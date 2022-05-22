@@ -53,28 +53,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       }
     });
   }, []);
-  const onYoutubeSubmit = () => {
-    console.log(youtubeString);
-    if (youtubeString.includes("watch?v=")) {
-      let pos = youtubeString.indexOf("watch?v=");
-      // console.log(url.substring(pos+8,));
-      setId(youtubeString.substring(pos + 8));
-      setInput(true);
-    } else if (youtubeString.includes("/shorts/")) {
-      let pos = youtubeString.indexOf("/shorts/");
-      // console.log(url.substring(pos+8,));
-      setId(youtubeString.substring(pos + 8));
-      setInput(true);
-    } else if (youtubeString == "") {
-      setId("");
-      setInput(true);
-    } else {
-      setId("");
-      setYoutubeString("");
-      setInput(false);
-      alert("인식할 수 없는 URL입니다.");
-    }
-  };
+  
   const onNewPostSubmit = async (e) => {
     e.preventDefault();
     if (checkRealSubmit == true) {
@@ -94,12 +73,11 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         const response = await uploadString(fileRef, vidFileString, "data_url");
         vidFileUrl = await getDownloadURL(response.ref);
       }
-      // Lee's code 220521_1855 (youtube URL) code start
-      // 현재, short영상과 일반 영상만 지원됨.
+      //  (youtube URL) code start
       if (id !== "") {
         youtubeUrl = id;
       }
-      // Lee's code 220521_1855 (youtube URL) code end
+      //  code end
 
       const chatObj = {
         title: title,
@@ -126,6 +104,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         router.back();
       }
       setCheckRealSubmit(false);
+      
     } else {
       return;
     }
@@ -162,7 +141,37 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       reader.readAsDataURL(file);
     }
   };
-
+  // Lee's Youtube URL substring Code Start
+  const onYoutubeSubmit = () => {
+    if (youtubeString.includes("watch?v=")) {
+      let pos = youtubeString.indexOf("watch?v=");
+      // console.log(url.substring(pos+8,));
+      setId(youtubeString.substring(pos + 8));
+      setInput(true);
+    } else if (youtubeString.includes("/shorts/")) {
+      let pos = youtubeString.indexOf("/shorts/");
+      // console.log(url.substring(pos+8,));
+      setId(youtubeString.substring(pos + 8));
+      setInput(true);
+    } else if (youtubeString == "" && checkRealSubmit == true) {
+      setId("");
+      setInput(true);
+      alert("");
+      // code fix Youtube URL Submit push button when URL empty string
+    } else if(youtubeString == "" && checkRealSubmit == false){
+      setId("");
+      setYoutubeString("");
+      setInput(false);
+      alert("유튜브 URL을 입력해주세요");
+    }
+    else {
+      setId("");
+      setYoutubeString("");
+      setInput(false);
+      alert("인식할 수 없는 URL입니다.");
+    }
+  };
+  // Lee's Youtube URL substring Code END
   const onClearPhotoClick = () => setImgFileString("");
   const onDeleteVideo = () => setVidFileString("");
   const onDeleteYoutubeUrl = () => {
@@ -232,7 +241,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       marginLeft: 20,
                       marginBottom: 5,
                     }}
-                    placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
+                    placeholder={`https://i1.ytimg.com/vi/${id}/sddefault.jpg`}
                     id={id}
                     source="youtube"
                   />
