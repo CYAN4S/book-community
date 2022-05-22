@@ -83,7 +83,10 @@ export const useUserPhoto = (targetUid) => {
     } else {
       const userDoc = await getUserDoc(targetUid);
       if (userDoc?.userPhoto != users[targetUid]) {
-        setUserPhoto(userDoc?.userPhoto);
+        setUserPhoto(
+          userDoc?.userPhoto ??
+            "https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
+        );
       } else {
         setUserPhoto(users[targetUid]);
       }
