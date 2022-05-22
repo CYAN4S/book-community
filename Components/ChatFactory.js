@@ -406,14 +406,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     color="orange"
                     pointing="right"
                     htmlFor="attach-file"
-                    style={{ width : 135, textAlign:"center"}}
+                    style={{ width : 120, textAlign:"center"}}
                   >
                     <p>Add Youtube URL</p>
                   </Label>
 
                   <Form.Field>
                     <Form.Input
-                    style={{ height:35,width : 250}}
+                    style={{ height:35,width : 215}}
                       focus
                       placeholder="Youtube URL을 입력해주세요"
                       value={youtubeString}
