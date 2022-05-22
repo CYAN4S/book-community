@@ -153,7 +153,12 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
       setInput(true);
-    } else if (youtubeString == "" && checkRealSubmit == true) {
+    } else if (youtubeString.includes("youtu.be/")){
+      let pos = youtubeString.indexOf("youtu.be/");
+      setId(youtubeString.substring(pos + 9));
+      setInput(true);
+    }
+    else if (youtubeString == "" && checkRealSubmit == true) {
       setId("");
       setInput(true);
       alert("");

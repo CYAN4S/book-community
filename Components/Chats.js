@@ -79,7 +79,10 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   };
 
   // toggle edit mode
-  const onEditClick = () => setEditing((prev) => !prev);
+  const onEditClick = () => {
+    setEditing((prev) => !prev);
+    setReplying(false);
+  };
 
   // chat Like func
   const onLikeClick = () => {
@@ -99,7 +102,10 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
   };
 
   // recomment edit mode
-  const onReplyClick = () => setReplying((prev) => !prev);
+  const onReplyClick = () => {
+    setReplying((prev) => !prev);
+    setEditing(false);
+  };
 
   // query for CheckReply
   // DB Real-time change check

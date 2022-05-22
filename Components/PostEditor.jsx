@@ -40,7 +40,6 @@ export default function PostEditor({
   // 0520_1100 편집/댓글 달고 나서 편집/댓글 창 그대로 유지되는 현상 방지
   const router = useRouter();
   // ChatFactory.js에서 추출 (Youtube Url) code START
-  const [input, setInput] = useState(false);
   const [youtubeString, setYoutubeString] = useState("");
   const [youtubeEdit, setYoutubeEdit] = useState(false);
   const [id, setId] = useState("");
@@ -129,7 +128,6 @@ export default function PostEditor({
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    setInput(false);
     alert("수정되었습니다!");
   };
 
@@ -175,7 +173,6 @@ export default function PostEditor({
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    setInput(false);
     if (genre_chat) {
       router.back();
     }
@@ -197,23 +194,29 @@ export default function PostEditor({
         router.push("/");
       }
       setCheckRealSubmit(false);
-    }else{
-      return
+    } else {
+      return;
     }
   };
 
-  const onDeleteTempImageClick = () => {
+  const onDeleteTempImage = () => {
     if (imgFileString !== "") {
       setImgFileString("");
       setImgEdit(false);
     }
   };
 
-  const onDeleteYoutubeUrl = () => {
+  
+  const onDeleteTempVideoFile = () => {
+    setVidFileString("");
+    setVidEdit(false);
+  };
+
+  const onDeleteTempYoutubeUrl = () => {
     setYoutubeString("");
     setId("");
-    setInput(false);
   };
+
 
   const OnImageDeleteClick = async () => {
     const ok = window.confirm(
@@ -257,7 +260,24 @@ export default function PostEditor({
       }
     }
   };
-
+  const onYoutubeUrlDeleteClick = async () => {
+    const ok = window.confirm("등록된 유튜브 링크를 삭제하시겠습니까?");
+    if (ok) {
+      if (chat.youtubeUrl === "") {
+        alert("채팅에 올려놓은 링크가 없습니다.");
+      } else {
+        updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+          title: newTitle,
+          text: newChat,
+          youtubeUrl: "",
+        })
+          .then(alert("삭제되었습니다!"))
+          .catch((error) => {
+            alert(error);
+          });
+      }
+    }
+  };
   const onFileChange = async (event) => {
     setImgEdit(true);
     const {
@@ -293,30 +313,31 @@ export default function PostEditor({
 
   // Lee's Youtube URL substring Code Start
   const onYoutubeSubmit = () => {
+    setYoutubeEdit(true);
     if (youtubeString.includes("watch?v=")) {
       let pos = youtubeString.indexOf("watch?v=");
       // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
-      setInput(true);
     } else if (youtubeString.includes("/shorts/")) {
       let pos = youtubeString.indexOf("/shorts/");
       // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
-      setInput(true);
+    } else if (youtubeString.includes("youtu.be/")) {
+      let pos = youtubeString.indexOf("youtu.be/");
+      setId(youtubeString.substring(pos + 9));
     } else if (youtubeString == "" && checkRealSubmit == true) {
       setId("");
-      setInput(true);
       alert("");
       // code fix Youtube URL Submit push button when URL empty string
     } else if (youtubeString == "" && checkRealSubmit == false) {
       setId("");
       setYoutubeString("");
-      setInput(false);
+
       alert("유튜브 URL을 입력해주세요");
     } else {
       setId("");
       setYoutubeString("");
-      setInput(false);
+
       alert("인식할 수 없는 URL입니다.");
     }
   };
@@ -416,7 +437,7 @@ export default function PostEditor({
               />
 
               <div
-                onClick={onDeleteYoutubeUrl}
+                onClick={onDeleteTempYoutubeUrl}
                 style={{
                   width: 150,
                   marginTop: 10,
@@ -457,7 +478,7 @@ export default function PostEditor({
                 fluid
                 label={{
                   color: "red",
-                  onClick: onDeleteTempImageClick,
+                  onClick: onDeleteTempImage,
                   icon: "remove circle",
                   size: "large",
                   ribbon: true,
@@ -486,7 +507,7 @@ export default function PostEditor({
               <Input
                 type="file"
                 accept="video/*"
-                onChange={onFileChangeVideo}
+                onChange={onDeleteTempVideoFile}
                 id="attach-file"
                 icon="video image"
                 style={{ width: 300 }}
@@ -537,7 +558,7 @@ export default function PostEditor({
           )}
           {chat?.youtubeUrl && (
             <div
-              onClick={onDeleteYoutubeUrl}
+              onClick={onYoutubeUrlDeleteClick}
               style={{ width: 140, height: 30, cursor: "pointer" }}
             >
               <Icon color="red" name="remove circle" />{" "}
