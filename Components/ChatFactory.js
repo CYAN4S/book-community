@@ -34,6 +34,10 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   // fix bug when push  YOUTUBE URL SUBMIT button
   const [checkRealSubmit, setCheckRealSubmit] = useState(false);
   const router = useRouter();
+  function returnClick(e) {
+    e.preventDefault();
+    router.back();
+  }
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
@@ -53,7 +57,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       }
     });
   }, []);
-  
+
   const onNewPostSubmit = async (e) => {
     e.preventDefault();
     if (checkRealSubmit == true) {
@@ -104,7 +108,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         router.back();
       }
       setCheckRealSubmit(false);
-      
     } else {
       return;
     }
@@ -153,23 +156,21 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
       setInput(true);
-    } else if (youtubeString.includes("youtu.be/")){
+    } else if (youtubeString.includes("youtu.be/")) {
       let pos = youtubeString.indexOf("youtu.be/");
       setId(youtubeString.substring(pos + 9));
       setInput(true);
-    }
-    else if (youtubeString == "" && checkRealSubmit == true) {
+    } else if (youtubeString == "" && checkRealSubmit == true) {
       setId("");
       setInput(true);
       alert("");
       // code fix Youtube URL Submit push button when URL empty string
-    } else if(youtubeString == "" && checkRealSubmit == false){
+    } else if (youtubeString == "" && checkRealSubmit == false) {
       setId("");
       setYoutubeString("");
       setInput(false);
       alert("유튜브 URL을 입력해주세요");
-    }
-    else {
+    } else {
       setId("");
       setYoutubeString("");
       setInput(false);
@@ -195,9 +196,20 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             <Header.Content>글 쓰기</Header.Content>
             <p style={{ fontSize: 12, marginTop: 3 }}>게시글을 작성해보세요!</p>
           </Header>
+
           <Container textAlign="left">
             <Form onSubmit={onNewPostSubmit}>
               <Form.Field>
+                <div style={{ textAlign: "right" }}>
+                  <Icon
+                    name="caret left"
+                    style={{ cursor: "pointer" }}
+                    onClick={returnClick}
+                  ></Icon>
+                  <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+                    뒤로가기
+                  </strong>
+                </div>
                 <Form.Input
                   fluid
                   label="제목"
