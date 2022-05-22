@@ -194,16 +194,6 @@ export default function PostEditor({
     } else {
       return
     }
-    
-    if(!genre_chat){
-      const url = window.location.href; 
-      if(!url.includes("home")){
-        router.push(window.location.reload());
-      }
-      else{
-        router.push("/");
-      }
-    }
 
   };
 
