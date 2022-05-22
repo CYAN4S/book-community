@@ -45,8 +45,6 @@ export default function PostEditor({
   const [id, setId] = useState("");
   const [checkRealSubmit, setCheckRealSubmit] = useState(false);
   // ChatFactory.js에서 추출 (Youtube Url) code END
-
-  console.log(chat)
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
@@ -174,9 +172,7 @@ export default function PostEditor({
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    if (genre_chat) {
-      router.back();
-    }
+    
   };
 
   const onSubmit = async (e) => {
@@ -196,7 +192,7 @@ export default function PostEditor({
       }
       setCheckRealSubmit(false);
     } else {
-      onReplySubmit();
+      return
     }
     
     if(!genre_chat){
