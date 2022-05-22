@@ -507,7 +507,7 @@ export default function PostEditor({
               <Input
                 type="file"
                 accept="video/*"
-                onChange={onDeleteTempVideoFile}
+                onChange={onFileChangeVideo}
                 id="attach-file"
                 icon="video image"
                 style={{ width: 300 }}
@@ -530,7 +530,7 @@ export default function PostEditor({
                 <source src={vidFileString}></source>
               </video>
               <div // 수정 필요!!!!!!!!!
-                onClick={OnVideoDeleteClick}
+                onClick={onDeleteTempVideoFile}
                 style={{ width: 100, height: 30, cursor: "pointer" }}
               >
                 <Icon color="red" name="remove circle" />{" "}
