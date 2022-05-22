@@ -382,7 +382,7 @@ export default function Profile() {
                           <List.Header>
                             <strong style={{ fontSize: 15 }}>
                               {" "}
-                              ✅ {user.displayName ?? "게스트"}{" "}
+                              ✅ {user.displayName ? user.displayName:"게스트"}{" "}
                             </strong>
                           </List.Header>
                         </>
@@ -392,7 +392,7 @@ export default function Profile() {
                             <List.Header as="a">
                               <strong style={{ fontSize: 15 }}>
                                 {" "}
-                                ✅ {user.displayName ?? "게스트"}{" "}
+                                ✅ {user.displayName ? user.displayName:"게스트"}{" "}
                               </strong>
                             </List.Header>
                           </Link>
