@@ -206,7 +206,6 @@ export default function PostEditor({
     }
   };
 
-  
   const onDeleteTempVideoFile = () => {
     setVidFileString("");
     setVidEdit(false);
@@ -216,7 +215,6 @@ export default function PostEditor({
     setYoutubeString("");
     setId("");
   };
-
 
   const OnImageDeleteClick = async () => {
     const ok = window.confirm(
@@ -452,6 +450,7 @@ export default function PostEditor({
               </div>
             </div>
           )}
+          
           {!chat?.fileUrl && (
             <div style={{ marginTop: 10 }}>
               <Label
@@ -514,7 +513,7 @@ export default function PostEditor({
               />
             </div>
           )}
-
+          
           {vidFileString && (
             <div>
               <video
@@ -529,7 +528,7 @@ export default function PostEditor({
               >
                 <source src={vidFileString}></source>
               </video>
-              <div // 수정 필요!!!!!!!!!
+              <div
                 onClick={onDeleteTempVideoFile}
                 style={{ width: 100, height: 30, cursor: "pointer" }}
               >
@@ -538,33 +537,42 @@ export default function PostEditor({
               </div>
             </div>
           )}
+          {purpose != "reply" ? (
+            <>
+              {chat?.fileUrl && (
+                <div
+                  onClick={OnImageDeleteClick}
+                  style={{ width: 100, height: 30, cursor: "pointer" }}
+                >
+                  <Icon color="red" name="remove circle" />{" "}
+                  <span>이미지 삭제</span>
+                </div>
+              )}
+              {chat?.vidFileUrl && (
+                <div
+                  onClick={OnVideoDeleteClick}
+                  style={{ width: 100, height: 30, cursor: "pointer" }}
+                >
+                  <Icon color="red" name="remove circle" />{" "}
+                  <span>비디오 삭제</span>
+                </div>
+              )}
+              {chat?.youtubeUrl && (
+                <div
+                  onClick={onYoutubeUrlDeleteClick}
+                  style={{ width: 140, height: 30, cursor: "pointer" }}
+                >
+                  <Icon color="red" name="remove circle" />{" "}
+                  <span>Youtube URL 삭제</span>
+                </div>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
 
           {/* ------------------ */}
-          {chat?.fileUrl && (
-            <div
-              onClick={OnImageDeleteClick}
-              style={{ width: 100, height: 30, cursor: "pointer" }}
-            >
-              <Icon color="red" name="remove circle" /> <span>이미지 삭제</span>
-            </div>
-          )}
-          {chat?.vidFileUrl && (
-            <div
-              onClick={OnVideoDeleteClick}
-              style={{ width: 100, height: 30, cursor: "pointer" }}
-            >
-              <Icon color="red" name="remove circle" /> <span>비디오 삭제</span>
-            </div>
-          )}
-          {chat?.youtubeUrl && (
-            <div
-              onClick={onYoutubeUrlDeleteClick}
-              style={{ width: 140, height: 30, cursor: "pointer" }}
-            >
-              <Icon color="red" name="remove circle" />{" "}
-              <span>Youtube URL 삭제</span>
-            </div>
-          )}
+
           <Button
             onClick={onCheckRealSubmit}
             value="update"
