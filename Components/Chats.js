@@ -196,7 +196,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                     marginTop: 10,
                     marginBottom: 5,
                   }}
-                  placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/maxresdefault.jpg`}
+                  placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/sddefault.jpg`}
                   id={chat.youtubeUrl}
                   source="youtube"
                 />
