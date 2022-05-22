@@ -189,7 +189,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                         fontFamily: "GothicA1-ExtraLight",
                       }}
                     >
-                      {displayName ? <></> : <>guest</>}
                       {displayName?.length > 5
                         ? `${displayName.substring(0, 5)}...`
                         : displayName}
@@ -199,7 +198,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
               </Link>
               <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
-                  <p style={{marginBottom : -2}}>{displayName ? <>등록시간</> : <>프로필을 등록해주세요</>}</p>
+                  <p style={{marginBottom : -2}}>{displayName!=="guest" ? <>등록시간</> : <>프로필을 등록해주세요</>}</p>
                   <Divider style={{ marginBottom: 5, marginTop: 5 }} />
                   <p style={{ marginTop: 3 }}>
                     <Icon name="clock" />
