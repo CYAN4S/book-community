@@ -466,6 +466,9 @@ export default function PostEditor({
                   marginLeft: 20,
                   marginBottom: 5,
                 }}
+                iframe={{
+                  allowFullScreen: true,
+                }}
                 placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
                 id={id}
                 source="youtube"

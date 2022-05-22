@@ -266,6 +266,10 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       marginLeft: 20,
                       marginBottom: 5,
                     }}
+                    iframe={{
+                      allowFullScreen: true,
+
+                    }}
                     placeholder={`https://i1.ytimg.com/vi/${id}/sddefault.jpg`}
                     id={id}
                     source="youtube"
@@ -435,6 +439,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     marginTop: 10,
                     marginLeft: 20,
                     marginBottom: 5,
+                  }}
+                  iframe={{
+                    allowFullScreen: true,
                   }}
                   placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
                   id={id}
