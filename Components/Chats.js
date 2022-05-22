@@ -77,8 +77,9 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
       if (chat.vidFileUrl !== "") {
         await deleteObject(ref(storageService, chat.vidFileUrl));
       }
+    }else{
+      return;
     }
-
     if (genre_chat) {
       router.back();
     }
