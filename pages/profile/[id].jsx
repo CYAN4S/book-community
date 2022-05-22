@@ -90,6 +90,8 @@ export default function Profile() {
         data.myBooks.map(async (x) => await x.substr(24))
       );
       setMyBooks(listMyBook);
+    } else {
+      setMyBooks([]);
     }
   };
 
