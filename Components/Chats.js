@@ -42,6 +42,12 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
 
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
   const router = useRouter();
+
+  function returnClick(e) {
+    e.preventDefault();
+    router.back();
+  }
+ 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -142,6 +148,17 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
             <Header as="h2" style={{ marginTop: "7%" }}>
               {chat.title}
             </Header>
+          
+            <div style={{textAlign : "right"}}>
+              <Icon
+                name="caret left"
+                style={{ cursor: "pointer" }}
+                onClick={returnClick}
+              ></Icon>
+              <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+                뒤로가기
+              </strong>
+            </div>
             <p style={{ textAlign: "left", display: "flex" }}>
               <Link href={`/profile/${chat.createrId}`}>
                 <a>
@@ -169,6 +186,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat }) {
                 {new Date(chat.createdAt).toLocaleString()}
               </span>
             </p>
+            
             <Divider
               style={{ marginTop: -10, marginBottom: 15, width: "40%" }}
             />

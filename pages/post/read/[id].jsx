@@ -3,14 +3,16 @@ import { useRouter } from "next/router";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { dbService } from "../../../firebaseConfig";
 import { useState, useEffect } from "react";
+import { Icon } from "semantic-ui-react";
 
 export default function ReadWriting({ chat_data }) {
-  // 게시글 출력 페이지 : 게시글 수정 시, 바로 출력되게끔 구성 
-  const [chats, setChats] = useState({})
+  // 게시글 출력 페이지 : 게시글 수정 시, 바로 출력되게끔 구성
+  const [chats, setChats] = useState({});
   const q = query(
     collection(dbService, chat_data.genre_chat),
     orderBy("createdAt", "desc")
   );
+
 
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
@@ -18,8 +20,8 @@ export default function ReadWriting({ chat_data }) {
         id: doc.id,
         ...doc.data(),
       }));
-      chatArray.map((item)=> {
-        if(!item.title){
+      chatArray.map((item) => {
+        if (!item.title) {
           item.title = chat_data.chat.title;
         }
       });
@@ -28,23 +30,25 @@ export default function ReadWriting({ chat_data }) {
     });
   }, []);
 
-  console.log()
+  console.log();
   return (
     <>
-    {chats.length ? 
-      <Chats
-        chat={chats[0]}
-        isOwner={chat_data.isOwner}
-        genre_chat={chat_data.genre_chat}
-      />
-      :
-      <></>}
+      {chats.length ? (
+
+          <Chats
+            chat={chats[0]}
+            isOwner={chat_data.isOwner}
+            genre_chat={chat_data.genre_chat}
+          />
+
+      ) : (
+        <></>
+      )}
     </>
   );
 }
 
 export async function getServerSideProps(props) {
-
   // query값으로 받아온 string요소를 다시 원상복구
   const chat = props.query && JSON.parse(props.query.chat);
   const isOwner = props.query && JSON.parse(props.query.isOwner);
