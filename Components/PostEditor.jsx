@@ -432,7 +432,7 @@ export default function PostEditor({
                   size="mini"
                   onClick={onYoutubeSubmit}
                 >
-                  Submit
+                  Search
                 </Button>
               </Grid.Column>
             </Grid>

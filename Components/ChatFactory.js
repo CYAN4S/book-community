@@ -197,7 +197,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
           </Header>
           <Container textAlign="left">
             <Form onSubmit={onNewPostSubmit}>
-            
               <Form.Field>
                 <Form.Input
                   fluid
@@ -207,12 +206,12 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   placeholder="글의 제목을 입력해주세요."
                   required
                 />
-                <Label basic color="orange" pointing="below">
-                  Please enter your text
-                </Label>
-                <TextArea
+                <Form.Input
+                  fluid
+                  label="내용"
                   value={chat}
                   onChange={(e) => setChat(e.target.value)}
+                  placeholder="글의 내용을 입력해주세요."
                   required
                 />
               </Form.Field>
@@ -248,7 +247,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 </Grid.Column>
               </Grid>
               {input && (
-                <div style={{ width: "50%" }}>
+                <div>
                   <Embed
                     style={{
                       marginTop: 10,
