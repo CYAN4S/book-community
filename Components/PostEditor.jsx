@@ -126,7 +126,7 @@ export default function PostEditor({
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    alert("수정되었습니다!");
+    
   };
 
   const onReplySubmit = async () => {
@@ -190,7 +190,13 @@ export default function PostEditor({
         router.push(window.location.reload());
         }
         else{
-          router.back();
+          // 수정완료 시, router.back() 미수행
+          if(purpose === "edit"){
+            alert("수정이 완료되었습니다.");
+          }else{
+            router.back();
+          }
+         
         }
       } else {
         router.push("/");
