@@ -333,7 +333,6 @@ export default function PostEditor({
       setId(youtubeString.substring(pos + 9));
     } else if (youtubeString == "" && checkRealSubmit == true) {
       setId("");
-      alert("");
       // code fix Youtube URL Submit push button when URL empty string
     } else if (youtubeString == "" && checkRealSubmit == false) {
       setId("");
