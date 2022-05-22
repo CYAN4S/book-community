@@ -266,6 +266,10 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       marginLeft: 20,
                       marginBottom: 5,
                     }}
+                    iframe={{
+                      allowFullScreen: true,
+
+                    }}
                     placeholder={`https://i1.ytimg.com/vi/${id}/sddefault.jpg`}
                     id={id}
                     source="youtube"
@@ -400,37 +404,34 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 required
               />
             </Form.Field>
-            <Grid columns={3}>
-              <Grid.Column style={{ width: 160 }}>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add Youtube URL</p>
-                </Label>
-              </Grid.Column>
-              <Grid.Column style={{ marginLeft: -30, width: 240 }}>
-                <Form.Field>
-                  <Form.Input
-                    focus
-                    placeholder="Youtube URL을 입력해주세요"
-                    value={youtubeString}
-                    onChange={(e) => setYoutubeString(e.target.value)}
-                  />
-                </Form.Field>
-              </Grid.Column>
-              <Grid.Column style={{ marginLeft: -20, width: 200 }}>
-                <Button
-                  style={{ marginTop: 5 }}
-                  size="mini"
-                  onClick={onYoutubeSubmit}
-                >
-                  Submit
-                </Button>
-              </Grid.Column>
-            </Grid>
+            <div style ={{height:35}} className="ui fluid action input">
+                  <Label
+                    basic
+                    color="orange"
+                    pointing="right"
+                    htmlFor="attach-file"
+                    style={{ width : 120, textAlign:"center"}}
+                  >
+                    <p>Add Youtube URL</p>
+                  </Label>
+
+                  <Form.Field>
+                    <Form.Input
+                    style={{ height:35,width : 215}}
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
+                  <Button
+                    style={{marginLeft : 5 }}
+                    size="tiny"
+                    onClick={onYoutubeSubmit}
+                  >
+                    Submit
+                  </Button>
+                </div>
             {input && (
               <div style={{ width: "50%" }}>
                 <Embed
@@ -438,6 +439,9 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     marginTop: 10,
                     marginLeft: 20,
                     marginBottom: 5,
+                  }}
+                  iframe={{
+                    allowFullScreen: true,
                   }}
                   placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
                   id={id}

@@ -318,7 +318,7 @@ export default function Title({ books }) {
             </Grid.Row>
           </Grid>
         </div>
-        <div className="ui center aligned container" style={{ marginTop: -10 }}>
+        <div className="ui aligned container" style={{ marginTop: -10 }}>
           <Grid style={{ marginTop: -10, marginLeft : -20 }} columns={3}>
             <Grid.Row>
               <div
@@ -380,7 +380,7 @@ export default function Title({ books }) {
                           >
                             어디에 있을까?
                           </Header>
-                          <Grid columns={3}>
+                          <Grid columns={3} style ={{textAlign:"center"}}>
                             <Grid.Row>
                               {regionData.map((item) => {
                                 return (

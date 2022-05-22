@@ -242,13 +242,17 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                     marginTop: 10,
                     marginBottom: 5,
                   }}
+                  iframe={{
+                    allowFullScreen: true,
+
+                  }}
                   placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/sddefault.jpg`}
                   id={chat.youtubeUrl}
                   source="youtube"
                 />
               </div>
             )}
-            <Container textAlign="right" style={{ marginBottom: 100 }}>
+            <Container style={{ marginBottom: 100 }}>
               <Button
                 labelPosition="right"
                 onClick={onLikeClick}
@@ -414,6 +418,10 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                   style={{
                     marginTop: 10,
                     marginBottom: 5,
+                  }}
+                  iframe={{
+                    allowFullScreen: true,
+
                   }}
                   
                   placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/sddefault.jpg`}
