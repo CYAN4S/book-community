@@ -30,11 +30,9 @@ export default function ReadWriting({ chat_data }) {
     });
   }, []);
 
-  console.log();
   return (
     <>
       {chats.length ? (
-
           <Chats
             chat={chats[0]}
             isOwner={chat_data.isOwner}
