@@ -164,15 +164,13 @@ export default function PostEditor({
     };
 
     await addDoc(collection(dbService, collectionName), chatObj)
-      .then(() =>    
-      alert("댓글이 등록되었습니다."))
+      .then(() => alert("댓글이 등록되었습니다."))
       .catch((error) => alert(error));
 
     setImgFileString("");
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    
   };
 
   const onSubmit = async (e) => {
@@ -186,11 +184,10 @@ export default function PostEditor({
       }
       const url = window.location.href;
       if (!url.includes("home")) {
-        if (!url.includes("post")){
-        //router.push(window.location.reload());
-        router.reload(window.location.pathname);
-        }
-        else{
+        if (!url.includes("post")) {
+          //router.push(window.location.reload());
+          router.reload(window.location.pathname);
+        } else {
           router.back();
         }
       } else {
@@ -198,9 +195,8 @@ export default function PostEditor({
       }
       setCheckRealSubmit(false);
     } else {
-      return
+      return;
     }
-
   };
 
   const onDeleteTempImage = () => {
@@ -364,19 +360,22 @@ export default function PostEditor({
                   <></>
                 ) : (
                   <>
-                    {chat.replyTo ? <></> : <>
-                    <Form.Input
-                      value={newTitle}
-                      type="text"
-                      placeholder={
-                        purpose == "reply" ? "댓글 달기" : "수정하기"
-                      }
-                      onChange={(e) => setNewTitle(e.target.value)}
-                      autoFocus
-                      required
-                    />
-                    </>}
-                    
+                    {chat.replyTo ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Form.Input
+                          value={newTitle}
+                          type="text"
+                          placeholder={
+                            purpose == "reply" ? "댓글 달기" : "수정하기"
+                          }
+                          onChange={(e) => setNewTitle(e.target.value)}
+                          autoFocus
+                          required
+                        />
+                      </>
+                    )}
                   </>
                 )}
               </>
@@ -396,72 +395,66 @@ export default function PostEditor({
           {purpose != "reply" ? (
             <>
               {!chat?.youtubeUrl && (
-                <Grid columns={3}>
-                  <Grid.Column style={{ width: 160, marginTop: 10 }}>
-                    <Label
-                      basic
-                      color="orange"
-                      pointing="right"
-                      htmlFor="attach-file"
-                    >
-                      <p>Add Youtube URL</p>
-                    </Label>
-                  </Grid.Column>
-                  <Grid.Column style={{ marginLeft: -30, width: 240 }}>
-                    <Form.Field>
-                      <Form.Input
-                        focus
-                        placeholder="Youtube URL을 입력해주세요"
-                        value={youtubeString}
-                        onChange={(e) => setYoutubeString(e.target.value)}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column style={{ marginLeft: -20, width: 200 }}>
-                    <Button
-                      style={{ marginTop: 5 }}
-                      size="mini"
-                      onClick={onYoutubeSubmit}
-                    >
-                      Submit
-                    </Button>
-                  </Grid.Column>
-                </Grid>
-              )}
-            </>
-          ) : (
-            <>
-              <Grid columns={3}>
-                <Grid.Column style={{ width: 160, marginTop: 10 }}>
+                <div style ={{height:35}} className="ui fluid action input">
                   <Label
                     basic
                     color="orange"
                     pointing="right"
                     htmlFor="attach-file"
+                    style={{ width : 120}}
                   >
                     <p>Add Youtube URL</p>
                   </Label>
-                </Grid.Column>
-                <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+
                   <Form.Field>
                     <Form.Input
+                    style={{ height:35,width : 210}}
                       focus
                       placeholder="Youtube URL을 입력해주세요"
                       value={youtubeString}
                       onChange={(e) => setYoutubeString(e.target.value)}
                     />
                   </Form.Field>
-                </Grid.Column>
-                <Grid.Column style={{ marginLeft: -20, width: 200 }}>
                   <Button
-                    style={{ marginTop: 5 }}
-                    size="mini"
+                    style={{marginLeft : 5 }}
+                    size="tiny"
                     onClick={onYoutubeSubmit}
                   >
                     Submit
                   </Button>
-                </Grid.Column>
-              </Grid>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+             <div style ={{height:35}} className="ui fluid action input">
+                  <Label
+                    basic
+                    color="orange"
+                    pointing="right"
+                    htmlFor="attach-file"
+                    style={{ width : 120}}
+                  >
+                    <p>Add Youtube URL</p>
+                  </Label>
+
+                  <Form.Field>
+                    <Form.Input
+                    style={{ height:35,width : 210}}
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
+                  <Button
+                    style={{marginLeft : 5 }}
+                    size="tiny"
+                    onClick={onYoutubeSubmit}
+                  >
+                    Submit
+                  </Button>
+                </div>
             </>
           )}
 

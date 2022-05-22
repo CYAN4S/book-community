@@ -248,7 +248,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                 />
               </div>
             )}
-            <Container textAlign="right" style={{ marginBottom: 100 }}>
+            <Container style={{ marginBottom: 100 }}>
               <Button
                 labelPosition="right"
                 onClick={onLikeClick}
