@@ -38,12 +38,12 @@ export default function PostEditor({
   // 0520_1100 편집/댓글 달고 나서 편집/댓글 창 그대로 유지되는 현상 방지
   const router = useRouter();
 
+  console.log(chat)
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
     ? genre_chat
     : "chat";
-
   const onEditSubmit = async () => {
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
@@ -259,6 +259,7 @@ export default function PostEditor({
                   <></>
                 ) : (
                   <>
+                    {chat.replyTo ? <></> : <>
                     <Form.Input
                       value={newTitle}
                       type="text"
@@ -269,6 +270,8 @@ export default function PostEditor({
                       autoFocus
                       required
                     />
+                    </>}
+                    
                   </>
                 )}
               </>
