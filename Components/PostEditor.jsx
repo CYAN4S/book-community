@@ -387,38 +387,76 @@ export default function PostEditor({
               required
             />
           </Form.Field>
-          {!chat?.youtubeUrl && (
-            <Grid columns={3}>
-              <Grid.Column style={{ width: 160, marginTop: 10 }}>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add Youtube URL</p>
-                </Label>
-              </Grid.Column>
-              <Grid.Column style={{ marginLeft: -30, width: 240 }}>
-                <Form.Field>
-                  <Form.Input
-                    focus
-                    placeholder="Youtube URL을 입력해주세요"
-                    value={youtubeString}
-                    onChange={(e) => setYoutubeString(e.target.value)}
-                  />
-                </Form.Field>
-              </Grid.Column>
-              <Grid.Column style={{ marginLeft: -20, width: 200 }}>
-                <Button
-                  style={{ marginTop: 5 }}
-                  size="mini"
-                  onClick={onYoutubeSubmit}
-                >
-                  Submit
-                </Button>
-              </Grid.Column>
-            </Grid>
+          {purpose != "reply" ? (
+            <>
+              {!chat?.youtubeUrl && (
+                <Grid columns={3}>
+                  <Grid.Column style={{ width: 160, marginTop: 10 }}>
+                    <Label
+                      basic
+                      color="orange"
+                      pointing="right"
+                      htmlFor="attach-file"
+                    >
+                      <p>Add Youtube URL</p>
+                    </Label>
+                  </Grid.Column>
+                  <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+                    <Form.Field>
+                      <Form.Input
+                        focus
+                        placeholder="Youtube URL을 입력해주세요"
+                        value={youtubeString}
+                        onChange={(e) => setYoutubeString(e.target.value)}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column style={{ marginLeft: -20, width: 200 }}>
+                    <Button
+                      style={{ marginTop: 5 }}
+                      size="mini"
+                      onClick={onYoutubeSubmit}
+                    >
+                      Submit
+                    </Button>
+                  </Grid.Column>
+                </Grid>
+              )}
+            </>
+          ) : (
+            <>
+              <Grid columns={3}>
+                <Grid.Column style={{ width: 160, marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="orange"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add Youtube URL</p>
+                  </Label>
+                </Grid.Column>
+                <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+                  <Form.Field>
+                    <Form.Input
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column style={{ marginLeft: -20, width: 200 }}>
+                  <Button
+                    style={{ marginTop: 5 }}
+                    size="mini"
+                    onClick={onYoutubeSubmit}
+                  >
+                    Submit
+                  </Button>
+                </Grid.Column>
+              </Grid>
+            </>
           )}
 
           {id && (
@@ -450,27 +488,52 @@ export default function PostEditor({
               </div>
             </div>
           )}
-          
-          {!chat?.fileUrl && (
-            <div style={{ marginTop: 10 }}>
-              <Label
-                basic
-                color="violet"
-                pointing="right"
-                htmlFor="attach-file"
-              >
-                <p>Add/Edit photos</p>
-              </Label>
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={onFileChange}
-                id="attach-file"
-                icon="file image"
-                style={{ width: 300 }}
-              />
-            </div>
+          {purpose != "reply" ? (
+            <>
+              {!chat?.fileUrl && (
+                <div style={{ marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="violet"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add/Edit photos</p>
+                  </Label>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={onFileChange}
+                    id="attach-file"
+                    icon="file image"
+                    style={{ width: 300 }}
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div style={{ marginTop: 10 }}>
+                <Label
+                  basic
+                  color="violet"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add/Edit photos</p>
+                </Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                  id="attach-file"
+                  icon="file image"
+                  style={{ width: 300 }}
+                />
+              </div>
+            </>
           )}
+
           {imgFileString && (
             <div className="temp">
               <Image
@@ -493,27 +556,53 @@ export default function PostEditor({
               />
             </div>
           )}
-          {!chat?.vidFileUrl && (
-            <div style={{ marginTop: 10 }}>
-              <Label
-                basic
-                color="violet"
-                pointing="right"
-                htmlFor="attach-file"
-              >
-                <p>Add/Edit videos</p>
-              </Label>
-              <Input
-                type="file"
-                accept="video/*"
-                onChange={onFileChangeVideo}
-                id="attach-file"
-                icon="video image"
-                style={{ width: 300 }}
-              />
-            </div>
+          {purpose != "reply" ? (
+            <>
+              {!chat?.vidFileUrl && (
+                <div style={{ marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="violet"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add/Edit videos</p>
+                  </Label>
+                  <Input
+                    type="file"
+                    accept="video/*"
+                    onChange={onFileChangeVideo}
+                    id="attach-file"
+                    icon="video image"
+                    style={{ width: 300 }}
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {" "}
+              <div style={{ marginTop: 10 }}>
+                <Label
+                  basic
+                  color="violet"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add/Edit videos</p>
+                </Label>
+                <Input
+                  type="file"
+                  accept="video/*"
+                  onChange={onFileChangeVideo}
+                  id="attach-file"
+                  icon="video image"
+                  style={{ width: 300 }}
+                />
+              </div>
+            </>
           )}
-          
+
           {vidFileString && (
             <div>
               <video
@@ -537,6 +626,7 @@ export default function PostEditor({
               </div>
             </div>
           )}
+
           {purpose != "reply" ? (
             <>
               {chat?.fileUrl && (
