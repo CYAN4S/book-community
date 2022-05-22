@@ -14,6 +14,8 @@ import {
   TextArea,
   Image,
   Icon,
+  Grid,
+  Embed,
 } from "semantic-ui-react";
 import { dbService, storageService } from "../firebaseConfig";
 import { v4 } from "uuid";
@@ -37,6 +39,12 @@ export default function PostEditor({
   const [vidEdit, setVidEdit] = useState(false);
   // 0520_1100 편집/댓글 달고 나서 편집/댓글 창 그대로 유지되는 현상 방지
   const router = useRouter();
+  // ChatFactory.js에서 추출 (Youtube Url) code START
+  const [youtubeString, setYoutubeString] = useState("");
+  const [youtubeEdit, setYoutubeEdit] = useState(false);
+  const [id, setId] = useState("");
+  const [checkRealSubmit, setCheckRealSubmit] = useState(false);
+  // ChatFactory.js에서 추출 (Youtube Url) code END
 
   console.log(chat)
   const collectionName = detailbook_chat
@@ -93,16 +101,40 @@ export default function PostEditor({
           alert(error);
         });
     }
+
+    if (youtubeEdit) {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+        title: newTitle,
+        text: newChat,
+        youtubeUrl: id,
+      })
+        .then(() => {})
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+        title: newTitle,
+        text: newChat,
+      })
+        .then(() => {})
+        .catch((error) => {
+          alert(error);
+        });
+    }
     setImgEdit(false);
     setImgFileString("");
     setVidEdit(false);
     setVidFileString("");
+    setYoutubeString("");
+    setId("");
     alert("수정되었습니다!");
   };
 
   const onReplySubmit = async () => {
     let fileUrl = "";
     let vidFileUrl = "";
+    let youtubeUrl = "";
     if (newChat === "") {
       return;
     }
@@ -116,6 +148,11 @@ export default function PostEditor({
       const response = await uploadString(fileRef, vidFileString, "data_url");
       vidFileUrl = await getDownloadURL(response.ref);
     }
+    //  (youtube URL) code start
+    if (id !== "") {
+      youtubeUrl = id;
+    }
+    //  code end
     const chatObj = {
       title: newTitle,
       text: newChat,
@@ -124,6 +161,7 @@ export default function PostEditor({
       fileUrl,
       users: [],
       vidFileUrl,
+      youtubeUrl,
       replyTo: chat.id,
     };
 
@@ -134,14 +172,29 @@ export default function PostEditor({
 
     setImgFileString("");
     setVidFileString("");
-    
+    setYoutubeString("");
+    setId("");
+    if (genre_chat) {
+      router.back();
+    }
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    if (checkRealSubmit == true) {
+      e.preventDefault();
 
-    if (purpose === "edit") {
-      onEditSubmit();
+      if (purpose === "edit") {
+        onEditSubmit();
+      } else {
+        onReplySubmit();
+      }
+      const url = window.location.href;
+      if (!url.includes("home")) {
+        router.push(window.location.reload());
+      } else {
+        router.push("/");
+      }
+      setCheckRealSubmit(false);
     } else {
       onReplySubmit();
     }
@@ -158,12 +211,24 @@ export default function PostEditor({
 
   };
 
-  const onDeleteTempImageClick = () => {
+  const onDeleteTempImage = () => {
     if (imgFileString !== "") {
       setImgFileString("");
       setImgEdit(false);
     }
   };
+
+  
+  const onDeleteTempVideoFile = () => {
+    setVidFileString("");
+    setVidEdit(false);
+  };
+
+  const onDeleteTempYoutubeUrl = () => {
+    setYoutubeString("");
+    setId("");
+  };
+
 
   const OnImageDeleteClick = async () => {
     const ok = window.confirm(
@@ -207,7 +272,24 @@ export default function PostEditor({
       }
     }
   };
-
+  const onYoutubeUrlDeleteClick = async () => {
+    const ok = window.confirm("등록된 유튜브 링크를 삭제하시겠습니까?");
+    if (ok) {
+      if (chat.youtubeUrl === "") {
+        alert("채팅에 올려놓은 링크가 없습니다.");
+      } else {
+        updateDoc(doc(dbService, collectionName, `${chat.id}`), {
+          title: newTitle,
+          text: newChat,
+          youtubeUrl: "",
+        })
+          .then(alert("삭제되었습니다!"))
+          .catch((error) => {
+            alert(error);
+          });
+      }
+    }
+  };
   const onFileChange = async (event) => {
     setImgEdit(true);
     const {
@@ -240,6 +322,39 @@ export default function PostEditor({
       reader.readAsDataURL(file);
     }
   };
+
+  // Lee's Youtube URL substring Code Start
+  const onYoutubeSubmit = () => {
+    setYoutubeEdit(true);
+    if (youtubeString.includes("watch?v=")) {
+      let pos = youtubeString.indexOf("watch?v=");
+      // console.log(url.substring(pos+8,));
+      setId(youtubeString.substring(pos + 8));
+    } else if (youtubeString.includes("/shorts/")) {
+      let pos = youtubeString.indexOf("/shorts/");
+      // console.log(url.substring(pos+8,));
+      setId(youtubeString.substring(pos + 8));
+    } else if (youtubeString.includes("youtu.be/")) {
+      let pos = youtubeString.indexOf("youtu.be/");
+      setId(youtubeString.substring(pos + 9));
+    } else if (youtubeString == "" && checkRealSubmit == true) {
+      setId("");
+      alert("");
+      // code fix Youtube URL Submit push button when URL empty string
+    } else if (youtubeString == "" && checkRealSubmit == false) {
+      setId("");
+      setYoutubeString("");
+
+      alert("유튜브 URL을 입력해주세요");
+    } else {
+      setId("");
+      setYoutubeString("");
+
+      alert("인식할 수 없는 URL입니다.");
+    }
+  };
+  // Lee's Youtube URL substring Code END
+  const onCheckRealSubmit = () => setCheckRealSubmit(true);
   return (
     <>
       <div>
@@ -253,6 +368,7 @@ export default function PostEditor({
             >
               Edit your text
             </Label>
+
             {genre_chat ? (
               <>
                 {purpose == "reply" ? (
@@ -287,70 +403,133 @@ export default function PostEditor({
               autoFocus
               required
             />
-
-            {!chat?.fileUrl && (
-              <div style={{ marginTop: 10 }}>
-                <Label
-                  basic
-                  color="violet"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add/Edit photos</p>
-                </Label>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  id="attach-file"
-                  icon="file image"
-                  style={{ width: 300 }}
-                />
-              </div>
-            )}
-            {imgFileString && (
-              <div className="temp">
-                <Image
-                  fluid
-                  label={{
-                    color: "red",
-                    onClick: onDeleteTempImageClick,
-                    icon: "remove circle",
-                    size: "large",
-                    ribbon: true,
-                  }}
-                  src={imgFileString}
-                  style={{
-                    backgroundImage: imgFileString,
-                    width: 300,
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 15,
-                  }}
-                />
-              </div>
-            )}
-            {!chat?.vidFileUrl && (
-              <div style={{ marginTop: 10 }}>
-                <Label
-                  basic
-                  color="violet"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add/Edit videos</p>
-                </Label>
-                <Input
-                  type="file"
-                  accept="video/*"
-                  onChange={onFileChangeVideo}
-                  id="attach-file"
-                  icon="video image"
-                  style={{ width: 300 }}
-                />
-              </div>
-            )}
           </Form.Field>
+          {!chat?.youtubeUrl && (
+            <Grid columns={3}>
+              <Grid.Column style={{ width: 160, marginTop: 10 }}>
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                >
+                  <p>Add Youtube URL</p>
+                </Label>
+              </Grid.Column>
+              <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+                <Form.Field>
+                  <Form.Input
+                    focus
+                    placeholder="Youtube URL을 입력해주세요"
+                    value={youtubeString}
+                    onChange={(e) => setYoutubeString(e.target.value)}
+                  />
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column style={{ marginLeft: -20, width: 200 }}>
+                <Button
+                  style={{ marginTop: 5 }}
+                  size="mini"
+                  onClick={onYoutubeSubmit}
+                >
+                  Submit
+                </Button>
+              </Grid.Column>
+            </Grid>
+          )}
+
+          {id && (
+            <div style={{ width: "50%" }}>
+              <Embed
+                style={{
+                  marginTop: 10,
+                  marginLeft: 20,
+                  marginBottom: 5,
+                }}
+                placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
+                id={id}
+                source="youtube"
+              />
+
+              <div
+                onClick={onDeleteTempYoutubeUrl}
+                style={{
+                  width: 150,
+                  marginTop: 10,
+                  marginLeft: 20,
+                  marginBottom: 5,
+                  height: 30,
+                  cursor: "pointer",
+                }}
+              >
+                <Icon color="red" name="remove circle" />{" "}
+                <span>Youtube URL 삭제</span>
+              </div>
+            </div>
+          )}
+          {!chat?.fileUrl && (
+            <div style={{ marginTop: 10 }}>
+              <Label
+                basic
+                color="violet"
+                pointing="right"
+                htmlFor="attach-file"
+              >
+                <p>Add/Edit photos</p>
+              </Label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={onFileChange}
+                id="attach-file"
+                icon="file image"
+                style={{ width: 300 }}
+              />
+            </div>
+          )}
+          {imgFileString && (
+            <div className="temp">
+              <Image
+                fluid
+                label={{
+                  color: "red",
+                  onClick: onDeleteTempImage,
+                  icon: "remove circle",
+                  size: "large",
+                  ribbon: true,
+                }}
+                src={imgFileString}
+                style={{
+                  backgroundImage: imgFileString,
+                  width: 300,
+                  marginTop: 10,
+                  marginLeft: 20,
+                  marginBottom: 15,
+                }}
+              />
+            </div>
+          )}
+          {!chat?.vidFileUrl && (
+            <div style={{ marginTop: 10 }}>
+              <Label
+                basic
+                color="violet"
+                pointing="right"
+                htmlFor="attach-file"
+              >
+                <p>Add/Edit videos</p>
+              </Label>
+              <Input
+                type="file"
+                accept="video/*"
+                onChange={onFileChangeVideo}
+                id="attach-file"
+                icon="video image"
+                style={{ width: 300 }}
+              />
+            </div>
+          )}
+
           {vidFileString && (
             <div>
               <video
@@ -365,8 +544,8 @@ export default function PostEditor({
               >
                 <source src={vidFileString}></source>
               </video>
-              <div
-                onClick={OnVideoDeleteClick}
+              <div // 수정 필요!!!!!!!!!
+                onClick={onDeleteTempVideoFile}
                 style={{ width: 100, height: 30, cursor: "pointer" }}
               >
                 <Icon color="red" name="remove circle" />{" "}
@@ -375,6 +554,7 @@ export default function PostEditor({
             </div>
           )}
 
+          {/* ------------------ */}
           {chat?.fileUrl && (
             <div
               onClick={OnImageDeleteClick}
@@ -391,10 +571,23 @@ export default function PostEditor({
               <Icon color="red" name="remove circle" /> <span>비디오 삭제</span>
             </div>
           )}
-          <Button type="submit" value="update" inverted color="green">
+          {chat?.youtubeUrl && (
+            <div
+              onClick={onYoutubeUrlDeleteClick}
+              style={{ width: 140, height: 30, cursor: "pointer" }}
+            >
+              <Icon color="red" name="remove circle" />{" "}
+              <span>Youtube URL 삭제</span>
+            </div>
+          )}
+          <Button
+            onClick={onCheckRealSubmit}
+            value="update"
+            inverted
+            color="green"
+          >
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
           </Button>
-
         </Form>
       </div>
     </>

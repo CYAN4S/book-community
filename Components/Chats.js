@@ -19,6 +19,7 @@ import {
   Container,
   Header,
   Divider,
+  Embed,
 } from "semantic-ui-react";
 import { authService, dbService, storageService } from "../firebaseConfig";
 import { useUserDisplayName, useUserPhoto } from "../utils/functions";
@@ -84,7 +85,10 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
   };
 
   // toggle edit mode
-  const onEditClick = () => setEditing((prev) => !prev);
+  const onEditClick = () => {
+    setEditing((prev) => !prev);
+    setReplying(false);
+  };
 
   // chat Like func
   const onLikeClick = () => {
@@ -104,7 +108,10 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
   };
 
   // recomment edit mode
-  const onReplyClick = () => setReplying((prev) => !prev);
+  const onReplyClick = () => {
+    setReplying((prev) => !prev);
+    setEditing(false);
+  };
 
   // query for CheckReply
   // DB Real-time change check
@@ -115,7 +122,6 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
         ...doc.data(),
       }));
       setChats(chatArray);
-
     });
   }, []);
 
@@ -228,7 +234,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                 <source src={chat.vidFileUrl}></source>
               </video>
             )}
-
+            {chat.youtubeUrl && (
+              <div style={{ width: "50%" }}>
+                <Embed
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 5,
+                  }}
+                  placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/sddefault.jpg`}
+                  id={chat.youtubeUrl}
+                  source="youtube"
+                />
+              </div>
+            )}
             <Container textAlign="right" style={{ marginBottom: 100 }}>
               <Button
                 labelPosition="right"
@@ -388,6 +406,19 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
               <video loop={true} style={{ width: 400 }} controls={true}>
                 <source src={chat.vidFileUrl}></source>
               </video>
+            )}
+            {chat.youtubeUrl && (
+              <div style={{ width: "50%" }}>
+                <Embed
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 5,
+                  }}
+                  placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/maxresdefault.jpg`}
+                  id={chat.youtubeUrl}
+                  source="youtube"
+                />
+              </div>
             )}
           </div>
           <Button
