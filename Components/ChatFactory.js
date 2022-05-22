@@ -197,7 +197,16 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
           </Header>
           <Container textAlign="left">
             <Form onSubmit={onNewPostSubmit}>
+            
               <Form.Field>
+                <Form.Input
+                  fluid
+                  label="제목"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="글의 제목을 입력해주세요."
+                  required
+                />
                 <Label basic color="orange" pointing="below">
                   Please enter your text
                 </Label>
