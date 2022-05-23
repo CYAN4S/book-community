@@ -43,7 +43,7 @@ export default function Explorer() {
     console.log("useEffect - mySearchBooks", mySearchBooks);
     const text = mySearchBooks;
     setLens(text.length);
-    console.log("useEffect - mySearchBooks",text);
+    console.log("useEffect - mySearchBooks", text);
     // 기존 코드
     // const res = await fetch(
     //   "https://openapi.naver.com/v1/search/book.json?query=" + text[0],
@@ -57,13 +57,12 @@ export default function Explorer() {
     // const books = await res.json();
 
     // 변경 코드
-    window
-      .fetch("https://openapi.naver.com/v1/search/book.json?query=" + text[0], {
-        headers: {
-          "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
-          "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
-        },
-      })
+    fetch("/v1/search/book.json?query=" + text[0], {
+      headers: {
+        "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+        "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
+      },
+    })
       .then(async (res) => {
         await res.json();
         setRecentBooks(res);
