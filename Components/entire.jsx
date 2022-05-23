@@ -1,5 +1,5 @@
-import { Button, Divider, Header, Icon, List, Table } from "semantic-ui-react";
-import { useState, useEffect } from "react";
+import { Button } from "semantic-ui-react";
+import { useState } from "react";
 import { Map, MapInfoWindow, MapMarker } from "react-kakao-maps-sdk";
 export default function Entire({ infoData }) {
   const hasBookLib = [];

@@ -5,15 +5,13 @@ import {
   Icon,
   Input,
   Label,
-  Segment,
   TextArea,
   Image,
   Container,
   Header,
   Embed,
   Grid,
-  GridColumn,
-} from "semantic-ui-react";
+  } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { v4 } from "uuid";
