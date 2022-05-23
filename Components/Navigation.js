@@ -38,7 +38,7 @@ export default function Navigation() {
     <>
       {isSignedIn ? (
         <>
-          <Menu inverted color={"teal"} widths={5} attached='top' tabular>
+          <Menu color ={'violet'} inverted widths={5} attached='top' tabular style={{fontSize: 18, fontFamily : "Gugi-Regular"}}>
             <Menu.Item
               name="HOME"
               onClick={goLink}
