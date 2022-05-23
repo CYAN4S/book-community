@@ -65,8 +65,8 @@ import Image from "next/image";
       <Container textAlign="left" fluid  style={{width : "95%"}}>
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row>
-            <Grid.Column width={9}>
-              <Image src={help1} width={700} height={900} />
+            <Grid.Column width={7}>
+              <Image src={help1} width={530} height={600} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -76,8 +76,8 @@ import Image from "next/image";
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column width={9}>
-              <Image src={help2} width={900} height={300} />
+            <Grid.Column width={7}>
+              <Image src={help2} width={700} height={220} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p >
@@ -87,8 +87,8 @@ import Image from "next/image";
           </Grid.Row>
 
           <Grid.Row>
-            <Grid.Column width={9}>
-              <Image src={help3} width={900} height={330} />
+            <Grid.Column width={7}>
+              <Image src={help3} width={700} height={220} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -98,8 +98,8 @@ import Image from "next/image";
           </Grid.Row>
 
           <Grid.Row>
-            <Grid.Column width={9}>
-              <Image src={help4} width={900} height={500} />
+            <Grid.Column width={7}>
+              <Image src={help4} width={700} height={350} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
