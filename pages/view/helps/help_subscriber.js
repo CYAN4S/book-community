@@ -6,7 +6,11 @@ import {
   } from "semantic-ui-react";
   import React from "react";
   import { useRouter } from "next/router";
-  
+  import help1 from "../../../public/help/help_subscriber1.png";
+  import help2 from "../../../public/help/help_subscriber2.png";
+  import help3 from "../../../public/help/help_subscriber3.png";
+  import help4 from "../../../public/help/help_subscriber4.png";
+
   const Help_Subscriber = () => {
     const router = useRouter();
   
@@ -62,7 +66,7 @@ import {
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row>
             <Grid.Column width={9}>
-              {/* <Image src={help1} width={900} height={120} /> */}
+              <Image src={help1} width={900} height={120} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
@@ -73,7 +77,7 @@ import {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={9}>
-              {/* <Image src={help2} width={900} height={170} /> */}
+              <Image src={help2} width={900} height={170} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
@@ -85,7 +89,19 @@ import {
 
           <Grid.Row>
             <Grid.Column width={9}>
-              {/* <Image src={help3} width={900} height={330} /> */}
+              <Image src={help3} width={900} height={330} />
+            </Grid.Column>
+            <Grid.Column centered width={7}>
+              <p className="help_searchbook_text">
+              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
+                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              </p>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <Image src={help4} width={900} height={330} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
