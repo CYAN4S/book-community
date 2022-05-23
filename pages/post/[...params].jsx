@@ -2,13 +2,9 @@ import {
   Button,
   Card,
   Divider,
-  Grid,
   Header,
   Icon,
-  Label,
-  List,
   Message,
-  Popup,
   Segment,
 } from "semantic-ui-react";
 import { useRouter } from "next/router";

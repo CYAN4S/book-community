@@ -6,9 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { addDoc, collection, doc, setDoc, } from "firebase/firestore";
-import { updateProfile } from "firebase/auth";
-
+import { doc, setDoc, } from "firebase/firestore";
 import {
   Divider,
   Button,

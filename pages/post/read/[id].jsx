@@ -1,9 +1,7 @@
 import Chats from "../../../Components/Chats";
-import { useRouter } from "next/router";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { dbService } from "../../../firebaseConfig";
 import { useState, useEffect } from "react";
-import { Icon } from "semantic-ui-react";
 
 export default function ReadWriting({ chat_data }) {
   // 게시글 출력 페이지 : 게시글 수정 시, 바로 출력되게끔 구성

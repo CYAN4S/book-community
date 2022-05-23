@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Grid } from "semantic-ui-react";
 
 export default function Books({ books }) {

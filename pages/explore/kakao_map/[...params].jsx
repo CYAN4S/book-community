@@ -1,6 +1,6 @@
 import { Button} from "semantic-ui-react";
 import { useRouter } from "next/router";
-import { Map, MapInfoWindow, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 export default function LibMap({ MapData }) {
   const router = useRouter();
