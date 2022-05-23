@@ -98,9 +98,8 @@ export default function Title({ books }) {
   const router = useRouter();
 
   // 0523_0923 책 검색 History 저장 code START
-  const [currentSearchHistoryBook, setCurrentSearchHistoryBook] = useState("");
-  const searchHistoryBook = async ()=> {
-    const createDate = Date.now()
+  const searchHistoryBook = async () => {
+    const createDate = Date.now();
     console.log(title);
     const doc = await getUserDoc(currentUid);
     const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
@@ -110,10 +109,7 @@ export default function Title({ books }) {
           ? [...doc.mySearchBooks, `${isbn}${title}`]
           : [`${isbn}${title}`],
       });
-
-    } 
-      
-
+    }
   };
   // 0523_0923 책 검색 History 저장 code END
 
