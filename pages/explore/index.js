@@ -21,7 +21,7 @@ export default function Explorer() {
   useEffect(() => {
     console.log("onUserDocSnapshot useEffect 실행");
     const unsub = onUserDocSnapshot(currentUid, onUser);
-    
+
     return () => unsub?.();
   }, [currentUid]);
 
@@ -36,40 +36,54 @@ export default function Explorer() {
     } else {
       setMySearchBooks([]);
     }
-    
-  }; 
+  };
+  const [RecentBooks, setRecentBooks] = useState([]);
   useEffect(async () => {
-    
     console.log("네이버 API 테스트 useEffect");
     console.log("useEffect - mySearchBooks", mySearchBooks);
-    const text = mySearchBooks
+    const text = mySearchBooks;
     setLens(text.length);
-    console.log("useEffect - mySearchBooks");
-    const res = await fetch(
-      "https://openapi.naver.com/v1/search/book.json?query=" + text[0],
-      {
+    console.log("useEffect - mySearchBooks",text);
+    // 기존 코드
+    // const res = await fetch(
+    //   "https://openapi.naver.com/v1/search/book.json?query=" + text[0],
+    //   {
+    //     headers: {
+    //       "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+    //       "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
+    //     },
+    //   }
+    // );
+    // const books = await res.json();
+
+    // 변경 코드
+    window
+      .fetch("https://openapi.naver.com/v1/search/book.json?query=" + text[0], {
         headers: {
           "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
           "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
         },
-      }
-    );
-    const books = await res.json();
-    books.items.title = books.items.map((book) => {
-      book.title = book.title.replace(
-        /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
-        ""
-      );
-    });
-  }, [mySearchBooks])
-
+      })
+      .then(async (res) => {
+        await res.json();
+        setRecentBooks(res);
+        RecentBooks.items.title = RecentBooks.items.map((RecentBooks) => {
+          RecentBooks.title = RecentBooks.title.replace(
+            /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+            ""
+          );
+        });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, [mySearchBooks]);
 
   // 0523_1103 추가 끝
   const [lens, setLens] = useState(0); // 사용자의 책 검색 기록 내용 있는지 여부
 
   useEffect(() => {
     setKeyword("");
-
   }, []);
   return (
     <>
@@ -98,7 +112,7 @@ export default function Explorer() {
         <div>
           {lens ? (
             <>
-              {books.items.map((book) => (
+              {RecentBooks.items.map((book) => (
                 <Grid style={{}} columns={4}>
                   <Grid.Row>
                     <Grid.Column key={book.isbn}>
