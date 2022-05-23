@@ -11,7 +11,7 @@ import {
   Header,
   Embed,
   Grid,
-  } from "semantic-ui-react";
+} from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { v4 } from "uuid";
@@ -266,7 +266,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     }}
                     iframe={{
                       allowFullScreen: true,
-
                     }}
                     placeholder={`https://i1.ytimg.com/vi/${id}/sddefault.jpg`}
                     id={id}
@@ -402,34 +401,42 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 required
               />
             </Form.Field>
-            <div style ={{height:35}} className="ui fluid action input">
-                  <Label
-                    basic
-                    color="orange"
-                    pointing="right"
-                    htmlFor="attach-file"
-                    style={{ width : 120, textAlign:"center"}}
-                  >
-                    <p>Add Youtube URL</p>
-                  </Label>
+            <div
+              style={{ height: 35, marginBottom: 10 }}
+              className="ui fluid action input"
+            >
+              <Label
+                basic
+                color="orange"
+                pointing="right"
+                htmlFor="attach-file"
+                style={{ width: 120, textAlign: "center" }}
+              >
+                <p>Add Youtube URL</p>
+              </Label>
 
-                  <Form.Field>
-                    <Form.Input
-                    style={{ height:35,width : 215}}
-                      focus
-                      placeholder="Youtube URL을 입력해주세요"
-                      value={youtubeString}
-                      onChange={(e) => setYoutubeString(e.target.value)}
-                    />
-                  </Form.Field>
-                  <Button
-                    style={{marginLeft : 5 }}
-                    size="tiny"
-                    onClick={onYoutubeSubmit}
-                  >
-                    Submit
-                  </Button>
-                </div>
+              <Form.Field>
+                <Form.Input
+                  style={{
+                    height: 35,
+                    width: 215,
+                    marginLeft: 10,
+                  }}
+                  focus
+                  placeholder="Youtube URL을 입력해주세요"
+                  value={youtubeString}
+                  onChange={(e) => setYoutubeString(e.target.value)}
+                />
+              </Form.Field>
+              <Icon
+                name="search"
+                style={{ marginLeft: 10, marginTop: 6, cursor : "pointer" }}
+                size="large"
+                color="violet"
+                
+                onClick={onYoutubeSubmit}
+              />
+            </div>
             {input && (
               <div style={{ width: "50%" }}>
                 <Embed
@@ -478,6 +485,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 onChange={onFileChange}
                 id="attach-file"
                 icon="file image"
+                style={{ marginLeft: 10, marginBottom: 10 }}
               />
             </div>
             {imgFileString && (
@@ -518,6 +526,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 onChange={onFileChangeVideo}
                 id="attach-file"
                 icon="video image"
+                style={{ marginLeft: 10 }}
               />
             </div>
             {vidFileString && (

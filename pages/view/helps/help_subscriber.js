@@ -99,7 +99,7 @@ import Image from "next/image";
 
           <Grid.Row>
             <Grid.Column width={7}>
-              <Image src={help4} width={700} height={350} />
+              <Image src={help4} width={700} height={360} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -120,7 +120,6 @@ import Image from "next/image";
             font-size: 15px;
             font-family: GothicA1-Medium;
           }
-          
         `}</style>
       </>
     );
