@@ -2,11 +2,11 @@ import "../styles/globals.css";
 import "semantic-ui-css/semantic.min.css";
 import Navigation from "../Components/Navigation";
 import Script from "next/script";
-import { Header, Icon, Segment } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import "../public/static/fonts/style.css";
 // React
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 // Firebase
 import { onAuthStateChanged } from "firebase/auth";
