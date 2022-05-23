@@ -126,7 +126,6 @@ export default function PostEditor({
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    
   };
 
   const onReplySubmit = async () => {
@@ -171,7 +170,6 @@ export default function PostEditor({
     setVidFileString("");
     setYoutubeString("");
     setId("");
-    
   };
 
   const onSubmit = async (e) => {
@@ -185,17 +183,17 @@ export default function PostEditor({
       }
       const url = window.location.href;
       if (!url.includes("home")) {
-        if (!url.includes("post")){
-        router.push(window.location.reload());
-        }
-        else{
-          // 수정완료 시, router.back() 미수행
-          if(purpose === "edit"){
+        if (!url.includes("post")) {
+          if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
-          }else{
+          }
+        } else {
+          // 수정완료 시, router.back() 미수행
+          if (purpose === "edit") {
+            alert("수정이 완료되었습니다.");
+          } else {
             router.back();
           }
-         
         }
       } else {
         router.push("/");
@@ -402,20 +400,20 @@ export default function PostEditor({
           {purpose != "reply" ? (
             <>
               {!chat?.youtubeUrl && (
-                <div style ={{height:35}} className="ui fluid action input">
+                <div style={{ height: 35 }} className="ui fluid action input">
                   <Label
                     basic
                     color="orange"
                     pointing="right"
                     htmlFor="attach-file"
-                    style={{ width : 120}}
+                    style={{ width: 120 }}
                   >
                     <p>Add Youtube URL</p>
                   </Label>
 
                   <Form.Field>
                     <Form.Input
-                    style={{ height:35,width : 210}}
+                      style={{ height: 35, width: 210 }}
                       focus
                       placeholder="Youtube URL을 입력해주세요"
                       value={youtubeString}
@@ -423,7 +421,7 @@ export default function PostEditor({
                     />
                   </Form.Field>
                   <Button
-                    style={{marginLeft : 5 }}
+                    style={{ marginLeft: 5 }}
                     size="tiny"
                     onClick={onYoutubeSubmit}
                   >
@@ -434,34 +432,34 @@ export default function PostEditor({
             </>
           ) : (
             <>
-             <div style ={{height:35}} className="ui fluid action input">
-                  <Label
-                    basic
-                    color="orange"
-                    pointing="right"
-                    htmlFor="attach-file"
-                    style={{ width : 120}}
-                  >
-                    <p>Add Youtube URL</p>
-                  </Label>
+              <div style={{ height: 35 }} className="ui fluid action input">
+                <Label
+                  basic
+                  color="orange"
+                  pointing="right"
+                  htmlFor="attach-file"
+                  style={{ width: 120 }}
+                >
+                  <p>Add Youtube URL</p>
+                </Label>
 
-                  <Form.Field>
-                    <Form.Input
-                    style={{ height:35,width : 210}}
-                      focus
-                      placeholder="Youtube URL을 입력해주세요"
-                      value={youtubeString}
-                      onChange={(e) => setYoutubeString(e.target.value)}
-                    />
-                  </Form.Field>
-                  <Button
-                    style={{marginLeft : 5 }}
-                    size="tiny"
-                    onClick={onYoutubeSubmit}
-                  >
-                    Submit
-                  </Button>
-                </div>
+                <Form.Field>
+                  <Form.Input
+                    style={{ height: 35, width: 210 }}
+                    focus
+                    placeholder="Youtube URL을 입력해주세요"
+                    value={youtubeString}
+                    onChange={(e) => setYoutubeString(e.target.value)}
+                  />
+                </Form.Field>
+                <Button
+                  style={{ marginLeft: 5 }}
+                  size="tiny"
+                  onClick={onYoutubeSubmit}
+                >
+                  Submit
+                </Button>
+              </div>
             </>
           )}
 
