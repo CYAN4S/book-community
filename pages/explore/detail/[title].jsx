@@ -28,16 +28,8 @@ import {
 import Chats from "../../../Components/Chats";
 
 export default function Title({ books }) {
-  const {
-    title,
-    image,
-    author,
-    price,
-    publisher,
-    pubdate,
-    isbn,
-    description,
-  } = books.items[0];
+  const { title, image, author, price, publisher, pubdate, isbn, description } =
+    books.items[0];
 
   const collectionName = `chat${isbn}`;
   const [isChecked, setIsChecked] = useState(false);
@@ -105,6 +97,22 @@ export default function Title({ books }) {
 
   const router = useRouter();
 
+  // 0523_0923 책 검색 History 저장 code START
+  const searchHistoryBook = async () => {
+    const createDate = Date.now();
+    console.log(title);
+    const doc = await getUserDoc(currentUid);
+    const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
+    if (!searchedMybook) {
+      updateUserDoc({
+        mySearchBooks: doc.mySearchBooks
+          ? [...doc.mySearchBooks, `${isbn}${title}`]
+          : [`${isbn}${title}`],
+      });
+    }
+  };
+  // 0523_0923 책 검색 History 저장 code END
+
   // 내 책으로 등록하기 기능 코드 시작 부분
   const [isSignedIn, setIsSignedIn] = useState(false);
   const queryId = router.query.id;
@@ -129,6 +137,8 @@ export default function Title({ books }) {
   };
   useEffect(() => {
     if (isSignedIn) {
+      // 0523_0923추가
+      searchHistoryBook();
       getDocAndCheck();
     }
   }, [isSignedIn]);
@@ -219,31 +229,43 @@ export default function Title({ books }) {
                     />
 
                     {!isMe() && (
-                    <span>
-                      <Button
-                        size="mini"
-                        basic
-                        color="orange"
-                        onClick={onRegisterClick}
-                      >
-                        {wasRegisterBookCheck
-                          ? "등록 해제"
-                          : "내 책으로 등록하기"}
-                      </Button>
-                      <p onClick={returnClick} style={{marginTop : 6, fontSize : 11, cursor : "pointer"}}> <Icon name = "undo" /> 돌아가기</p>
-                     
+                      <span>
+                        <Button
+                          size="mini"
+                          basic
+                          color="orange"
+                          onClick={onRegisterClick}
+                        >
+                          {wasRegisterBookCheck
+                            ? "등록 해제"
+                            : "내 책으로 등록하기"}
+                        </Button>
+                        <p
+                          onClick={returnClick}
+                          style={{
+                            marginTop: 6,
+                            fontSize: 11,
+                            cursor: "pointer",
+                          }}
+                        >
+                          {" "}
+                          <Icon name="undo" /> 돌아가기
+                        </p>
                       </span>
                     )}
-                    
                   </div>
                 </Grid.Column>
 
                 <Grid.Column>
                   <div
-                    style={{ width: 330, height: 240, marginLeft: -50}}
+                    style={{ width: 330, height: 240, marginLeft: -50 }}
                     className="ui orange segment"
                   >
-                    <Header as="h3" color="blue" style={{marginTop: 5, marginBottom : 5}}>
+                    <Header
+                      as="h3"
+                      color="blue"
+                      style={{ marginTop: 5, marginBottom: 5 }}
+                    >
                       책 정보
                     </Header>
 
@@ -251,20 +273,55 @@ export default function Title({ books }) {
                       <List divided vertical>
                         <List.Item>
                           <div style={{ fontSize: 13, margin: "5px 0px" }}>
-                            <strong className="book_item"> {title?.length > 140 ? `${title.substring(0,140)}...` : title} </strong>
+                            <strong className="book_item">
+                              {" "}
+                              {title?.length > 140
+                                ? `${title.substring(0, 140)}...`
+                                : title}{" "}
+                            </strong>
                           </div>
                         </List.Item>
 
-                        <List.Item style={{height : 30, lineHeight : "25px", fontSize : 12}}>
-                          <strong>출판사</strong> {publisher?.length > 60 ? `${publisher.substring(0,60)}...` : publisher}
+                        <List.Item
+                          style={{
+                            height: 30,
+                            lineHeight: "25px",
+                            fontSize: 12,
+                          }}
+                        >
+                          <strong>출판사</strong>{" "}
+                          {publisher?.length > 60
+                            ? `${publisher.substring(0, 60)}...`
+                            : publisher}
                         </List.Item>
-                        <List.Item  style={{height : 30, lineHeight : "25px", fontSize : 12}}>
+                        <List.Item
+                          style={{
+                            height: 30,
+                            lineHeight: "25px",
+                            fontSize: 12,
+                          }}
+                        >
                           <strong>출간일</strong> {pubdate}
                         </List.Item>
-                        <List.Item  style={{height : 30, lineHeight : "25px", fontSize : 12}}>
-                          <strong>작가</strong> {author?.length > 50 ? `${author.substring(0,50)}...` : author}
+                        <List.Item
+                          style={{
+                            height: 30,
+                            lineHeight: "25px",
+                            fontSize: 12,
+                          }}
+                        >
+                          <strong>작가</strong>{" "}
+                          {author?.length > 50
+                            ? `${author.substring(0, 50)}...`
+                            : author}
                         </List.Item>
-                        <List.Item  style={{height : 30, lineHeight : "25px", fontSize : 12}}>
+                        <List.Item
+                          style={{
+                            height: 30,
+                            lineHeight: "25px",
+                            fontSize: 12,
+                          }}
+                        >
                           <strong className="num_price">
                             {new Intl.NumberFormat("ko", {
                               style: "currency",
@@ -319,14 +376,14 @@ export default function Title({ books }) {
           </Grid>
         </div>
         <div className="ui aligned container" style={{ marginTop: -10 }}>
-          <Grid style={{ marginTop: -10, marginLeft : -20 }} columns={3}>
+          <Grid style={{ marginTop: -10, marginLeft: -20 }} columns={3}>
             <Grid.Row>
               <div
                 style={{
                   width: 590,
                   height: 380,
                   marginLeft: 25,
-                  marginRight : -20,
+                  marginRight: -20,
                 }}
                 className="ui basic segment"
               >
@@ -380,13 +437,13 @@ export default function Title({ books }) {
                           >
                             어디에 있을까?
                           </Header>
-                          <Grid columns={3} style ={{textAlign:"center"}}>
+                          <Grid columns={3} style={{ textAlign: "center" }}>
                             <Grid.Row>
                               {regionData.map((item) => {
                                 return (
                                   <Grid.Column
                                     key={item.id}
-                                    style={{ marginBottom: 12,}}
+                                    style={{ marginBottom: 12 }}
                                   >
                                     <div>
                                       <label
@@ -416,7 +473,7 @@ export default function Title({ books }) {
                   </div>
                 </Grid.Column>
               </div>
-              <Grid.Column  style={{marginLeft : 10}}>
+              <Grid.Column style={{ marginLeft: 10 }}>
                 <div
                   style={{
                     width: 590,
@@ -461,7 +518,11 @@ export default function Title({ books }) {
         <div style={{ marginLeft: 20, textAlign: "left" }}>
           {chats.length ? (
             chats.map((chat) => (
-              <div className="chat_space" key={chat.id} style={{marginBottom : 30}}>
+              <div
+                className="chat_space"
+                key={chat.id}
+                style={{ marginBottom: 30 }}
+              >
                 <Chats
                   chat={chat}
                   isOwner={chat.createrId === userId}
