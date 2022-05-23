@@ -17,20 +17,6 @@ export default function Navigation() {
   }, []);
 
   const router = useRouter();
-  let activeItem = {};
-
-  // active branch
-  if (router.pathname === "/") {
-    activeItem = "home";
-  } else if (router.pathname === "/view_more") {
-    activeItem = "view_more";
-  } else if (router.pathname === "/explore") {
-    activeItem = "explore";
-  } else if (router.pathname === "/profile") {
-    activeItem = "profile";
-  } else if (router.pathname === "/post") {
-    activeItem = "post";
-  }
 
   // actual movement
   function goLink(e, data) {
@@ -55,27 +41,22 @@ export default function Navigation() {
           <Menu inverted color={"teal"} widths={5} attached='top' tabular>
             <Menu.Item
               name="HOME"
-              active={activeItem === "home"}
               onClick={goLink}
             />
             <Menu.Item
               name="EXPLORE"
-              active={activeItem === "explore"}
               onClick={goLink}
             />
             <Menu.Item
               name="POST"
-              active={activeItem === "post"}
               onClick={goLink}
             />
             <Menu.Item
               name="PROFILE"
-              active={activeItem === "profile"}
               onClick={goLink}
             />
             <Menu.Item
               name="VIEW MORE"
-              active={activeItem === "about"}
               onClick={goLink}
             />
           </Menu>
