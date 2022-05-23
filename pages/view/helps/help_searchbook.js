@@ -66,7 +66,7 @@ const Help_SearchBook = () => {
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help1} width={900} height={120} />
+              <Image src={help1} width={900} height={100} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
@@ -77,7 +77,7 @@ const Help_SearchBook = () => {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help2} width={900} height={170} />
+              <Image src={help2} width={900} height={130} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
@@ -89,7 +89,7 @@ const Help_SearchBook = () => {
 
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help3} width={900} height={330} />
+              <Image src={help3} width={900} height={300} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
