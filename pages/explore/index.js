@@ -1,14 +1,76 @@
 import React from "react";
-import { Button, Header } from "semantic-ui-react";
+import { Button, Header, Icon, Segment, Grid, Table } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
+import { authService } from "../../firebaseConfig";
+import { onUserDocSnapshot } from "../../utils/functions";
 export default function Explorer() {
+  // 0523_1103 추가 시작
   const [keyword, setKeyword] = useState("");
+  const [currentUid, setCurrentUid] = useState(null);
   useEffect(() => {
-    setKeyword("");
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUid(user.uid);
+      }
+      console.log("onAuthStatechanged(user)실행");
+    });
   }, []);
 
+  const [mySearchBooks, setMySearchBooks] = useState([]);
+  useEffect(() => {
+    console.log("onUserDocSnapshot useEffect 실행");
+    const unsub = onUserDocSnapshot(currentUid, onUser);
+    
+    return () => unsub?.();
+  }, [currentUid]);
+
+  const onUser = async (data) => {
+    console.log("onUser 실행");
+    setLens(mySearchBooks.length);
+    if (data?.mySearchBooks) {
+      const listMySearchBook = await Promise.all(
+        data.mySearchBooks.map(async (x) => await x.substr(24))
+      );
+      setMySearchBooks(listMySearchBook);
+    } else {
+      setMySearchBooks([]);
+    }
+    
+  }; 
+  useEffect(async () => {
+    
+    console.log("네이버 API 테스트 useEffect");
+    console.log("useEffect - mySearchBooks", mySearchBooks);
+    const text = mySearchBooks
+    setLens(text.length);
+    console.log("useEffect - mySearchBooks");
+    const res = await fetch(
+      "https://openapi.naver.com/v1/search/book.json?query=" + text[0],
+      {
+        headers: {
+          "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+          "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
+        },
+      }
+    );
+    const books = await res.json();
+    books.items.title = books.items.map((book) => {
+      book.title = book.title.replace(
+        /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
+        ""
+      );
+    });
+  }, [mySearchBooks])
+
+
+  // 0523_1103 추가 끝
+  const [lens, setLens] = useState(0); // 사용자의 책 검색 기록 내용 있는지 여부
+
+  useEffect(() => {
+    setKeyword("");
+
+  }, []);
   return (
     <>
       <div className="ui fluid action input">
@@ -22,12 +84,100 @@ export default function Explorer() {
         ></input>
         <Link href={`/explore/${keyword}`}>
           <a>
-            <Button inverted color='blue' style={{ marginLeft: 5 }}>
+            <Button inverted color="blue" style={{ marginLeft: 5 }}>
               검색
             </Button>
           </a>
         </Link>
       </div>
+      {/* 0523_1105 내용 추가 시작 */}
+      <Header as="h3" color="black">
+        최근 검색한 책
+      </Header>
+      <Segment style={{}}>
+        <div>
+          {lens ? (
+            <>
+              {books.items.map((book) => (
+                <Grid style={{}} columns={4}>
+                  <Grid.Row>
+                    <Grid.Column key={book.isbn}>
+                      <div>
+                        <div
+                          style={{ marginLeft: 5 }}
+                          className="ui two column grid ui center aligned segments"
+                        >
+                          <div className="columnImage">
+                            <div
+                              style={{ width: 110, height: 145 }}
+                              className="ui orange segment"
+                            >
+                              <Link
+                                href={`explore/detail/${book.title
+                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                              >
+                                <a>
+                                  <img
+                                    style={{
+                                      width: 80,
+                                      height: 120,
+                                    }}
+                                    src={book.image}
+                                    alt="DON'T HAVE IMAGE"
+                                    className="img_book"
+                                  />
+                                </a>
+                              </Link>
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              width: 300,
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                            className="ui yellow segment"
+                          >
+                            <Table.Header>
+                              <Table.Row>
+                                <Table.HeaderCell
+                                  style={{
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  <div>
+                                    {book.title.length < 30
+                                      ? book.title
+                                      : book.title.slice(0, 30) + "..."}
+                                  </div>
+                                </Table.HeaderCell>
+                              </Table.Row>
+                            </Table.Header>
+                          </div>
+                        </div>
+                      </div>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              ))}
+            </>
+          ) : (
+            <>
+              <div
+                style={{
+                  padding: "50px 0",
+                  textAlign: "center",
+                  fontSize: "20px",
+                }}
+              >
+                <strong>최근 검색한 기록이 없습니다!</strong>
+                <p />
+              </div>
+            </>
+          )}
+        </div>
+      </Segment>
       <Header as="h3" color="black">
         읽고 있는 책
       </Header>
