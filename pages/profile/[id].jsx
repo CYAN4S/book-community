@@ -381,7 +381,6 @@ export default function Profile() {
                         <>
                           <List.Header>
                             <strong style={{ fontSize: 15 }}>
-                              {" "}
                               ✅ {user.displayName ? user.displayName:"게스트"}{" "}
                             </strong>
                           </List.Header>
@@ -391,8 +390,7 @@ export default function Profile() {
                           <Link href={`/profile/${user.uid}`}>
                             <List.Header as="a">
                               <strong style={{ fontSize: 15 }}>
-                                {" "}
-                                ✅ {user.displayName ? user.displayName:"게스트"}{" "}
+                                ✅ {user.displayName ? user.displayName:"게스트"}
                               </strong>
                             </List.Header>
                           </Link>
@@ -401,10 +399,9 @@ export default function Profile() {
 
                       <List.Description>
                         <p style={{ fontSize: 12, marginLeft: 30 }}>
-                          {" "}
-                          {user.statusMsg
+                          {user.statusMsg && !(user.statusMsg === "")
                             ? `상태메시지 : ${user.statusMsg}`
-                            : "상태메시지가 없습니다."}{" "}
+                            : "상태메시지가 없습니다."}
                         </p>
                       </List.Description>
                     </List.Content>
