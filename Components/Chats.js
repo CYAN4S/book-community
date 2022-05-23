@@ -132,7 +132,7 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
   const onCheckExistOriginal = () => {
     //(id) => id != `${isbn}${title}`
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
-    if (checkExistOrginal == false) {
+    if (checkExistOrginal === false) {
       alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
     }
   };
