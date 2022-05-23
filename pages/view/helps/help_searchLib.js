@@ -1,22 +1,11 @@
 import {
-    Button,
-    Divider,
-    Form,
     Header,
-    Input,
-    Segment,
-    TextArea,
     Icon,
     Container,
-    Accordion,
     Grid,
-    Card,
-    Popup,
   } from "semantic-ui-react";
   import React from "react";
-  import { useState } from "react";
   import { useRouter } from "next/router";
-  import Link from "next/link";
   import Image from "next/image";
   import help1 from "../../../public/help/help_searchLib1.jpg";
   import help2 from "../../../public/help/help_searchLib2.jpg";
