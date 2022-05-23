@@ -229,14 +229,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 <Grid.Column style={{ width: 160 }}>
                   <Label
                     basic
-                    color="orange"
+                    color="red"
                     pointing="right"
                     htmlFor="attach-file"
                   >
                     <p>Add Youtube URL</p>
                   </Label>
                 </Grid.Column>
-                <Grid.Column style={{ marginLeft: -30, width: 240 }}>
+                <Grid.Column style={{ marginLeft: -30, width: 240, marginTop : -3, marginBottom : 10 }}>
                   <Form.Field>
                     <Form.Input
                       focus
@@ -247,13 +247,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   </Form.Field>
                 </Grid.Column>
                 <Grid.Column style={{ marginLeft: -20, width: 200 }}>
-                  <Button
-                    style={{ marginTop: 5 }}
-                    size="mini"
+                  <Icon
+                    style={{ marginTop: 5, cursor:"pointer" }}
+                    size="large"
+                    name="search"
+                    color="violet"
                     onClick={onYoutubeSubmit}
-                  >
-                    Submit
-                  </Button>
+                  />
+                  
                 </Grid.Column>
               </Grid>
               {input && (
@@ -304,6 +305,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   onChange={onFileChange}
                   id="attach-file"
                   icon="file image"
+                  style={{marginLeft : 8, marginBottom : 10}}
                 />
               </div>
               {imgFileString && (
@@ -331,7 +333,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
               <div>
                 <Label
                   basic
-                  color="orange"
+                  color="yellow"
                   pointing="right"
                   htmlFor="attach-file"
                 >
@@ -344,6 +346,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   onChange={onFileChangeVideo}
                   id="attach-file"
                   icon="video image"
+                  style={{marginLeft : 10}}
                 />
               </div>
               {vidFileString && (
@@ -392,7 +395,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         <>
           <Form onSubmit={onNewPostSubmit}>
             <Form.Field>
-              <Label basic color="orange" pointing="below">
+              <Label basic color="black" pointing="below">
                 Please enter your text
               </Label>
               <TextArea
@@ -407,7 +410,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             >
               <Label
                 basic
-                color="orange"
+                color="red"
                 pointing="right"
                 htmlFor="attach-file"
                 style={{ width: 120, textAlign: "center" }}
@@ -433,7 +436,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 style={{ marginLeft: 10, marginTop: 6, cursor : "pointer" }}
                 size="large"
                 color="violet"
-                
                 onClick={onYoutubeSubmit}
               />
             </div>
@@ -513,7 +515,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             <div>
               <Label
                 basic
-                color="orange"
+                color="yellow"
                 pointing="right"
                 htmlFor="attach-file"
               >
