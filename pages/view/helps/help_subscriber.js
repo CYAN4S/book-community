@@ -69,8 +69,8 @@ import Image from "next/image";
               <Image src={help1} width={700} height={900} />
             </Grid.Column>
             <Grid.Column centered width={7}>
-              <p className="help_searchbook_text">
-                {`1. Explore 탭을 통해, 검색 창으로 이동할 수 있습니다.`}
+              <p>
+                {`1. 채팅 공간에서, 다른 사용자의 프로필을 누를 수 있습니다.`}
               </p>
              
             </Grid.Column>
@@ -80,9 +80,8 @@ import Image from "next/image";
               <Image src={help2} width={900} height={300} />
             </Grid.Column>
             <Grid.Column centered width={7}>
-              <p className="help_searchbook_text">
-              {`2. Explore 페이지의 검색박스와 검색 버튼의 클릭을 통해, 특정 도서의
-                검색 결과를 확인할 수 있습니다.`}
+              <p >
+              {`2. 다른 사용자의 프로필을 눌러 사용자 프로필로 이동하면, 구독하기 버튼을 누를 수 있습니다.`}
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -92,9 +91,8 @@ import Image from "next/image";
               <Image src={help3} width={900} height={330} />
             </Grid.Column>
             <Grid.Column centered width={7}>
-              <p className="help_searchbook_text">
-              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
-                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              <p>
+              {`3. 구독하기 버튼을 누를 시, 구독 취소로 버튼 활성화 상태가 변경됩니다.`}
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -104,9 +102,8 @@ import Image from "next/image";
               <Image src={help4} width={900} height={500} />
             </Grid.Column>
             <Grid.Column centered width={7}>
-              <p className="help_searchbook_text">
-              {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
-                클릭하여, 세부정보를 확인할 수 있습니다.`}
+              <p>
+              {`4. 다른 사용자를 구독한 후, 나의 프로필로 이동하면 "내가 구독한 사용자" 목록에 해당 사용자가 등록됩니다.`}
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -117,6 +114,11 @@ import Image from "next/image";
           div {
             margin-top: 30px;
             text-align: right;
+          }
+
+          p {
+            font-size: 15px;
+            font-family: GothicA1-Medium;
           }
           
         `}</style>
