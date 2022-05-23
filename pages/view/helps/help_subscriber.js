@@ -10,7 +10,7 @@ import {
   import help2 from "../../../public/help/help_subscriber2.png";
   import help3 from "../../../public/help/help_subscriber3.png";
   import help4 from "../../../public/help/help_subscriber4.png";
-
+import Image from "next/image";
   const Help_Subscriber = () => {
     const router = useRouter();
   
@@ -66,7 +66,7 @@ import {
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help1} width={900} height={120} />
+              <Image src={help1} width={700} height={900} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
@@ -77,7 +77,7 @@ import {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help2} width={900} height={170} />
+              <Image src={help2} width={900} height={300} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
@@ -101,7 +101,7 @@ import {
 
           <Grid.Row>
             <Grid.Column width={9}>
-              <Image src={help4} width={900} height={330} />
+              <Image src={help4} width={900} height={500} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
