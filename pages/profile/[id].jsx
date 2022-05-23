@@ -228,7 +228,7 @@ export default function Profile() {
               상태메시지
             </Label>
             <span>
-              {statusMsg ? <>{statusMsg}</> : <>상태메시지를 입력해보세요</>}
+              {statusMsg ? <>{statusMsg}</> : <>상태메시지가 입력되지 않았어요.</>}
             </span>
             <Divider></Divider>
             <Label as="a" color="orange" ribbon style={{height:25}}>
