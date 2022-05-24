@@ -20,8 +20,8 @@ export default function Navigation() {
 
   // actual movement
   function goLink(e, data) {
-    if (data.name === "HOME") {
-      router.push("/");
+    if (data.name === "WE") {
+      router.push("/we");
     } else if (data.name === "VIEW MORE") {
       router.push("/view_more");
     } else if (data.name === "EXPLORE") {
@@ -40,7 +40,7 @@ export default function Navigation() {
         <>
           <Menu color ={'violet'} inverted widths={5} attached='top' tabular style={{fontSize: 18, fontFamily : "Gugi-Regular"}}>
             <Menu.Item
-              name="HOME"
+              name="WE"
               onClick={goLink}
             />
             <Menu.Item

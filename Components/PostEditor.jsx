@@ -643,7 +643,7 @@ export default function PostEditor({
               {chat?.fileUrl && (
                 <div
                   onClick={OnImageDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 10, marginTop : 10 }}
+                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20, marginTop : 10 }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>이미지 삭제</span>

@@ -14,7 +14,7 @@ export default function Home() {
       if (user) {
         // 로그인 되어 있다면
         setIsSigned(true);
-        router.replace("/home");
+        router.replace("/main");
       } else {
         // 로그인 되어있지 않다면
         setIsSigned(false);
