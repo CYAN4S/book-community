@@ -156,7 +156,7 @@ export default function Chats({
         alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
       }
     }else{
-      const checkExistOrginal = detailChats.map((x) => x.id).includes(chat.replyTo);
+      const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
       if (checkExistOrginal === false) {
         alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
       }
