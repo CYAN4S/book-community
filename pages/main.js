@@ -7,8 +7,15 @@ import {
   Menu,
   Segment,
 } from "semantic-ui-react";
+import { useRouter } from "next/router";
 
 export default function Main() {
+
+  const router = useRouter();
+  const onClick = () => {
+    router.push("/we");
+  }
+
   const HomepageHead = () => (
     <Container text>
       <Header
@@ -30,12 +37,14 @@ export default function Main() {
           fontSize: "1.7em",
           fontWeight: "normal",
           marginTop: "1em",
+          marginBottom: "11.5em",
         }}
       />
-      <Button inverted size="huge">
+      <Button inverted size="huge" onClick={onClick}>
         Get Started
         <Icon name="right arrow" />
       </Button>
+
     </Container>
   );
 
@@ -44,7 +53,7 @@ export default function Main() {
       <Segment
         inverted
         textAlign="center"
-        style={{ minHeight: "100vh", padding: "1em 0em" }}
+        style={{ minHeight: "100vh", padding: "1em 0em", marginTop : -35, marginLeft : -10, marginRight : -10 }}
         vertical
       >
         <HomepageHead />
