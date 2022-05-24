@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Header,Segment } from "semantic-ui-react";
+import { Button, Header, Segment, Grid, Table } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export default function Explorer() {
 
   return (
     <>
-      <div style = {{marginTop:-20}}className="ui fluid action input">
+      <div style={{ marginTop: -20 }} className="ui fluid action input">
         <input
           type="text"
           placeholder="책 이름, 글쓴이, 출판사 등.."
@@ -41,8 +41,8 @@ export default function Explorer() {
         <div>
           {lens ? (
             <>
-              {recentBooks.map((recentBooks) => (
-                <Grid style={{}} columns={4}>
+              {/* {recentBooks.map((recentBooks) => (
+                <Grid style={{}} columns={4} key={``}>
                   <Grid.Row>
                     <Grid.Column>
                       <div>
@@ -103,7 +103,7 @@ export default function Explorer() {
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
-              ))}
+              ))} */}
             </>
           ) : (
             <>
@@ -138,15 +138,13 @@ export default function Explorer() {
       <Header as="h3" color="black">
         비슷한 책
       </Header>
-      <Header style ={{marginTop : -10}}as="h5" color="grey">
+      <Header style={{ marginTop: -10 }} as="h5" color="grey">
         회원님이 접한 책을 읽은 독자들의 관심 도서
       </Header>
       <Segment style={{}}>
         <div>
           {similarBookLens ? (
-            <>
-              {/* 준비 중인 코드 */}
-            </>
+            <>{/* 준비 중인 코드 */}</>
           ) : (
             <>
               <div
