@@ -101,7 +101,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             </Label>
           )}
 
-          {chat.replyTo && <Label color="blue">{extractText === "" ? <></> : `${extractText}의 답글` }</Label>}
+          {chat.replyTo && <Label color="blue">{extractText === "" ? <></> : extractText.length>20 ? <>{extractText.substring(0,20)}...의 답글</>: `${extractText}의 답글`}</Label>}
           <Card.Header
             style={{
               fontSize: 17,

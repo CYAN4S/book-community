@@ -156,7 +156,7 @@ export default function Profile() {
       userPhoto,
     };
     updateUserDoc(userPhotoObj)
-      .then(() => console.log("프로필사진 전송완료"))
+      .then(() => alert("업로드가 완료되었습니다."))
       .catch((error) => alert(error));
     setImgFileString("");
     router.push("/profile");
@@ -245,11 +245,11 @@ export default function Profile() {
                       size="mini"
                       //floated ="right"
                       onClick={onUploadPhotoClick}
-                      style={{marginLeft : -8, height : 25}}
+                      style={{marginLeft : -5}}
                     >
                       <Icon
                         name="exchange"
-                        style={{ marginLeft: -10, marginRight: -10} }
+                        style={{ marginLeft: -10, marginRight: -10, marginTop : -5} }
                       />
                     </Button>
                   </>
