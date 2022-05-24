@@ -199,7 +199,7 @@ export default function PostEditor({
         if (purpose === "edit") {
           alert("수정이 완료되었습니다.");
         }
-        router.push("/");
+        router.push("/we");
       }
       setCheckRealSubmit(false);
     } else {

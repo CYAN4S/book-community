@@ -113,7 +113,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         router.push(url);
       } else {
         alert("글을 등록하였습니다.");
-        router.push("/");
+        router.push("/we");
       }
       setCheckRealSubmit(false);
     } else {
