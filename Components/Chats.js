@@ -151,28 +151,44 @@ export default function Chats({
   const onCheckExistOriginal = () => {
     if (collectionName != "chat") {
       //(id) => id != `${isbn}${title}`
-      const checkExistOrginal = detailChats.map((x) => x.id).includes(chat.replyTo);
+      const checkExistOrginal = detailChats
+        .map((x) => x.id)
+        .includes(chat.replyTo);
       if (checkExistOrginal === false) {
         alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
       }
-    }else{
+    } else {
       const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
       if (checkExistOrginal === false) {
         alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
       }
     }
- 
   };
 
   const onMouseEnter = () => {
-    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
-    if (checkExistOrginal == false) {
+    if (collectionName != "chat") {
+      //(id) => id != `${isbn}${title}`
+      const checkExistOrginal = detailChats
+        .map((x) => x.id)
+        .includes(chat.replyTo);
+      if (checkExistOrginal === false) {
+      } else {
+        setExtractText(
+          `원문 '${
+            detailChats.filter((x) => x.id === chat.replyTo)[0].text
+          }'으로 이동하기`
+        );
+      }
     } else {
-      setExtractText(
-        `원문 '${
-          chats.filter((x) => x.id === chat.replyTo)[0].text
-        }'으로 이동하기`
-      );
+      const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
+      if (checkExistOrginal === false) {
+      } else {
+        setExtractText(
+          `원문 '${
+            chats.filter((x) => x.id === chat.replyTo)[0].text
+          }'으로 이동하기`
+        );
+      }
     }
   };
 
