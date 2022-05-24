@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import { useState } from "react";
 import Link from "next/link";
+import withTransition from "../public/HOC/withTransition";
 
 const Post = () => {
   // 대표장르가 선택되었는가?
@@ -330,7 +331,6 @@ const Post = () => {
                 style={{marginTop:100, marginLeft:50}}
               />             
             </Link>
-           
           </div>
         )}
 
@@ -338,4 +338,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default withTransition(Post);

@@ -6,8 +6,9 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import ChatFactory from "../Components/ChatFactory";
 import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
+import withTransition from "../public/HOC/withTransition";
 
-export default function Book_home() {
+function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
 
@@ -80,3 +81,5 @@ export default function Book_home() {
     </>
   );
 }
+
+export default withTransition(Book_home);

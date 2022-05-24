@@ -2,12 +2,14 @@ import React from "react";
 import { Button, Header, Segment, Grid, Table } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import withTransition from "../../public/HOC/withTransition";
 
-export default function Explorer() {
+function Explorer() {
   const [keyword, setKeyword] = useState("");
   const [recentBooks, setRecentBooks] = useState([]);
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
+
   useEffect(() => {
     setKeyword("");
     setLens(0);
@@ -164,3 +166,5 @@ export default function Explorer() {
     </>
   );
 }
+
+export default withTransition(Explorer);

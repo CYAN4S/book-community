@@ -30,7 +30,9 @@ import { currentUserState } from "../../utils/hooks";
 
 import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
 
-export default function Profile() {
+import withTransition from "../../public/HOC/withTransition";
+
+function Profile() {
   const [currentUser] = useRecoilState(currentUserState);
 
   // Route
@@ -507,3 +509,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default withTransition(Profile);

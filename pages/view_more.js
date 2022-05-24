@@ -5,8 +5,9 @@ import {
 } from "semantic-ui-react";
 import React from "react";
 import Link from "next/link";
+import withTransition from "../public/HOC/withTransition";
 
-export default function View_more() {
+function View_more() {
   
   return (
     <>
@@ -86,3 +87,5 @@ export default function View_more() {
     </>
   );
 }
+
+export default withTransition(View_more);
