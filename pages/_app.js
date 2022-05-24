@@ -18,20 +18,26 @@ import { onUserDocSnapshot } from "../utils/functions";
 import { RecoilRoot, useRecoilState } from "recoil";
 import { currentUserState } from "../utils/hooks";
 
+import { useRouter } from "next/router";
+
 function MyApp({ Component, pageProps }) {
   const key = process.env.NEXT_PUBLIC_KAKAO_AUTHKEY;
+  const router = useRouter();
   return (
     <RecoilRoot>
       <RecoilComponent />
-      <div >
+      
+      <div>
+      {router.pathname === "/main" ? <></>: 
+      <>
         <div className="main">
           <Header as="h1" inverted color="violet" style={{marginTop : 50, marginLeft : -30}}>
           <Header.Content style={{marginLeft : -50, fontSize: 20, fontFamily : "Gugi-Regular"}}>새로운 소통을 꿈꾸는</Header.Content>
             <p style = {{fontFamily: "GamjaFlower-Regular", marginTop : -15, marginLeft : 70, marginBottom:30, fontSize: 40}}>BOOKSTAMP</p>
           </Header>
-          
         </div>
-
+      </>}
+        
         {/* 카카오 맵 API를 사용하기 위함 */}
         <Script
           type="text/javascript"

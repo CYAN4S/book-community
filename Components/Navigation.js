@@ -37,8 +37,9 @@ export default function Navigation() {
   return (
     <>
       {isSignedIn ? (
-        <>
-          <Menu color ={'violet'} inverted widths={5} attached='top' tabular style={{fontSize: 18, fontFamily : "Gugi-Regular"}}>
+        <> {
+          router.pathname === "/main"? <></> : <>
+            <Menu color ={'violet'} inverted widths={5} attached='top' tabular style={{fontSize: 18, fontFamily : "Gugi-Regular"}}>
             <Menu.Item
               name="WE"
               onClick={goLink}
@@ -60,6 +61,10 @@ export default function Navigation() {
               onClick={goLink}
             />
           </Menu>
+          </>
+
+        }
+          
         </>
       ) : (
         <></>
