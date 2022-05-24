@@ -182,7 +182,7 @@ export default function PostEditor({
         onReplySubmit();
       }
       const url = window.location.href;
-      if (!url.includes("home")) {
+      if (!url.includes("we")) {
         if (!url.includes("post")) {
           if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
