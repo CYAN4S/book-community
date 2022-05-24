@@ -107,7 +107,12 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       if (genre_chat) {
         alert("글을 등록하였습니다.");
         router.back();
-      }else{
+      }else if (detailbook_chat){
+        const url = window.location.href;
+        alert("글을 등록하였습니다.");
+        router.push(url);
+      }
+      else{
         alert("글을 등록하였습니다.");
         router.push("/");
       }
