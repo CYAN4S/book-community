@@ -196,8 +196,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                         fontFamily: "GothicA1-ExtraLight",
                       }}
                     >
-                      {displayName?.length > 5
-                        ? `${displayName.substring(0, 5)}...`
+                      {displayName?.length > 6
+                        ? `${displayName.substring(0, 6)}...`
                         : displayName}
                     </p>
                   </Label>
@@ -345,8 +345,8 @@ export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extr
                       }}
                     >
                       {displayName ? <></> : <>guest</>}
-                      {displayName?.length > 5
-                        ? `${displayName.substring(0, 5)}...`
+                      {displayName?.length > 6
+                        ? `${displayName.substring(0, 6)}...`
                         : displayName}
                     </p>
                   </Label>
