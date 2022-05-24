@@ -119,6 +119,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     } else {
       return;
     }
+    setSubmitFile(false);
   };
 
   const onFileChange = (event) => {
