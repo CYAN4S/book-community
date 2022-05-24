@@ -103,12 +103,15 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       setId("");
       setInput(false);
       if (genre_chat) {
+        alert("글을 등록하였습니다.")
         router.back();
       }
       setCheckRealSubmit(false);
     } else {
       return;
     }
+
+    
   };
 
   const onFileChange = (event) => {
@@ -236,7 +239,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     <p>Add Youtube URL</p>
                   </Label>
                 </Grid.Column>
-                <Grid.Column style={{ marginLeft: -30, width: 240, marginTop : -3, marginBottom : 10 }}>
+                <Grid.Column
+                  style={{
+                    marginLeft: -30,
+                    width: 240,
+                    marginTop: -3,
+                    marginBottom: 10,
+                  }}
+                >
                   <Form.Field>
                     <Form.Input
                       focus
@@ -248,13 +258,12 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 </Grid.Column>
                 <Grid.Column style={{ marginLeft: -20, width: 200 }}>
                   <Icon
-                    style={{ marginTop: 5, cursor:"pointer" }}
+                    style={{ marginTop: 5, cursor: "pointer" }}
                     size="large"
                     name="search"
                     color="violet"
                     onClick={onYoutubeSubmit}
                   />
-                  
                 </Grid.Column>
               </Grid>
               {input && (
@@ -305,7 +314,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   onChange={onFileChange}
                   id="attach-file"
                   icon="file image"
-                  style={{marginLeft : 8, marginBottom : 10}}
+                  style={{ marginLeft: 8, marginBottom: 10 }}
                 />
               </div>
               {imgFileString && (
@@ -346,7 +355,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   onChange={onFileChangeVideo}
                   id="attach-file"
                   icon="video image"
-                  style={{marginLeft : 10}}
+                  style={{ marginLeft: 10 }}
                 />
               </div>
               {vidFileString && (
@@ -363,17 +372,18 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   >
                     <source src={vidFileString}></source>
                   </video>
-                  <div>
-                    <Button
-                      icon
-                      labelPosition="right"
-                      color="red"
-                      onClick={onDeleteVideo}
-                      style={{ marginLeft: 20 }}
-                    >
-                      영상 삭제
-                      <Icon name="delete" />
-                    </Button>
+
+                  <div
+                    onClick={onDeleteVideo}
+                    style={{
+                      width: 100,
+                      height: 30,
+                      cursor: "pointer",
+                      marginLeft: 20,
+                    }}
+                  >
+                    <Icon color="red" name="remove circle" />
+                    <span>비디오 삭제</span>
                   </div>
                 </div>
               )}
@@ -433,7 +443,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
               </Form.Field>
               <Icon
                 name="search"
-                style={{ marginLeft: 10, marginTop: 6, cursor : "pointer" }}
+                style={{ marginLeft: 10, marginTop: 6, cursor: "pointer" }}
                 size="large"
                 color="violet"
                 onClick={onYoutubeSubmit}
@@ -545,17 +555,17 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 >
                   <source src={vidFileString}></source>
                 </video>
-                <div>
-                  <Button
-                    icon
-                    labelPosition="right"
-                    color="red"
-                    onClick={onDeleteVideo}
-                    style={{ marginLeft: 20 }}
-                  >
-                    영상 삭제
-                    <Icon name="delete" />
-                  </Button>
+                <div
+                  onClick={onDeleteVideo}
+                  style={{
+                    width: 100,
+                    height: 30,
+                    cursor: "pointer",
+                    marginLeft: 20,
+                  }}
+                >
+                  <Icon color="red" name="remove circle" />
+                  <span>비디오 삭제</span>
                 </div>
               </div>
             )}

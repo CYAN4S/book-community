@@ -141,7 +141,7 @@ export default function PostEditor({
       fileUrl = await getDownloadURL(response.ref);
     }
     if (vidFileString !== "") {
-      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const fileRef = ref(storageService, `${uid}/${v4()}`);
       const response = await uploadString(fileRef, vidFileString, "data_url");
       vidFileUrl = await getDownloadURL(response.ref);
     }
@@ -406,7 +406,7 @@ export default function PostEditor({
                 <div style={{ height: 35 }} className="ui fluid action input">
                   <Label
                     basic
-                    color="orange"
+                    color="red"
                     pointing="right"
                     htmlFor="attach-file"
                     style={{ width: 120 }}
@@ -423,13 +423,14 @@ export default function PostEditor({
                       onChange={(e) => setYoutubeString(e.target.value)}
                     />
                   </Form.Field>
-                  <Button
-                    style={{ marginLeft: 5 }}
-                    size="tiny"
+                  <Icon
+                    style={{ marginTop : 5, marginLeft: 10, cursor:"pointer" }}
+                    size="large"
+                    name="search"
+                    color="violet"
                     onClick={onYoutubeSubmit}
-                  >
-                    Submit
-                  </Button>
+                  />
+                  
                 </div>
               )}
             </>
@@ -438,7 +439,7 @@ export default function PostEditor({
               <div style={{ height: 35 }} className="ui fluid action input">
                 <Label
                   basic
-                  color="orange"
+                  color="red"
                   pointing="right"
                   htmlFor="attach-file"
                   style={{ width: 120 }}
@@ -455,13 +456,14 @@ export default function PostEditor({
                     onChange={(e) => setYoutubeString(e.target.value)}
                   />
                 </Form.Field>
-                <Button
-                  style={{ marginLeft: 5 }}
-                  size="tiny"
-                  onClick={onYoutubeSubmit}
-                >
-                  Submit
-                </Button>
+                <Icon
+                    style={{ marginTop : 5, marginLeft: 10, cursor:"pointer" }}
+                    size="large"
+                    name="search"
+                    color="violet"
+                    onClick={onYoutubeSubmit}
+                  />
+
               </div>
             </>
           )}
@@ -504,7 +506,7 @@ export default function PostEditor({
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
-                    color="violet"
+                    color="orange"
                     pointing="right"
                     htmlFor="attach-file"
                   >
@@ -526,7 +528,7 @@ export default function PostEditor({
               <div style={{ marginTop: 10 }}>
                 <Label
                   basic
-                  color="violet"
+                  color="orange"
                   pointing="right"
                   htmlFor="attach-file"
                 >
@@ -572,7 +574,7 @@ export default function PostEditor({
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
-                    color="violet"
+                    color="yellow"
                     pointing="right"
                     htmlFor="attach-file"
                   >
@@ -591,11 +593,10 @@ export default function PostEditor({
             </>
           ) : (
             <>
-              {" "}
               <div style={{ marginTop: 10 }}>
                 <Label
                   basic
-                  color="violet"
+                  color="yellow"
                   pointing="right"
                   htmlFor="attach-file"
                 >
@@ -629,9 +630,9 @@ export default function PostEditor({
               </video>
               <div
                 onClick={onDeleteTempVideoFile}
-                style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 10, marginTop : 10 }}
+                style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20 }}
               >
-                <Icon color="red" name="remove circle" />{" "}
+                <Icon color="red" name="remove circle" />
                 <span>비디오 삭제</span>
               </div>
             </div>
@@ -651,7 +652,7 @@ export default function PostEditor({
               {chat?.vidFileUrl && (
                 <div
                   onClick={OnVideoDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer" }}
+                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20, marginTop : 10  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>비디오 삭제</span>
@@ -660,7 +661,7 @@ export default function PostEditor({
               {chat?.youtubeUrl && (
                 <div
                   onClick={onYoutubeUrlDeleteClick}
-                  style={{ width: 140, height: 30, cursor: "pointer", marginTop:10, marginLeft:10, marginBottom : 10 }}
+                  style={{ width: 140, height: 30, cursor: "pointer", marginTop:10, marginLeft:20, marginBottom : 10 }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>Youtube URL 삭제</span>
@@ -678,6 +679,7 @@ export default function PostEditor({
             value="update"
             inverted
             color="green"
+            style={{marginTop : 10}}
           >
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
           </Button>
