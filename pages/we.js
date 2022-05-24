@@ -8,8 +8,6 @@ import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Book_home() {
-
-
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
 

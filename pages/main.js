@@ -8,15 +8,16 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { useRouter } from "next/router";
+import withTransition from "../public/HOC/withTransition";
 
-export default function Main() {
-
+ function Main() {
   const router = useRouter();
   const onClick = () => {
     router.push("/we");
   }
 
   const HomepageHead = () => (
+
     <Container text>
       <Header
         as="h1"
@@ -61,3 +62,5 @@ export default function Main() {
     </>
   );
 }
+
+export default withTransition(Main);
