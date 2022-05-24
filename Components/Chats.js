@@ -27,15 +27,8 @@ import PostEditor from "./PostEditor";
 import { useRouter } from "next/router";
 import {} from "firebase/firestore";
 
-export default function Chats({
-  chat,
-  isOwner,
-  detailbook_chat,
-  genre_chat,
-  extractTitle,
-}) {
+export default function Chats({ chat, isOwner, detailbook_chat, genre_chat, extractTitle }) {
   const [chats, setChats] = useState("");
-  const [detailChats, setDetailChats] = useState("");
   const [editing, setEditing] = useState(false);
   const [replying, setReplying] = useState(false);
   const [currentUid, setCurrentUid] = useState(null);
@@ -56,7 +49,7 @@ export default function Chats({
     e.preventDefault();
     router.back();
   }
-
+ 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -84,7 +77,7 @@ export default function Chats({
       if (chat.vidFileUrl !== "") {
         await deleteObject(ref(storageService, chat.vidFileUrl));
       }
-    } else {
+    }else{
       return;
     }
     if (genre_chat) {
@@ -121,8 +114,8 @@ export default function Chats({
     setEditing(false);
   };
 
-  // query for CheckReply(generalChat)
-  const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
+  // query for CheckReply
+  // DB Real-time change check
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
@@ -133,46 +126,22 @@ export default function Chats({
     });
   }, []);
 
-  const qForDetailChat = query(
-    collection(dbService, `${detailbook_chat}`),
-    orderBy("createdAt", "desc")
-  );
-  useEffect(() => {
-    onSnapshot(qForDetailChat, (snapshot) => {
-      const chatArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setDetailChats(chatArray);
-    });
-  }, []);
-
+  // Detail book page chatting query
+  const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
   // check replyChat Exist
   const onCheckExistOriginal = () => {
-    if (collectionName != "chat") {
-      //(id) => id != `${isbn}${title}`
-      const checkExistOrginal = detailChats.map((x) => x.id).includes(chat.replyTo);
-      if (checkExistOrginal === false) {
-        alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
-      }
-    }else{
-      const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
-      if (checkExistOrginal === false) {
-        alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
-      }
+    //(id) => id != `${isbn}${title}`
+    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
+    if (checkExistOrginal === false) {
+      alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
     }
- 
   };
 
   const onMouseEnter = () => {
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
     if (checkExistOrginal == false) {
     } else {
-      setExtractText(
-        `원문 '${
-          chats.filter((x) => x.id === chat.replyTo)[0].text
-        }'으로 이동하기`
-      );
+      setExtractText(`원문 '${chats.filter((x) => x.id === chat.replyTo)[0].text}'으로 이동하기`);
     }
   };
 
@@ -236,13 +205,7 @@ export default function Chats({
               </Link>
               <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
-                  <p style={{ marginBottom: -2 }}>
-                    {displayName !== "guest" ? (
-                      <>등록시간</>
-                    ) : (
-                      <>프로필을 등록해주세요</>
-                    )}
-                  </p>
+                  <p style={{marginBottom : -2}}>{displayName!=="guest" ? <>등록시간</> : <>프로필을 등록해주세요</>}</p>
                   <Divider style={{ marginBottom: 5, marginTop: 5 }} />
                   <p style={{ marginTop: 3 }}>
                     <Icon name="clock" />
@@ -252,7 +215,9 @@ export default function Chats({
               </Item.Content>
             </Item>
 
-            <Divider style={{ marginBottom: 15, width: "40%" }} />
+            <Divider
+              style={{ marginBottom: 15, width: "40%" }}
+            />
             <p style={{ marginBottom: 10 }}>{chat.text}</p>
 
             {chat.fileUrl && (
@@ -279,6 +244,7 @@ export default function Chats({
                   }}
                   iframe={{
                     allowFullScreen: true,
+
                   }}
                   placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/sddefault.jpg`}
                   id={chat.youtubeUrl}
@@ -455,7 +421,9 @@ export default function Chats({
                   }}
                   iframe={{
                     allowFullScreen: true,
+
                   }}
+                  
                   placeholder={`https://i1.ytimg.com/vi/${chat.youtubeUrl}/sddefault.jpg`}
                   id={chat.youtubeUrl}
                   source="youtube"
