@@ -196,6 +196,9 @@ export default function PostEditor({
           }
         }
       } else {
+        if (purpose === "edit") {
+          alert("수정이 완료되었습니다.");
+        }
         router.push("/");
       }
       setCheckRealSubmit(false);
@@ -626,7 +629,7 @@ export default function PostEditor({
               </video>
               <div
                 onClick={onDeleteTempVideoFile}
-                style={{ width: 100, height: 30, cursor: "pointer" }}
+                style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 10, marginTop : 10 }}
               >
                 <Icon color="red" name="remove circle" />{" "}
                 <span>비디오 삭제</span>
@@ -639,7 +642,7 @@ export default function PostEditor({
               {chat?.fileUrl && (
                 <div
                   onClick={OnImageDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer" }}
+                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 10, marginTop : 10 }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>이미지 삭제</span>
@@ -657,7 +660,7 @@ export default function PostEditor({
               {chat?.youtubeUrl && (
                 <div
                   onClick={onYoutubeUrlDeleteClick}
-                  style={{ width: 140, height: 30, cursor: "pointer" }}
+                  style={{ width: 140, height: 30, cursor: "pointer", marginTop:10, marginLeft:10, marginBottom : 10 }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>Youtube URL 삭제</span>
