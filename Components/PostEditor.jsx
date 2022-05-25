@@ -32,6 +32,8 @@ export default function PostEditor({
   const [newTitle, setNewTitle] = useState(
     purpose == "reply" ? "" : chat?.title
   );
+  const [submitEnd, setSubmitEnd] = useState(false);
+  const [submitFile, setSubmitFile] = useState(false);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
   // 0519_1929 비디오 업로드 편집/삭제 관련 버그 해결 코드 시작
@@ -182,15 +184,16 @@ export default function PostEditor({
         onReplySubmit();
       }
       const url = window.location.href;
-      if (!url.includes("home")) {
+      if (!url.includes("we")) {
         if (!url.includes("post")) {
           if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
           }
         } else {
-          // 수정완료 시, router.back() 미수행
+          // 수정완료 시, router.back() 미수행 => 다시 추가함(수정하면 카톡에 이야기해줘요)(0525)
           if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
+            router.back();
           } else {
             router.back();
           }
@@ -199,9 +202,12 @@ export default function PostEditor({
         if (purpose === "edit") {
           alert("수정이 완료되었습니다.");
         }
+        else{
         router.push("/we");
+        }
       }
       setCheckRealSubmit(false);
+      setSubmitEnd(true);
     } else {
       return;
     }
@@ -348,10 +354,17 @@ export default function PostEditor({
   };
   // Lee's Youtube URL substring Code END
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
+  // submitEnd toggleOff code
+  // submitFile Ontoggle code
+  const onSubmitFile = () => {
+    setSubmitFile((prev) => !prev);
+  };
   return (
     <>
       <div>
+        {!submitEnd &&(
         <Form onSubmit={onSubmit}>
+        
           <Form.Field>
             <Label
               basic
@@ -390,7 +403,7 @@ export default function PostEditor({
             ) : (
               <></>
             )}
-
+            
             <Form.TextArea
               value={newChat}
               type="text"
@@ -400,18 +413,19 @@ export default function PostEditor({
               required
             />
           </Form.Field>
+
           {purpose != "reply" ? (
             <>
-              {!chat?.youtubeUrl && (
+              {!chat?.youtubeUrl && submitFile && (
                 <div style={{ height: 35 }} className="ui fluid action input">
                   <Label
                     basic
                     color="red"
                     pointing="right"
                     htmlFor="attach-file"
-                    style={{ width: 120 }}
+                    style={{ width: 145 }}
                   >
-                    <p>Add Youtube URL</p>
+                    <p>Add/Edit Youtube URL</p>
                   </Label>
 
                   <Form.Field>
@@ -424,47 +438,47 @@ export default function PostEditor({
                     />
                   </Form.Field>
                   <Icon
-                    style={{ marginTop : 5, marginLeft: 10, cursor:"pointer" }}
+                    style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
                     size="large"
                     name="search"
                     color="violet"
                     onClick={onYoutubeSubmit}
                   />
-                  
                 </div>
               )}
             </>
           ) : (
             <>
-              <div style={{ height: 35 }} className="ui fluid action input">
-                <Label
-                  basic
-                  color="red"
-                  pointing="right"
-                  htmlFor="attach-file"
-                  style={{ width: 120 }}
-                >
-                  <p>Add Youtube URL</p>
-                </Label>
+              {submitFile && (
+                <div style={{ height: 35 }} className="ui fluid action input">
+                  <Label
+                    basic
+                    color="red"
+                    pointing="right"
+                    htmlFor="attach-file"
+                    style={{ width: 145 }}
+                  >
+                    <p>Add/Edit Youtube URL</p>
+                  </Label>
 
-                <Form.Field>
-                  <Form.Input
-                    style={{ height: 35, width: 210 }}
-                    focus
-                    placeholder="Youtube URL을 입력해주세요"
-                    value={youtubeString}
-                    onChange={(e) => setYoutubeString(e.target.value)}
-                  />
-                </Form.Field>
-                <Icon
-                    style={{ marginTop : 5, marginLeft: 10, cursor:"pointer" }}
+                  <Form.Field>
+                    <Form.Input
+                      style={{ height: 35, width: 210 }}
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
+                  <Icon
+                    style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
                     size="large"
                     name="search"
                     color="violet"
                     onClick={onYoutubeSubmit}
                   />
-
-              </div>
+                </div>
+              )}
             </>
           )}
 
@@ -502,7 +516,7 @@ export default function PostEditor({
           )}
           {purpose != "reply" ? (
             <>
-              {!chat?.fileUrl && (
+              {!chat?.fileUrl && submitFile && (
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
@@ -525,24 +539,26 @@ export default function PostEditor({
             </>
           ) : (
             <>
-              <div style={{ marginTop: 10 }}>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add/Edit photos</p>
-                </Label>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  id="attach-file"
-                  icon="file image"
-                  style={{ width: 300 }}
-                />
-              </div>
+              {submitFile && (
+                <div style={{ marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="orange"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add/Edit photos</p>
+                  </Label>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={onFileChange}
+                    id="attach-file"
+                    icon="file image"
+                    style={{ width: 300 }}
+                  />
+                </div>
+              )}
             </>
           )}
 
@@ -570,7 +586,7 @@ export default function PostEditor({
           )}
           {purpose != "reply" ? (
             <>
-              {!chat?.vidFileUrl && (
+              {!chat?.vidFileUrl && submitFile && (
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
@@ -593,24 +609,26 @@ export default function PostEditor({
             </>
           ) : (
             <>
-              <div style={{ marginTop: 10 }}>
-                <Label
-                  basic
-                  color="yellow"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add/Edit videos</p>
-                </Label>
-                <Input
-                  type="file"
-                  accept="video/*"
-                  onChange={onFileChangeVideo}
-                  id="attach-file"
-                  icon="video image"
-                  style={{ width: 300 }}
-                />
-              </div>
+              {submitFile && (
+                <div style={{ marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="yellow"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add/Edit videos</p>
+                  </Label>
+                  <Input
+                    type="file"
+                    accept="video/*"
+                    onChange={onFileChangeVideo}
+                    id="attach-file"
+                    icon="video image"
+                    style={{ width: 300 }}
+                  />
+                </div>
+              )}
             </>
           )}
 
@@ -630,7 +648,12 @@ export default function PostEditor({
               </video>
               <div
                 onClick={onDeleteTempVideoFile}
-                style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20 }}
+                style={{
+                  width: 100,
+                  height: 30,
+                  cursor: "pointer",
+                  marginLeft: 20,
+                }}
               >
                 <Icon color="red" name="remove circle" />
                 <span>비디오 삭제</span>
@@ -643,7 +666,12 @@ export default function PostEditor({
               {chat?.fileUrl && (
                 <div
                   onClick={OnImageDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20, marginTop : 10 }}
+                  style={{
+                    width: 100,
+                    height: 30,
+                    cursor: "pointer",
+                    marginTop: 10,
+                  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>이미지 삭제</span>
@@ -652,7 +680,12 @@ export default function PostEditor({
               {chat?.vidFileUrl && (
                 <div
                   onClick={OnVideoDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20, marginTop : 10  }}
+                  style={{
+                    width: 100,
+                    height: 30,
+                    cursor: "pointer",
+                    marginTop: 10,
+                  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>비디오 삭제</span>
@@ -661,7 +694,13 @@ export default function PostEditor({
               {chat?.youtubeUrl && (
                 <div
                   onClick={onYoutubeUrlDeleteClick}
-                  style={{ width: 140, height: 30, cursor: "pointer", marginTop:10, marginLeft:20, marginBottom : 10 }}
+                  style={{
+                    width: 140,
+                    height: 30,
+                    cursor: "pointer",
+                    marginTop: 10,
+                    marginBottom: 10,
+                  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>Youtube URL 삭제</span>
@@ -673,17 +712,29 @@ export default function PostEditor({
           )}
 
           {/* ------------------ */}
-
-          <Button
-            onClick={onCheckRealSubmit}
-            value="update"
-            inverted
-            color="green"
-            style={{marginTop : 10}}
-          >
-            {purpose == "reply" ? "댓글 달기" : "수정 완료"}
-          </Button>
+          {!submitEnd&&(
+          <><Button
+                onClick={onCheckRealSubmit}
+                value="update"
+                inverted
+                color="green"
+                style={{ marginTop: 10 }}
+              >
+                {purpose == "reply" ? "댓글 달기" : "수정 완료"}
+              </Button><Button
+                onClick={onSubmitFile}
+                icon
+                inverted
+                labelPosition="right"
+                color="blue"
+                style={{ marginTop: 5 }}
+              >
+                  파일 첨부하기
+                  <Icon name="file" />
+                </Button></>
+          )}
         </Form>
+        )}
       </div>
     </>
   );
