@@ -30,12 +30,12 @@ function Main() {
     // function으로 정의하는 모습
     hover: (clicked) => ({
       // 클릭된 버튼은 scale이 커지지 않는다.
-      scale: clicked ? 1 : 1.5,
+      scale: clicked ? 1 : 1.2,
       color: "white",
       backgroundColor: "black",
     }),
     pressed: {
-      scale: 0.7,
+      scale: 0.8,
     },
     rest: {
       scale: 1,
