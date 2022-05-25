@@ -32,6 +32,7 @@ export default function PostEditor({
   const [newTitle, setNewTitle] = useState(
     purpose == "reply" ? "" : chat?.title
   );
+  const [submitEnd, setSubmitEnd] = useState(false);
   const [submitFile, setSubmitFile] = useState(false);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
@@ -189,9 +190,10 @@ export default function PostEditor({
             alert("수정이 완료되었습니다.");
           }
         } else {
-          // 수정완료 시, router.back() 미수행
+          // 수정완료 시, router.back() 미수행 => 다시 추가함(0525)
           if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
+            router.back();
           } else {
             router.back();
           }
@@ -351,7 +353,7 @@ export default function PostEditor({
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
   // submitEnd toggleOff code
   const onSubmitEnd = () => {
-    setSubmitEnd((prev) => !prev);
+    setSubmitEnd(false);
   };
   // submitFile Ontoggle code
   const onSubmitFile = () => {
@@ -399,19 +401,30 @@ export default function PostEditor({
             ) : (
               <></>
             )}
+            {genre_chat ? (
+              <Form.TextArea
+                value={newChat}
+                type="text"
+                placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
+                onChange={(e) => setNewChat(e.target.value)}
+                autoFocus
+                required
+              />
+            ) : (
 
-            <Form.TextArea
-              value={newChat}
-              type="text"
-              placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
-              onChange={(e) => setNewChat(e.target.value)}
-              autoFocus
-              required
-            />
+              <Form.TextArea
+                value={newChat}
+                type="text"
+                placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
+                onChange={(e) => setNewChat(e.target.value)}
+                autoFocus
+                required
+              />
+            )}
           </Form.Field>
           {purpose != "reply" ? (
             <>
-              {!chat?.youtubeUrl  && submitFile&& (
+              {!chat?.youtubeUrl && submitFile && (
                 <div style={{ height: 35 }} className="ui fluid action input">
                   <Label
                     basic
@@ -444,36 +457,36 @@ export default function PostEditor({
             </>
           ) : (
             <>
-            {submitFile && (
-              <div style={{ height: 35 }} className="ui fluid action input">
-                <Label
-                  basic
-                  color="red"
-                  pointing="right"
-                  htmlFor="attach-file"
-                  style={{ width: 145 }}
-                >
-                  <p>Add/Edit Youtube URL</p>
-                </Label>
+              {submitFile && (
+                <div style={{ height: 35 }} className="ui fluid action input">
+                  <Label
+                    basic
+                    color="red"
+                    pointing="right"
+                    htmlFor="attach-file"
+                    style={{ width: 145 }}
+                  >
+                    <p>Add/Edit Youtube URL</p>
+                  </Label>
 
-                <Form.Field>
-                  <Form.Input
-                    style={{ height: 35, width: 210 }}
-                    focus
-                    placeholder="Youtube URL을 입력해주세요"
-                    value={youtubeString}
-                    onChange={(e) => setYoutubeString(e.target.value)}
+                  <Form.Field>
+                    <Form.Input
+                      style={{ height: 35, width: 210 }}
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
+                  <Icon
+                    style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
+                    size="large"
+                    name="search"
+                    color="violet"
+                    onClick={onYoutubeSubmit}
                   />
-                </Form.Field>
-                <Icon
-                  style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
-                  size="large"
-                  name="search"
-                  color="violet"
-                  onClick={onYoutubeSubmit}
-                />
-              </div>
-            )}
+                </div>
+              )}
             </>
           )}
 
@@ -511,7 +524,7 @@ export default function PostEditor({
           )}
           {purpose != "reply" ? (
             <>
-              {!chat?.fileUrl  && submitFile&& (
+              {!chat?.fileUrl && submitFile && (
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
@@ -535,24 +548,24 @@ export default function PostEditor({
           ) : (
             <>
               {submitFile && (
-              <div style={{ marginTop: 10 }}>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add/Edit photos</p>
-                </Label>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  id="attach-file"
-                  icon="file image"
-                  style={{ width: 300 }}
-                />
-              </div>
+                <div style={{ marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="orange"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add/Edit photos</p>
+                  </Label>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={onFileChange}
+                    id="attach-file"
+                    icon="file image"
+                    style={{ width: 300 }}
+                  />
+                </div>
               )}
             </>
           )}
@@ -581,7 +594,7 @@ export default function PostEditor({
           )}
           {purpose != "reply" ? (
             <>
-              {!chat?.vidFileUrl  && submitFile && (
+              {!chat?.vidFileUrl && submitFile && (
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
@@ -604,26 +617,26 @@ export default function PostEditor({
             </>
           ) : (
             <>
-            {submitFile && (
-              <div style={{ marginTop: 10 }}>
-                <Label
-                  basic
-                  color="yellow"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add/Edit videos</p>
-                </Label>
-                <Input
-                  type="file"
-                  accept="video/*"
-                  onChange={onFileChangeVideo}
-                  id="attach-file"
-                  icon="video image"
-                  style={{ width: 300 }}
-                />
-              </div>
-            )}
+              {submitFile && (
+                <div style={{ marginTop: 10 }}>
+                  <Label
+                    basic
+                    color="yellow"
+                    pointing="right"
+                    htmlFor="attach-file"
+                  >
+                    <p>Add/Edit videos</p>
+                  </Label>
+                  <Input
+                    type="file"
+                    accept="video/*"
+                    onChange={onFileChangeVideo}
+                    id="attach-file"
+                    icon="video image"
+                    style={{ width: 300 }}
+                  />
+                </div>
+              )}
             </>
           )}
 
@@ -718,16 +731,16 @@ export default function PostEditor({
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
           </Button>
           <Button
-                onClick={onSubmitFile}
-                icon
-                inverted
-                labelPosition="right"
-                color="blue"
-                style={{ marginTop: 5 }}
-              >
-                파일 첨부하기
-                <Icon name="file" />
-              </Button>
+            onClick={onSubmitFile}
+            icon
+            inverted
+            labelPosition="right"
+            color="blue"
+            style={{ marginTop: 5 }}
+          >
+            파일 첨부하기
+            <Icon name="file" />
+          </Button>
         </Form>
       </div>
     </>
