@@ -348,6 +348,7 @@ export default function PostEditor({
   };
   // Lee's Youtube URL substring Code END
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
+
   return (
     <>
       <div>
@@ -409,9 +410,9 @@ export default function PostEditor({
                     color="red"
                     pointing="right"
                     htmlFor="attach-file"
-                    style={{ width: 120 }}
+                    style={{ width: 145 }}
                   >
-                    <p>Add Youtube URL</p>
+                    <p>Add/Edit Youtube URL</p>
                   </Label>
 
                   <Form.Field>
@@ -442,9 +443,9 @@ export default function PostEditor({
                   color="red"
                   pointing="right"
                   htmlFor="attach-file"
-                  style={{ width: 120 }}
+                  style={{ width: 145 }}
                 >
-                  <p>Add Youtube URL</p>
+                  <p>Add/Edit Youtube URL</p>
                 </Label>
 
                 <Form.Field>
