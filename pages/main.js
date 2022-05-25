@@ -168,6 +168,7 @@ function Main() {
             marginBottom: 5,
             fontSize: 25,
             fontFamily: "FredokaOne-Regular",
+            borderRadius: "8%",
           }}
         >
           Go Bookstamp
@@ -189,6 +190,7 @@ function Main() {
             marginBottom: 5,
             fontSize: 25,
             fontFamily: "FredokaOne-Regular",
+            borderRadius: "8%",
           }}
         >
           Go Discord
