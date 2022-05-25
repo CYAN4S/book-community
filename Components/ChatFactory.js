@@ -214,6 +214,16 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
           <Container textAlign="left">
             <Form onSubmit={onNewPostSubmit}>
               <Form.Field>
+              <div style={{ textAlign: "right" }}>
+                  <Icon
+                    name="caret left"
+                    style={{ cursor: "pointer" }}
+                    onClick={returnClick}
+                  ></Icon>
+                  <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+                    뒤로가기
+                  </strong>
+                </div>
                 <Form.Input
                   fluid
                   label="제목"
