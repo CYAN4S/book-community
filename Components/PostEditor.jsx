@@ -411,7 +411,7 @@ export default function PostEditor({
           </Form.Field>
           {purpose != "reply" ? (
             <>
-              {!chat?.youtubeUrl && (
+              {!chat?.youtubeUrl  && submitFile&& (
                 <div style={{ height: 35 }} className="ui fluid action input">
                   <Label
                     basic
@@ -511,7 +511,7 @@ export default function PostEditor({
           )}
           {purpose != "reply" ? (
             <>
-              {!chat?.fileUrl && (
+              {!chat?.fileUrl  && submitFile&& (
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
@@ -581,7 +581,7 @@ export default function PostEditor({
           )}
           {purpose != "reply" ? (
             <>
-              {!chat?.vidFileUrl && (
+              {!chat?.vidFileUrl  && submitFile && (
                 <div style={{ marginTop: 10 }}>
                   <Label
                     basic
@@ -665,7 +665,6 @@ export default function PostEditor({
                     width: 100,
                     height: 30,
                     cursor: "pointer",
-                    marginLeft: 20,
                     marginTop: 10,
                   }}
                 >
@@ -680,7 +679,6 @@ export default function PostEditor({
                     width: 100,
                     height: 30,
                     cursor: "pointer",
-                    marginLeft: 20,
                     marginTop: 10,
                   }}
                 >
@@ -696,7 +694,6 @@ export default function PostEditor({
                     height: 30,
                     cursor: "pointer",
                     marginTop: 10,
-                    marginLeft: 20,
                     marginBottom: 10,
                   }}
                 >
