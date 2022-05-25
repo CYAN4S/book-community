@@ -32,6 +32,7 @@ export default function PostEditor({
   const [newTitle, setNewTitle] = useState(
     purpose == "reply" ? "" : chat?.title
   );
+  const [submitFile, setSubmitFile] = useState(false);
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
   // 0519_1929 비디오 업로드 편집/삭제 관련 버그 해결 코드 시작
@@ -348,7 +349,14 @@ export default function PostEditor({
   };
   // Lee's Youtube URL substring Code END
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
-
+  // submitEnd toggleOff code
+  const onSubmitEnd = () => {
+    setSubmitEnd((prev) => !prev);
+  };
+  // submitFile Ontoggle code
+  const onSubmitFile = () => {
+    setSubmitFile((prev) => !prev);
+  };
   return (
     <>
       <div>
@@ -425,18 +433,18 @@ export default function PostEditor({
                     />
                   </Form.Field>
                   <Icon
-                    style={{ marginTop : 5, marginLeft: 10, cursor:"pointer" }}
+                    style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
                     size="large"
                     name="search"
                     color="violet"
                     onClick={onYoutubeSubmit}
                   />
-                  
                 </div>
               )}
             </>
           ) : (
             <>
+            {submitFile && (
               <div style={{ height: 35 }} className="ui fluid action input">
                 <Label
                   basic
@@ -458,14 +466,14 @@ export default function PostEditor({
                   />
                 </Form.Field>
                 <Icon
-                    style={{ marginTop : 5, marginLeft: 10, cursor:"pointer" }}
-                    size="large"
-                    name="search"
-                    color="violet"
-                    onClick={onYoutubeSubmit}
-                  />
-
+                  style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
+                  size="large"
+                  name="search"
+                  color="violet"
+                  onClick={onYoutubeSubmit}
+                />
               </div>
+            )}
             </>
           )}
 
@@ -526,6 +534,7 @@ export default function PostEditor({
             </>
           ) : (
             <>
+              {submitFile && (
               <div style={{ marginTop: 10 }}>
                 <Label
                   basic
@@ -544,6 +553,7 @@ export default function PostEditor({
                   style={{ width: 300 }}
                 />
               </div>
+              )}
             </>
           )}
 
@@ -594,6 +604,7 @@ export default function PostEditor({
             </>
           ) : (
             <>
+            {submitFile && (
               <div style={{ marginTop: 10 }}>
                 <Label
                   basic
@@ -612,6 +623,7 @@ export default function PostEditor({
                   style={{ width: 300 }}
                 />
               </div>
+            )}
             </>
           )}
 
@@ -631,7 +643,12 @@ export default function PostEditor({
               </video>
               <div
                 onClick={onDeleteTempVideoFile}
-                style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20 }}
+                style={{
+                  width: 100,
+                  height: 30,
+                  cursor: "pointer",
+                  marginLeft: 20,
+                }}
               >
                 <Icon color="red" name="remove circle" />
                 <span>비디오 삭제</span>
@@ -644,7 +661,13 @@ export default function PostEditor({
               {chat?.fileUrl && (
                 <div
                   onClick={OnImageDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20, marginTop : 10 }}
+                  style={{
+                    width: 100,
+                    height: 30,
+                    cursor: "pointer",
+                    marginLeft: 20,
+                    marginTop: 10,
+                  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>이미지 삭제</span>
@@ -653,7 +676,13 @@ export default function PostEditor({
               {chat?.vidFileUrl && (
                 <div
                   onClick={OnVideoDeleteClick}
-                  style={{ width: 100, height: 30, cursor: "pointer", marginLeft : 20, marginTop : 10  }}
+                  style={{
+                    width: 100,
+                    height: 30,
+                    cursor: "pointer",
+                    marginLeft: 20,
+                    marginTop: 10,
+                  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>비디오 삭제</span>
@@ -662,7 +691,14 @@ export default function PostEditor({
               {chat?.youtubeUrl && (
                 <div
                   onClick={onYoutubeUrlDeleteClick}
-                  style={{ width: 140, height: 30, cursor: "pointer", marginTop:10, marginLeft:20, marginBottom : 10 }}
+                  style={{
+                    width: 140,
+                    height: 30,
+                    cursor: "pointer",
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginBottom: 10,
+                  }}
                 >
                   <Icon color="red" name="remove circle" />{" "}
                   <span>Youtube URL 삭제</span>
@@ -680,10 +716,21 @@ export default function PostEditor({
             value="update"
             inverted
             color="green"
-            style={{marginTop : 10}}
+            style={{ marginTop: 10 }}
           >
             {purpose == "reply" ? "댓글 달기" : "수정 완료"}
           </Button>
+          <Button
+                onClick={onSubmitFile}
+                icon
+                inverted
+                labelPosition="right"
+                color="blue"
+                style={{ marginTop: 5 }}
+              >
+                파일 첨부하기
+                <Icon name="file" />
+              </Button>
         </Form>
       </div>
     </>
