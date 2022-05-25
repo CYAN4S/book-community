@@ -190,7 +190,7 @@ export default function PostEditor({
             alert("수정이 완료되었습니다.");
           }
         } else {
-          // 수정완료 시, router.back() 미수행 => 다시 추가함(0525)
+          // 수정완료 시, router.back() 미수행 => 다시 추가함(수정하면 카톡에 이야기해줘요)(0525)
           if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
             router.back();
@@ -202,9 +202,12 @@ export default function PostEditor({
         if (purpose === "edit") {
           alert("수정이 완료되었습니다.");
         }
+        else{
         router.push("/we");
+        }
       }
       setCheckRealSubmit(false);
+      setSubmitEnd(true);
     } else {
       return;
     }
@@ -352,9 +355,6 @@ export default function PostEditor({
   // Lee's Youtube URL substring Code END
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
   // submitEnd toggleOff code
-  const onSubmitEnd = () => {
-    setSubmitEnd(false);
-  };
   // submitFile Ontoggle code
   const onSubmitFile = () => {
     setSubmitFile((prev) => !prev);
@@ -362,7 +362,9 @@ export default function PostEditor({
   return (
     <>
       <div>
+        {!submitEnd &&(
         <Form onSubmit={onSubmit}>
+        
           <Form.Field>
             <Label
               basic
@@ -401,6 +403,7 @@ export default function PostEditor({
             ) : (
               <></>
             )}
+            
             <Form.TextArea
               value={newChat}
               type="text"
@@ -410,6 +413,7 @@ export default function PostEditor({
               required
             />
           </Form.Field>
+
           {purpose != "reply" ? (
             <>
               {!chat?.youtubeUrl && submitFile && (
@@ -708,28 +712,29 @@ export default function PostEditor({
           )}
 
           {/* ------------------ */}
-
-          <Button
-            onClick={onCheckRealSubmit}
-            value="update"
-            inverted
-            color="green"
-            style={{ marginTop: 10 }}
-          >
-            {purpose == "reply" ? "댓글 달기" : "수정 완료"}
-          </Button>
-          <Button
-            onClick={onSubmitFile}
-            icon
-            inverted
-            labelPosition="right"
-            color="blue"
-            style={{ marginTop: 5 }}
-          >
-            파일 첨부하기
-            <Icon name="file" />
-          </Button>
+          {!submitEnd&&(
+          <><Button
+                onClick={onCheckRealSubmit}
+                value="update"
+                inverted
+                color="green"
+                style={{ marginTop: 10 }}
+              >
+                {purpose == "reply" ? "댓글 달기" : "수정 완료"}
+              </Button><Button
+                onClick={onSubmitFile}
+                icon
+                inverted
+                labelPosition="right"
+                color="blue"
+                style={{ marginTop: 5 }}
+              >
+                  파일 첨부하기
+                  <Icon name="file" />
+                </Button></>
+          )}
         </Form>
+        )}
       </div>
     </>
   );
