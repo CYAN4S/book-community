@@ -14,6 +14,7 @@ import Link from "next/link";
 const Help_Community = () => {
   const router = useRouter();
 
+  // Back: Common to help pages
   function returnClick(e) {
     e.preventDefault();
     router.back();

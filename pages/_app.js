@@ -28,6 +28,8 @@ function MyApp({ Component, pageProps }) {
       <RecoilRoot>
         <RecoilComponent />
 
+        {/*By dividing router.pathname, 
+          _app.js manages the parts that need to be output and those that don't.*/}
         <div>
           {router.pathname === "/main" ? (
             <></>
@@ -65,7 +67,7 @@ function MyApp({ Component, pageProps }) {
             </>
           )}
 
-          {/* 카카오 맵 API를 사용하기 위함 */}
+          {/* To use the Kakao Map API */}
           <Script
             type="text/javascript"
             src={

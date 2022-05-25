@@ -12,10 +12,13 @@ import withTransition from "../public/HOC/withTransition";
 
  function Main() {
   const router = useRouter();
+
+  // When click event occurs, go to WE page
   const onClick = () => {
     router.push("/we");
   }
 
+  // header component
   const HomepageHead = () => (
 
     <Container text>
