@@ -23,7 +23,7 @@ import { useState } from "react";
 
   const onClick_goDiscord = () => {
     setClicked(true);
-    router.push("/we");
+    router.push("https://discord.gg/nvwy2PpW");
   }
 
   const buttonVariants = {
@@ -42,9 +42,19 @@ import { useState } from "react";
     },
   };
 
+  const RepeatComponent = () => {
+    const blockVariants = {
+      initial: {
+        y: -50,
+      },
+      target: {
+        y: 100,
+      },
+    };
+  }
   // header component
   const HomepageHead = () => (
-    <Container text>
+    <Container textAlign="center">
       <Header
         as="h1"
         content="We Are Bookstamp"
@@ -64,9 +74,22 @@ import { useState } from "react";
           fontSize: "1.7em",
           fontWeight: "normal",
           marginTop: "1em",
-          marginBottom: "11.5em",
+          marginBottom: "5.5em",
         }}
       />
+
+    <Header
+        as="h2"
+        content="메인이미지 넣는곳"
+        inverted
+        style={{
+          fontSize: "1.7em",
+          fontWeight: "normal",
+          marginTop: "1em",
+          marginBottom: "5.5em",
+        }}
+      />
+
       <div>
         <motion.button
           initial="rest"
@@ -83,10 +106,10 @@ import { useState } from "react";
 
         <motion.button
           initial="rest"
-          whileHover="hover" // hover상태 일 때 hover animation발생
+          whileHover="hover" 
           whileTap="pressed"
           variants={buttonVariants}
-          custom={clicked} // custom을 통해 값을 전달 할 수 있다.
+          custom={clicked}
           onClick={onClick_goDiscord}
           style={{backgroundColor :"white", cursor : "pointer", paddingLeft : 10, paddingTop:5, marginBottom : 5, fontSize : 25, fontFamily : "FredokaOne-Regular"}}
         >
@@ -106,6 +129,7 @@ import { useState } from "react";
         style={{ minHeight: "100vh", padding: "1em 0em", marginTop : -35, marginLeft : -10, marginRight : -10 }}
         vertical
       >
+
         <HomepageHead />
       </Segment>
     </>
