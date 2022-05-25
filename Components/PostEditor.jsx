@@ -401,26 +401,14 @@ export default function PostEditor({
             ) : (
               <></>
             )}
-            {genre_chat ? (
-              <Form.TextArea
-                value={newChat}
-                type="text"
-                placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
-                onChange={(e) => setNewChat(e.target.value)}
-                autoFocus
-                required
-              />
-            ) : (
-
-              <Form.TextArea
-                value={newChat}
-                type="text"
-                placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
-                onChange={(e) => setNewChat(e.target.value)}
-                autoFocus
-                required
-              />
-            )}
+            <Form.TextArea
+              value={newChat}
+              type="text"
+              placeholder={purpose == "reply" ? "댓글 달기" : "수정하기"}
+              onChange={(e) => setNewChat(e.target.value)}
+              autoFocus
+              required
+            />
           </Form.Field>
           {purpose != "reply" ? (
             <>
