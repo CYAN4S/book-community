@@ -70,7 +70,6 @@ function Main() {
     <Container textAlign="center">
       <Header
         as="h1"
-        content="We Are Bookstamp"
         inverted
         style={{
           fontSize: "4em",
@@ -78,10 +77,10 @@ function Main() {
           marginBottom: 0,
           marginTop: "3em",
         }}
-      />
+      >        <p style={{fontSize : 70, fontFamily : "Dongle-Regular" }}>We Are Bookstamp</p>
+        </Header>
       <Header
         as="h2"
-        content="find wider communication"
         inverted
         style={{
           fontSize: "1.7em",
@@ -89,9 +88,10 @@ function Main() {
           marginTop: "1em",
           marginBottom: "1em",
         }}
-      ></Header>
+      >
+      </Header>
 
-      <Image src = {bookstamp} style={{marginBottom : "3em"}}/>
+      <Image src = {bookstamp} style={{marginBottom : "3em"}} width={400} height={400}/>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <motion.p
