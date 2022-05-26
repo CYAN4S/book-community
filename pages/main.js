@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import withTransition from "../public/HOC/withTransition";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
+import bookstamp from "../public/bookstamp.png";
 
 function Main() {
   const router = useRouter();
@@ -85,21 +87,11 @@ function Main() {
           fontSize: "1.7em",
           fontWeight: "normal",
           marginTop: "1em",
-          marginBottom: "5.5em",
+          marginBottom: "1em",
         }}
       ></Header>
 
-      <Header
-        as="h2"
-        content="메인이미지 넣는곳"
-        inverted
-        style={{
-          fontSize: "1.7em",
-          fontWeight: "normal",
-          marginTop: "1em",
-          marginBottom: "2.5em",
-        }}
-      />
+      <Image src = {bookstamp} style={{marginBottom : "3em"}}/>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <motion.p
