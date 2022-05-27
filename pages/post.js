@@ -371,4 +371,4 @@ const Post = () => {
   );
 };
 
-export default withTransition(Post);
+export default Post;

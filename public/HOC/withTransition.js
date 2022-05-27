@@ -15,13 +15,13 @@ const withTransition = (OriginalComponent) => {
         transition={{ duration: 0.8, ease: "easeInOut" }}
       />
       </> : <>
-      {/* <motion.div
+      <motion.div
         className="slide-out"
         initial={{ scaleX: 1 }}
         animate={{ scaleX: 0 }}
         exit={{ scaleX: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-      /> */}
+      />
       </>}
       
     </>

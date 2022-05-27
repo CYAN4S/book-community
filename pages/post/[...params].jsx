@@ -15,8 +15,10 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 
 import CardChats from "../../Components/CardChats";
+import withTransition from "../../public/HOC/withTransition";
 
-export default function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
+function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
+
   const router = useRouter();
 
   // 서버의 현재시간을 담을 state
@@ -156,3 +158,6 @@ export async function getServerSideProps({ params: { params } }) {
     },
   };
 }
+
+
+export default PostArea;

@@ -510,4 +510,4 @@ function Profile() {
   );
 }
 
-export default withTransition(Profile);
+export default Profile;

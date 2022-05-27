@@ -167,4 +167,4 @@ function Explorer() {
   );
 }
 
-export default withTransition(Explorer);
+export default Explorer;

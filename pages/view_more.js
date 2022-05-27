@@ -88,4 +88,4 @@ function View_more() {
   );
 }
 
-export default withTransition(View_more);
+export default View_more;

@@ -47,21 +47,21 @@ function Main() {
   const rotate = useMotionValue(0);
   const blockVariants = {
     initial: {
-      x : "-2em",
+      x: "-2em",
       y: 50,
     },
     target: {
-      x : "-2em",
+      x: "-2em",
       y: 80,
     },
   };
   const blockVariants2 = {
     initial: {
-      x : "2em",
+      x: "2em",
       y: 80,
     },
     target: {
-      x : "2em",
+      x: "2em",
       y: 50,
     },
   };
@@ -77,7 +77,7 @@ function Main() {
           fontWeight: "normal",
           marginBottom: 0,
           marginTop: "2.5em",
-          fontFamily:"DoHyeon-Regular"
+          fontFamily: "DoHyeon-Regular",
         }}
       />
       <Header
@@ -89,12 +89,17 @@ function Main() {
           fontWeight: "normal",
           marginTop: "1em",
           marginBottom: "1.5em",
-          fontFamily:"DoHyeon-Regular",
-          color:"grey",
+          fontFamily: "DoHyeon-Regular",
+          color: "grey",
         }}
       ></Header>
 
-      <Image src = {bookstamp} style={{marginBottom : "1.5em"}} width={400} height={400}/>
+      <Image
+        src={bookstamp}
+        style={{ marginBottom: "1.5em" }}
+        width={400}
+        height={400}
+      />
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <motion.p

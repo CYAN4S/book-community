@@ -82,4 +82,4 @@ function Book_home() {
   );
 }
 
-export default withTransition(Book_home);
+export default Book_home;
