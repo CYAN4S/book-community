@@ -227,7 +227,7 @@ const Post = () => {
 
   return (
     <>
-      <Container textAlign="center">
+      <Container textAlign="center" style={{ marginBottom: 20 }}>
         <Header as="h2" icon>
           <Icon name="paste" />
           게시글 작성하기
@@ -235,113 +235,136 @@ const Post = () => {
             작성할 게시글의 장르를 먼저 선택해주세요.
           </Header.Subheader>
         </Header>
-        </Container>
+      </Container>
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Grid columns={1} divided>
-          {representative_KDC ? (
-            <Grid.Row>
-              
-            </Grid.Row>
-          ) : (
-            <Grid.Row>
-              <Grid.Column>
-              <Menu vertical size="massive" style={{ marginLeft: "15%" }}>
-                <Dropdown item text="1단계 : 장르 선택하기">
-                  <Dropdown.Menu>
-                    {kdc.map((item) => (
-                      <Dropdown.Item key={item.id} onClick={handleItemClick}>
-                        {item.name}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Menu>
-              </Grid.Column>
-            </Grid.Row>
-          )}
-          {detail_KDC ? (
-            <Grid.Row></Grid.Row>
-          ) : (
-            <Grid.Row>
-              
+          <Grid.Row>
+            <Grid.Column>
               {representative_KDC ? (
-                <Grid.Column>
-                  <Menu vertical size="massive" style={{ marginLeft: "55%" }}>
-                    <Dropdown item text="2단계 : 세부 장르 선택하기">
-                      <Dropdown.Menu>
-                        <Dropdown.Header
-                          icon="tags"
-                          content={` 선택된 대표장르 : ${representative_KDC_Element.name}`}
-                        />
-                        {kdc_Arr.map((item) => (
-                          <Dropdown.Item
-                            key={item.id}
-                            onClick={handleDetailItemClick}
-                          >
-                            {item.name}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </Menu>
-                  </Grid.Column>
+                <Grid.Row></Grid.Row>
               ) : (
-                <></>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Menu vertical size="massive">
+                      <Dropdown item text="1단계 : 장르 선택하기">
+                        <Dropdown.Menu>
+                          {kdc.map((item) => (
+                            <Dropdown.Item
+                              key={item.id}
+                              onClick={handleItemClick}
+                            >
+                              {item.name}
+                            </Dropdown.Item>
+                          ))}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </Menu>
+                  </Grid.Column>
+                </Grid.Row>
               )}
-              
-            </Grid.Row>
-          )}
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column>
+              {detail_KDC ? (
+                <></>
+              ) : (
+                <>
+                  {representative_KDC ? (
+                    <>
+                      <Menu vertical size="massive">
+                        <Dropdown item text="2단계 : 세부 장르 선택하기">
+                          <Dropdown.Menu>
+                            <Dropdown.Header
+                              icon="tags"
+                              content={` 선택된 대표장르 : ${representative_KDC_Element.name}`}
+                            />
+                            {kdc_Arr.map((item) => (
+                              <Dropdown.Item
+                                key={item.id}
+                                onClick={handleDetailItemClick}
+                              >
+                                {item.name}
+                              </Dropdown.Item>
+                            ))}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Menu>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
+      </div>
 
       {representative_KDC && detail_KDC && (
-        <div style={{ margin: 30, textAlign: "center" }}>
-          <Grid centered columns={2}>
-            <Grid.Row column={2}>
-              <Grid.Column width={3} centered>
-                <Card>
-                  <Image src="./represent.jpg" wrapped ui={false} />
-                  <Card.Content>
-                    <Card.Header>선택된 장르</Card.Header>
-                    <Card.Meta>대표</Card.Meta>
-                    <Card.Description>
-                      {representative_KDC_Element.name}
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-              <Grid.Column width={3} centered style={{ marginLeft: 15 }}>
-                <Card>
-                  <Image src="./detail.jpg" wrapped ui={false} />
-                  <Card.Content>
-                    <Card.Header>선택된 장르</Card.Header>
-                    <Card.Meta>세부</Card.Meta>
-                    <Card.Description>{detail_KDC_Element}</Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <Button
-            onClick={retrySelect}
-            content="다시 선택하기"
-            labelPosition="left"
-            icon="redo"
-            inverted
-            color="red"
-            style={{ marginTop: 100, marginLeft: 8 }}
-          />
+        <div style={{ textAlign: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Grid centered columns={2}>
+              <Grid.Row column={2}>
+                <Grid.Column width={5} centered>
+                  <Card>
+                    <Image src="./represent.jpg" wrapped ui={false} />
+                    <Card.Content>
+                      <Card.Header>선택된 장르</Card.Header>
+                      <Card.Meta>대표</Card.Meta>
+                      <Card.Description>
+                        {representative_KDC_Element.name}
+                      </Card.Description>
+                    </Card.Content>
+                  </Card>
+                </Grid.Column>
+                <Grid.Column width={5} centered style={{ marginLeft: 15 }}>
+                  <Card>
+                    <Image src="./detail.jpg" wrapped ui={false} />
+                    <Card.Content>
+                      <Card.Header>선택된 장르</Card.Header>
+                      <Card.Meta>세부</Card.Meta>
+                      <Card.Description>{detail_KDC_Element}</Card.Description>
+                    </Card.Content>
+                  </Card>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
 
-          <Link
-            href={`./post/${representative_KDC_Element.name}/${detail_KDC_Element}`}
-          >
-            <Button
-              content="선택 완료하기"
-              labelPosition="left"
-              icon="redo"
-              inverted
-              color="violet"
-              style={{ marginTop: 100, marginLeft: 50 }}
-            />
-          </Link>
+          <div style={{ display: "flex", justifyContent: "center", marginTop : 20 }}>
+            <Grid columns={2} >
+              <Grid.Row>
+                <Grid.Column>
+                  <Button
+                    onClick={retrySelect}
+                    content="다시 선택하기"
+                    labelPosition="left"
+                    icon="redo"
+                    inverted
+                    color="red"
+                    style={{ marginTop: "5em" }}
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <Link
+                    href={`./post/${representative_KDC_Element.name}/${detail_KDC_Element}`}
+                  >
+                    <Button
+                      content="선택 완료하기"
+                      labelPosition="left"
+                      icon="redo"
+                      inverted
+                      color="violet"
+                      style={{ marginTop: "5em" }}
+                    />
+                  </Link>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
         </div>
       )}
     </>
