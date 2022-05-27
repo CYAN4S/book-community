@@ -1,6 +1,6 @@
 import { authService, dbService } from "../firebaseConfig";
 
-import { Divider, Header, Icon } from "semantic-ui-react";
+import { Divider, Header, Icon,Button } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import ChatFactory from "../Components/ChatFactory";
@@ -31,7 +31,15 @@ function Book_home() {
     });
   }, []);
 
-  
+  const onLookEntire = () => {
+
+  };
+  const onLookMine = () => {
+
+  };
+  const onLookSubscriber = () => {
+
+  };
   return (
     <>
       <div style={{marginLeft : 5}}>
@@ -63,6 +71,16 @@ function Book_home() {
               </Header.Subheader>
             </Header.Content>
           </Header>
+          <Button inverted color="violet" onClick={onLookEntire}>
+            전체 글
+          </Button>
+          <Button inverted color="pink" onClick={onLookMine}>
+            나의 글
+          </Button>
+          <Button inverted color="green" onClick={onLookSubscriber}>
+            구독자 글
+          </Button>
+          <Divider/>
           <div style={{ marginTop: 30 }}>
             {chats.length ? (
               chats.map((chat) => (
