@@ -70,28 +70,31 @@ function Main() {
     <Container textAlign="center">
       <Header
         as="h1"
+        content="We Are Bookstamp"
         inverted
         style={{
           fontSize: "4em",
           fontWeight: "normal",
           marginBottom: 0,
-          marginTop: "3em",
+          marginTop: "2.5em",
+          fontFamily:"DoHyeon-Regular"
         }}
-      >        <p style={{fontSize : 70, fontFamily : "Dongle-Regular" }}>We Are Bookstamp</p>
-        </Header>
+      />
       <Header
         as="h2"
+        content="find wider communication"
         inverted
         style={{
-          fontSize: "1.7em",
+          fontSize: "1.5em",
           fontWeight: "normal",
           marginTop: "1em",
-          marginBottom: "1em",
+          marginBottom: "1.5em",
+          fontFamily:"DoHyeon-Regular",
+          color:"grey",
         }}
-      >
-      </Header>
+      ></Header>
 
-      <Image src = {bookstamp} style={{marginBottom : "3em"}} width={400} height={400}/>
+      <Image src = {bookstamp} style={{marginBottom : "1.5em"}} width={400} height={400}/>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <motion.p
