@@ -1,17 +1,43 @@
 import { authService, dbService } from "../firebaseConfig";
 
-import { Divider, Header, Icon,Button } from "semantic-ui-react";
+import { Divider, Header, Icon, Button } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import ChatFactory from "../Components/ChatFactory";
 import Chats from "../Components/Chats";
 import { onAuthStateChanged } from "firebase/auth";
 import withTransition from "../public/HOC/withTransition";
+import { onUserDocSnapshot, getUserDoc } from "../utils/functions";
 
 function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
+  // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 start
+  const [LookEntire, setLookEntire] = useState(false);
+  const [LookMine, setLookMine] = useState(false);
+  const [LookSubscriber, setLookSubscriber] = useState(false);
 
+  const [subscribers, setSubscribers] = useState([]);
+  const [Articles, setArticles] = useState([]);
+
+  const onUser = async (data) => {
+    if (data?.users) {
+      // 구독자 글 있는지 확인
+      const x = await Promise.all(
+        data.users.map(async (userId) => await getUserDoc(userId))
+      );
+      const y = x.map((y) => y.uid);
+      setSubscribers(y);
+    } else {
+      setSubscribers([]);
+    }
+  };
+  useEffect(() => {
+    const unsub = onUserDocSnapshot(userId, onUser);
+    return () => unsub?.();
+    
+  }, [userId]);
+  // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 end
   onAuthStateChanged(authService, (user) => {
     if (user) {
       setUserId(user.uid);
@@ -20,36 +46,48 @@ function Book_home() {
 
   const q = query(collection(dbService, "chat"), orderBy("createdAt", "desc"));
   useEffect(() => {
+    setLookEntire(true);
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-
       setChats(chatArray);
+      // const y = chatArray.map((y) => y.createrId);
+      // setArticles(y);
+        
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
 
   const onLookEntire = () => {
-
+    setLookEntire(true);
+    setLookMine(false);
+    setLookSubscriber(false);
   };
   const onLookMine = () => {
-
+    
+    setLookMine(true);
+    if (LookMine == true) {
+      console.log(userId)
+      console.log(Articles)
+    }
+    setLookEntire(false);
+    setLookSubscriber(false);
   };
   const onLookSubscriber = () => {
-
+    
+    setLookSubscriber(true);
+    setLookEntire(false);
+    setLookMine(false);
   };
   return (
     <>
-      <div style={{marginLeft : 5}}>
+      <div style={{ marginLeft: 5 }}>
         <Header>
           <title>Home pages</title>
-
         </Header>
-        <div style={{height:30}}>
-         
-        </div>
+        <div style={{ height: 30 }}></div>
         <div>
           <Header as="h2" style={{ marginTop: -40 }}>
             <Icon name="chat" />
@@ -80,21 +118,62 @@ function Book_home() {
           <Button inverted color="green" onClick={onLookSubscriber}>
             구독자 글
           </Button>
-          <Divider/>
+          <Divider />
           <div style={{ marginTop: 30 }}>
-            {chats.length ? (
-              chats.map((chat) => (
-                <div key={chat.id} style={{ marginBottom: 30 }}>
-                  <Chats chat={chat} isOwner={chat.createrId === userId} />
-                </div>
-              ))
+            {LookEntire ? (
+              <>
+                {chats.length ? (
+                  chats.map((chat) => (
+                    <div key={chat.id} style={{ marginBottom: 30 }}>
+                      <Chats chat={chat} isOwner={chat.createrId === userId} />
+                    </div>
+                  ))
+                ) : (
+                  <p>채팅목록이 없습니다</p>
+                )}
+              </>
+            ) : LookMine ? (
+              <>
+              {/* {chats.length ? (
+                chats.map((chat) => (
+                  <div key={chat.id} style={{ marginBottom: 30 }}>
+                    {Articles.includes(userId) ? (
+                      <Chats
+                        chat={chat}
+                        isOwner={chat.createrId === userId}
+                      />
+                    ) : (<></>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p>채팅목록이 없습니다</p>
+              )} */}
+            </>
+            ) : LookSubscriber ? (
+              <>
+                {chats.length ? (
+                  chats.map((chat) => (
+                    <div key={chat.id} style={{ marginBottom: 30 }}>
+                      {subscribers.includes(chat.createrId) ? (
+                        <Chats
+                          chat={chat}
+                          isOwner={chat.createrId === userId}
+                        />
+                      ) : (<></>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p>채팅목록이 없습니다</p>
+                )}
+              </>
             ) : (
-              <p>채팅목록이 없습니다</p>
+              <></>
             )}
           </div>
           <Divider />
         </div>
-
       </div>
     </>
   );
