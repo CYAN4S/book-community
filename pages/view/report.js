@@ -204,7 +204,7 @@ const Report = () => {
         <div>
           {formOpen ? (
             <>
-              <Icon name="caret up" onClick={onToggleForm} size="big"></Icon>
+              <Icon name="caret up" onClick={onToggleForm} size="big" style={{cursor:"pointer"}}></Icon>
               <Segment>
                 <Form onSubmit={onNewReportSubmit}>
                   <Form.Group widths="equal">
@@ -298,7 +298,7 @@ const Report = () => {
             </>
           ) : (
             <>
-              <Icon name="caret down" onClick={onToggleForm} size="big"></Icon>
+              <Icon name="caret down" onClick={onToggleForm} size="big" style={{cursor:"pointer"}}></Icon>
             </>
           )}
         </div>

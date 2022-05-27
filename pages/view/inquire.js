@@ -1,4 +1,4 @@
-import { authService, dbService,  } from "../../firebaseConfig";
+import { authService, dbService } from "../../firebaseConfig";
 import { updateProfile } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import {
@@ -15,56 +15,55 @@ import {
   Select,
 } from "semantic-ui-react";
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 const Inquire = () => {
   // 0515_1623 코드 추가 시작
-const [inquireUserName, setInquireUserName] = useState("");
-const [userContext, setUserContext] = useState("");
-const [category, setCategory] = useState("");
-const categories = [
-  { key: "a", text: "시스템 문의", value: "시스템 문의" },
-  { key: "b", text: "시스템 개선", value: "시스템 개선" },
-  { key: "c", text: "기타", value: "기타" },
-];
+  const [inquireUserName, setInquireUserName] = useState("");
+  const [userContext, setUserContext] = useState("");
+  const [category, setCategory] = useState("");
+  const categories = [
+    { key: "a", text: "시스템 문의", value: "시스템 문의" },
+    { key: "b", text: "시스템 개선", value: "시스템 개선" },
+    { key: "c", text: "기타", value: "기타" },
+  ];
 
-const [userObj, setUserObj] = useState(null);
-const collectionName = `userInquire`;
-useEffect(() => {
-  authService.onAuthStateChanged((user) => {
-    if (user) {
-      setUserObj({
-        uid: user.uid,
-        updateProfile: (args) => updateProfile(args),
-      });
-    } else {
-      setUserObj(null);
-    }
-  });
-}, []);
+  const [userObj, setUserObj] = useState(null);
+  const collectionName = `userInquire`;
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj({
+          uid: user.uid,
+          updateProfile: (args) => updateProfile(args),
+        });
+      } else {
+        setUserObj(null);
+      }
+    });
+  }, []);
 
-const onNewInquireSubmit = async (e) => {
-  e.preventDefault();
+  const onNewInquireSubmit = async (e) => {
+    e.preventDefault();
 
-  const inquireObj = {
-    createdAt: Date.now(),
-    createrId: userObj.uid,
-    inquireUserName: inquireUserName,
-    userContext:userContext,
-    category: category,
-    
+    const inquireObj = {
+      createdAt: Date.now(),
+      createrId: userObj.uid,
+      inquireUserName: inquireUserName,
+      userContext: userContext,
+      category: category,
+    };
+
+    console.log(category, userContext);
+    await addDoc(collection(dbService, collectionName), inquireObj)
+      .then(() => console.log("전송완료"))
+      .catch((error) => alert(error));
+    setInquireUserName("");
+    setUserContext("");
+    setCategory("");
   };
-
-  console.log(category,userContext);
-  await addDoc(collection(dbService, collectionName), inquireObj)
-    .then(() => console.log("전송완료"))
-    .catch((error) => alert(error));
-  setInquireUserName("");
-  setUserContext("");
-  setCategory("");
-};
-// 0515_1623 코드 끝
+  // 0515_1623 코드 끝
   const [formOpen, setFormOpen] = useState(false);
   const router = useRouter();
   const panels = [
@@ -88,7 +87,8 @@ const onNewInquireSubmit = async (e) => {
         content: (
           <div style={{ marginLeft: 30 }}>
             <p style={{ fontSize: 13 }}>
-              - 시스템 개선에 대한 생각이 있으시거나, 불편한 점이 있으실 때 문의하실 수 있어요!
+              - 시스템 개선에 대한 생각이 있으시거나, 불편한 점이 있으실 때
+              문의하실 수 있어요!
             </p>
           </div>
         ),
@@ -100,9 +100,7 @@ const onNewInquireSubmit = async (e) => {
       content: {
         content: (
           <div style={{ marginLeft: 30 }}>
-            <p style={{ fontSize: 13 }}>
-              - 그 외의 사항
-            </p>
+            <p style={{ fontSize: 13 }}>- 그 외의 사항</p>
           </div>
         ),
       },
@@ -148,14 +146,19 @@ const onNewInquireSubmit = async (e) => {
           <Icon name="edit" />
           <Header.Subheader>
             <p style={{ marginTop: 20 }}>
-            아래 화살표 버튼을 눌러 양식에 따라 내용을 작성해주세요.
+              아래 화살표 버튼을 눌러 양식에 따라 내용을 작성해주세요.
             </p>
           </Header.Subheader>
         </Header>
         <div>
           {formOpen ? (
             <>
-              <Icon name="caret up" onClick={onToggleForm} size="big"></Icon>
+              <Icon
+                name="caret up"
+                onClick={onToggleForm}
+                size="big"
+                style={{ cursor: "pointer" }}
+              ></Icon>
               <Segment>
                 <Form onSubmit={onNewInquireSubmit}>
                   <Form.Group widths="equal">
@@ -176,8 +179,8 @@ const onNewInquireSubmit = async (e) => {
                       style={{ marginBottom: 20 }}
                       control={Select}
                       options={categories}
-                      value = {category}
-                      onChange={(e,data) => setCategory(data.value)}
+                      value={category}
+                      onChange={(e, data) => setCategory(data.value)}
                       required
                     />
                   </Form.Group>
@@ -201,7 +204,12 @@ const onNewInquireSubmit = async (e) => {
             </>
           ) : (
             <>
-              <Icon name="caret down" onClick={onToggleForm} size="big"></Icon>
+              <Icon
+                name="caret down"
+                onClick={onToggleForm}
+                size="big"
+                style={{ cursor: "pointer" }}
+              ></Icon>
             </>
           )}
         </div>
