@@ -13,7 +13,7 @@ function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
   // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 start
-  const [LookEntire, setLookEntire] = useState(false);
+  const [LookEntire, setLookEntire] = useState(true);
   const [LookMine, setLookMine] = useState(false);
   const [LookSubscriber, setLookSubscriber] = useState(false);
 
@@ -33,6 +33,8 @@ function Book_home() {
     }
   };
   useEffect(() => {
+   
+
     const unsub = onUserDocSnapshot(userId, onUser);
     return () => unsub?.();
     
@@ -46,40 +48,45 @@ function Book_home() {
 
   const q = query(collection(dbService, "chat"), orderBy("createdAt", "desc"));
   useEffect(() => {
-    setLookEntire(true);
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setChats(chatArray);
-      // const y = chatArray.map((y) => y.createrId);
-      // setArticles(y);
-        
+      const y = chatArray.map((y) => y.createrId);
+      setArticles(y);
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
 
   const onLookEntire = () => {
+    console.log("onLookEntire 실행")
     setLookEntire(true);
     setLookMine(false);
     setLookSubscriber(false);
+    console.log("LookEntire",LookEntire);
+    console.log("LookMine",LookMine)
+    console.log("LookSubscriber",LookSubscriber)
   };
   const onLookMine = () => {
+    setLookEntire((prev) => !prev);
+    setLookMine((prev) => !prev);
     
-    setLookMine(true);
-    if (LookMine == true) {
-      console.log(userId)
-      console.log(Articles)
-    }
-    setLookEntire(false);
-    setLookSubscriber(false);
+    console.log("LookEntire",LookEntire);
+    console.log("LookMine",LookMine)
+    console.log("LookSubscriber",LookSubscriber)
+    
   };
   const onLookSubscriber = () => {
-    
+   
+    console.log("onLookSubscriber실행")
     setLookSubscriber(true);
     setLookEntire(false);
     setLookMine(false);
+    console.log("LookEntire",LookEntire);
+    console.log("LookMine",LookMine)
+    console.log("LookSubscriber",LookSubscriber)
   };
   return (
     <>
@@ -134,7 +141,7 @@ function Book_home() {
               </>
             ) : LookMine ? (
               <>
-              {/* {chats.length ? (
+              {chats.length ? (
                 chats.map((chat) => (
                   <div key={chat.id} style={{ marginBottom: 30 }}>
                     {Articles.includes(userId) ? (
@@ -148,7 +155,7 @@ function Book_home() {
                 ))
               ) : (
                 <p>채팅목록이 없습니다</p>
-              )} */}
+              )}
             </>
             ) : LookSubscriber ? (
               <>
