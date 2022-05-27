@@ -17,6 +17,7 @@ import {
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import withTransition from "../../public/HOC/withTransition";
 
 const Inquire = () => {
   // 0515_1623 코드 추가 시작
@@ -218,4 +219,4 @@ const Inquire = () => {
   );
 };
 
-export default Inquire;
+export default withTransition(Inquire);

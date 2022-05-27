@@ -12,6 +12,8 @@ import {
 import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import withTransition from "../../public/HOC/withTransition";
+
 const Help = () => {
   const router = useRouter();
   function returnClick(e) {
@@ -311,4 +313,4 @@ const Help = () => {
   );
 };
 
-export default Help;
+export default withTransition(Help);

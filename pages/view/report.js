@@ -21,12 +21,12 @@ import { addDoc, collection } from "firebase/firestore";
 // 0516_0944 import 추가
 import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import withTransition from "../../public/HOC/withTransition";
 
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
   // 0516_0932 코드 추가 시작
   // reportPhotoUpload code start
-
 
   const onFileChange = (event) => {
     const {
@@ -77,7 +77,7 @@ const Report = () => {
     });
   }, []);
 
-  const onNewReportSubmit = async (e,data) => {
+  const onNewReportSubmit = async (e, data) => {
     e.preventDefault();
     if (imgFileString !== "") {
       const fileRef = ref(storageService, `${data.uid}/${v4()}`);
@@ -204,7 +204,12 @@ const Report = () => {
         <div>
           {formOpen ? (
             <>
-              <Icon name="caret up" onClick={onToggleForm} size="big" style={{cursor:"pointer"}}></Icon>
+              <Icon
+                name="caret up"
+                onClick={onToggleForm}
+                size="big"
+                style={{ cursor: "pointer" }}
+              ></Icon>
               <Segment>
                 <Form onSubmit={onNewReportSubmit}>
                   <Form.Group widths="equal">
@@ -298,7 +303,12 @@ const Report = () => {
             </>
           ) : (
             <>
-              <Icon name="caret down" onClick={onToggleForm} size="big" style={{cursor:"pointer"}}></Icon>
+              <Icon
+                name="caret down"
+                onClick={onToggleForm}
+                size="big"
+                style={{ cursor: "pointer" }}
+              ></Icon>
             </>
           )}
         </div>
@@ -307,4 +317,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default withTransition(Report);
