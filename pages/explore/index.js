@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Header, Segment, Grid, Table } from "semantic-ui-react";
+import { Button, Header, Segment, Grid, Table, Icon, Divider } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import withTransition from "../../public/HOC/withTransition";
@@ -11,34 +11,28 @@ function Explorer() {
 
   // const [recentBooks, setRecentBooks] = useState([]); // 최근 검색한 책
 
-
   const [toggleRecentBooks, setToggleRecentBooks] = useState(false);
 
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부 확인용
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
 
   const [currentUser] = useRecoilState(currentUserState);
-  let recentBooks = currentUser.mySearchBooks; // 최근 검색한 책
+
+  let recentBooks = currentUser?.mySearchBooks.length > 4 ? currentUser?.mySearchBooks. : currentUser?.mySearchBooks;
+  
+
+
   useEffect(() => {
     setKeyword("");
     if (currentUser) {
       if (currentUser.mySearchBooks.length) {
         setLens(currentUser.mySearchBooks.length);
-        
       } else {
         setLens(0);
       }
     }
     setSimilarBookLens(0);
   }, []);
-
-  // const onClick = () => {
-  //   currentUser.mySearchBooks.map((book) => {
-  //     recentBooks.push(book);
-  //   });
-  //   setToggleRecentBooks(!toggleRecentBooks);
-  // }
-
 
   return (
     <>
@@ -67,17 +61,19 @@ function Explorer() {
         <div>
           {lens ? (
             <>
-                            <Grid columns={4} key={``}>
-                  <Grid.Row>
-              {recentBooks.map((recentBooks) => (
-
-                    <Grid.Column>
-                     
+              <Grid columns={4} key={``} divided>
+                <Grid.Row>
+                  {recentBooks.map((recentBooks) => (
+                    <>
+                    <Grid.Column style={{display : "flex", justifyContent : "center", }}>
+                      <Icon name="book" size="huge"></Icon>
+                      <p style={{marginLeft : 10, marginRight: 10, fontFamily : "Gugi-Regular", fontSize : 11}}>{recentBooks.slice(24,).length > 35 ? `${recentBooks.slice(24,).substring(0,35)}...` : recentBooks.slice(24,)}</p>
                     </Grid.Column>
-                  
-              ))}
-              </Grid.Row>
-                </Grid>
+                    <Divider />
+                    </>
+                  ))}
+                </Grid.Row>
+              </Grid>
             </>
           ) : (
             <>
