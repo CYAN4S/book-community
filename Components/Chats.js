@@ -33,6 +33,7 @@ export default function Chats({
   detailbook_chat,
   genre_chat,
   extractTitle,
+  replyCheck
 }) {
   const [chats, setChats] = useState("");
   const [detailChats, setDetailChats] = useState("");
@@ -404,7 +405,7 @@ export default function Chats({
               </Link>
               <Item.Content style={{ marginLeft: 20, marginBottom: 5 }}>
                 <Item.Description>
-                  {chat.replyTo ? (
+                  {chat.replyTo && replyCheck != false? (
                     <>
                       <strong>{chat.text}</strong>
                       <Label
