@@ -13,13 +13,11 @@ function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
   // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 start
-  const [exist, setExist] = useState(false);
-  const [entire, setEntire] = useState(false);
+  const [entire, setEntire] = useState(true);
   const [mine, setMine] = useState(false);
   const [subscriber, setSubscriber] = useState(false);
 
   const [subscribers, setSubscribers] = useState([]);
-  const [Articles, setArticles] = useState([]);
 
   const onUser = async (data) => {
     if (data?.users) {
@@ -55,39 +53,11 @@ function Book_home() {
         ...doc.data(),
       }));
       setChats(chatArray);
-      const y = chatArray.map((y) => y.createrId);
-      setArticles(y);
-      // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
   }, []);
 
-  // const onLookEntire = () => {
-  //   setLookEntire(true);
-  //   console.log("onLookEntire 실행")
-  //   console.log("LookEntire",LookEntire);
-  //   console.log("LookMine",LookMine)
-  //   console.log("LookSubscriber",LookSubscriber)
-  // };
-  // const onLookMine = () => {
-  //   setLookEntire(false);
-  //   console.log("onLookMine 실행")
-  //   console.log("LookEntire",LookEntire);
-  //   console.log("LookMine",LookMine)
-  //   console.log("LookSubscriber",LookSubscriber)
-    
-  // };
-  // const onLookSubscriber = () => {
-  //   setLookEntire(false); 
-  //   console.log("onLookSubscriber실행")
-  //   console.log("LookEntire",LookEntire);
-  //   console.log("LookMine",LookMine)
-  //   console.log("LookSubscriber",LookSubscriber)
-  // };
-  const toggleExist = () => {
-    setEntire(false);
-    setMine(false);
-    setSubscriber(false);
-  };
+
+
   const toggleEntire = () => {
     setEntire(true);
     setMine(false);
@@ -162,7 +132,7 @@ function Book_home() {
               {chats.length ? (
                 chats.map((chat) => (
                   <div key={chat.id} style={{ marginBottom: 30 }}>
-                    {Articles.includes(userId) ? (
+                    {(chat.createrId === userId) ? (
                       <Chats
                         chat={chat}
                         isOwner={chat.createrId === userId}
