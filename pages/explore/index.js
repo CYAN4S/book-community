@@ -39,17 +39,17 @@ function Explorer() {
       const uniqueArr = reverseMySearchBook.filter((element, index) => {
         return reverseMySearchBook.indexOf(element) === index;
     });
-      setRecentBooks(uniqueArr.length > 4 ? uniqueArr.slice(-4):uniqueArr);
-      setLens(uniqueArr);
+      setRecentBooks(uniqueArr.length > 4 ? uniqueArr.slice(-5):uniqueArr);
+      setLens(uniqueArr.length > 4 ? uniqueArr.slice(-5).length:uniqueArr.length);
     } else {
       setRecentBooks([]);
     }
   };
   // 테스트용 버튼 (console)
-  // const onStatusCheck = () => {
-  //   console.log(recentBooks);
-  //   console.log(lens);
-  // };
+  const onStatusCheck = () => {
+    console.log(recentBooks);
+    console.log(lens);
+  };
   return (
     <>
       <div style={{ marginTop: -20 }} className="ui fluid action input">
@@ -70,14 +70,14 @@ function Explorer() {
         </Link>
       </div>
       {/* 테스트용 버튼 (console 확인용) */}
-      {/* <Button
+      <Button
         onClick={onStatusCheck}
         inverted
         color="blue"
         style={{ marginLeft: 5 }}
       >
         확인
-      </Button> */}
+      </Button>
        {/* 0523_1105 내용 추가 시작 */}
        <Header as="h3" color="black">
         최근 검색한 책
