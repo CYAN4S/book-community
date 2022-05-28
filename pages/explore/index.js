@@ -88,9 +88,15 @@ function Explorer() {
                 <Grid.Row>
                   {reverseRecentBooks.map((recentBooks) => (
                     <>
+                       <Link
+                                href={`explore/detail/${recentBooks
+                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                              >
                       <Grid.Column
                         style={{ display: "flex", justifyContent: "center" }}
                       >
+                        
                         <Icon name="book" size="huge"></Icon>
                         <p
                           style={{
@@ -104,7 +110,9 @@ function Explorer() {
                                       ? recentBooks
                                       : recentBooks.slice(0, 50) + "..."}
                         </p>
+                       
                       </Grid.Column>
+                      </Link>
                       <Divider />
                     </>
                   ))}
