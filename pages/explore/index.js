@@ -29,6 +29,8 @@ function Explorer() {
     setSimilarBookLens(0);
   },[currentUser]);
 
+  // 최근 검색한 책 왼쪽에서 배치되게끔 배열 재배치
+  const reverseRecentBooks = [...recentBooks].reverse();
   return (
     <>
       <div style={{ marginTop: -20 }} className="ui fluid action input">
@@ -58,7 +60,7 @@ function Explorer() {
             <>
               <Grid columns={4} key={``} divided>
                 <Grid.Row>
-                  {recentBooks.map((recentBooks) => (
+                  {reverseRecentBooks.map((recentBooks) => (
                     <>
                     <Grid.Column style={{display : "flex", justifyContent : "center", }}>
                       <Icon name="book" size="huge"></Icon>
