@@ -106,11 +106,11 @@ function Book_home() {
           <Button inverted color="violet" onClick={toggleEntire}>
             전체 글
           </Button>
-          <Button inverted color="pink" onClick={toggleMine}>
-            나의 글
-          </Button>
           <Button inverted color="green" onClick={toggleSubscriber}>
             구독자 글
+          </Button>
+          <Button inverted color="pink" onClick={toggleMine}>
+            나의 글
           </Button>
           <Divider />
           <div style={{ marginTop: 30 }}>
@@ -135,6 +135,7 @@ function Book_home() {
                     {(chat.createrId === userId) ? (
                       <Chats
                         chat={chat}
+                        replyCheck = {false}
                         isOwner={chat.createrId === userId}
                       />
                     ) : (<></>
@@ -154,6 +155,7 @@ function Book_home() {
                       {subscribers.includes(chat.createrId) ? (
                         <Chats
                           chat={chat}
+                          replyCheck = {false}
                           isOwner={chat.createrId === userId}
                         />
                       ) : (<></>
