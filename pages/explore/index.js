@@ -35,13 +35,16 @@ function Explorer() {
       const listMySearchBook = await Promise.all(
         data.mySearchBooks.map(async (x) => await x.substr(24))
       );
-      setRecentBooks(listMySearchBook.length > 4 ? listMySearchBook.slice(-4):listMySearchBook);
-      setLens(listMySearchBook);
+      const reverseMySearchBook = [...listMySearchBook].reverse();
+      const uniqueArr = reverseMySearchBook.filter((element, index) => {
+        return reverseMySearchBook.indexOf(element) === index;
+    });
+      setRecentBooks(uniqueArr.length > 4 ? uniqueArr.slice(-4):uniqueArr);
+      setLens(uniqueArr);
     } else {
       setRecentBooks([]);
     }
   };
-  const reverseRecentBooks= [...recentBooks].reverse();
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
   //   console.log(recentBooks);
@@ -86,7 +89,7 @@ function Explorer() {
             <>
               <Grid columns={4} key={``} divided>
                 <Grid.Row>
-                  {reverseRecentBooks.map((recentBooks) => (
+                  {recentBooks.map((recentBooks) => (
                     <>
                        <Link
                                 href={`explore/detail/${recentBooks

@@ -102,14 +102,14 @@ export default function Title({ books }) {
     const createDate = Date.now();
     console.log(title);
     const doc = await getUserDoc(currentUid);
-    const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
-    if (!searchedMybook) {
+    //const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
+    // if (!searchedMybook) {
       updateUserDoc({
         mySearchBooks: doc.mySearchBooks
           ? [...doc.mySearchBooks, `${isbn}${title}`]
           : [`${isbn}${title}`],
       });
-    }
+    // }
   };
   // 0523_0923 책 검색 History 저장 code END
 
