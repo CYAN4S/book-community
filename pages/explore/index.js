@@ -9,7 +9,7 @@ import { currentUserState } from "../../utils/hooks";
 function Explorer() {
   const [keyword, setKeyword] = useState("");
 
-  const [recentBooks, setRecentBooks] = useState({}); // 최근 검색한 책
+  const [recentBooks, setRecentBooks] = useState([]); // 최근 검색한 책
 
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부 확인용
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
@@ -17,15 +17,14 @@ function Explorer() {
   const [currentUser] = useRecoilState(currentUserState);
   useEffect(() => {
     setKeyword("");
-    if(currentUser){
-      if(currentUser.mySearchBooks.length){
+    if (currentUser) {
+      if (currentUser.mySearchBooks.length) {
         setLens(currentUser.mySearchBooks.length);
-        currentUser.mySearchBooks.map((book)=>{
-          console.log(book)
-          setRecentBooks([...recentBooks, book])
-          
-        })
-      }else{
+        currentUser.mySearchBooks.map((book) => {
+          console.log(book);
+          setRecentBooks([...recentBooks, book]);
+        });
+      } else {
         setLens(0);
       }
     }
@@ -58,15 +57,14 @@ function Explorer() {
         <div>
           {lens ? (
             <>
-              {recentBooks.length && recentBooks.map((recentBooks) => (
-                <Grid columns={4} key={``}>
-                  <Grid.Row>
-                    <Grid.Column>
-                      {recentBooks}
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              ))}
+              {recentBooks.length &&
+                recentBooks.map((recentBooks) => (
+                  <Grid columns={4} key={``}>
+                    <Grid.Row>
+                      <Grid.Column>{recentBooks}</Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                ))}
             </>
           ) : (
             <>
