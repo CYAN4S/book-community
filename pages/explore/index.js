@@ -3,19 +3,34 @@ import { Button, Header, Segment, Grid, Table } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import withTransition from "../../public/HOC/withTransition";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../utils/hooks";
 
 function Explorer() {
   const [keyword, setKeyword] = useState("");
-  const [recentBooks, setRecentBooks] = useState([]);
-  const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부
+
+  const [recentBooks, setRecentBooks] = useState({}); // 최근 검색한 책
+
+  const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부 확인용
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
 
+  const [currentUser] = useRecoilState(currentUserState);
   useEffect(() => {
     setKeyword("");
-    setLens(0);
+    if(currentUser){
+      if(currentUser.mySearchBooks.length){
+        setLens(currentUser.mySearchBooks.length);
+        currentUser.mySearchBooks.map((book)=>{
+          console.log(book)
+          setRecentBooks([...recentBooks, book])
+          
+        })
+      }else{
+        setLens(0);
+      }
+    }
     setSimilarBookLens(0);
   }, []);
-
   return (
     <>
       <div style={{ marginTop: -20 }} className="ui fluid action input">
@@ -43,69 +58,15 @@ function Explorer() {
         <div>
           {lens ? (
             <>
-              {/* {recentBooks.map((recentBooks) => (
-                <Grid style={{}} columns={4} key={``}>
+              {recentBooks.length && recentBooks.map((recentBooks) => (
+                <Grid columns={4} key={``}>
                   <Grid.Row>
                     <Grid.Column>
-                      <div>
-                        <div
-                          style={{ marginLeft: 5 }}
-                          className="ui two column grid ui center aligned segments"
-                        >
-                          <div className="columnImage">
-                            <div
-                              style={{ width: 110, height: 145 }}
-                              className="ui orange segment"
-                            >
-                              <Link
-                                href={`explore/detail/${recentBooks
-                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
-                              >
-                                <a>
-                                  <img
-                                    style={{
-                                      width: 80,
-                                      height: 120,
-                                    }}
-                                    src={"test"}
-                                    alt="DON'T HAVE IMAGE"
-                                    className="img_book"
-                                  />
-                                </a>
-                              </Link>
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              width: 300,
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                            className="ui yellow segment"
-                          >
-                            <Table.Header>
-                              <Table.Row>
-                                <Table.HeaderCell
-                                  style={{
-                                    fontSize: 12,
-                                  }}
-                                >
-                                  <div>
-                                    {recentBooks.length < 30
-                                      ? recentBooks
-                                      : recentBooks.slice(0, 30) + "..."}
-                                  </div>
-                                </Table.HeaderCell>
-                              </Table.Row>
-                            </Table.Header>
-                          </div>
-                        </div>
-                      </div>
+                      {recentBooks}
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
-              ))} */}
+              ))}
             </>
           ) : (
             <>
