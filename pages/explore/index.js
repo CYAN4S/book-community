@@ -1,36 +1,52 @@
 import React from "react";
-import { Button, Header, Segment, Grid, Table, Icon, Divider } from "semantic-ui-react";
+import { Button, Header, Icon, Segment, Grid, Table,Divider } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import withTransition from "../../public/HOC/withTransition";
-import { useRecoilState } from "recoil";
-import { currentUserState } from "../../utils/hooks";
+import { authService } from "../../firebaseConfig";
+import { onUserDocSnapshot } from "../../utils/functions";
 
 function Explorer() {
   const [keyword, setKeyword] = useState("");
-
-  const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부 확인용
+  const [recentBooks, setRecentBooks] = useState([]);
+  const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
 
-  const [currentUser] = useRecoilState(currentUserState);
-  const [recentBooks, setRecentBooks] = useState(currentUser?.mySearchBooks.length > 4 ? currentUser?.mySearchBooks.slice(-4,) : currentUser?.mySearchBooks);
-  
   useEffect(() => {
     setKeyword("");
-    if (currentUser) {
-      if (currentUser.mySearchBooks.length) {
-        setLens(currentUser.mySearchBooks.length);
-      } else {
-        setLens(0);
-      }
-    }
-    // 새로고침시 재반영
-    setRecentBooks(currentUser?.mySearchBooks.length > 4 ? currentUser?.mySearchBooks.slice(-4,) : currentUser?.mySearchBooks);
+    setLens(0);
     setSimilarBookLens(0);
-  },[currentUser]);
+  }, []);
+  // 0523_1103 추가 시작
+  const [currentUid, setCurrentUid] = useState(null);
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUid(user.uid);
+      }
+    });
+  }, []);
 
-  // 최근 검색한 책 왼쪽에서 배치되게끔 배열 재배치
-  //const reverseRecentBooks = [...recentBooks].reverse();
+  useEffect(() => {
+    const unsub = onUserDocSnapshot(currentUid, onUser);
+    return () => unsub?.();
+  }, [currentUid]);
+  const onUser = async (data) => {
+    if (data?.mySearchBooks) {
+      const listMySearchBook = await Promise.all(
+        data.mySearchBooks.map(async (x) => await x.substr(24))
+      );
+      setRecentBooks(listMySearchBook.length > 4 ? listMySearchBook.slice(-4):listMySearchBook);
+      setLens(listMySearchBook);
+    } else {
+      setRecentBooks([]);
+    }
+  };
+  const reverseRecentBooks= [...recentBooks].reverse();
+  // 테스트용 버튼 (console)
+  // const onStatusCheck = () => {
+  //   console.log(recentBooks);
+  //   console.log(lens);
+  // };
   return (
     <>
       <div style={{ marginTop: -20 }} className="ui fluid action input">
@@ -50,23 +66,54 @@ function Explorer() {
           </a>
         </Link>
       </div>
-      {/* 0523_1105 내용 추가 시작 */}
-      <Header as="h3" color="black">
+      {/* 테스트용 버튼 (console 확인용) */}
+      {/* <Button
+        onClick={onStatusCheck}
+        inverted
+        color="blue"
+        style={{ marginLeft: 5 }}
+      >
+        확인
+      </Button> */}
+       {/* 0523_1105 내용 추가 시작 */}
+       <Header as="h3" color="black">
         최근 검색한 책
       </Header>
-      <Segment>
+      <Segment style={{overflow: "hidden",
+                      maxHeight: 120,}}>
         <div>
           {lens ? (
             <>
               <Grid columns={4} key={``} divided>
                 <Grid.Row>
-                  {recentBooks.map((recentBooks) => (
+                  {reverseRecentBooks.map((recentBooks) => (
                     <>
-                    <Grid.Column style={{display : "flex", justifyContent : "center", }}>
-                      <Icon name="book" size="huge"></Icon>
-                      <p style={{marginLeft : 10, marginRight: 10, fontFamily : "Gugi-Regular", fontSize : 11}}>{recentBooks.slice(24,).length > 35 ? `${recentBooks.slice(24,).substring(0,35)}...` : recentBooks.slice(24,)}</p>
-                    </Grid.Column>
-                    <Divider />
+                       <Link
+                                href={`explore/detail/${recentBooks
+                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                              >
+                      <Grid.Column
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        
+                        <Icon name="book" size="huge"></Icon>
+                        <p
+                          style={{
+                            marginLeft: 10,
+                            marginRight: 10,
+                            fontFamily: "Gugi-Regular",
+                            fontSize: 11,
+                          }}
+                        >
+                          {recentBooks.length < 50
+                                      ? recentBooks
+                                      : recentBooks.slice(0, 50) + "..."}
+                        </p>
+                       
+                      </Grid.Column>
+                      </Link>
+                      <Divider />
                     </>
                   ))}
                 </Grid.Row>
