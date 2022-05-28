@@ -9,19 +9,12 @@ import { currentUserState } from "../../utils/hooks";
 function Explorer() {
   const [keyword, setKeyword] = useState("");
 
-  // const [recentBooks, setRecentBooks] = useState([]); // 최근 검색한 책
-
-  const [toggleRecentBooks, setToggleRecentBooks] = useState(false);
-
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부 확인용
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
 
   const [currentUser] = useRecoilState(currentUserState);
-
-  let recentBooks = currentUser?.mySearchBooks.length > 4 ? currentUser?.mySearchBooks. : currentUser?.mySearchBooks;
+  const [recentBooks, setRecentBooks] = useState(currentUser?.mySearchBooks.length > 4 ? currentUser?.mySearchBooks.slice(-4,) : currentUser?.mySearchBooks);
   
-
-
   useEffect(() => {
     setKeyword("");
     if (currentUser) {
@@ -31,8 +24,10 @@ function Explorer() {
         setLens(0);
       }
     }
+    // 새로고침시 재반영
+    setRecentBooks(currentUser?.mySearchBooks.length > 4 ? currentUser?.mySearchBooks.slice(-4,) : currentUser?.mySearchBooks);
     setSimilarBookLens(0);
-  }, []);
+  },[currentUser]);
 
   return (
     <>
