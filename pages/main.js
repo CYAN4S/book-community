@@ -12,7 +12,7 @@ import withTransition from "../public/HOC/withTransition";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
-import bookstamp from "../public/bookstamp.png";
+import bookstamp from "../public/bkstmp.svg";
 
 function Main() {
   const router = useRouter();
