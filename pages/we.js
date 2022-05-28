@@ -13,9 +13,10 @@ function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
   // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 start
-  const [LookEntire, setLookEntire] = useState(true);
-  const [LookMine, setLookMine] = useState(false);
-  const [LookSubscriber, setLookSubscriber] = useState(false);
+  const [exist, setExist] = useState(false);
+  const [entire, setEntire] = useState(false);
+  const [mine, setMine] = useState(false);
+  const [subscriber, setSubscriber] = useState(false);
 
   const [subscribers, setSubscribers] = useState([]);
   const [Articles, setArticles] = useState([]);
@@ -60,33 +61,49 @@ function Book_home() {
     });
   }, []);
 
-  const onLookEntire = () => {
-    console.log("onLookEntire 실행")
-    setLookEntire(true);
-    setLookMine(false);
-    setLookSubscriber(false);
-    console.log("LookEntire",LookEntire);
-    console.log("LookMine",LookMine)
-    console.log("LookSubscriber",LookSubscriber)
-  };
-  const onLookMine = () => {
-    setLookEntire((prev) => !prev);
-    setLookMine((prev) => !prev);
+  // const onLookEntire = () => {
+  //   setLookEntire(true);
+  //   console.log("onLookEntire 실행")
+  //   console.log("LookEntire",LookEntire);
+  //   console.log("LookMine",LookMine)
+  //   console.log("LookSubscriber",LookSubscriber)
+  // };
+  // const onLookMine = () => {
+  //   setLookEntire(false);
+  //   console.log("onLookMine 실행")
+  //   console.log("LookEntire",LookEntire);
+  //   console.log("LookMine",LookMine)
+  //   console.log("LookSubscriber",LookSubscriber)
     
-    console.log("LookEntire",LookEntire);
-    console.log("LookMine",LookMine)
-    console.log("LookSubscriber",LookSubscriber)
-    
+  // };
+  // const onLookSubscriber = () => {
+  //   setLookEntire(false); 
+  //   console.log("onLookSubscriber실행")
+  //   console.log("LookEntire",LookEntire);
+  //   console.log("LookMine",LookMine)
+  //   console.log("LookSubscriber",LookSubscriber)
+  // };
+  const toggleExist = () => {
+    setEntire(false);
+    setMine(false);
+    setSubscriber(false);
   };
-  const onLookSubscriber = () => {
-   
-    console.log("onLookSubscriber실행")
-    setLookSubscriber(true);
-    setLookEntire(false);
-    setLookMine(false);
-    console.log("LookEntire",LookEntire);
-    console.log("LookMine",LookMine)
-    console.log("LookSubscriber",LookSubscriber)
+  const toggleEntire = () => {
+    setEntire(true);
+    setMine(false);
+    setSubscriber(false);
+  };
+
+  const toggleMine= () => {
+    setEntire(false);
+    setMine(true);
+    setSubscriber(false);
+  };
+
+  const toggleSubscriber = () => {
+    setEntire(false);
+    setMine(false);
+    setSubscriber(true);
   };
   return (
     <>
@@ -116,18 +133,18 @@ function Book_home() {
               </Header.Subheader>
             </Header.Content>
           </Header>
-          <Button inverted color="violet" onClick={onLookEntire}>
+          <Button inverted color="violet" onClick={toggleEntire}>
             전체 글
           </Button>
-          <Button inverted color="pink" onClick={onLookMine}>
+          <Button inverted color="pink" onClick={toggleMine}>
             나의 글
           </Button>
-          <Button inverted color="green" onClick={onLookSubscriber}>
+          <Button inverted color="green" onClick={toggleSubscriber}>
             구독자 글
           </Button>
           <Divider />
           <div style={{ marginTop: 30 }}>
-            {LookEntire ? (
+            {entire && (
               <>
                 {chats.length ? (
                   chats.map((chat) => (
@@ -139,7 +156,8 @@ function Book_home() {
                   <p>채팅목록이 없습니다</p>
                 )}
               </>
-            ) : LookMine ? (
+            )}
+            {mine&& (
               <>
               {chats.length ? (
                 chats.map((chat) => (
@@ -157,7 +175,8 @@ function Book_home() {
                 <p>채팅목록이 없습니다</p>
               )}
             </>
-            ) : LookSubscriber ? (
+            )}
+            {subscriber && (
               <>
                 {chats.length ? (
                   chats.map((chat) => (
@@ -175,9 +194,7 @@ function Book_home() {
                   <p>채팅목록이 없습니다</p>
                 )}
               </>
-            ) : (
-              <></>
-            )}
+            )} 
           </div>
           <Divider />
         </div>
