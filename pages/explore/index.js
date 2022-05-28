@@ -9,27 +9,37 @@ import { currentUserState } from "../../utils/hooks";
 function Explorer() {
   const [keyword, setKeyword] = useState("");
 
-  const [recentBooks, setRecentBooks] = useState([]); // 최근 검색한 책
+  // const [recentBooks, setRecentBooks] = useState([]); // 최근 검색한 책
+
+
+  const [toggleRecentBooks, setToggleRecentBooks] = useState(false);
 
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부 확인용
   const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
 
   const [currentUser] = useRecoilState(currentUserState);
+  let recentBooks = currentUser.mySearchBooks; // 최근 검색한 책
   useEffect(() => {
     setKeyword("");
     if (currentUser) {
       if (currentUser.mySearchBooks.length) {
         setLens(currentUser.mySearchBooks.length);
-        currentUser.mySearchBooks.map((book) => {
-          console.log(book);
-          setRecentBooks([...recentBooks, book]);
-        });
+        
       } else {
         setLens(0);
       }
     }
     setSimilarBookLens(0);
   }, []);
+
+  // const onClick = () => {
+  //   currentUser.mySearchBooks.map((book) => {
+  //     recentBooks.push(book);
+  //   });
+  //   setToggleRecentBooks(!toggleRecentBooks);
+  // }
+
+
   return (
     <>
       <div style={{ marginTop: -20 }} className="ui fluid action input">
@@ -53,18 +63,21 @@ function Explorer() {
       <Header as="h3" color="black">
         최근 검색한 책
       </Header>
-      <Segment style={{}}>
+      <Segment>
         <div>
           {lens ? (
             <>
-              {recentBooks.length &&
-                recentBooks.map((recentBooks) => (
-                  <Grid columns={4} key={``}>
-                    <Grid.Row>
-                      <Grid.Column>{recentBooks}</Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                ))}
+                            <Grid columns={4} key={``}>
+                  <Grid.Row>
+              {recentBooks.map((recentBooks) => (
+
+                    <Grid.Column>
+                     
+                    </Grid.Column>
+                  
+              ))}
+              </Grid.Row>
+                </Grid>
             </>
           ) : (
             <>
