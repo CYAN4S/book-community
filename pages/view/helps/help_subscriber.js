@@ -63,8 +63,8 @@ import Image from "next/image";
       </Container>
 
       <Container textAlign="left" fluid  style={{width : "95%"}}>
-        <Grid celled verticalAlign="middle" centered>
-          <Grid.Row>
+        <Grid celled verticalAlign="middle" centered >
+          <Grid.Row style={{border : "2px solid grey"}}>
             <Grid.Column width={7}>
               <Image src={help1} width={530} height={600} />
             </Grid.Column>
@@ -74,8 +74,8 @@ import Image from "next/image";
               </p>
              
             </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
+          </Grid.Row >
+          <Grid.Row style={{border : "2px solid grey"}}>
             <Grid.Column width={7}>
               <Image src={help2} width={700} height={220} />
             </Grid.Column>
@@ -86,7 +86,7 @@ import Image from "next/image";
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
+          <Grid.Row style={{border : "2px solid grey"}}>
             <Grid.Column width={7}>
               <Image src={help3} width={700} height={220} />
             </Grid.Column>
@@ -97,7 +97,7 @@ import Image from "next/image";
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
+          <Grid.Row style={{border : "2px solid grey"}}>
             <Grid.Column width={7}>
               <Image src={help4} width={700} height={360} />
             </Grid.Column>

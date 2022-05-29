@@ -277,7 +277,7 @@ function Profile() {
                   scale-down : none 또는 contain 자동선택
                    */
                   style={{ /*backgroundSize : "100%",*/
-                     marginTop: 10, marginBottom: 10, 
+                     marginTop: 10, marginBottom: 10,  
                      objectFit: "scale-down"}}
                 ></Image>
               </>

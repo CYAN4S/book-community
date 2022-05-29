@@ -66,8 +66,8 @@ import {
 
       <Container textAlign="left" fluid style={{width : "95%"}}>
         <Grid celled verticalAlign="middle" centered>
-          <Grid.Row>
-            <Grid.Column width={9}>
+          <Grid.Row style={{border : "2px solid grey"}}>
+            <Grid.Column width={8}>
               <Image src={help1} width={900} height={450} />
             </Grid.Column>
             <Grid.Column centered width={7}>
@@ -77,9 +77,9 @@ import {
              
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row >
-            <Grid.Column width={9} textAlign="center" >
-              <Image src={help2} width={700} height={350} />
+          <Grid.Row style={{border : "2px solid grey"}}>
+            <Grid.Column width={8} >
+              <Image src={help2} width={900} height={450} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
@@ -88,8 +88,8 @@ import {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column width={9}>
+          <Grid.Row style={{border : "2px solid grey"}}>
+            <Grid.Column width={8}>
               <Image src={help3} width={950} height={400} />
             </Grid.Column>
             <Grid.Column centered width={7}>
@@ -103,8 +103,8 @@ import {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column width={9}>
+          <Grid.Row style={{border : "2px solid grey"}}>
+            <Grid.Column width={8}>
               <Image src={help4} width={900} height={330} />
             </Grid.Column>
             <Grid.Column centered width={7}>
@@ -114,8 +114,8 @@ import {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column width={9}>
+          <Grid.Row style={{border : "2px solid grey"}}>
+            <Grid.Column width={8}>
               <Image src={help5} width={900} height={400} />
             </Grid.Column>
             <Grid.Column centered width={7}>
