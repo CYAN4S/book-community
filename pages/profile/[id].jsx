@@ -150,7 +150,7 @@ function Profile() {
       alert("업로드할 사진을 선택하세요!");
       return;
     } else {
-      const fileRef = ref(storageService, `${data.uid}/${v4()}`);
+      const fileRef = ref(storageService, `${currentUser?.uid}/${v4()}`);
       const response = await uploadString(fileRef, imgFileString, "data_url");
       userPhoto = await getDownloadURL(response.ref);
     }
@@ -266,9 +266,15 @@ function Profile() {
               <>
                 <Image
                   src={currentUserPhotoUri}
-                  width="40%"
-                  height="40%"
-                  style={{ marginTop: 10, marginBottom: 10 }}
+                  width={350}
+                  height={350}
+
+                  /* cover : 가로세로 비율을 유지한 채로 사이즈가 조절됨
+                   비율이 맞지 않더라도 이미지를 확대해 컨테이너를 완전히 채우는 특징을 가짐.*/
+                  style={{ minWidth : 200, minHeight : 200,
+                    maxWidth : 500, maxHeight : 500,
+                     marginTop: 10, marginBottom: 10, 
+                     objectFit: "contain"}}
                 ></Image>
               </>
             ) : (
@@ -324,8 +330,8 @@ function Profile() {
                             src={imgFileString}
                             style={{
                               backgroundImage: imgFileString,
-                              width: "40%",
-                              height: "40%",
+                              width: "50%",
+                              height: "50%",
                               marginTop: 10,
                               marginLeft: 20,
                               marginBottom: 20,
@@ -376,7 +382,7 @@ function Profile() {
             ) : (
               <List>
                 {subscribers.map((user) => (
-                  <List.Item key={v4()} style={{ marginBottom: 5 }}>
+                  <List.Item key={`${v4()}`} style={{ marginBottom: 5 }}>
                     {/* <Image avatar src="/images/avatar/small/rachel.png" /> */}
                     <List.Content>
                       {user.uid === currentUser.uid ? (
