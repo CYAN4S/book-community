@@ -151,7 +151,6 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             style={{
               fontSize: 11,
               textAlign: "right",
-              marginTop: 10,
               marginRight: 10,
             }}
           >
