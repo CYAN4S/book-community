@@ -4,6 +4,7 @@ import {
   Divider,
   Header,
   Icon,
+  Label,
   Message,
   Segment,
 } from "semantic-ui-react";
@@ -110,15 +111,22 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {/* 게시글 */}
 
       {chats.length ? (
+        
         <Segment
           inverted
           style={{
             textAlign: "center",
-            marginLeft: 20,
-            marginRight: 20,
-            borderRadius: "30px",
+            marginLeft : 10,
+            marginRight : 10,
+            paddingTop: 20,
+            borderRadius: "20px",
           }}
+          
         >
+
+         <Segment inverted secondary >
+            <p style={{fontSize : 20, fontFamily : "Bangers-Regular", color : "#ebffef",  letterSpacing : "1.2px"}}> {`This board contains the thoughts of other users.`} </p>
+          </Segment>
           <Card.Group itemsPerRow={5} centered>
             {chats.map((chat) => (
               <span key={chat.id} style={{ marginLeft: 10, marginRight: 10 }}>
