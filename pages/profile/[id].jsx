@@ -20,6 +20,7 @@ import {
   List,
   Segment,
   TextArea,
+  Container,
 } from "semantic-ui-react";
 
 import { v4 } from "uuid";
@@ -266,15 +267,18 @@ function Profile() {
               <>
                 <Image
                   src={currentUserPhotoUri}
-                  width={350}
-                  height={350}
+                  width={"40%"}
+                  height={"40%"}
 
-                  /* cover : 가로세로 비율을 유지한 채로 사이즈가 조절됨
-                   비율이 맞지 않더라도 이미지를 확대해 컨테이너를 완전히 채우는 특징을 가짐.*/
-                  style={{ minWidth : 200, minHeight : 200,
-                    maxWidth : 500, maxHeight : 500,
+                  /* 
+                  cover : 가로세로 비율을 유지한 채로 사이즈가 조절됨
+                  비율이 맞지 않더라도 이미지를 확대해 컨테이너를 완전히 채우는 특징을 가짐.
+                   
+                  scale-down : none 또는 contain 자동선택
+                   */
+                  style={{ /*backgroundSize : "100%",*/
                      marginTop: 10, marginBottom: 10, 
-                     objectFit: "contain"}}
+                     objectFit: "scale-down"}}
                 ></Image>
               </>
             ) : (
