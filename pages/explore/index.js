@@ -2,8 +2,9 @@ import React from "react";
 import { Button, Header, Icon, Segment, Grid, Table,Divider } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { authService } from "../../firebaseConfig";
+import { authService, dbService } from "../../firebaseConfig";
 import { onUserDocSnapshot } from "../../utils/functions";
+import { doc, setDoc } from "firebase/firestore";
 
 function Explorer() {
   const [keyword, setKeyword] = useState("");
@@ -45,6 +46,22 @@ function Explorer() {
       setRecentBooks([]);
     }
   };
+
+  const updateUserDoc = (newData) => {
+    return setDoc(doc(dbService, "profile", currentUid), newData, {
+      merge: true,
+    });
+  };
+
+  const clearRecentlyBook = () => {
+    updateUserDoc({
+      mySearchBooks: []
+    });
+
+    setLens(0);
+    setRecentBooks([]);
+  }
+
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
   //   console.log(recentBooks);
@@ -81,6 +98,7 @@ function Explorer() {
        {/* 0523_1105 내용 추가 시작 */}
        <Header as="h3" color="black">
         최근 검색한 책
+        <Icon name = "delete" onClick = {clearRecentlyBook} color={"red"} size="mini" style={{cursor : "pointer", marginLeft : 3, marginBottom : 5}}/>
       </Header>
       <Segment style={{overflow: "hidden",
                       maxHeight: 120,}}>
