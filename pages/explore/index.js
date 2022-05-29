@@ -1,10 +1,17 @@
 import React from "react";
-import { Button, Header, Icon, Segment, Grid, Table,Divider } from "semantic-ui-react";
+import {
+  Button,
+  Header,
+  Icon,
+  Segment,
+  Grid,
+  Table,
+  Divider,
+} from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { authService, dbService } from "../../firebaseConfig";
+import { authService } from "../../firebaseConfig";
 import { onUserDocSnapshot } from "../../utils/functions";
-import { doc, setDoc } from "firebase/firestore";
 
 function Explorer() {
   const [keyword, setKeyword] = useState("");
@@ -39,29 +46,13 @@ function Explorer() {
       const reverseMySearchBook = [...listMySearchBook].reverse();
       const uniqueArr = reverseMySearchBook.filter((element, index) => {
         return reverseMySearchBook.indexOf(element) === index;
-    });
-      setRecentBooks(uniqueArr.length > 4 ? uniqueArr.slice(-5,-1):uniqueArr);
-      setLens(uniqueArr.length > 4 ? uniqueArr.slice(-5,-1).length:uniqueArr.length);
+      });
+      setRecentBooks(uniqueArr);
+      setLens(uniqueArr.length);
     } else {
       setRecentBooks([]);
     }
   };
-
-  const updateUserDoc = (newData) => {
-    return setDoc(doc(dbService, "profile", currentUid), newData, {
-      merge: true,
-    });
-  };
-
-  const clearRecentlyBook = () => {
-    updateUserDoc({
-      mySearchBooks: []
-    });
-
-    setLens(0);
-    setRecentBooks([]);
-  }
-
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
   //   console.log(recentBooks);
@@ -95,13 +86,11 @@ function Explorer() {
       >
         확인
       </Button> */}
-       {/* 0523_1105 내용 추가 시작 */}
-       <Header as="h3" color="black">
+      {/* 0523_1105 내용 추가 시작 */}
+      <Header as="h3" color="black">
         최근 검색한 책
-        <Icon name = "delete" onClick = {clearRecentlyBook} color={"red"} size="mini" style={{cursor : "pointer", marginLeft : 3, marginBottom : 5}}/>
       </Header>
-      <Segment style={{overflow: "hidden",
-                      maxHeight: 120,}}>
+      <Segment style={{ overflow: "hidden", maxHeight: 120 }}>
         <div>
           {lens ? (
             <>
@@ -109,30 +98,28 @@ function Explorer() {
                 <Grid.Row>
                   {recentBooks.map((recentBooks) => (
                     <>
-                       <Link
-                                href={`explore/detail/${recentBooks
-                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
-                              >
-                      <Grid.Column
-                        style={{ display: "flex", justifyContent: "center" }}
+                      <Link
+                        href={`explore/detail/${recentBooks
+                          .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                          .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
                       >
-                        
-                        <Icon name="book" size="huge"></Icon>
-                        <p
-                          style={{
-                            marginLeft: 10,
-                            marginRight: 10,
-                            fontFamily: "Gugi-Regular",
-                            fontSize: 11,
-                          }}
+                        <Grid.Column
+                          style={{ display: "flex", justifyContent: "center" }}
                         >
-                          {recentBooks.length < 50
-                                      ? recentBooks
-                                      : recentBooks.slice(0, 50) + "..."}
-                        </p>
-                       
-                      </Grid.Column>
+                          <Icon name="book" size="huge"></Icon>
+                          <p
+                            style={{
+                              marginLeft: 10,
+                              marginRight: 10,
+                              fontFamily: "Gugi-Regular",
+                              fontSize: 11,
+                            }}
+                          >
+                            {recentBooks.length < 50
+                              ? recentBooks
+                              : recentBooks.slice(0, 50) + "..."}
+                          </p>
+                        </Grid.Column>
                       </Link>
                       <Divider />
                     </>
