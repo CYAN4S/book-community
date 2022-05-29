@@ -68,21 +68,6 @@ function Explorer() {
   //   console.log(lens);
   // };
 
-  const updateUserDoc = (newData) => {
-    return setDoc(doc(dbService, "profile", currentUid), newData, {
-      merge: true,
-    });
-  };
-
-  const clearRecentlyBook = () => {
-    updateUserDoc({
-      mySearchBooks: []
-    });
-
-    setLens(0);
-    setRecentBooks([]);
-  }
-
 
   return (
     <>
