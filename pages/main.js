@@ -96,9 +96,9 @@ function Main() {
 
       <Image
         src={bookstamp}
-        style={{ marginBottom: "1.5em" }}
-        width={400}
-        height={400}
+        style={{ marginBottom: "1em" }}
+        width={350}
+        height={350}
       />
 
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -152,7 +152,7 @@ function Main() {
         </motion.p>
       </div>
 
-      <div>
+      <div style={{marginBottom : "1em"}}>
         <motion.button
           initial="rest"
           whileHover="hover" // hover상태 일 때 hover animation발생
