@@ -47,7 +47,7 @@ function Explorer() {
       const uniqueArr = reverseMySearchBook.filter((element, index) => {
         return reverseMySearchBook.indexOf(element) === index;
       });
-      setRecentBooks(uniqueArr);
+      setRecentBooks(uniqueArr.length > 4 ? uniqueArr.slice(-(uniqueArr.length),-(uniqueArr.length-4)):uniqueArr);
       setLens(uniqueArr.length);
     } else {
       setRecentBooks([]);
