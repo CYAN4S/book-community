@@ -122,10 +122,8 @@ const Help_Help = () => {
           <Header.Content>
             신고
             <Header.Subheader>
-              {" "}
               <p style={{ fontSize: 10, marginLeft: 3 }}>
-                {" "}
-                신고하기 페이지로 이동하려면 이 부분을 클릭해주세요{" "}
+                신고하기 페이지로 이동하려면 이 부분을 클릭해주세요
               </p>
             </Header.Subheader>
           </Header.Content>
