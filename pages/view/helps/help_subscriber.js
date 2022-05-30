@@ -38,7 +38,7 @@ import Image from "next/image";
           </div>
         </Container>
   
-        <Container textAlign="left" fluid style={{ marginTop: 30 }}>
+        <Container textAlign="left" fluid style={{ marginTop: 30, width: "95%"  }}>
           <Header as="h2">
             <Icon name="question" />
             <Header.Content>
@@ -62,7 +62,7 @@ import Image from "next/image";
         </Header>
       </Container>
 
-      <Container textAlign="left" fluid  style={{width : "95%"}}>
+      <Container textAlign="left" fluid  style={{width : "90%"}}>
         <Grid celled verticalAlign="middle" centered >
           <Grid.Row style={{border : "2px solid grey"}}>
             <Grid.Column width={7}>

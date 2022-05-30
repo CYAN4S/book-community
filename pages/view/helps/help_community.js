@@ -39,7 +39,7 @@ const Help_Community = () => {
         </div>
       </Container>
 
-      <Container textAlign="left" fluid style={{ marginTop: 30 }}>
+      <Container textAlign="left" fluid style={{ width : "95%", marginTop: 30 }}>
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
@@ -49,7 +49,9 @@ const Help_Community = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
+      </Container>
 
+      <Container style={{ width : "90%", marginTop: 30  }}>
         <Segment>
           <Grid columns={2} relaxed="very" style={{ textAlign: "center" }}>
             <Grid.Column>
@@ -105,7 +107,7 @@ const Help_Community = () => {
           </Grid>
           <Divider vertical>And</Divider>
         </Segment>
-      </Container>
+        </Container>
 
       <style jsx>{`
         div {

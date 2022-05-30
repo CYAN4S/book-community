@@ -19,7 +19,7 @@ const Help_Profile = () => {
 
   return (
     <>
-      <Container fluid textAlign="center" style={{ width: "90%" }}>
+      <Container fluid textAlign="center" style={{ width: "95%" }}>
         <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
           <Icon name="comment alternate" circular />
           <Header.Content> PROFILE </Header.Content>
@@ -36,7 +36,7 @@ const Help_Profile = () => {
         </div>
       </Container>
 
-      <Container textAlign="left" fluid style={{ marginTop: 30 }}>
+      <Container textAlign="left" fluid style={{ marginTop: 30, width: "95%" }}>
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
@@ -46,7 +46,9 @@ const Help_Profile = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
+        </Container>
 
+        <Container style={{ marginTop: 30, width: "90%" }}>
         <Segment>
           <Grid columns={4} divided>
             <Grid.Row textAlign="center">
@@ -168,7 +170,7 @@ const Help_Profile = () => {
             </Grid.Row>
           </Grid>
         </Segment>
-      </Container>
+        </Container>
 
       <style jsx>{`
         div {

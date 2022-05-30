@@ -33,7 +33,7 @@ import {
           </div>
         </Container>
   
-        <Container textAlign="left" fluid style={{ marginTop: 30 }}>
+        <Container textAlign="left" fluid style={{ marginTop: 30, width: "90%"  }}>
           <Header as="h2">
             <Icon name="question" />
             <Header.Content>
