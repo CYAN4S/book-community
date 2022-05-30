@@ -53,7 +53,7 @@ const Help_Community = () => {
         <Segment>
           <Grid columns={2} relaxed="very" style={{ textAlign: "center" }}>
             <Grid.Column>
-              <p style={{ fontSize: 18 }}> first space for you!</p>
+              <p> first space for you!</p>
               <Icon
                 name="hand point down"
                 size="big"
@@ -72,15 +72,13 @@ const Help_Community = () => {
                     }
                   >
                     <Popup.Header>MOVE EXPLORE</Popup.Header>
-                    <Popup.Content>
-                      클릭하여 이동하기
-                    </Popup.Content>
+                    <Popup.Content>클릭하여 이동하기</Popup.Content>
                   </Popup>
                 </a>
               </Link>
             </Grid.Column>
             <Grid.Column>
-              <p style={{ fontSize: 18 }}>second space for you!</p>
+              <p>second space for you!</p>
               <Icon
                 name="hand point down outline"
                 size="big"
@@ -99,9 +97,7 @@ const Help_Community = () => {
                     }
                   >
                     <Popup.Header>MOVE POST</Popup.Header>
-                    <Popup.Content>
-                      클릭하여 이동하기
-                    </Popup.Content>
+                    <Popup.Content>클릭하여 이동하기</Popup.Content>
                   </Popup>
                 </a>
               </Link>
@@ -119,9 +115,8 @@ const Help_Community = () => {
 
         p {
           font-family: FredokaOne-Regular;
+          font-size: 18px;
         }
-
-        
       `}</style>
     </>
   );
