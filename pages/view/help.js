@@ -23,10 +23,10 @@ const Help = () => {
   return (
     <>
       <div>
-        <Container fluid textAlign="center" style={{ width: "90%" }}>
+        <Container fluid textAlign="center" style={{ width: "95%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="question circle" circular />
-            <Header.Content> 도움말</Header.Content>
+            <Header.Content> 도움말 </Header.Content>
           </Header>
           <div>
             <Icon
@@ -44,8 +44,8 @@ const Help = () => {
               Kinds
             </Header>
           </Divider>
-          <Grid columns={3} style={{ marginLeft: 10 }}>
-            <Grid.Row centered columns={4} color="black" textAlign="center">
+          <Grid columns={3} centered>
+            <Grid.Row columns={4} color="black" textAlign="center">
               <Link href="./helps/help_community">
                 <Grid.Column>
                   <Popup
@@ -113,7 +113,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={4} maxRating={5} />
                     </Popup.Content>
                   </Popup>
@@ -137,7 +137,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={4} maxRating={5} />
                     </Popup.Content>
                   </Popup>
@@ -163,7 +163,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={3} maxRating={5} />
                     </Popup.Content>
                   </Popup>
@@ -217,88 +217,6 @@ const Help = () => {
                   </Popup>
                 </Grid.Column>
               </Link>
-            </Grid.Row>
-            <Grid.Row centered columns={4} color="black" textAlign="center">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>NONE</Card.Header>
-                        <Card.Description>NONE</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={5} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>NONE</Card.Header>
-                        <Card.Description>NONE</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={4} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>NONE</Card.Header>
-                        <Card.Description>NONE</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={4} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <Card>
-                      <Image src="/bookstamp.png" />
-                      <Card.Content>
-                        <Card.Header>NONE</Card.Header>
-                        <Card.Description>NONE</Card.Description>
-                      </Card.Content>
-                    </Card>
-                  }
-                >
-                  <Popup.Header style={{ width: 300 }}>NONE</Popup.Header>
-                  <Popup.Content>
-                    <Icon name="hand point right" />
-                    추천도{" "}
-                    <Rating icon="star" defaultRating={4} maxRating={5} />
-                  </Popup.Content>
-                </Popup>
-              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>

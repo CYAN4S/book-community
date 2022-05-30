@@ -117,7 +117,7 @@ function Explorer() {
                                   .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
                               >
                       <Grid.Column
-                        style={{ display: "flex", justifyContent: "center" }}
+                        style={{ display: "flex", justifyContent: "center", cursor: "pointer" }}
                       >
                         
                         <Icon name="book" size="huge"></Icon>
