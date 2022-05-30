@@ -30,9 +30,7 @@ const Help_Profile = () => {
             style={{ cursor: "pointer" }}
             onClick={returnClick}
           ></Icon>
-          <strong onClick={returnClick}>
-            뒤로가기
-          </strong>
+          <strong onClick={returnClick}>뒤로가기</strong>
         </div>
       </Container>
 
@@ -46,9 +44,9 @@ const Help_Profile = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
-        </Container>
+      </Container>
 
-        <Container style={{ marginTop: 30, width: "90%" }}>
+      <Container style={{ marginTop: 30, width: "90%" }}>
         <Segment>
           <Grid columns={4} divided>
             <Grid.Row textAlign="center">
@@ -170,7 +168,7 @@ const Help_Profile = () => {
             </Grid.Row>
           </Grid>
         </Segment>
-        </Container>
+      </Container>
 
       <style jsx>{`
         div {
@@ -182,15 +180,15 @@ const Help_Profile = () => {
           font-family: FredokaOne-Regular;
         }
 
-        span{
-          margin-bottom : -8px;
-          margin-left : 10px;
+        span {
+          margin-bottom: -8px;
+          margin-left: 10px;
           margin-right: 3px;
           font-size: 17px;
           font-family: "DoHyeon-Regular";
         }
 
-        strong{
+        strong {
           cursor: pointer;
         }
       `}</style>

@@ -27,13 +27,11 @@ const Help_SearchBook = () => {
             style={{ cursor: "pointer" }}
             onClick={returnClick}
           ></Icon>
-          <strong onClick={returnClick}>
-            뒤로가기
-          </strong>
+          <strong onClick={returnClick}>뒤로가기</strong>
         </div>
       </Container>
 
-      <Container textAlign="left" fluid style={{ marginTop: 30, width: "95%"  }}>
+      <Container textAlign="left" fluid style={{ marginTop: 30, width: "95%" }}>
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
@@ -105,8 +103,8 @@ const Help_SearchBook = () => {
           font-size: 15px;
           font-family: GothicA1-Medium;
         }
-        
-        strong{
+
+        strong {
           cursor: pointer;
         }
       `}</style>

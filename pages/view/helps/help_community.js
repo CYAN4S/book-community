@@ -33,13 +33,11 @@ const Help_Community = () => {
             style={{ cursor: "pointer" }}
             onClick={returnClick}
           ></Icon>
-          <strong onClick={returnClick}>
-            뒤로가기
-          </strong>
+          <strong onClick={returnClick}>뒤로가기</strong>
         </div>
       </Container>
 
-      <Container textAlign="left" fluid style={{ width : "95%", marginTop: 30 }}>
+      <Container textAlign="left" fluid style={{ width: "95%", marginTop: 30 }}>
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
@@ -51,7 +49,7 @@ const Help_Community = () => {
         </Header>
       </Container>
 
-      <Container style={{ width : "90%", marginTop: 30  }}>
+      <Container style={{ width: "90%", marginTop: 30 }}>
         <Segment>
           <Grid columns={2} relaxed="very" style={{ textAlign: "center" }}>
             <Grid.Column>
@@ -107,7 +105,7 @@ const Help_Community = () => {
           </Grid>
           <Divider vertical>And</Divider>
         </Segment>
-        </Container>
+      </Container>
 
       <style jsx>{`
         div {
@@ -120,7 +118,7 @@ const Help_Community = () => {
           font-size: 18px;
         }
 
-        strong{
+        strong {
           cursor: pointer;
         }
       `}</style>

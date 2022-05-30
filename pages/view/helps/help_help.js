@@ -46,7 +46,7 @@ const Help_Help = () => {
         </div>
       </Container>
 
-      <Container textAlign="left" fluid style={{ marginTop: 30, width: "95%"  }}>
+      <Container textAlign="left" fluid style={{ marginTop: 30, width: "95%" }}>
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
@@ -80,7 +80,7 @@ const Help_Help = () => {
           <Header.Content>
             문의
             <Header.Subheader>
-              <p className = "pushTag" onClick = {pushInquireClick}>
+              <p className="pushTag" onClick={pushInquireClick}>
                 문의하기 페이지로 이동하려면 이 부분을 클릭해주세요
               </p>
             </Header.Subheader>
@@ -123,20 +123,20 @@ const Help_Help = () => {
       <Container
         textAlign="left"
         fluid
-        style={{ width: "90%", marginTop: "1.8em"}}
+        style={{ width: "90%", marginTop: "1.8em" }}
       >
         <Header as="h2">
           <Icon name="meh outline" size="big" />
           <Header.Content>
             신고
             <Header.Subheader>
-              <p className = "pushTag" onClick = {pushReportClick}>
+              <p className="pushTag" onClick={pushReportClick}>
                 신고하기 페이지로 이동하려면 이 부분을 클릭해주세요
               </p>
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <Grid celled verticalAlign="middle" centered >
+        <Grid celled verticalAlign="middle" centered>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
               <Image src={help4} width={500} height={250} />
@@ -189,10 +189,10 @@ const Help_Help = () => {
           cursor: pointer;
         }
 
-        .pushTag{
+        .pushTag {
           font-size: 10px;
           margin-left: 3px;
-          cursor: pointer; 
+          cursor: pointer;
         }
       `}</style>
     </>
