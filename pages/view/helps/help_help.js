@@ -51,7 +51,24 @@ const Help_Help = () => {
         </Header>
       </Container>
 
-      <Container textAlign="left" fluid style={{ width: "95%" }}>
+      <Container
+        textAlign="left"
+        fluid
+        style={{ width: "95%", marginTop: "1.8em" }}
+      >
+        <Header as="h2">
+          <Icon name="envelope outline" size="big" />
+          <Header.Content>
+            문의
+            <Header.Subheader>
+              {" "}
+              <p style={{ fontSize: 10, marginLeft: 3 }}>
+                {" "}
+                문의하기 페이지로 이동하려면 이 부분을 클릭해주세요{" "}
+              </p>
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
@@ -86,7 +103,24 @@ const Help_Help = () => {
         </Grid>
       </Container>
 
-      <Container textAlign="left" fluid style={{ width: "95%" }}>
+      <Container
+        textAlign="left"
+        fluid
+        style={{ width: "95%", marginTop: "1.8em" }}
+      >
+        <Header as="h2">
+          <Icon name="meh outline" size="big" />
+          <Header.Content>
+            신고
+            <Header.Subheader>
+              {" "}
+              <p style={{ fontSize: 10, marginLeft: 3 }}>
+                {" "}
+                신고하기 페이지로 이동하려면 이 부분을 클릭해주세요{" "}
+              </p>
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
