@@ -1,4 +1,4 @@
-import { Header, Icon, Container, Grid } from "semantic-ui-react";
+import { Header, Icon, Container, Grid, Divider } from "semantic-ui-react";
 import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -123,7 +123,7 @@ const Help_Help = () => {
       <Container
         textAlign="left"
         fluid
-        style={{ width: "90%", marginTop: "1.8em" }}
+        style={{ width: "90%", marginTop: "3em" }}
       >
         <Header as="h2">
           <Icon name="meh outline" size="big" />
