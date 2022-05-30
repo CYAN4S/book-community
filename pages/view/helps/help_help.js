@@ -1,6 +1,17 @@
 import { Header, Icon, Container, Grid } from "semantic-ui-react";
 import React from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
+
+// inquiry img
+import help1 from "../../../public/help/help_inquiry1.png";
+import help2 from "../../../public/help/help_inquiry2.png";
+import help3 from "../../../public/help/help_inquiry3.png";
+
+// report img
+import help4 from "../../../public/help/help_report1.png";
+import help5 from "../../../public/help/help_report2.png";
+import help6 from "../../../public/help/help_report3.png";
 
 const Help_Help = () => {
   const router = useRouter();
@@ -61,10 +72,8 @@ const Help_Help = () => {
           <Header.Content>
             문의
             <Header.Subheader>
-              {" "}
               <p style={{ fontSize: 10, marginLeft: 3 }}>
-                {" "}
-                문의하기 페이지로 이동하려면 이 부분을 클릭해주세요{" "}
+                문의하기 페이지로 이동하려면 이 부분을 클릭해주세요
               </p>
             </Header.Subheader>
           </Header.Content>
@@ -72,7 +81,7 @@ const Help_Help = () => {
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
-              {/* <Image src={help1} width={530} height={600} /> */}
+              <Image src={help1} width={500} height={250} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -82,7 +91,7 @@ const Help_Help = () => {
           </Grid.Row>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
-              {/* <Image src={help2} width={700} height={220} /> */}
+              <Image src={help2} width={350} height={120} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -92,7 +101,7 @@ const Help_Help = () => {
           </Grid.Row>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
-              {/* <Image src={help2} width={700} height={220} /> */}
+              <Image src={help3} width={390} height={300} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -124,7 +133,7 @@ const Help_Help = () => {
         <Grid celled verticalAlign="middle" centered>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
-              {/* <Image src={help1} width={530} height={600} /> */}
+              <Image src={help4} width={500} height={250} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -134,7 +143,7 @@ const Help_Help = () => {
           </Grid.Row>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
-              {/* <Image src={help2} width={700} height={220} /> */}
+              <Image src={help5} width={360} height={120} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
@@ -144,7 +153,7 @@ const Help_Help = () => {
           </Grid.Row>
           <Grid.Row style={{ border: "2px solid grey" }}>
             <Grid.Column width={7}>
-              {/* <Image src={help2} width={700} height={220} /> */}
+              <Image src={help6} width={400} height={350} />
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
