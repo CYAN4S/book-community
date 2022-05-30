@@ -32,7 +32,7 @@ import Image from "next/image";
               style={{ cursor: "pointer" }}
               onClick={returnClick}
             ></Icon>
-            <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+            <strong onClick={returnClick}>
               뒤로가기
             </strong>
           </div>
@@ -119,6 +119,10 @@ import Image from "next/image";
           p {
             font-size: 15px;
             font-family: GothicA1-Medium;
+          }
+
+          strong{
+            cursor: pointer;
           }
         `}</style>
       </>

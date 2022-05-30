@@ -33,7 +33,7 @@ const Help_Community = () => {
             style={{ cursor: "pointer" }}
             onClick={returnClick}
           ></Icon>
-          <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+          <strong onClick={returnClick}>
             뒤로가기
           </strong>
         </div>
@@ -116,6 +116,10 @@ const Help_Community = () => {
         p {
           font-family: FredokaOne-Regular;
           font-size: 18px;
+        }
+
+        strong{
+          cursor: pointer;
         }
       `}</style>
     </>

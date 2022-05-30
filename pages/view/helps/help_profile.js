@@ -30,7 +30,7 @@ const Help_Profile = () => {
             style={{ cursor: "pointer" }}
             onClick={returnClick}
           ></Icon>
-          <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+          <strong onClick={returnClick}>
             뒤로가기
           </strong>
         </div>
@@ -186,6 +186,10 @@ const Help_Profile = () => {
           margin-right: 3px;
           font-size: 17px;
           font-family: "DoHyeon-Regular";
+        }
+
+        strong{
+          cursor: pointer;
         }
       `}</style>
     </>

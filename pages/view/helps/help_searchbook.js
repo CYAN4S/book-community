@@ -27,7 +27,7 @@ const Help_SearchBook = () => {
             style={{ cursor: "pointer" }}
             onClick={returnClick}
           ></Icon>
-          <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+          <strong onClick={returnClick}>
             뒤로가기
           </strong>
         </div>
@@ -100,9 +100,14 @@ const Help_SearchBook = () => {
           margin-top: 30px;
           text-align: right;
         }
+
         .help_searchbook_text {
           font-size: 15px;
           font-family: GothicA1-Medium;
+        }
+        
+        strong{
+          cursor: pointer;
         }
       `}</style>
     </>

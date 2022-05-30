@@ -27,7 +27,7 @@ import {
               style={{ cursor: "pointer" }}
               onClick={returnClick}
             ></Icon>
-            <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+            <strong onClick={returnClick}>
               뒤로가기
             </strong>
           </div>
@@ -49,6 +49,10 @@ import {
           div {
             margin-top: 30px;
             text-align: right;
+          }
+
+          strong{
+            cursor: pointer;
           }
           
         `}</style>
