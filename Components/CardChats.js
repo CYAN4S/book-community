@@ -26,19 +26,15 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
       if (checkExistOrginal) {
         if (chats.filter((x) => x.id === chat.replyTo)[0]) {
           setExtractText(
-            `${
-              chats.filter((x) => x.id === chat.replyTo)[0].title
-            }`
+            `${chats.filter((x) => x.id === chat.replyTo)[0].title}`
           );
-          chat.title = `${
-            chats.filter((x) => x.id === chat.replyTo)[0].title
-          }`;
+          chat.title = `${chats.filter((x) => x.id === chat.replyTo)[0].title}`;
         }
       }
 
       setChats(chatArray);
     });
-  },[chats]);
+  }, [chats]);
 
   // check replyChat Exist
   const onCheckExistOriginal = () => {
@@ -53,7 +49,9 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
     const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
     if (checkExistOrginal == false) {
     } else {
-      setExtractText(`원문 '${chats.filter((x) => x.id === chat.replyTo)[0].text}'으로...`);
+      setExtractText(
+        `원문 '${chats.filter((x) => x.id === chat.replyTo)[0].text}'으로...`
+      );
     }
   };
 
@@ -68,7 +66,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           pathname: `../post/read/${id}`,
           query: {
             chat: chat && JSON.stringify(chat),
-            extractTitle : extractText,
+            extractTitle: extractText,
             isOwner: isOwner,
             genre_chat: genre_chat,
           },
@@ -101,7 +99,17 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             </Label>
           )}
 
-          {chat.replyTo && <Label color="blue">{extractText === "" ? <></> : extractText.length>20 ? <>{extractText.substring(0,20)}...의 답글</>: `${extractText}의 답글`}</Label>}
+          {chat.replyTo && (
+            <Label color="blue" style={{ width: "100%", textAlign: "center" }}>
+              {extractText === "" ? (
+                <></>
+              ) : extractText.length > 20 ? (
+                <>{extractText.substring(0, 20)}...의 답글</>
+              ) : (
+                `${extractText}의 답글`
+              )}
+            </Label>
+          )}
           <Card.Header
             style={{
               fontSize: 17,
@@ -159,10 +167,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           </Card.Meta>
           <Card.Content extra>
             <Icon name="user" />
-            {
-               `작성자 : ${useUserDisplayName(chat.createrId)}`
-            }
-           
+            {`작성자 : ${useUserDisplayName(chat.createrId)}`}
           </Card.Content>
         </Card>
       </Link>
