@@ -45,6 +45,8 @@ const Inquire = () => {
     });
   }, []);
 
+
+  // submit form data (inquire)
   const onNewInquireSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,9 +66,12 @@ const Inquire = () => {
     setUserContext("");
     setCategory("");
   };
-  // 0515_1623 코드 끝
+
+  // open or close form
   const [formOpen, setFormOpen] = useState(false);
   const router = useRouter();
+
+  // menu data
   const panels = [
     {
       key: "system_inquiry",
@@ -108,6 +113,7 @@ const Inquire = () => {
     },
   ];
 
+  // form state toggle
   const onToggleForm = () => {
     setFormOpen((prev) => !prev);
   };

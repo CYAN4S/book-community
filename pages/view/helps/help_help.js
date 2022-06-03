@@ -21,10 +21,13 @@ const Help_Help = () => {
     router.back();
   }
 
+  // move inquire page
   function pushInquireClick(e) {
     router.push("/view/inquire");
   }
 
+
+  // move report page
   function pushReportClick(e) {
     router.push("/view/report");
   }

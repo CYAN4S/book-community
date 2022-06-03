@@ -120,7 +120,7 @@ export default function Lib({ infoData }) {
                   return (
                     <Table.Row key={data.name}>
                       <Table.Cell>
-                        <a href={data.homepage}>{data.name}</a>
+                        <a href={data.homepage} title ="클릭하여 홈페이지로 이동하기">{data.name}</a>
                       </Table.Cell>
                       <Table.Cell>{data.tel}</Table.Cell>
                       <Table.Cell>
@@ -128,7 +128,7 @@ export default function Lib({ infoData }) {
                         <Link
                           href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
                         >
-                          <a>
+                          <a  title ="클릭하여 카카오 맵 펼치기">
                             <Icon name="map marker alternate" style={{marginLeft:5}}/>
                           </a>
                         </Link>
@@ -162,7 +162,7 @@ export default function Lib({ infoData }) {
                                 data.latitude,
                                 data.longitude
                               ).toFixed(1)}
-                              km
+                              {`km`}
                             </strong>
                           </>
                         ) : (
@@ -173,7 +173,7 @@ export default function Lib({ infoData }) {
                               data.latitude,
                               data.longitude
                             ).toFixed(1)}
-                            km
+                            {`km`}
                           </>
                         )}
                       </Table.Cell>
@@ -237,34 +237,6 @@ export default function Lib({ infoData }) {
         .wrap {
           text-align: center;
           margin: 30px 10px 20px 10px;
-        }
-
-        .libName {
-          margin-top: 10px;
-          margin-bottom: 10px;
-          font-size: 12px;
-        }
-
-        .toggleEntireMap {
-          text-align: center;
-          font-size: 20px;
-          padding: 10px;
-          background-color: white;
-          color: black;
-          border: 3px solid black;
-          border-radius: 30px;
-          text-transform: uppercase;
-          cursor: pointer;
-          transition: all 400ms;
-        }
-
-        .toggleEntireMaps {
-          outline: none; /*버튼이 포커스되었을때 아웃라인이 생기는것을 없애줌*/
-        }
-
-        .toggleEntireMap:hover {
-          background-color: black;
-          color: white;
         }
       `}</style>
     </>

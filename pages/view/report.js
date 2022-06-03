@@ -77,6 +77,7 @@ const Report = () => {
     });
   }, []);
 
+  // submit form data (report)
   const onNewReportSubmit = async (e, data) => {
     e.preventDefault();
     if (imgFileString !== "") {
@@ -111,9 +112,10 @@ const Report = () => {
     setImgFileString("");
     router.push("/view_more");
   };
-  // 0513_0849 코드 추가 끝
 
   const router = useRouter();
+
+   // menu data
   const panels = [
     {
       key: "misuse",
@@ -158,6 +160,7 @@ const Report = () => {
     },
   ];
 
+  // form state toggle
   const onToggleForm = () => {
     setFormOpen((prev) => !prev);
   };

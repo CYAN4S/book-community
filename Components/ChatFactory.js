@@ -10,7 +10,6 @@ import {
   Container,
   Header,
   Embed,
-  Grid,
 } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -43,7 +42,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     : genre_chat
     ? genre_chat
     : "chat";
-  // const collectionName = detailbook_chat ?? "chat"
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
@@ -77,11 +75,11 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         const response = await uploadString(fileRef, vidFileString, "data_url");
         vidFileUrl = await getDownloadURL(response.ref);
       }
+
       //  (youtube URL) code start
       if (id !== "") {
         youtubeUrl = id;
       }
-      //  code end
 
       const chatObj = {
         title: title,
