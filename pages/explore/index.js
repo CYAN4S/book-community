@@ -82,25 +82,26 @@ function Explorer() {
 
   return (
     <>
-      <div style={{ marginTop: -20 }} className="ui fluid action input">
-        <input
-          type="text"
-          placeholder="책 이름, 글쓴이, 출판사 등.."
-          onChange={(e) => {
-            e.preventDefault();
-            setKeyword(e.target.value);
-          }}
-        ></input>
-        <Link href={`/explore/${keyword}`}>
-          <a>
-            <Button inverted color="blue" style={{ marginLeft: 5 }}>
-              검색
-            </Button>
-          </a>
-        </Link>
-      </div>
-      {/* 테스트용 버튼 (console 확인용) */}
-      {/* <Button
+      <>
+        <div style={{ marginTop: -20 }} className="ui fluid action input">
+          <input
+            type="text"
+            placeholder="책 이름, 글쓴이, 출판사 등.."
+            onChange={(e) => {
+              e.preventDefault();
+              setKeyword(e.target.value);
+            }}
+          ></input>
+          <Link href={`/explore/${keyword}`}>
+            <a>
+              <Button inverted color="blue" style={{ marginLeft: 5 }}>
+                검색
+              </Button>
+            </a>
+          </Link>
+        </div>
+        {/* 테스트용 버튼 (console 확인용) */}
+        {/* <Button
         onClick={onStatusCheck}
         inverted
         color="blue"
@@ -108,31 +109,30 @@ function Explorer() {
       >
         확인
       </Button> */}
-      {/* 0523_1105 내용 추가 시작 */}
-      <Header as="h3" color="black">
-        최근 검색한 책
-        <Icon
-          name="delete"
-          onClick={clearRecentlyBook}
-          color={"red"}
-          size="mini"
-          style={{ cursor: "pointer", marginLeft: 3, marginBottom: 5 }}
-        />
-      </Header>
-      <Segment style={{ overflow: "hidden", maxHeight: 120 }}>
-        <div>
-          {lens ? (
-            <>
-              <Grid columns={4} key={``} divided>
-                <Grid.Row>
-                  {recentBooks.map((recentBooks) => (
-                    <>
-                      <Link
-                        href={`explore/detail/${recentBooks
-                          .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                          .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
-                      >
-                        <a title="이동하기" style={{color : "black"}}>
+        {/* 0523_1105 내용 추가 시작 */}
+        <Header as="h3" color="black">
+          최근 검색한 책
+          <Icon
+            name="delete"
+            onClick={clearRecentlyBook}
+            color={"red"}
+            size="mini"
+            style={{ cursor: "pointer", marginLeft: 3, marginBottom: 5 }}
+          />
+        </Header>
+        <Segment style={{ overflow: "hidden", maxHeight: 120 }}>
+          <div>
+            {lens ? (
+              <>
+                <Grid columns={4} key={``} divided>
+                  <Grid.Row>
+                    {recentBooks.map((recentBooks) => (
+                      <>
+                        <Link
+                          href={`explore/detail/${recentBooks
+                            .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                            .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                        >
                           <Grid.Column
                             style={{
                               display: "flex",
@@ -140,84 +140,91 @@ function Explorer() {
                               cursor: "pointer",
                             }}
                           >
-                            <Icon name="book" size="huge"></Icon>
+                            <a title="상세페이지로 이동하기">
+                              <Icon name="book" size="huge"></Icon>
+                            </a>
                             <p
-                              style={{
-                                marginLeft: 10,
-                                marginRight: 10,
-                                fontFamily: "Gugi-Regular",
-                                fontSize: 11,
-                              }}
-                            >
-                              {recentBooks.length < 50
-                                ? recentBooks
-                                : recentBooks.slice(0, 50) + "..."}
-                            </p>
+                                style={{
+                                  marginLeft: 10,
+                                  marginRight: 10,
+                                  fontFamily: "Gugi-Regular",
+                                  fontSize: 11,
+                                }}
+                              >
+                                {recentBooks.length < 50
+                                  ? recentBooks
+                                  : recentBooks.slice(0, 50) + "..."}
+                              </p>
                           </Grid.Column>
-                        </a>
-                      </Link>
-                      <Divider />
-                    </>
-                  ))}
-                </Grid.Row>
-              </Grid>
-            </>
-          ) : (
-            <>
-              <div
-                style={{
-                  padding: "40px 0",
-                  textAlign: "center",
-                  fontSize: "20px",
-                }}
-              >
-                <strong>최근 검색한 기록이 없습니다!</strong>
-                <p />
-              </div>
-            </>
-          )}
+                        </Link>
+                        <Divider />
+                      </>
+                    ))}
+                  </Grid.Row>
+                </Grid>
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    padding: "40px 0",
+                    textAlign: "center",
+                    fontSize: "20px",
+                  }}
+                >
+                  <strong>최근 검색한 기록이 없습니다!</strong>
+                  <p />
+                </div>
+              </>
+            )}
+          </div>
+        </Segment>
+        {/* 0523 추가 내용 끝 */}
+        <Header as="h3" color="black">
+          추천 장르
+        </Header>
+        <div className="ui equal width center aligned padded grid">
+          <div className="row">
+            <div className="teal column">컴퓨터공학</div>
+            <div className="teal column">프로그래밍 언어</div>
+          </div>
+          <div className="row">
+            <div className="teal column">예술/에세이</div>
+            <div className="teal column">자기계발</div>
+          </div>
         </div>
-      </Segment>
-      {/* 0523 추가 내용 끝 */}
-      <Header as="h3" color="black">
-        추천 장르
-      </Header>
-      <div className="ui equal width center aligned padded grid">
-        <div className="row">
-          <div className="teal column">컴퓨터공학</div>
-          <div className="teal column">프로그래밍 언어</div>
-        </div>
-        <div className="row">
-          <div className="teal column">예술/에세이</div>
-          <div className="teal column">자기계발</div>
-        </div>
-      </div>
-      <Header as="h3" color="black">
-        비슷한 책
-      </Header>
-      <Header style={{ marginTop: -10 }} as="h5" color="grey">
-        회원님이 접한 책을 읽은 독자들의 관심 도서
-      </Header>
-      <Segment style={{}}>
-        <div>
-          {similarBookLens ? (
-            <>{/* 준비 중인 코드 */}</>
-          ) : (
-            <>
-              <div
-                style={{
-                  padding: "50px 0",
-                  textAlign: "center",
-                  fontSize: "20px",
-                }}
-              >
-                <strong>나만의 구독자를 먼저 만들어 보아요!</strong>
-                <p />
-              </div>
-            </>
-          )}
-        </div>
-      </Segment>
+        <Header as="h3" color="black">
+          비슷한 책
+        </Header>
+        <Header style={{ marginTop: -10 }} as="h5" color="grey">
+          회원님이 접한 책을 읽은 독자들의 관심 도서
+        </Header>
+        <Segment style={{}}>
+          <div>
+            {similarBookLens ? (
+              <>{/* 준비 중인 코드 */}</>
+            ) : (
+              <>
+                <div
+                  style={{
+                    padding: "50px 0",
+                    textAlign: "center",
+                    fontSize: "20px",
+                  }}
+                >
+                  <strong>나만의 구독자를 먼저 만들어 보아요!</strong>
+                  <p />
+                </div>
+              </>
+            )}
+          </div>
+        </Segment>
+      </>
+      <style jsx>{`
+        a{
+          color: black;
+        }
+      `}</style>
     </>
   );
 }
