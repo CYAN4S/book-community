@@ -1,4 +1,13 @@
-import { Button, Container, Dimmer, Grid, Icon, Loader, Segment, Table } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Dimmer,
+  Grid,
+  Icon,
+  Loader,
+  Segment,
+  Table,
+} from "semantic-ui-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -51,11 +60,11 @@ export default function SearchKeyword({ books }) {
   return (
     <>
       {!loading ? (
-         <Segment style={{height : "100vh"}}>
-         <Dimmer active>
-           <Loader size='massive'>Loading</Loader>
-         </Dimmer>
-       </Segment>
+        <Segment style={{ height: "100vh" }}>
+          <Dimmer active>
+            <Loader size="massive">Loading</Loader>
+          </Dimmer>
+        </Segment>
       ) : (
         <>
           <div>

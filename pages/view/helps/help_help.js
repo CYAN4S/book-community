@@ -26,7 +26,6 @@ const Help_Help = () => {
     router.push("/view/inquire");
   }
 
-
   // move report page
   function pushReportClick(e) {
     router.push("/view/report");

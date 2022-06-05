@@ -1,14 +1,14 @@
-import {
-  Divider,
-  Icon,
-  Item,
-} from "semantic-ui-react";
+import { Button, Divider, Icon, Item } from "semantic-ui-react";
 import React from "react";
 import Link from "next/link";
 import withTransition from "../public/HOC/withTransition";
+import { useRouter } from "next/router";
 
 function View_more() {
-  
+  const router = useRouter();
+  const onClick = () =>{
+    router.push("/main");   
+  }
   return (
     <>
       <div style={{ width: 300 }}>
@@ -63,11 +63,16 @@ function View_more() {
         </Item.Group>
       </div>
 
-      <Divider horizontal>FOOTER</Divider>
-
-      <div className="footer">
-        <p>Editor : ABC</p>
-        <address>Contact webmaster for more information. 000-1234-5678</address>
+      <Divider />
+      <div style={{ display: "flex", justifyContent: "right" }}>
+        <Button animated="vertical" color="black"  onClick = {onClick}>
+          <Button.Content hidden>
+            <p>메인으로</p>
+          </Button.Content>
+          <Button.Content visible>
+            <Icon name="power" />
+          </Button.Content>
+        </Button>
       </div>
 
       <style jsx>{`
@@ -77,11 +82,9 @@ function View_more() {
           align-items: center;
         }
 
-        .footer {
-          display: flex;
-          flex-direction: column;
-          justify-content: right;
-          align-items: right;
+        p{
+          font-size : 11px;
+          font-family : "GothicA1-Bold";
         }
       `}</style>
     </>
