@@ -46,6 +46,15 @@ const Help_Profile = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
+        <p
+          style={{
+            fontSize: 11,
+            color: "red",
+            marginTop: 30,
+            marginBottom: 15,
+            marginLeft : 50,
+          }}
+        >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
         <Image src={helpProfile} width={700} height={290} />
       </Container>
 
