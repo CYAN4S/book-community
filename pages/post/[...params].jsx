@@ -1,10 +1,12 @@
 import {
   Button,
   Card,
+  Dimmer,
   Divider,
   Header,
   Icon,
   Label,
+  Loader,
   Message,
   Segment,
 } from "semantic-ui-react";
@@ -19,6 +21,9 @@ import CardChats from "../../Components/CardChats";
 
 function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
   const router = useRouter();
+
+  // 로딩 이벤트를 위한 state
+  const [loading, setLoading] = useState(false);
 
   // 서버의 현재시간을 담을 state
   const [time, setTime] = useState(0);
@@ -60,82 +65,95 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       setChats(chatArray);
       // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인.
     });
+
+    setLoading(true);
   }, []);
 
   return (
     <>
-      <Message
-        info
-        header={`선택된 대표 장르는 "${representative_KDC_Name}" 입니다.`}
-        content={`선택된 세부 장르는 "${detail_KDC_Name}" 입니다.`}
-      />
+      {!loading ? (
+        <>
+          <Segment style={{ height: "100vh" }}>
+            <Dimmer active>
+              <Loader size="massive">Loading</Loader>
+            </Dimmer>
+          </Segment>
+        </>
+      ) : (
+        <>
+          <Message
+            info
+            header={`선택된 대표 장르는 "${representative_KDC_Name}" 입니다.`}
+            content={`선택된 세부 장르는 "${detail_KDC_Name}" 입니다.`}
+          />
 
-      <Message warning>
-        <Message.Header>혹시 다른 장르를 선택하시고 싶으신가요?</Message.Header>
-        <p>돌아가시려면 버튼을 클릭해주세요!</p>
-        <Button
-          content="돌아가기"
-          icon="undo"
-          labelPosition="left"
-          onClick={returnClick}
-          inverted
-          color="black"
-        />
-      </Message>
+          <Message warning>
+            <Message.Header>
+              혹시 다른 장르를 선택하시고 싶으신가요?
+            </Message.Header>
+            <p>돌아가시려면 버튼을 클릭해주세요!</p>
+            <Button
+              content="돌아가기"
+              icon="undo"
+              labelPosition="left"
+              onClick={returnClick}
+              inverted
+              color="black"
+            />
+          </Message>
 
-      <Divider horizontal style={{ marginTop: 20 }}>
-        <Header as="h4">
-          <Icon name="clipboard" />
-          게시된 글
-        </Header>
-      </Divider>
+          <Divider horizontal style={{ marginTop: 20 }}>
+            <Header as="h4">
+              <Icon name="clipboard" />
+              게시된 글
+            </Header>
+          </Divider>
 
-      <Button.Group basic size="small" right>
-        <Link href={`./${collectionName}`}>
-          <Button icon="pencil alternate" content="글 작성하기" />
-        </Link>
-        <Button icon="redo" content="새로고침" onClick={refreshPage} />
-        <Link href={`../view/inquire`}>
-          <Button icon="comment alternate outline" content="문의하기" />
-        </Link>
-        <Link href={`../view/report`}>
-          <Button icon="warning" content="신고하기" />
-        </Link>
-        <Link href={`../view/help`}>
-          <Button icon="question" content="도움말" />
-        </Link>
-      </Button.Group>
+          <Button.Group basic size="small" right>
+            <Link href={`./${collectionName}`}>
+              <Button icon="pencil alternate" content="글 작성하기" />
+            </Link>
+            <Button icon="redo" content="새로고침" onClick={refreshPage} />
+            <Link href={`../view/inquire`}>
+              <Button icon="comment alternate outline" content="문의하기" />
+            </Link>
+            <Link href={`../view/report`}>
+              <Button icon="warning" content="신고하기" />
+            </Link>
+            <Link href={`../view/help`}>
+              <Button icon="question" content="도움말" />
+            </Link>
+          </Button.Group>
 
-      {/* 게시글 */}
+          {/* 게시글 */}
 
-      {chats.length ? (
-        <Segment
-          inverted
-          style={{
-            textAlign: "center",
-            marginLeft: 10,
-            marginRight: 10,
-            paddingTop: 20,
-            borderRadius: "20px",
-          }}
-        >
-          <Segment inverted secondary>
-            <p
+          {chats.length ? (
+            <Segment
+              inverted
               style={{
-                fontSize: 20,
-                fontFamily: "Bangers-Regular",
-                color: "#ebffef",
-                letterSpacing: "1.2px",
+                textAlign: "center",
+                marginLeft: 10,
+                marginRight: 10,
+                paddingTop: 20,
+                borderRadius: "20px",
               }}
             >
-              {" "}
-              {`This board contains the thoughts of other users.`}{" "}
-            </p>
-          </Segment>
+              <Segment inverted secondary>
+                <p
+                  style={{
+                    fontSize: 20,
+                    fontFamily: "Bangers-Regular",
+                    color: "#ebffef",
+                    letterSpacing: "1.2px",
+                  }}
+                >
+                  {" "}
+                  {`This board contains the thoughts of other users.`}{" "}
+                </p>
+              </Segment>
 
-            <Card.Group itemsPerRow={5} centered>
-              {chats.map((chat) => (
-
+              <Card.Group itemsPerRow={5} centered>
+                {chats.map((chat) => (
                   <span
                     key={chat.id}
                     style={{ marginLeft: 10, marginRight: 10 }}
@@ -147,24 +165,24 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
                       genre_chat={collectionName}
                     />
                   </span>
-
-              ))}
-            </Card.Group>
-        </Segment>
-        
-      ) : (
-        <>
-          <Message icon color="blue">
-            <Icon name="circle notched" loading />
-            <Message.Content>
-              <Message.Header>
-                누군가 글을 올리기를 기다리고 있어요!
-              </Message.Header>
-              <p style={{ fontSize: 13, marginBottom: -5 }}>
-                글 작성하기 버튼을 눌러 글을 올려보세요!
-              </p>
-            </Message.Content>
-          </Message>
+                ))}
+              </Card.Group>
+            </Segment>
+          ) : (
+            <>
+              <Message icon color="blue">
+                <Icon name="circle notched" loading />
+                <Message.Content>
+                  <Message.Header>
+                    누군가 글을 올리기를 기다리고 있어요!
+                  </Message.Header>
+                  <p style={{ fontSize: 13, marginBottom: -5 }}>
+                    글 작성하기 버튼을 눌러 글을 올려보세요!
+                  </p>
+                </Message.Content>
+              </Message>
+            </>
+          )}
         </>
       )}
     </>
