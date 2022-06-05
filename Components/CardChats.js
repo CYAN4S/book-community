@@ -1,7 +1,7 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Card, Icon, Label } from "semantic-ui-react";
+import { Card, Icon, Label, Pagination } from "semantic-ui-react";
 import { dbService } from "../firebaseConfig";
 import { useUserDisplayName } from "../utils/functions";
 

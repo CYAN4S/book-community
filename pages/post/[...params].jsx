@@ -16,10 +16,8 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 
 import CardChats from "../../Components/CardChats";
-import withTransition from "../../public/HOC/withTransition";
 
 function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
-
   const router = useRouter();
 
   // 서버의 현재시간을 담을 state
@@ -111,45 +109,62 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
       {/* 게시글 */}
 
       {chats.length ? (
-        
         <Segment
           inverted
           style={{
             textAlign: "center",
-            marginLeft : 10,
-            marginRight : 10,
+            marginLeft: 10,
+            marginRight: 10,
             paddingTop: 20,
             borderRadius: "20px",
           }}
-          
         >
-
-         <Segment inverted secondary >
-            <p style={{fontSize : 20, fontFamily : "Bangers-Regular", color : "#ebffef",  letterSpacing : "1.2px"}}> {`This board contains the thoughts of other users.`} </p>
+          <Segment inverted secondary>
+            <p
+              style={{
+                fontSize: 20,
+                fontFamily: "Bangers-Regular",
+                color: "#ebffef",
+                letterSpacing: "1.2px",
+              }}
+            >
+              {" "}
+              {`This board contains the thoughts of other users.`}{" "}
+            </p>
           </Segment>
-          <Card.Group itemsPerRow={5} centered>
-            {chats.map((chat) => (
-              <span key={chat.id} style={{ marginLeft: 10, marginRight: 10 }}>
-                <CardChats
-                  chat={chat}
-                  id={chat.id}
-                  isOwner={chat.createrId === userId}
-                  genre_chat={collectionName}
-                />
-              </span>
-            ))}
-          </Card.Group>
+
+            <Card.Group itemsPerRow={5} centered>
+              {chats.map((chat) => (
+
+                  <span
+                    key={chat.id}
+                    style={{ marginLeft: 10, marginRight: 10 }}
+                  >
+                    <CardChats
+                      chat={chat}
+                      id={chat.id}
+                      isOwner={chat.createrId === userId}
+                      genre_chat={collectionName}
+                    />
+                  </span>
+
+              ))}
+            </Card.Group>
         </Segment>
+        
       ) : (
         <>
-         
-            <Message icon color="blue">
-              <Icon name="circle notched" loading />
-              <Message.Content>
-                <Message.Header>누군가 글을 올리기를 기다리고 있어요!</Message.Header>
-                <p style={{fontSize : 13, marginBottom : -5}}>글 작성하기 버튼을 눌러 글을 올려보세요!</p>
-              </Message.Content>
-            </Message>
+          <Message icon color="blue">
+            <Icon name="circle notched" loading />
+            <Message.Content>
+              <Message.Header>
+                누군가 글을 올리기를 기다리고 있어요!
+              </Message.Header>
+              <p style={{ fontSize: 13, marginBottom: -5 }}>
+                글 작성하기 버튼을 눌러 글을 올려보세요!
+              </p>
+            </Message.Content>
+          </Message>
         </>
       )}
     </>
@@ -166,6 +181,5 @@ export async function getServerSideProps({ params: { params } }) {
     },
   };
 }
-
 
 export default PostArea;
