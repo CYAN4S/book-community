@@ -1,10 +1,4 @@
-import {
-  Button,
-  Divider,
-  Header,
-  Icon,
-  Table,
-} from "semantic-ui-react";
+import { Button, Dimmer, Divider, Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -13,6 +7,8 @@ import { useEffect } from "react";
 
 export default function Lib({ infoData }) {
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
   const [entire, setEntire] = useState(false);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -85,153 +81,180 @@ export default function Lib({ infoData }) {
         );
       }
     });
+
+    setLoading(true);
   });
 
   return (
     <>
-      <div className="wrap">
-        {infoData.length ? (
-          <>
-            <Table celled>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell style={{ width: 170 }}>
-                    도서관 이름
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 100 }}>
-                    연락처
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 250 }}>
-                    주소
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 50 }}>
-                    소장 여부
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 50 }}>
-                    대출 가능 여부
-                  </Table.HeaderCell>
-                  <Table.HeaderCell style={{ width: 100 }}>
-                    내 위치와의 거리
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {infoData.map((data) => {
-                  return (
-                    <Table.Row key={data.name}>
-                      <Table.Cell>
-                        <a href={data.homepage} title ="클릭하여 홈페이지로 이동하기">{data.name}</a>
-                      </Table.Cell>
-                      <Table.Cell>{data.tel}</Table.Cell>
-                      <Table.Cell>
-                      {data.address}
-                        <Link
-                          href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
-                        >
-                          <a  title ="클릭하여 카카오 맵 펼치기">
-                            <Icon name="map marker alternate" style={{marginLeft:5}}/>
-                          </a>
-                        </Link>
-                      </Table.Cell>
-                      {/* 소장 및 대출가능 시, O 표시 */}
-                      {data.value.response.result.hasBook === "Y" ? (
-                        <Table.Cell positive>O</Table.Cell>
-                      ) : (
-                        <Table.Cell negative>X</Table.Cell>
-                      )}
-                      {data.value.response.result.loanAvailable === "Y" ? (
-                        <Table.Cell positive>O</Table.Cell>
-                      ) : (
-                        <Table.Cell negative>X</Table.Cell>
-                      )}
-                      <Table.Cell>
-                        {/* min값이면, 두드러지게 표시 */}
-                        {min ===
-                        getDistanceFromLatLonInKm(
-                          latitude,
-                          longitude,
-                          data.latitude,
-                          data.longitude
-                        ) ? (
-                          <>
-                            <Icon name="thumbs up"></Icon>
-                            <strong>
-                              {getDistanceFromLatLonInKm(
-                                latitude,
-                                longitude,
-                                data.latitude,
-                                data.longitude
-                              ).toFixed(1)}
-                              {`km`}
-                            </strong>
-                          </>
-                        ) : (
-                          <>
-                            {getDistanceFromLatLonInKm(
+      {!loading ? (
+        <Segment style={{ height: "100vh" }}>
+          <Dimmer active>
+            <Loader size="massive">Loading</Loader>
+          </Dimmer>
+        </Segment>
+      ) : (
+        <>
+          <div className="wrap">
+            {infoData.length ? (
+              <>
+                <Table celled>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell style={{ width: 170 }}>
+                        도서관 이름
+                      </Table.HeaderCell>
+                      <Table.HeaderCell style={{ width: 100 }}>
+                        연락처
+                      </Table.HeaderCell>
+                      <Table.HeaderCell style={{ width: 250 }}>
+                        주소
+                      </Table.HeaderCell>
+                      <Table.HeaderCell style={{ width: 50 }}>
+                        소장 여부
+                      </Table.HeaderCell>
+                      <Table.HeaderCell style={{ width: 50 }}>
+                        대출 가능 여부
+                      </Table.HeaderCell>
+                      <Table.HeaderCell style={{ width: 100 }}>
+                        내 위치와의 거리
+                      </Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {infoData.map((data) => {
+                      return (
+                        <Table.Row key={data.name}>
+                          <Table.Cell>
+                            <a
+                              href={data.homepage}
+                              title="클릭하여 홈페이지로 이동하기"
+                            >
+                              {data.name}
+                            </a>
+                          </Table.Cell>
+                          <Table.Cell>{data.tel}</Table.Cell>
+                          <Table.Cell>
+                            {data.address}
+                            <Link
+                              href={`../kakao_map/${data.latitude}/${data.longitude}/${data.name}`}
+                            >
+                              <a title="클릭하여 카카오 맵 펼치기">
+                                <Icon
+                                  name="map marker alternate"
+                                  style={{ marginLeft: 5 }}
+                                />
+                              </a>
+                            </Link>
+                          </Table.Cell>
+                          {/* 소장 및 대출가능 시, O 표시 */}
+                          {data.value.response.result.hasBook === "Y" ? (
+                            <Table.Cell positive>O</Table.Cell>
+                          ) : (
+                            <Table.Cell negative>X</Table.Cell>
+                          )}
+                          {data.value.response.result.loanAvailable === "Y" ? (
+                            <Table.Cell positive>O</Table.Cell>
+                          ) : (
+                            <Table.Cell negative>X</Table.Cell>
+                          )}
+                          <Table.Cell>
+                            {/* min값이면, 두드러지게 표시 */}
+                            {min ===
+                            getDistanceFromLatLonInKm(
                               latitude,
                               longitude,
                               data.latitude,
                               data.longitude
-                            ).toFixed(1)}
-                            {`km`}
-                          </>
-                        )}
-                      </Table.Cell>
-                    </Table.Row>
-                  );
-                })}
-              </Table.Body>
-            </Table>
-          </>
-        ) : (
-          <>
-            <div
-              style={{
-                padding: "200px 0",
-                textAlign: "center",
-                fontSize: "35px",
-              }}
-            >
-              <Icon name="warning circle" color="red" />{" "}
-              <strong>검색결과가 존재하지 않습니다.</strong>
-              <p />
-            </div>
-          </>
-        )}
-
-        <Button
-          color="black"
-          onClick={returnClick}
-          style={{ marginTop: 10, marginBottom: 20 }}
-        >
-          돌아가기
-        </Button>
-
-        {/* 해당페이지에 표시된 도서관들의 위치 표시 */}
-        {infoData.length !== 0 && (
-          <>
-            <Divider style={{ marginTop: 30 }} inverted />
-            <Header as="h2" color="blue">
-              <p style={{fontFamily : "Stylish-Regular"}}>전체 위치 확인하기</p>
-            </Header>
-            <div>
-            {entire ? (
-              <>
-                <Entire infoData={infoData} />
-                <Icon name="arrow alternate circle up" size = "big" onClick={onClick} ></Icon>
-                
+                            ) ? (
+                              <>
+                                <Icon name="thumbs up"></Icon>
+                                <strong>
+                                  {getDistanceFromLatLonInKm(
+                                    latitude,
+                                    longitude,
+                                    data.latitude,
+                                    data.longitude
+                                  ).toFixed(1)}
+                                  {`km`}
+                                </strong>
+                              </>
+                            ) : (
+                              <>
+                                {getDistanceFromLatLonInKm(
+                                  latitude,
+                                  longitude,
+                                  data.latitude,
+                                  data.longitude
+                                ).toFixed(1)}
+                                {`km`}
+                              </>
+                            )}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
+                </Table>
               </>
             ) : (
               <>
-                <Icon name="arrow alternate circle down" size = "big" onClick={onClick}></Icon>
+                <div
+                  style={{
+                    padding: "200px 0",
+                    textAlign: "center",
+                    fontSize: "35px",
+                  }}
+                >
+                  <Icon name="warning circle" color="red" />{" "}
+                  <strong>검색결과가 존재하지 않습니다.</strong>
+                  <p />
+                </div>
               </>
             )}
-            </div>
 
-            
-          </>
-        )}
-      </div>
+            <Button
+              color="black"
+              onClick={returnClick}
+              style={{ marginTop: 10, marginBottom: 20 }}
+            >
+              돌아가기
+            </Button>
+
+            {/* 해당페이지에 표시된 도서관들의 위치 표시 */}
+            {infoData.length !== 0 && (
+              <>
+                <Divider style={{ marginTop: 30 }} inverted />
+                <Header as="h2" color="blue">
+                  <p style={{ fontFamily: "Stylish-Regular" }}>
+                    전체 위치 확인하기
+                  </p>
+                </Header>
+                <div>
+                  {entire ? (
+                    <>
+                      <Entire infoData={infoData} />
+                      <Icon
+                        name="arrow alternate circle up"
+                        size="big"
+                        onClick={onClick}
+                      ></Icon>
+                    </>
+                  ) : (
+                    <>
+                      <Icon
+                        name="arrow alternate circle down"
+                        size="big"
+                        onClick={onClick}
+                      ></Icon>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      )}
 
       <style jsx>{`
         .wrap {
