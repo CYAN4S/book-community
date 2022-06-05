@@ -65,15 +65,12 @@ const Help_Profile = () => {
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span>
-                    {" "}
-                    3. 나를 대표할 수 있는 사진을 업로드 할 수 있습니다.
-                  </span>
+                  <span>3. 대표이미지를 업로드 할 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 4. 내가 구독한 사용자를 확인할 수 있습니다.</span>
+                  <span> 4. 나의 구독자를 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -81,7 +78,7 @@ const Help_Profile = () => {
             <Grid.Row style={{ marginTop: -20 }}>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 5. 내가 등록한 책 목록을 확인할 수 있습니다.</span>
+                  <span> 5. 내가 등록한 책들을 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
