@@ -11,20 +11,30 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { authService, dbService } from "../../firebaseConfig";
-import { onUserDocSnapshot } from "../../utils/functions";
+// getUserDoc 추가 06061427
+import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
 import { doc, setDoc } from "firebase/firestore";
 
 function Explorer() {
+  const [subLens, setSubLens] = useState(0);
+  const [subscribers, setSubscribers] = useState([]); // 구독자 목록 가져오기
   const [keyword, setKeyword] = useState("");
   const [recentBooks, setRecentBooks] = useState([]);
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부
-  const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
+  //const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
 
   useEffect(() => {
     setKeyword("");
     setLens(0);
-    setSimilarBookLens(0);
+    //setSimilarBookLens(0);
+    setSubLens(0);
   }, []);
+  useEffect(() => {
+    setSubLens(subscribers.length);
+    
+  }, [subscribers.length]);
+ 
+
   // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
   useEffect(() => {
@@ -39,7 +49,9 @@ function Explorer() {
     const unsub = onUserDocSnapshot(currentUid, onUser);
     return () => unsub?.();
   }, [currentUid]);
+  const [displayName, setDisplayName] = useState(null);
   const onUser = async (data) => {
+    
     if (data?.mySearchBooks) {
       const listMySearchBook = await Promise.all(
         data.mySearchBooks.map(async (x) => await x.substr(24))
@@ -56,6 +68,18 @@ function Explorer() {
       setLens(uniqueArr.length);
     } else {
       setRecentBooks([]);
+    }
+    // 06061429 추가
+    if (data?.users) {
+      const x = await Promise.all(
+        data.users.map(async (uid) => await getUserDoc(uid))
+      );
+      setSubscribers(x);
+
+      setSubLens(subscribers.length);
+
+    } else {
+      setSubscribers([]);
     }
   };
 
@@ -74,10 +98,18 @@ function Explorer() {
     setRecentBooks([]);
   };
 
+  const [randomUser, setRandomUser] = useState(
+    Math.floor(Math.random() * subLens)
+  );
+  const otherSubscribers = () => {
+    const tempRandomUser = Math.floor(Math.random() * subLens);
+    setRandomUser(tempRandomUser);
+    setDisplayName(subscribers[tempRandomUser].displayName);
+    
+  };
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
-  //   console.log(recentBooks);
-  //   console.log(lens);
+  //   console.log(subscribers[randomUser].displayName);
   // };
 
   return (
@@ -102,13 +134,13 @@ function Explorer() {
         </div>
         {/* 테스트용 버튼 (console 확인용) */}
         {/* <Button
-        onClick={onStatusCheck}
-        inverted
-        color="blue"
-        style={{ marginLeft: 5 }}
-      >
-        확인
-      </Button> */}
+          onClick={onStatusCheck}
+          inverted
+          color="blue"
+          style={{ marginLeft: 5 }}
+        >
+          확인
+        </Button> */}
         {/* 0523_1105 내용 추가 시작 */}
         <Header as="h3" color="black">
           최근 검색한 책
@@ -144,17 +176,17 @@ function Explorer() {
                               <Icon name="book" size="huge"></Icon>
                             </a>
                             <p
-                                style={{
-                                  marginLeft: 10,
-                                  marginRight: 10,
-                                  fontFamily: "Gugi-Regular",
-                                  fontSize: 11,
-                                }}
-                              >
-                                {recentBooks.length < 50
-                                  ? recentBooks
-                                  : recentBooks.slice(0, 50) + "..."}
-                              </p>
+                              style={{
+                                marginLeft: 10,
+                                marginRight: 10,
+                                fontFamily: "Gugi-Regular",
+                                fontSize: 11,
+                              }}
+                            >
+                              {recentBooks.length < 50
+                                ? recentBooks
+                                : recentBooks.slice(0, 50) + "..."}
+                            </p>
                           </Grid.Column>
                         </Link>
                         <Divider />
@@ -195,14 +227,81 @@ function Explorer() {
         </div>
         <Header as="h3" color="black">
           비슷한 책
+          <Icon
+            name="redo"
+            onClick={otherSubscribers}
+            color={"black"}
+            size="mini"
+            style={{ cursor: "pointer", marginLeft: 3, marginBottom: 5 }}
+          />
         </Header>
+
         <Header style={{ marginTop: -10 }} as="h5" color="grey">
-          회원님이 접한 책을 읽은 독자들의 관심 도서
+          <p style ={{}}>
+            {subLens ? (
+              <> {displayName ? `구독자 [${displayName}]님의 관심있는 책` : "구독자 [게스트]님의 관심있는 책"}</>
+            ) : (
+              <></>
+            )}
+          </p>
         </Header>
+
         <Segment style={{}}>
           <div>
-            {similarBookLens ? (
-              <>{/* 준비 중인 코드 */}</>
+            {subLens ? (
+              <Grid columns={4} key={``} divided>
+                <Grid.Row>
+                  {subscribers[randomUser].myBooks.map(
+                    (subscriberBooks) => (
+                      (subscribers[randomUser].myBooks = [
+                        ...subscribers[randomUser].myBooks,
+                      ].reverse()),
+                      (subscribers[randomUser].myBooks =
+                        subscribers[randomUser].myBooks.length > 4
+                          ? subscribers[randomUser].myBooks.slice(
+                              -subscribers[randomUser].myBooks.length,
+                              -(subscribers[randomUser].myBooks.length - 4)
+                            )
+                          : subscribers[randomUser].myBooks),
+                      (subscriberBooks = subscriberBooks.substr(24)),
+                      (
+                        <>
+                          <Link
+                            href={`explore/detail/${subscriberBooks
+                              .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                              .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                          >
+                            <Grid.Column
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                              }}
+                            >
+                              <a title="상세페이지로 이동하기">
+                                <Icon name="book" size="huge"></Icon>
+                              </a>
+                              <p
+                                style={{
+                                  marginLeft: 10,
+                                  marginRight: 10,
+                                  fontFamily: "Gugi-Regular",
+                                  fontSize: 11,
+                                }}
+                              >
+                                {subscriberBooks.length < 50
+                                  ? subscriberBooks
+                                  : subscriberBooks.slice(0, 50) + "..."}
+                              </p>
+                            </Grid.Column>
+                          </Link>
+                          <Divider />
+                        </>
+                      )
+                    )
+                  )}
+                </Grid.Row>
+              </Grid>
             ) : (
               <>
                 <div
@@ -221,7 +320,7 @@ function Explorer() {
         </Segment>
       </>
       <style jsx>{`
-        a{
+        a {
           color: black;
         }
       `}</style>
