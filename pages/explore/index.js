@@ -108,9 +108,9 @@ function Explorer() {
     
   };
   // 테스트용 버튼 (console)
-  const onStatusCheck = () => {
-    console.log(subscribers[randomUser].displayName);
-  };
+  // const onStatusCheck = () => {
+  //   console.log(subscribers[randomUser].displayName);
+  // };
 
   return (
     <>
@@ -133,14 +133,14 @@ function Explorer() {
           </Link>
         </div>
         {/* 테스트용 버튼 (console 확인용) */}
-        <Button
+        {/* <Button
           onClick={onStatusCheck}
           inverted
           color="blue"
           style={{ marginLeft: 5 }}
         >
           확인
-        </Button>
+        </Button> */}
         {/* 0523_1105 내용 추가 시작 */}
         <Header as="h3" color="black">
           최근 검색한 책
