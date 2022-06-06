@@ -197,6 +197,21 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const onSubmitFile = () => {
     setSubmitFile((prev) => !prev);
   };
+  //06061341 책 태그 코드 추가
+  // tagBook Ontoggle code
+  const [tagBook, setTagBook] = useState(false);
+  const [bookName, setBookName] = useState("");
+  const onTagBook = () => {
+    setTagBook((prev) => !prev);
+    setSubmitFile(false);
+  };
+
+  // bookSearch Ontoggle code
+  const [bookSearch, setBookSearch] = useState(false);
+  const onBookSearch=()=>{
+    setBookSearch((prev) => !prev);
+    
+  };
 
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
   return (
@@ -596,6 +611,53 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 </div>
               </div>
             )}
+            {/* 06061341 책 태그 코드 추가 (return문)*/}
+            {tagBook&& (
+              <div
+                style={{ height: 35, marginBottom: 10 }}
+                className="ui fluid action input"
+              >
+                <Label
+                  basic
+                  color="red"
+                  pointing="right"
+                  htmlFor="attach-file"
+                  style={{ width: 120, textAlign: "center" }}
+                >
+                  <p>Search Book</p>
+                </Label>
+
+                <Form.Field>
+                  <Form.Input
+                    style={{
+                      height: 35,
+                      width: 215,
+                      marginLeft: 10,
+                    }}
+                    focus
+                    placeholder="책 이름, 글쓴이, 출판사 등.."
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setBookName(e.target.value)
+                    }}
+                  />
+                </Form.Field>
+                
+                <Icon
+                  name="search"
+                  style={{ marginLeft: 10, marginTop: 6, cursor: "pointer" }}
+                  size="large"
+                  color="violet"
+                  onClick={onBookSearch}
+                />
+              </div>
+            )}
+             {bookSearch && (
+                <div>
+                 
+                </div>
+              )}
+              {/* 06061341 책 태그 코드 끝 (return문) */}
             <Button
               onClick={onCheckRealSubmit}
               icon
@@ -615,6 +677,16 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             >
               파일 첨부하기
               <Icon name="file" />
+            </Button>
+            <Button
+              onClick={onTagBook}
+              icon
+              labelPosition="right"
+              color="purple"
+              style={{ marginTop: 5 }}
+            >
+              책 태그하기
+              <Icon name="book" />
             </Button>
           </Form>
         </>
