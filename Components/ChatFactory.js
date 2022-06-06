@@ -200,41 +200,243 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
 
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
   return (
-    <div>
-      {genre_chat ? (
-        <>
-          <Header as="h2" icon textAlign="center">
-            <Icon name="book" circular />
-            <Header.Content>글 쓰기</Header.Content>
-            <p style={{ fontSize: 12, marginTop: 3 }}>게시글을 작성해보세요!</p>
-          </Header>
+    <>
+      <div>
+        {genre_chat ? (
+          <>
+            <Header as="h2" icon textAlign="center">
+              <Icon name="book" circular />
+              <Header.Content>글 쓰기</Header.Content>
+              <p>게시글을 작성해보세요!</p>
+            </Header>
 
-          <Container textAlign="left">
+            <Container textAlign="left">
+              <Form onSubmit={onNewPostSubmit}>
+                <Form.Field>
+                  <div style={{ textAlign: "right" }}>
+                    <Icon
+                      name="caret left"
+                      style={{ cursor: "pointer" }}
+                      onClick={returnClick}
+                    ></Icon>
+                    <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+                      뒤로가기
+                    </strong>
+                  </div>
+                  <Form.Input
+                    fluid
+                    label="제목"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="글의 제목을 입력해주세요."
+                    required
+                  />
+                  <Form.TextArea
+                    label="내용"
+                    value={chat}
+                    onChange={(e) => setChat(e.target.value)}
+                    placeholder="글의 내용을 입력해주세요."
+                    required
+                  />
+                </Form.Field>
+                {submitFile && (
+                  <div
+                    style={{ height: 35, marginBottom: 10 }}
+                    className="ui fluid action input"
+                  >
+                    <Label
+                      basic
+                      color="red"
+                      pointing="right"
+                      htmlFor="attach-file"
+                      style={{ width: 120, textAlign: "center" }}
+                    >
+                      <p>Add Youtube URL</p>
+                    </Label>
+
+                    <Form.Field>
+                      <Form.Input
+                        style={{
+                          height: 35,
+                          width: 215,
+                          marginLeft: 10,
+                        }}
+                        focus
+                        placeholder="Youtube URL을 입력해주세요"
+                        value={youtubeString}
+                        onChange={(e) => setYoutubeString(e.target.value)}
+                      />
+                    </Form.Field>
+                    <Icon
+                      name="search"
+                      style={{
+                        marginLeft: 10,
+                        marginTop: 6,
+                        cursor: "pointer",
+                      }}
+                      size="large"
+                      color="violet"
+                      onClick={onYoutubeSubmit}
+                    />
+                  </div>
+                )}
+                {input && (
+                  <div style={{ width: "50%" }}>
+                    <Embed
+                      style={{
+                        marginTop: 10,
+                        marginLeft: 20,
+                        marginBottom: 5,
+                      }}
+                      iframe={{
+                        allowFullScreen: true,
+                      }}
+                      placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
+                      id={id}
+                      source="youtube"
+                    />
+
+                    <div
+                      onClick={onDeleteYoutubeUrl}
+                      style={{
+                        width: 150,
+                        marginTop: 10,
+                        marginLeft: 20,
+                        marginBottom: 5,
+                        height: 30,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Icon color="red" name="remove circle" />{" "}
+                      <span>Youtube URL 삭제</span>
+                    </div>
+                  </div>
+                )}
+                {submitFile && (
+                  <div>
+                    <Label
+                      basic
+                      color="orange"
+                      pointing="right"
+                      htmlFor="attach-file"
+                    >
+                      <p>Add photos</p>
+                    </Label>
+
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={onFileChange}
+                      id="attach-file"
+                      icon="file image"
+                      style={{ marginLeft: 10, marginBottom: 10 }}
+                    />
+                  </div>
+                )}
+                {imgFileString && (
+                  <div>
+                    <Image
+                      fluid
+                      label={{
+                        color: "red",
+                        onClick: onClearPhotoClick,
+                        icon: "remove circle",
+                        size: "large",
+                        ribbon: true,
+                      }}
+                      src={imgFileString}
+                      style={{
+                        backgroundImage: imgFileString,
+                        width: "40%",
+                        height: "40%",
+                        marginTop: 10,
+                        marginLeft: 20,
+                      }}
+                    />
+                  </div>
+                )}
+                {submitFile && (
+                  <div>
+                    <Label
+                      basic
+                      color="yellow"
+                      pointing="right"
+                      htmlFor="attach-file"
+                    >
+                      <p>Add videos</p>
+                    </Label>
+
+                    <Input
+                      type="file"
+                      accept="video/*"
+                      onChange={onFileChangeVideo}
+                      id="attach-file"
+                      icon="video image"
+                      style={{ marginLeft: 10 }}
+                    />
+                  </div>
+                )}
+                {vidFileString && (
+                  <div>
+                    <video
+                      loop={true}
+                      style={{
+                        width: 400,
+                        marginTop: 10,
+                        marginLeft: 20,
+                        marginBottom: 5,
+                      }}
+                      controls={true}
+                    >
+                      <source src={vidFileString}></source>
+                    </video>
+                    <div
+                      onClick={onDeleteVideo}
+                      style={{
+                        width: 100,
+                        height: 30,
+                        cursor: "pointer",
+                        marginLeft: 20,
+                      }}
+                    >
+                      <Icon color="red" name="remove circle" />
+                      <span>비디오 삭제</span>
+                    </div>
+                  </div>
+                )}
+                <Button
+                  onClick={onCheckRealSubmit}
+                  icon
+                  labelPosition="right"
+                  color="teal"
+                  style={{ marginTop: 5 }}
+                >
+                  보내기
+                  <Icon name="paper plane" />
+                </Button>
+                <Button
+                  onClick={onSubmitFile}
+                  icon
+                  labelPosition="right"
+                  color="blue"
+                  style={{ marginTop: 5 }}
+                >
+                  파일 첨부하기
+                  <Icon name="file" />
+                </Button>
+              </Form>
+            </Container>
+          </>
+        ) : (
+          <>
             <Form onSubmit={onNewPostSubmit}>
               <Form.Field>
-              <div style={{ textAlign: "right" }}>
-                  <Icon
-                    name="caret left"
-                    style={{ cursor: "pointer" }}
-                    onClick={returnClick}
-                  ></Icon>
-                  <strong style={{ cursor: "pointer" }} onClick={returnClick}>
-                    뒤로가기
-                  </strong>
-                </div>
-                <Form.Input
-                  fluid
-                  label="제목"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="글의 제목을 입력해주세요."
-                  required
-                />
-                <Form.TextArea
-                  label="내용"
+                <Label basic color="black" pointing="below">
+                  Please enter your text
+                </Label>
+                <TextArea
                   value={chat}
                   onChange={(e) => setChat(e.target.value)}
-                  placeholder="글의 내용을 입력해주세요."
                   required
                 />
               </Form.Field>
@@ -420,205 +622,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                 <Icon name="file" />
               </Button>
             </Form>
-          </Container>
-        </>
-      ) : (
-        <>
-          <Form onSubmit={onNewPostSubmit}>
-            <Form.Field>
-              <Label basic color="black" pointing="below">
-                Please enter your text
-              </Label>
-              <TextArea
-                value={chat}
-                onChange={(e) => setChat(e.target.value)}
-                required
-              />
-            </Form.Field>
-            {submitFile && (
-              <div
-                style={{ height: 35, marginBottom: 10 }}
-                className="ui fluid action input"
-              >
-                <Label
-                  basic
-                  color="red"
-                  pointing="right"
-                  htmlFor="attach-file"
-                  style={{ width: 120, textAlign: "center" }}
-                >
-                  <p>Add Youtube URL</p>
-                </Label>
-
-                <Form.Field>
-                  <Form.Input
-                    style={{
-                      height: 35,
-                      width: 215,
-                      marginLeft: 10,
-                    }}
-                    focus
-                    placeholder="Youtube URL을 입력해주세요"
-                    value={youtubeString}
-                    onChange={(e) => setYoutubeString(e.target.value)}
-                  />
-                </Form.Field>
-                <Icon
-                  name="search"
-                  style={{ marginLeft: 10, marginTop: 6, cursor: "pointer" }}
-                  size="large"
-                  color="violet"
-                  onClick={onYoutubeSubmit}
-                />
-              </div>
-            )}
-            {input && (
-              <div style={{ width: "50%" }}>
-                <Embed
-                  style={{
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 5,
-                  }}
-                  iframe={{
-                    allowFullScreen: true,
-                  }}
-                  placeholder={`https://i1.ytimg.com/vi/${id}/maxresdefault.jpg`}
-                  id={id}
-                  source="youtube"
-                />
-
-                <div
-                  onClick={onDeleteYoutubeUrl}
-                  style={{
-                    width: 150,
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 5,
-                    height: 30,
-                    cursor: "pointer",
-                  }}
-                >
-                  <Icon color="red" name="remove circle" />{" "}
-                  <span>Youtube URL 삭제</span>
-                </div>
-              </div>
-            )}
-            {submitFile && (
-              <div>
-                <Label
-                  basic
-                  color="orange"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add photos</p>
-                </Label>
-
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  id="attach-file"
-                  icon="file image"
-                  style={{ marginLeft: 10, marginBottom: 10 }}
-                />
-              </div>
-            )}
-            {imgFileString && (
-              <div>
-                <Image
-                  fluid
-                  label={{
-                    color: "red",
-                    onClick: onClearPhotoClick,
-                    icon: "remove circle",
-                    size: "large",
-                    ribbon: true,
-                  }}
-                  src={imgFileString}
-                  style={{
-                    backgroundImage: imgFileString,
-                    width: "40%",
-                    height: "40%",
-                    marginTop: 10,
-                    marginLeft: 20,
-                  }}
-                />
-              </div>
-            )}
-            {submitFile && (
-              <div>
-                <Label
-                  basic
-                  color="yellow"
-                  pointing="right"
-                  htmlFor="attach-file"
-                >
-                  <p>Add videos</p>
-                </Label>
-
-                <Input
-                  type="file"
-                  accept="video/*"
-                  onChange={onFileChangeVideo}
-                  id="attach-file"
-                  icon="video image"
-                  style={{ marginLeft: 10 }}
-                />
-              </div>
-            )}
-            {vidFileString && (
-              <div>
-                <video
-                  loop={true}
-                  style={{
-                    width: 400,
-                    marginTop: 10,
-                    marginLeft: 20,
-                    marginBottom: 5,
-                  }}
-                  controls={true}
-                >
-                  <source src={vidFileString}></source>
-                </video>
-                <div
-                  onClick={onDeleteVideo}
-                  style={{
-                    width: 100,
-                    height: 30,
-                    cursor: "pointer",
-                    marginLeft: 20,
-                  }}
-                >
-                  <Icon color="red" name="remove circle" />
-                  <span>비디오 삭제</span>
-                </div>
-              </div>
-            )}
-            <Button
-              onClick={onCheckRealSubmit}
-              icon
-              labelPosition="right"
-              color="teal"
-              style={{ marginTop: 5 }}
-            >
-              보내기
-              <Icon name="paper plane" />
-            </Button>
-            <Button
-              onClick={onSubmitFile}
-              icon
-              labelPosition="right"
-              color="blue"
-              style={{ marginTop: 5 }}
-            >
-              파일 첨부하기
-              <Icon name="file" />
-            </Button>
-          </Form>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+      <style jsx>{`
+        p {
+          font-size: 12px;
+        }
+      `}</style>
+    </>
   );
 }

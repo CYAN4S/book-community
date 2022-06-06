@@ -40,27 +40,6 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
     });
   },[chats]);
 
-  // check replyChat Exist
-  const onCheckExistOriginal = () => {
-    //(id) => id != `${isbn}${title}`
-    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
-    if (checkExistOrginal == false) {
-      alert("사용자가 원글을 삭제하여 이동할 수 없습니다.");
-    }
-  };
-
-  const onMouseEnter = () => {
-    const checkExistOrginal = chats.map((x) => x.id).includes(chat.replyTo);
-    if (checkExistOrginal == false) {
-    } else {
-      setExtractText(`원문 '${chats.filter((x) => x.id === chat.replyTo)[0].text}'으로...`);
-    }
-  };
-
-  const onMouseLeave = () => {
-    setExtractText("이동하기");
-  };
-
   return (
     <>
       <Link
@@ -68,7 +47,7 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           pathname: `../post/read/${id}`,
           query: {
             chat: chat && JSON.stringify(chat),
-            extractTitle : extractText,
+            extractTitle: extractText,
             isOwner: isOwner,
             genre_chat: genre_chat,
           },
@@ -101,7 +80,18 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             </Label>
           )}
 
-          {chat.replyTo && <Label color="blue">{extractText === "" ? <></> : extractText.length>20 ? <>{extractText.substring(0,20)}...의 답글</>: `${extractText}의 답글`}</Label>}
+          {chat.replyTo && (
+            <Label color="blue">
+              {extractText === "" ? (
+                <></>
+              ) : extractText.length > 20 ? (
+                <p className = "reply_title">{ `제목 "${extractText.substring(0, 20)}"...의 답글` }</p>
+              ) : (
+                <p className = "reply_title">{ `제목 "${extractText}"의 답글` }</p>
+              )}
+              
+            </Label>
+          )}
           <Card.Header
             style={{
               fontSize: 17,
@@ -159,15 +149,17 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
           </Card.Meta>
           <Card.Content extra>
             <Icon name="user" />
-            {
-               `작성자 : ${useUserDisplayName(chat.createrId)}`
-            }
-           
+            {`작성자 : ${useUserDisplayName(chat.createrId)}`}
           </Card.Content>
         </Card>
       </Link>
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .reply_title{
+          font-size : 12px;
+          letter-spacing : 1.1px;
+        }
+      `}</style>
     </>
   );
 }

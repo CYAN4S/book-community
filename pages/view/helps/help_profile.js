@@ -61,7 +61,7 @@ const Help_Profile = () => {
       <Container style={{ marginTop: 30, width: "90%" }}>
         <Segment>
           <Grid columns={4} divided>
-            <Grid.Row textAlign="center">
+            <Grid.Row textAlign="center" style={{ border: "2px solid grey" }}>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
                   <span className="num_span">1.</span>
@@ -87,8 +87,8 @@ const Help_Profile = () => {
                 </div>
               </Grid.Column>
             </Grid.Row>
-            <Divider style={{ marginTop: -5 }} />
-            <Grid.Row style={{ marginTop: -20 }}>
+            <Divider style={{ marginTop: -5,  border: "2px solid grey"}} />
+            <Grid.Row style={{ marginTop: -20, border: "2px solid grey" }}>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
                   <span className="num_span">5.</span>
