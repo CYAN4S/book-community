@@ -105,7 +105,6 @@ function Explorer() {
     const tempRandomUser = Math.floor(Math.random() * subLens);
     setRandomUser(tempRandomUser);
     setDisplayName(subscribers[tempRandomUser].displayName);
-    
   };
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
