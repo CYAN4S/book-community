@@ -7,6 +7,7 @@ import {
   Grid,
   Table,
   Divider,
+  Popup,
 } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -16,6 +17,8 @@ import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
 import { doc, setDoc } from "firebase/firestore";
 
 function Explorer() {
+  const [randomUser, setRandomUser] = useState(0);
+  const [displayName, setDisplayName] = useState([]);
   const [subLens, setSubLens] = useState(0);
   const [subscribers, setSubscribers] = useState([]); // 구독자 목록 가져오기
   const [keyword, setKeyword] = useState("");
@@ -47,9 +50,10 @@ function Explorer() {
 
   useEffect(() => {
     const unsub = onUserDocSnapshot(currentUid, onUser);
+    
     return () => unsub?.();
   }, [currentUid]);
-  const [displayName, setDisplayName] = useState("");
+
   const onUser = async (data) => {
     
     if (data?.mySearchBooks) {
@@ -75,8 +79,12 @@ function Explorer() {
         data.users.map(async (uid) => await getUserDoc(uid))
       );
       setSubscribers(x);
-
+      
+      
       setSubLens(subscribers.length);
+      console.log(subscribers.length);
+      setDisplayName(x[0].displayName);
+      console.log(x[randomUser].displayName);
 
     } else {
       setSubscribers([]);
@@ -98,13 +106,15 @@ function Explorer() {
     setRecentBooks([]);
   };
 
-  const [randomUser, setRandomUser] = useState(
-    Math.floor(Math.random() * subLens)
-  );
+  
   const otherSubscribers = () => {
     const tempRandomUser = Math.floor(Math.random() * subLens);
+    if(randomUser == tempRandomUser){
+      otherSubscribers();
+    }else{
     setRandomUser(tempRandomUser);
     setDisplayName(subscribers[tempRandomUser].displayName);
+    }
   };
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
@@ -172,7 +182,7 @@ function Explorer() {
                             }}
                           >
                             <a title="상세페이지로 이동하기">
-                              <Icon name="book" size="huge"></Icon>
+                              <Icon name="book" size="huge"/>
                             </a>
                             <p
                               style={{
@@ -210,45 +220,35 @@ function Explorer() {
             )}
           </div>
         </Segment>
-        {/* 0523 추가 내용 끝 */}
-        <Header as="h3" color="black">
-          추천 장르
-        </Header>
-        <div className="ui equal width center aligned padded grid">
-          <div className="row">
-            <div className="teal column">컴퓨터공학</div>
-            <div className="teal column">프로그래밍 언어</div>
-          </div>
-          <div className="row">
-            <div className="teal column">예술/에세이</div>
-            <div className="teal column">자기계발</div>
-          </div>
-        </div>
-        <Header as="h3" color="black">
-          비슷한 책
-          <Icon
-            name="redo"
-            onClick={otherSubscribers}
-            color={"black"}
-            size="mini"
-            style={{ cursor: "pointer", marginLeft: 3, marginBottom: 5 }}
-          />
-        </Header>
 
-        <Header style={{ marginTop: -10 }} as="h5" color="grey">
-          <p style ={{}}>
+        <Header as="h3" color="black" style={{ marginTop: "3em", display : "flex"}}>
+          내 구독자가 관심있어하는 책
+          <Popup content='버튼을 누르면 다른 구독자들을 랜덤으로 검색합니다.'
+            trigger={<Icon
+            name="random"
+            onClick={otherSubscribers}
+            color={"red"}
+            size="mini"
+            style={{ cursor: "pointer", marginLeft: 5, marginTop : -2}}/>} />
+        </Header>
+        
+        <Header style={{ marginTop: 10, display : "flex"}} as="h5" color="grey">
+          <Popup content='초기에는 가장 오래된 구독자의 등록된 책을 확인합니다.' trigger={<Icon name='question circle' loading />} />
+          <span className="similar_book">
             {subLens ? (
               <> {displayName ? `구독자 [${displayName}]님의 관심있는 책` : "구독자 [게스트]님의 관심있는 책"}</>
             ) : (
               <></>
             )}
-          </p>
+            
+          </span>
+          
         </Header>
 
-        <Segment style={{}}>
+        <Segment>
           <div>
             {subLens ? (
-              <Grid columns={4} key={``} divided>
+              <Grid columns={4} divided>
                 <Grid.Row>
                   {subscribers[randomUser].myBooks.map(
                     (subscriberBooks) => (
@@ -278,7 +278,7 @@ function Explorer() {
                               }}
                             >
                               <a title="상세페이지로 이동하기">
-                                <Icon name="book" size="huge"></Icon>
+                                <Icon name="book" size="huge"/>
                               </a>
                               <p
                                 style={{
@@ -321,6 +321,11 @@ function Explorer() {
       <style jsx>{`
         a {
           color: black;
+        }
+
+        .similar_book{
+          font-size: 12px;
+          margin-top : 0.2em;
         }
       `}</style>
     </>
