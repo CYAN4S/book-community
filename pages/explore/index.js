@@ -154,7 +154,7 @@ function Explorer() {
         <Header as="h3" color="black">
           최근 검색한 책
           <Icon
-            name="delete"
+            name="eraser"
             onClick={clearRecentlyBook}
             color={"red"}
             size="mini"
