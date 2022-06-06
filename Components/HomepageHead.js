@@ -18,7 +18,7 @@ export default function HomepageHead() {
 
   const onClick_goDiscord = () => {
     setClicked(true);
-    router.push("https://discord.gg/nvwy2PpW");
+    router.push("https://discord.gg/bQ3cjMRdPh");
   };
 
   const buttonVariants = {

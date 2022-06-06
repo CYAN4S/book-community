@@ -84,8 +84,8 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
             <Label color="blue">
               {extractText === "" ? (
                 <></>
-              ) : extractText.length > 20 ? (
-                <p className = "reply_title">{ `제목 "${extractText.substring(0, 20)}"...의 답글` }</p>
+              ) : extractText.length > 10 ? (
+                <p className = "reply_title">{ `제목 "${extractText.substring(0, 10)}..."의 답글` }</p>
               ) : (
                 <p className = "reply_title">{ `제목 "${extractText}"의 답글` }</p>
               )}
@@ -157,7 +157,6 @@ export default function CardChats({ chat, id, isOwner, genre_chat }) {
       <style jsx>{`
         .reply_title{
           font-size : 12px;
-          letter-spacing : 1.1px;
         }
       `}</style>
     </>
