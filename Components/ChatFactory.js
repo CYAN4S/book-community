@@ -196,6 +196,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   // submitFile Ontoggle code
   const onSubmitFile = () => {
     setSubmitFile((prev) => !prev);
+    setTagBook(false);
   };
   //06061341 책 태그 코드 추가
   // tagBook Ontoggle code
@@ -654,7 +655,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             )}
              {bookSearch && (
                 <div>
-                 
+                 <p>결과가 나올 창</p>
                 </div>
               )}
               {/* 06061341 책 태그 코드 끝 (return문) */}
