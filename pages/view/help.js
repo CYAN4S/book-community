@@ -20,6 +20,7 @@ const Help = () => {
     e.preventDefault();
     router.back();
   }
+
   return (
     <>
       <div>
@@ -64,7 +65,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={5} maxRating={5} />
                     </Popup.Content>
                   </Popup>
@@ -89,7 +90,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={4} maxRating={5} />
                     </Popup.Content>
                   </Popup>
@@ -187,7 +188,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={2} maxRating={5} />
                     </Popup.Content>
                   </Popup>
@@ -211,7 +212,7 @@ const Help = () => {
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />
-                      추천도{" "}
+                      추천도
                       <Rating icon="star" defaultRating={3} maxRating={5} />
                     </Popup.Content>
                   </Popup>

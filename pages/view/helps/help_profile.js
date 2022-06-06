@@ -46,54 +46,71 @@ const Help_Profile = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
+        <p
+          style={{
+            fontSize: 11,
+            color: "red",
+            marginTop: 30,
+            marginBottom: 15,
+            marginLeft: 50,
+          }}
+        >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
         <Image src={helpProfile} width={700} height={290} />
       </Container>
 
       <Container style={{ marginTop: 30, width: "90%" }}>
         <Segment>
           <Grid columns={4} divided>
-            <Grid.Row textAlign="center">
+            <Grid.Row textAlign="center" style={{ border: "2px solid grey" }}>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 1. 내 닉네임을 확인할 수 있습니다.</span>
+                  <span className="num_span">1.</span>
+                  <span> 내 닉네임을 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 2. 내 상태메시지를 확인할 수 있습니다.</span>
+                  <span className="num_span">2.</span>
+                  <span> 내 상태메시지를 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span>3. 대표이미지를 업로드 할 수 있습니다.</span>
+                  <span className="num_span">3.</span>
+                  <span> 대표이미지를 업로드 할 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 4. 나의 구독자를 확인할 수 있습니다.</span>
+                  <span className="num_span">4.</span>
+                  <span> 나의 구독자를 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
             </Grid.Row>
-            <Divider style={{ marginTop: -5 }} />
-            <Grid.Row style={{ marginTop: -20 }}>
+            <Divider style={{ marginTop: -5,  border: "2px solid grey"}} />
+            <Grid.Row style={{ marginTop: -20, border: "2px solid grey" }}>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 5. 내가 등록한 책들을 확인할 수 있습니다.</span>
+                  <span className="num_span">5.</span>
+                  <span> 내가 등록한 책들을 확인할 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 6. 내 닉네임을 바꿀 수 있습니다.</span>
+                  <span className="num_span">6.</span>
+                  <span> 내 닉네임을 바꿀 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 7. 내 상태 메시지를 바꿀 수 있습니다.</span>
+                  <span className="num_span">7.</span>
+                  <span> 내 상태 메시지를 바꿀 수 있습니다.</span>
                 </div>
               </Grid.Column>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
-                  <span> 8. 로그아웃 할 수 있습니다.</span>
+                  <span className="num_span">8.</span>
+                  <span> 로그아웃 할 수 있습니다.</span>
                 </div>
               </Grid.Column>
             </Grid.Row>
@@ -113,6 +130,12 @@ const Help_Profile = () => {
           font-family: "DoHyeon-Regular";
         }
 
+        .num_span {
+          font-size: 25px;
+          margin-right: 0.5em;
+          color: violet;
+        }
+
         strong {
           cursor: pointer;
         }
@@ -122,6 +145,7 @@ const Help_Profile = () => {
           display: flex;
           align-items: center;
         }
+
       `}</style>
     </>
   );

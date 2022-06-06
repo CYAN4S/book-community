@@ -107,7 +107,7 @@ function Profile() {
   const updateDisplayName = (newName) => {
     updateUserDoc({ displayName: newName })
       .then(() => {
-        alert("Name Changed!");
+        alert("닉네임이 변경되었습니다!");
       })
       .catch((error) => {
         alert(error);
@@ -117,7 +117,7 @@ function Profile() {
   const updateStatusMsg = async (newMsg) => {
     updateUserDoc({ statusMsg: newMsg })
       .then(() => {
-        alert("Status Message Changed!");
+        alert("상태메시지가 변경되었습니다!");
       })
       .catch((error) => {
         alert(error);
