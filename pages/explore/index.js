@@ -49,7 +49,7 @@ function Explorer() {
     const unsub = onUserDocSnapshot(currentUid, onUser);
     return () => unsub?.();
   }, [currentUid]);
-  const [displayName, setDisplayName] = useState(null);
+  const [displayName, setDisplayName] = useState("");
   const onUser = async (data) => {
     
     if (data?.mySearchBooks) {
