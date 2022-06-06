@@ -16,6 +16,8 @@ import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
 import { doc, setDoc } from "firebase/firestore";
 
 function Explorer() {
+  const [randomUser, setRandomUser] = useState(0);
+  const [displayName, setDisplayName] = useState([]);
   const [subLens, setSubLens] = useState(0);
   const [subscribers, setSubscribers] = useState([]); // 구독자 목록 가져오기
   const [keyword, setKeyword] = useState("");
@@ -47,9 +49,10 @@ function Explorer() {
 
   useEffect(() => {
     const unsub = onUserDocSnapshot(currentUid, onUser);
+    
     return () => unsub?.();
   }, [currentUid]);
-  const [displayName, setDisplayName] = useState("");
+
   const onUser = async (data) => {
     
     if (data?.mySearchBooks) {
@@ -75,8 +78,12 @@ function Explorer() {
         data.users.map(async (uid) => await getUserDoc(uid))
       );
       setSubscribers(x);
-
+      
+      
       setSubLens(subscribers.length);
+      console.log(subscribers.length);
+      setDisplayName(x[0].displayName);
+      console.log(x[randomUser].displayName);
 
     } else {
       setSubscribers([]);
@@ -98,14 +105,15 @@ function Explorer() {
     setRecentBooks([]);
   };
 
-  const [randomUser, setRandomUser] = useState(
-    Math.floor(Math.random() * subLens)
-  );
+  
   const otherSubscribers = () => {
     const tempRandomUser = Math.floor(Math.random() * subLens);
+    if(randomUser == tempRandomUser){
+      otherSubscribers();
+    }else{
     setRandomUser(tempRandomUser);
     setDisplayName(subscribers[tempRandomUser].displayName);
-    
+    }
   };
   // 테스트용 버튼 (console)
   // const onStatusCheck = () => {
