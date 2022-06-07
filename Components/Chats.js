@@ -270,7 +270,7 @@ export default function Chats({
             </Item>
 
             <Divider style={{ marginBottom: 15, width: "40%" }} />
-            <p style={{ marginBottom: 10 }}>{chat.text}</p>
+            <p style={{ marginBottom: 10, whiteSpace:"pre" }}>{chat.text}</p>
 
             {chat.fileUrl && (
               <Image
