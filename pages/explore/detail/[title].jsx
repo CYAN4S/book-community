@@ -18,7 +18,6 @@ import { useState, useEffect } from "react";
 import ChatFactory from "../../../Components/ChatFactory";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService, dbService } from "../../../firebaseConfig";
-
 import {
   collection,
   onSnapshot,
@@ -31,8 +30,17 @@ import {
 import Chats from "../../../Components/Chats";
 
 export default function Title({ books }) {
-  const { title, image, author, price, publisher, pubdate, isbn, description } =
-    books.items[0];
+
+  const router = useRouter();
+  const { title, image, author, price, publisher, pubdate, isbn, description } = 
+     books.items[0];
+
+  useEffect(()=>{
+    if(title === "error"){
+      alert("책 정보를 받아올 수 없습니다.");
+      router.back();
+    }
+  },[]);
 
   // 로딩을 위한 state
   const [loading, setLoading] = useState(false);
@@ -86,6 +94,7 @@ export default function Title({ books }) {
 
   // DB Real-time change check
   useEffect(() => {
+
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -102,8 +111,6 @@ export default function Title({ books }) {
     collection(dbService, `chat${isbn}`),
     orderBy("createdAt", "desc")
   );
-
-  const router = useRouter();
 
   // 0523_0923 책 검색 History 저장 code START
   const searchHistoryBook = async () => {
@@ -208,7 +215,6 @@ export default function Title({ books }) {
     <>
       {!loading ? (
         <>
-          {" "}
           <Segment style={{ height: "100vh" }}>
             <Dimmer active>
               <Loader size="massive">Loading</Loader>
@@ -217,7 +223,6 @@ export default function Title({ books }) {
         </>
       ) : (
         <>
-          {" "}
           <Container textAlign="centered">
             <div className="ui center aligned container">
               <Grid columns={3}>
@@ -266,7 +271,6 @@ export default function Title({ books }) {
                                 cursor: "pointer",
                               }}
                             >
-                              {" "}
                               <Icon name="undo" /> 돌아가기
                             </p>
                           </span>
@@ -292,7 +296,6 @@ export default function Title({ books }) {
                             <List.Item>
                               <div style={{ fontSize: 13, margin: "5px 0px" }}>
                                 <strong className="book_item">
-                                  {" "}
                                   {title?.length > 140
                                     ? `${title.substring(0, 140)}...`
                                     : title}{" "}
@@ -560,7 +563,7 @@ export default function Title({ books }) {
               )}
             </div>
             <div className="ui divider"></div>
-          </div>{" "}
+          </div>
         </>
       )}
     </>
@@ -608,6 +611,10 @@ export async function getServerSideProps(props) {
       ""
     );
   });
+
+  if(books.items[0] === undefined){
+    books.items[0] = {title :  "error", description:"error",  author:"error", publisher : "error"}
+  }
 
   return {
     props: {
