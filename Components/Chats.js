@@ -11,6 +11,7 @@ import { deleteObject, ref } from "firebase/storage";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import {
+  Grid,
   Button,
   Icon,
   Label,
@@ -447,24 +448,38 @@ export default function Chats({
                 </Item.Description>
               </Item.Content>
             </Item>
-
+            <Grid>
             {chat.fileUrl && (
+              <>
+              <Label style ={{marginTop: 15,marginBottom:10}} basic color="orange" >
+              <p style ={{marginBottom:3}}>Image</p>
+              <div>
               <Image
                 src={chat.fileUrl}
                 style={{
                   width: 300,
-                  marginTop: 10,
+                  
                   marginBottom: 5,
                 }}
               />
+              </div>
+              </Label>
+              </>
             )}
             {chat.vidFileUrl && (
-              <video loop={true} style={{ width: 400 }} controls={true}>
+              <>
+              <Label style ={{marginTop: 15,marginBottom:10}} basic color="yellow" >
+              <p style ={{marginBottom:-1}}>Video</p>
+              <video loop={true} style={{width: 400 }} controls={true}>
                 <source src={chat.vidFileUrl}></source>
               </video>
+              </Label>
+              </>
             )}
             {chat.youtubeUrl && (
-              <div style={{ width: "50%" }}>
+              <Label style ={{width: "50%",marginTop: 15,marginBottom:10}} basic color="red" >
+              <p style ={{marginBottom:-8}}>Youtube</p>
+              <div>
                 <Embed
                   style={{
                     marginTop: 10,
@@ -478,7 +493,9 @@ export default function Chats({
                   source="youtube"
                 />
               </div>
+              </Label>
             )}
+            </Grid>
           </div>
           <Button
             labelPosition="right"
