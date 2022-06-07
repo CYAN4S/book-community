@@ -34,9 +34,10 @@ export default function Title({ books }) {
   const router = useRouter();
   const { title, image, author, price, publisher, pubdate, isbn, description } = 
      books.items[0];
-
+  const [titleError, setTitleError] = useState(false);
   useEffect(()=>{
     if(title === "error"){
+      setTitleError(true);
       alert("책 정보를 받아올 수 없습니다.");
       router.back();
     }
@@ -117,11 +118,13 @@ export default function Title({ books }) {
     const doc = await getUserDoc(currentUid);
     //const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
     // if (!searchedMybook) {
+      if(!titleError){
     updateUserDoc({
       mySearchBooks: doc.mySearchBooks
         ? [...doc.mySearchBooks, `${isbn}${title}`]
         : [`${isbn}${title}`],
     });
+  }
     // }
   };
   // 0523_0923 책 검색 History 저장 code END
