@@ -34,9 +34,7 @@ function Explorer() {
   }, []);
   useEffect(() => {
     setSubLens(subscribers.length);
-    
   }, [subscribers.length]);
- 
 
   // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
@@ -50,12 +48,11 @@ function Explorer() {
 
   useEffect(() => {
     const unsub = onUserDocSnapshot(currentUid, onUser);
-    
+
     return () => unsub?.();
   }, [currentUid]);
 
   const onUser = async (data) => {
-    
     if (data?.mySearchBooks) {
       const listMySearchBook = await Promise.all(
         data.mySearchBooks.map(async (x) => await x.substr(24))
@@ -79,13 +76,10 @@ function Explorer() {
         data.users.map(async (uid) => await getUserDoc(uid))
       );
       setSubscribers(x);
-      
-      
       setSubLens(subscribers.length);
-      console.log(subscribers.length);
-      setDisplayName(x[0].displayName);
-      console.log(x[randomUser].displayName);
-
+      if (x.length) {
+        setDisplayName(x[0].displayName);
+      }
     } else {
       setSubscribers([]);
     }
@@ -106,14 +100,13 @@ function Explorer() {
     setRecentBooks([]);
   };
 
-  
   const otherSubscribers = () => {
     const tempRandomUser = Math.floor(Math.random() * subLens);
-    if(randomUser == tempRandomUser){
+    if (randomUser == tempRandomUser) {
       otherSubscribers();
-    }else{
-    setRandomUser(tempRandomUser);
-    setDisplayName(subscribers[tempRandomUser].displayName);
+    } else {
+      setRandomUser(tempRandomUser);
+      setDisplayName(subscribers[tempRandomUser].displayName);
     }
   };
   // 테스트용 버튼 (console)
@@ -182,16 +175,9 @@ function Explorer() {
                             }}
                           >
                             <a title="상세페이지로 이동하기">
-                              <Icon name="book" size="huge"/>
+                              <Icon name="book" size="huge" />
                             </a>
-                            <p
-                              style={{
-                                marginLeft: 10,
-                                marginRight: 10,
-                                fontFamily: "Gugi-Regular",
-                                fontSize: 11,
-                              }}
-                            >
+                            <p className="print_book">
                               {recentBooks.length < 50
                                 ? recentBooks
                                 : recentBooks.slice(0, 50) + "..."}
@@ -214,35 +200,54 @@ function Explorer() {
                   }}
                 >
                   <strong>최근 검색한 기록이 없습니다!</strong>
-                  <p />
                 </div>
               </>
             )}
           </div>
         </Segment>
 
-        <Header as="h3" color="black" style={{ marginTop: "3em", display : "flex"}}>
+        <Header
+          as="h3"
+          color="black"
+          style={{ marginTop: "3em", display: "flex" }}
+        >
           내 구독자가 관심있어하는 책
-          <Popup content='버튼을 누르면 다른 구독자들을 랜덤으로 검색합니다.'
-            trigger={<Icon
-            name="random"
-            onClick={otherSubscribers}
-            color={"red"}
-            size="mini"
-            style={{ cursor: "pointer", marginLeft: 5, marginTop : -2}}/>} />
+          {subLens >= 2 ? (
+            <Popup
+              content="버튼을 누르면 다른 구독자들을 랜덤으로 검색합니다."
+              trigger={
+                <Icon
+                  name="random"
+                  onClick={otherSubscribers}
+                  color={"red"}
+                  size="mini"
+                  style={{ cursor: "pointer", marginLeft: 5, marginTop: -2 }}
+                />
+              }
+            />
+          ) : (
+            <></>
+          )}
         </Header>
-        
-        <Header style={{ marginTop: 10, display : "flex"}} as="h5" color="grey">
-          <Popup content='초기에는 가장 오래된 구독자의 등록된 책을 확인합니다.' trigger={<Icon name='question circle' loading />} />
+
+        <Header style={{ marginTop: 10, display: "flex" }} as="h5" color="grey">
           <span className="similar_book">
             {subLens ? (
-              <> {displayName ? `구독자 [${displayName}]님의 관심있는 책` : "구독자 [게스트]님의 관심있는 책"}</>
+              <>
+                <Popup
+                  content="초기에는 가장 오래된 구독자의 등록된 책을 확인합니다."
+                  trigger={<Icon name="question circle" size="large" loading />}
+                />
+                <span style={{ marginLeft: "-0.2em" }}>
+                  {displayName
+                    ? `구독자 [${displayName}]님의 관심있는 책`
+                    : "구독자 [guest]님의 관심있는 책"}{" "}
+                </span>
+              </>
             ) : (
               <></>
             )}
-            
           </span>
-          
         </Header>
 
         <Segment>
@@ -250,54 +255,53 @@ function Explorer() {
             {subLens ? (
               <Grid columns={4} divided>
                 <Grid.Row>
-                  {subscribers[randomUser].myBooks.map(
-                    (subscriberBooks) => (
-                      (subscribers[randomUser].myBooks = [
-                        ...subscribers[randomUser].myBooks,
-                      ].reverse()),
-                      (subscribers[randomUser].myBooks =
-                        subscribers[randomUser].myBooks.length > 4
-                          ? subscribers[randomUser].myBooks.slice(
-                              -subscribers[randomUser].myBooks.length,
-                              -(subscribers[randomUser].myBooks.length - 4)
-                            )
-                          : subscribers[randomUser].myBooks),
-                      (subscriberBooks = subscriberBooks.substr(24)),
-                      (
-                        <>
-                          <Link
-                            href={`explore/detail/${subscriberBooks
-                              .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                              .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
-                          >
-                            <Grid.Column
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                cursor: "pointer",
-                              }}
+                  {subscribers[randomUser].myBooks ? (
+                    subscribers[randomUser].myBooks.map(
+                      (subscriberBooks) => (
+                        (subscribers[randomUser].myBooks = [
+                          ...subscribers[randomUser].myBooks,
+                        ].reverse()),
+                        (subscribers[randomUser].myBooks =
+                          subscribers[randomUser].myBooks.length > 4
+                            ? subscribers[randomUser].myBooks.slice(
+                                -subscribers[randomUser].myBooks.length,
+                                -(subscribers[randomUser].myBooks.length - 4)
+                              )
+                            : subscribers[randomUser].myBooks),
+                        (subscriberBooks = subscriberBooks.substr(24)),
+                        (
+                          <>
+                            <Link
+                              href={`explore/detail/${subscriberBooks
+                                .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
                             >
-                              <a title="상세페이지로 이동하기">
-                                <Icon name="book" size="huge"/>
-                              </a>
-                              <p
+                              <Grid.Column
                                 style={{
-                                  marginLeft: 10,
-                                  marginRight: 10,
-                                  fontFamily: "Gugi-Regular",
-                                  fontSize: 11,
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  cursor: "pointer",
                                 }}
                               >
-                                {subscriberBooks.length < 50
-                                  ? subscriberBooks
-                                  : subscriberBooks.slice(0, 50) + "..."}
-                              </p>
-                            </Grid.Column>
-                          </Link>
-                          <Divider />
-                        </>
+                                <a title="상세페이지로 이동하기">
+                                  <Icon name="book" size="huge" />
+                                </a>
+                                <p className="print_book">
+                                  {subscriberBooks.length < 50
+                                    ? subscriberBooks
+                                    : subscriberBooks.slice(0, 50) + "..."}
+                                </p>
+                              </Grid.Column>
+                            </Link>
+                            <Divider />
+                          </>
+                        )
                       )
                     )
+                  ) : (
+                    <p className="no_books_of_interest">
+                      구독자가 등록한 책이 없습니다.
+                    </p>
                   )}
                 </Grid.Row>
               </Grid>
@@ -311,7 +315,6 @@ function Explorer() {
                   }}
                 >
                   <strong>나만의 구독자를 먼저 만들어 보아요!</strong>
-                  <p />
                 </div>
               </>
             )}
@@ -323,9 +326,24 @@ function Explorer() {
           color: black;
         }
 
-        .similar_book{
+        .similar_book {
           font-size: 12px;
-          margin-top : 0.2em;
+          margin-top: 0.2em;
+        }
+
+        .print_book {
+          margin-left: 10;
+          margin-right: 10;
+          font-family: "Gugi-Regular";
+          font-size: 11px;
+        }
+
+        .no_books_of_interest {
+          margin-left: 1em;
+          font-family: "KaushanScript-Regula";
+          font-size: 15px;
+          font-weight: bold;
+          color: grey;
         }
       `}</style>
     </>

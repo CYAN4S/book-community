@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 
 function View_more() {
   const router = useRouter();
-  const onClick = () =>{
-    router.push("/main");   
-  }
+  const onClick = () => {
+    router.push("/main");
+  };
   return (
     <>
       <div style={{ width: 300 }}>
@@ -65,7 +65,7 @@ function View_more() {
 
       <Divider />
       <div style={{ display: "flex", justifyContent: "right" }}>
-        <Button animated="vertical" color="black"  onClick = {onClick}>
+        <Button animated="vertical" color="black" onClick={onClick}>
           <Button.Content hidden>
             <p>메인으로</p>
           </Button.Content>
@@ -82,9 +82,9 @@ function View_more() {
           align-items: center;
         }
 
-        p{
-          font-size : 11px;
-          font-family : "GothicA1-Bold";
+        p {
+          font-size: 11px;
+          font-family: "GothicA1-Bold";
         }
       `}</style>
     </>
