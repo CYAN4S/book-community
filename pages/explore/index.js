@@ -32,9 +32,10 @@ function Explorer() {
     //setSimilarBookLens(0);
     setSubLens(0);
   }, []);
+
   useEffect(() => {
     setSubLens(subscribers.length);
-  }, [subLens, subscribers]);
+  },[subscribers, subLens, lens]);
 
   // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
@@ -48,7 +49,6 @@ function Explorer() {
 
   useEffect(() => {
     const unsub = onUserDocSnapshot(currentUid, onUser);
-
     return () => unsub?.();
   }, [currentUid]);
 

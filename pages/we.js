@@ -32,11 +32,8 @@ function Book_home() {
     }
   };
   useEffect(() => {
-   
-
     const unsub = onUserDocSnapshot(userId, onUser);
     return () => unsub?.();
-    
   }, [userId]);
   // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 end
   onAuthStateChanged(authService, (user) => {
@@ -55,8 +52,6 @@ function Book_home() {
       setChats(chatArray);
     });
   }, []);
-
-
 
   const toggleEntire = () => {
     setEntire(true);
