@@ -35,7 +35,7 @@ function Explorer() {
 
   useEffect(() => {
     setSubLens(subscribers.length);
-  },);
+  },[subscribers, subLens, lens]);
 
   // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
