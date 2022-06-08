@@ -50,7 +50,7 @@ function Explorer() {
   useEffect(() => {
     const unsub = onUserDocSnapshot(currentUid, onUser);
     return () => unsub?.();
-  }, [currentUid]);
+  }, [currentUid, subscribers, lens]);
 
   const onUser = async (data) => {
     if (data?.mySearchBooks) {
