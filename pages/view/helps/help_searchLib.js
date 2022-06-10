@@ -37,9 +37,9 @@ const Help_Search = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프에서 특정 책에 대한 도서관을 어떻게 찾을까?`}
+            북스탬프에서 특정 책에 대한 도서관을 어떻게 찾을까?
             <Header.Subheader>
-              {`How do I find the library for a specific book in Bookstamp?`}
+              How do I find the library for a specific book in Bookstamp?
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -51,7 +51,7 @@ const Help_Search = () => {
             <Header.Subheader>
               <p
                 style={{ fontSize: 11, color: "red", marginTop: 30 }}
-              >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
+              >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -65,7 +65,7 @@ const Help_Search = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-                {`1. 특정 책 검색을 통한 상세페이지에서, "어디에 있을까?" 탭의 지역을 선택할 수 있습니다.`}
+                1. 특정 책 검색을 통한 상세페이지에서, "어디에 있을까?" 탭의 지역을 선택할 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -86,7 +86,7 @@ const Help_Search = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-                {`3. 소장도서관 확인버튼을 누르면, 지역 내 도서관의 정보와 현재 나의위치로부터의 거리를 확인할 수 있습니다.`}
+                3. 소장도서관 확인버튼을 누르면, 지역 내 도서관의 정보와 현재 나의위치로부터의 거리를 확인할 수 있습니다.
               </p>
 
               <p
@@ -108,7 +108,7 @@ const Help_Search = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-                {`4. 주소 옆의 맵핀을 누르면, 다음과 같이 선택된 도서관의 지도 상 위치를 확인할 수 있습니다.`}
+                4. 주소 옆의 맵핀을 누르면, 다음과 같이 선택된 도서관의 지도 상 위치를 확인할 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -119,7 +119,7 @@ const Help_Search = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-                {`5. 또한 도서관들의 정보를 출력하는 [3번째 이미지] 화면에서 스크롤을 아래로 내려, 화살표 아이콘을 클릭하면, 도서관들의 전체 위치를 확인할 수도 있습니다.`}
+                5. 또한 도서관들의 정보를 출력하는 [3번째 이미지] 화면에서 스크롤을 아래로 내려, 화살표 아이콘을 클릭하면, 도서관들의 전체 위치를 확인할 수도 있습니다.
               </p>
 
               <p

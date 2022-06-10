@@ -35,9 +35,9 @@ const Help_SearchBook = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프에서 책 검색을 하고싶다면?`}
+            북스탬프에서 책 검색을 하고싶다면?
             <Header.Subheader>
-              {`Do you want to search for books in Bookstamp?`}
+              Do you want to search for books in Bookstamp?
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -49,7 +49,7 @@ const Help_SearchBook = () => {
             <Header.Subheader>
               <p
                 style={{ fontSize: 11, color: "red", marginTop: 30 }}
-              >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
+              >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -63,7 +63,7 @@ const Help_SearchBook = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
-                {`1. Explore 탭을 통해, 검색 창으로 이동할 수 있습니다.`}
+                1. Explore 탭을 통해, 검색 창으로 이동할 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -73,8 +73,8 @@ const Help_SearchBook = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
-                {`2. Explore 페이지의 검색박스와 검색 버튼의 클릭을 통해, 특정 도서의
-                검색 결과를 확인할 수 있습니다.`}
+                2. Explore 페이지의 검색박스와 검색 버튼의 클릭을 통해, 특정 도서의
+                검색 결과를 확인할 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -85,8 +85,8 @@ const Help_SearchBook = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchbook_text">
-                {`3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
-                클릭하여, 세부정보를 확인할 수 있습니다.`}
+                3. 도서 검색 결과를 필터별로 확인할 수 있으며, 출력된 도서를
+                클릭하여, 세부정보를 확인할 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>

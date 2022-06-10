@@ -52,9 +52,9 @@ const Help_Help = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프에서의 신고, 문의는 어떻게 수행할 수 있을까?`}
+            북스탬프에서의 신고, 문의는 어떻게 수행할 수 있을까?
             <Header.Subheader>
-              {`How can I report and inquire at Bookstamp?`}
+              How can I report and inquire at Bookstamp?
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -66,7 +66,7 @@ const Help_Help = () => {
             <Header.Subheader>
               <p
                 style={{ fontSize: 11, color: "red", marginTop: 30 }}
-              >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
+              >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -95,7 +95,7 @@ const Help_Help = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`1. 어느 상황에서 문의를 할 수 있는가에 대해 알려드립니다.`}
+                1. 어느 상황에서 문의를 할 수 있는가에 대해 알려드립니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -105,7 +105,7 @@ const Help_Help = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`2. 양식을 작성하기 위해 화살표 아이콘을 눌러, 양식을 펼칠 수 있습니다.`}
+                2. 양식을 작성하기 위해 화살표 아이콘을 눌러, 양식을 펼칠 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -115,7 +115,7 @@ const Help_Help = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`3. 양식 내용에 따라 문의 내용을 작성하고 전송할 수 있습니다.`}
+                3. 양식 내용에 따라 문의 내용을 작성하고 전송할 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -145,7 +145,7 @@ const Help_Help = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`1. 어느 상황에서 신고를 할 수 있는가에 대해 알려드립니다.`}
+                1. 어느 상황에서 신고를 할 수 있는가에 대해 알려드립니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -155,7 +155,7 @@ const Help_Help = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`2. 양식을 작성하기 위해 화살표 아이콘을 눌러, 양식을 펼칠 수 있습니다.`}
+                2. 양식을 작성하기 위해 화살표 아이콘을 눌러, 양식을 펼칠 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -165,7 +165,7 @@ const Help_Help = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`3. 양식 내용에 따라 신고 내용을 작성하고 전송할 수 있습니다.`}
+                3. 양식 내용에 따라 신고 내용을 작성하고 전송할 수 있습니다.
               </p>
               <p
                 style={{
@@ -175,7 +175,7 @@ const Help_Help = () => {
                   marginLeft: 15,
                 }}
               >
-                {`- 신고는 자세하게, 당시 상황을 잘 반영한 이미지가 첨부된다면 처리에 유용하게 활용될 수 있습니다.`}
+                - 신고는 자세하게, 당시 상황을 잘 반영한 이미지가 첨부된다면 처리에 유용하게 활용될 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>

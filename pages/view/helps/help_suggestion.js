@@ -31,9 +31,9 @@ const Help_Suggestion = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프에서의 책 추천을 어떻게 활용할 수 있을까?`}
+            북스탬프에서의 책 추천을 어떻게 활용할 수 있을까?
             <Header.Subheader>
-              {`How can I use book recommendations from Bookstamp?`}
+              How can I use book recommendations from Bookstamp?
             </Header.Subheader>
           </Header.Content>
         </Header>

@@ -40,9 +40,9 @@ const Help_Profile = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프의 프로필 페이지는?`}
+            북스탬프의 프로필 페이지는?
             <Header.Subheader>
-              {`What is Bookstamp's profile page?`}
+              What is Bookstamp's profile page?
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -54,7 +54,7 @@ const Help_Profile = () => {
             marginBottom: 15,
             marginLeft: 50,
           }}
-        >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
+        >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
         <Image src={helpProfile} width={700} height={290} />
       </Container>
 

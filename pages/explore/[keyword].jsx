@@ -511,9 +511,11 @@ export default function SearchKeyword({ books }) {
                     fontSize: "35px",
                   }}
                 >
-                  <Icon name="warning circle" color="red" />{" "}
-                  <strong>검색결과가 존재하지 않습니다.</strong>
-                  <p />
+                  
+                  <p style={{fontSize : 23, fontFamily:"GothicA1-Medium"}}>
+                    <Icon name="warning circle" color="red" />검색결과가 존재하지 않습니다.
+                  </p>
+                
                   <Link href={`/explore`}>
                     <Button color="black">돌아가기</Button>
                   </Link>
@@ -521,6 +523,7 @@ export default function SearchKeyword({ books }) {
               </>
             )}
           </div>
+         
         </>
       )}
     </>
