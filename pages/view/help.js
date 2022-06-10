@@ -54,8 +54,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>COMMUNITY</Card.Header>
-                          <Card.Description>사용자와 대화하기</Card.Description>
+                          <Card.Header>
+                            <p className="guide_name">COMMUNITY</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text"> 사용자와 대화하기</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -79,8 +83,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>PROFILE</Card.Header>
-                          <Card.Description>프로필 설정</Card.Description>
+                          <Card.Header>
+                            <p className="guide_name">PROFILE</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text">프로필 설정</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -103,8 +111,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>SEARCH BOOK</Card.Header>
-                          <Card.Description>책 검색</Card.Description>
+                          <Card.Header>
+                            <p className="guide_name">SEARCH BOOK</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text"> 책 검색</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -127,8 +139,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>BOOK SUGGESTION</Card.Header>
-                          <Card.Description>책 추천</Card.Description>
+                          <Card.Header>
+                            <p className="guide_name">BOOK SUGGESTION</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text"> 책 추천</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -153,8 +169,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>SEARCH LIB</Card.Header>
-                          <Card.Description>도서관 검색</Card.Description>
+                          <Card.Header>
+                            <p className="guide_name">SEARCH LIB</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text"> 도서관 검색</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -177,8 +197,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>INQUIRE/REPORT</Card.Header>
-                          <Card.Description>문의/신고</Card.Description>
+                          <Card.Header>
+                              <p className="guide_name">INQUIRE<br/>REPORT</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text"> 문의/신고</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -201,8 +225,12 @@ const Help = () => {
                       <Card>
                         <Image src="/bookstamp.png" />
                         <Card.Content>
-                          <Card.Header>SUBSCRIBER</Card.Header>
-                          <Card.Description>구독자 관리</Card.Description>
+                          <Card.Header>
+                            <p className="guide_name">SUBSCRIBER</p>
+                          </Card.Header>
+                          <Card.Description>
+                            <p className="guide_text"> 구독자 관리</p>
+                          </Card.Description>
                         </Card.Content>
                       </Card>
                     }
@@ -226,6 +254,16 @@ const Help = () => {
         div {
           margin-top: 30px;
           text-align: right;
+        }
+
+        .guide_name {
+          font-size: 12.5px;
+          text-align: center;
+        }
+
+        .guide_text {
+          font-size: 11px;
+          text-align: center;
         }
       `}</style>
     </>

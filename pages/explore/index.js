@@ -35,7 +35,7 @@ function Explorer() {
 
   useEffect(() => {
     setSubLens(subscribers.length);
-  },[subscribers, subLens, lens]);
+  },[subscribers]);
 
   // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
@@ -235,7 +235,7 @@ function Explorer() {
             {subLens ? (
               <>
                 <Popup
-                  content="초기에는 가장 오래된 구독자의 등록된 책을 확인합니다."
+                  content="페이지 조작 시에는, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
                   trigger={<Icon name="question circle" size="large" loading />}
                 />
                 <span style={{ marginLeft: "-0.2em" }}>
