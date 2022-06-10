@@ -30,7 +30,7 @@ function Explorer() {
     setKeyword("");
     setLens(0);
     //setSimilarBookLens(0);
-    //setSubLens(0);
+    setSubLens(0);
   }, []);
 
   useEffect(() => {
@@ -92,11 +92,6 @@ function Explorer() {
   };
 
   const clearRecentlyBook = () => {
-
-    if(lens){
-      otherSubscribers(); // 만약 최근검색한책이 지워지면, 내 구독자가 관심있어하는 책을 초기화 
-    }
-
     updateUserDoc({
       mySearchBooks: [],
     });
