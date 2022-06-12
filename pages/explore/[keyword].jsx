@@ -531,7 +531,7 @@ export default function SearchKeyword({ books }) {
 }
 
 export async function getServerSideProps({ query }) {
-  const text = query.keyword; // test용
+  const text = query.keyword; 
   const res = await fetch(
     "https://openapi.naver.com/v1/search/book.json?query=" +
       text +
