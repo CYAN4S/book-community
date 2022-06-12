@@ -18,16 +18,15 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { updateProfile } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
-// 0516_0944 import 추가
+
 import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import withTransition from "../../public/HOC/withTransition";
 
 const Report = () => {
   const [formOpen, setFormOpen] = useState(false);
-  // 0516_0932 코드 추가 시작
+ 
   // reportPhotoUpload code start
-
   const onFileChange = (event) => {
     const {
       target: { files },
@@ -46,8 +45,6 @@ const Report = () => {
 
   const onClearPhotoClick = () => setImgFileString("");
   // reportPhotoUpload code end
-  // 0516_0932 코드 추가 끝
-  // 0513_0849 코드 추가 시작
   const [reportUserName, setReportUserName] = useState("");
   const [badUserName, setBadUserName] = useState("");
   const [reportUserContext, setReportUserContext] = useState("");
@@ -239,7 +236,7 @@ const Report = () => {
                     <Form.Field
                       control={Select}
                       options={badChatWhys}
-                      label={"신고 사유"}
+                      label="신고 사유"
                       placeholder="신고 사유"
                       value={badChatWhy}
                       onChange={(e, data) => setBadChatWhy(data.value)}
