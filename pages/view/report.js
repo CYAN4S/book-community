@@ -119,7 +119,7 @@ const Report = () => {
       title: "불량 이용",
       content: {
         content: (
-          <div class="panel_div">
+          <div className="panel_div">
             <p className="panel_p">
               - 불량 이용 : 불건전 언어 사용, 부적절한 내용, 불법프로그램 사용
               등 커뮤니티 이용 피해가 발생하였을 때, 신고해주세요!
@@ -133,7 +133,7 @@ const Report = () => {
       title: "계정 도용",
       content: {
         content: (
-          <div class="panel_div">
+          <div className="panel_div">
             <p className="panel_p">
               - 게시판에서의 상업적 행위가 발생할 때, 신고해주세요!
             </p>
@@ -146,7 +146,7 @@ const Report = () => {
       title: "상업적 이용",
       content: {
         content: (
-          <div class="panel_div">
+          <div className="panel_div">
             <p className="panel_p">
               - 계정 도용으로 인한 피해를 받으셨거나, 목격하셨을 때
               신고해주세요!
@@ -160,7 +160,7 @@ const Report = () => {
       title: "기타",
       content: {
         content: (
-          <div class="panel_div">
+          <div className="panel_div">
             <p className="panel_p">
               - 그 외의 사용자 기망행위가 목격되면 신고해주세요!
             </p>
@@ -266,7 +266,7 @@ const Report = () => {
                       onChange={(e) => setReportUserContext(e.target.value)}
                     />
                     <strong>
-                      <p>파일 첨부</p>
+                      <p>파일 업로드</p>
                     </strong>
                     <div
                       style={{ marginTop: 5, marginBottom: 10 }}

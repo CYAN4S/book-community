@@ -42,7 +42,7 @@ const Help_Profile = () => {
           <Header.Content>
             북스탬프의 프로필 페이지는?
             <Header.Subheader>
-              What is Bookstamp's profile page?
+              {`What is Bookstamp's profile page?`}
             </Header.Subheader>
           </Header.Content>
         </Header>

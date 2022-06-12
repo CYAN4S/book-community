@@ -66,7 +66,7 @@ const Help_Search = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p className="help_searchLib_text">
-                1. 특정 책 검색을 통한 상세페이지에서, "어디에 있을까?" 탭의 지역을 선택할 수 있습니다.
+                {`1. 특정 책 검색을 통한 상세페이지에서, 어디에 있을까?" 탭의 지역을 선택할 수 있습니다.`}
               </p>
             </Grid.Column>
           </Grid.Row>

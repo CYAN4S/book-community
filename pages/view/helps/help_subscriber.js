@@ -96,7 +96,7 @@ const Help_Subscriber = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                4. 다른 사용자를 구독한 후, 나의 프로필로 이동하면 "내가 구독한 사용자" 목록에 해당 사용자가 등록됩니다.
+                {`4. 다른 사용자를 구독한 후, 나의 프로필로 이동하면 "내가 구독한 사용자" 목록에 해당 사용자가 등록됩니다.`}
               </p>
             </Grid.Column>
           </Grid.Row>
