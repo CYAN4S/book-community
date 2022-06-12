@@ -35,9 +35,9 @@ const Help_Subscriber = () => {
         <Header as="h2">
           <Icon name="question" />
           <Header.Content>
-            {`북스탬프에서의 구독자 관리는 어떻게 할까?`}
+            북스탬프에서의 구독자 관리는 어떻게 할까?
             <Header.Subheader>
-              {`How to manage subscribers in Bookstamp?`}
+              How to manage subscribers in Bookstamp?
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -49,7 +49,7 @@ const Help_Subscriber = () => {
             <Header.Subheader>
               <p
                 style={{ fontSize: 11, color: "red", marginTop: 30 }}
-              >{`현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.`}</p>
+              >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -63,7 +63,7 @@ const Help_Subscriber = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`1. 채팅 공간에서, 다른 사용자의 프로필을 누를 수 있습니다.`}
+                1. 채팅 공간에서, 다른 사용자의 프로필을 누를 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -73,7 +73,7 @@ const Help_Subscriber = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`2. 다른 사용자의 프로필을 눌러 사용자 프로필로 이동하면, 구독하기 버튼을 누를 수 있습니다.`}
+                2. 다른 사용자의 프로필을 눌러 사용자 프로필로 이동하면, 구독하기 버튼을 누를 수 있습니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -84,7 +84,7 @@ const Help_Subscriber = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`3. 구독하기 버튼을 누를 시, 구독 취소로 버튼 활성화 상태가 변경됩니다.`}
+                3. 구독하기 버튼을 누를 시, 구독 취소로 버튼 활성화 상태가 변경됩니다.
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -95,7 +95,7 @@ const Help_Subscriber = () => {
             </Grid.Column>
             <Grid.Column centered width={7}>
               <p>
-                {`4. 다른 사용자를 구독한 후, 나의 프로필로 이동하면 "내가 구독한 사용자" 목록에 해당 사용자가 등록됩니다.`}
+                4. 다른 사용자를 구독한 후, 나의 프로필로 이동하면 "내가 구독한 사용자" 목록에 해당 사용자가 등록됩니다.
               </p>
             </Grid.Column>
           </Grid.Row>

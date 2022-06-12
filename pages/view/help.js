@@ -198,7 +198,11 @@ const Help = () => {
                         <Image src="/bookstamp.png" />
                         <Card.Content>
                           <Card.Header>
-                              <p className="guide_name">INQUIRE<br/>REPORT</p>
+                            <p className="guide_name">
+                              INQUIRE
+                              <br />
+                              REPORT
+                            </p>
                           </Card.Header>
                           <Card.Description>
                             <p className="guide_text"> 문의/신고</p>
@@ -257,14 +261,36 @@ const Help = () => {
         }
 
         .guide_name {
-          font-size: 12.5px;
+          font-size: 18px;
           text-align: center;
         }
 
         .guide_text {
-          font-size: 11px;
+          font-size: 10px;
           text-align: center;
         }
+
+        @media (max-width: 1023px) {
+          .guide_name {
+            font-size: 13px;
+            text-align: center;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .guide_name {
+            font-size: 9px;
+            text-align: center;
+          }
+
+          .guide_text {
+            font-size: 6px;
+            text-align: center;
+          }
+        }
+
+
+
       `}</style>
     </>
   );

@@ -30,7 +30,6 @@ function Explorer() {
     setKeyword("");
     setLens(0);
     //setSimilarBookLens(0);
-    //setSubLens(0);
   }, []);
 
   useEffect(() => {
@@ -92,17 +91,13 @@ function Explorer() {
   };
 
   const clearRecentlyBook = () => {
-
-    if(lens){
-      otherSubscribers(); // 만약 최근검색한책이 지워지면, 내 구독자가 관심있어하는 책을 초기화 
-    }
-
     updateUserDoc({
       mySearchBooks: [],
     });
 
     setLens(0);
     setRecentBooks([]);
+    otherSubscribers();
   };
 
   const otherSubscribers = () => {
@@ -175,8 +170,10 @@ function Explorer() {
                           <Grid.Column
                             style={{
                               display: "flex",
-                              justifyContent: "center",
+                              justifyContent: "left",
                               cursor: "pointer",
+                              marginTop : 10,
+                              marginBottom : 10,
                             }}
                           >
                             <a title="상세페이지로 이동하기">
@@ -266,13 +263,6 @@ function Explorer() {
                         (subscribers[randomUser].myBooks = [
                           ...subscribers[randomUser].myBooks,
                         ].reverse()),
-                        (subscribers[randomUser].myBooks =
-                          subscribers[randomUser].myBooks.length > 4
-                            ? subscribers[randomUser].myBooks.slice(
-                                -subscribers[randomUser].myBooks.length,
-                                -(subscribers[randomUser].myBooks.length - 4)
-                              )
-                            : subscribers[randomUser].myBooks),
                         (subscriberBooks = subscriberBooks.substr(24)),
                         (
                           <>
@@ -284,8 +274,11 @@ function Explorer() {
                               <Grid.Column
                                 style={{
                                   display: "flex",
-                                  justifyContent: "center",
+                                  justifyContent: "left",
                                   cursor: "pointer",
+                                  marginTop : 10,
+                                  marginBottom : 10,
+
                                 }}
                               >
                                 <a title="상세페이지로 이동하기">

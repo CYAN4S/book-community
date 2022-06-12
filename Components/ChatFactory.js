@@ -207,7 +207,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
             <Header as="h2" icon textAlign="center">
               <Icon name="book" circular />
               <Header.Content>글 쓰기</Header.Content>
-              <p>게시글을 작성해보세요!</p>
+              <p className="genre_chat">게시글을 작성해보세요!</p>
             </Header>
 
             <Container textAlign="left">
@@ -251,7 +251,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       htmlFor="attach-file"
                       style={{ width: 120, textAlign: "center" }}
                     >
-                      <p>Add Youtube URL</p>
+                      <p className="upload_element">Add Youtube URL</p>
                     </Label>
 
                     <Form.Field>
@@ -320,7 +320,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       pointing="right"
                       htmlFor="attach-file"
                     >
-                      <p>Add photos</p>
+                      <p className="upload_element">Add photos</p>
                     </Label>
 
                     <Input
@@ -363,7 +363,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       pointing="right"
                       htmlFor="attach-file"
                     >
-                      <p>Add videos</p>
+                      <p className="upload_element">Add videos</p>
                     </Label>
 
                     <Input
@@ -404,26 +404,29 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     </div>
                   </div>
                 )}
-                <Button
-                  onClick={onCheckRealSubmit}
-                  icon
-                  labelPosition="right"
-                  color="teal"
-                  style={{ marginTop: 5 }}
-                >
-                  보내기
-                  <Icon name="paper plane" />
-                </Button>
-                <Button
-                  onClick={onSubmitFile}
-                  icon
-                  labelPosition="right"
-                  color="blue"
-                  style={{ marginTop: 5 }}
-                >
-                  파일 첨부하기
-                  <Icon name="file" />
-                </Button>
+
+                <div style={{ marginTop: 10 }}>
+                  <Button
+                    onClick={onCheckRealSubmit}
+                    icon
+                    labelPosition="right"
+                    color="teal"
+                    style={{ marginTop: 5 }}
+                  >
+                    보내기
+                    <Icon name="paper plane" />
+                  </Button>
+                  <Button
+                    onClick={onSubmitFile}
+                    icon
+                    labelPosition="right"
+                    color="blue"
+                    style={{ marginTop: 5 }}
+                  >
+                    파일 첨부하기
+                    <Icon name="file" />
+                  </Button>
+                </div>
               </Form>
             </Container>
           </>
@@ -452,7 +455,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     htmlFor="attach-file"
                     style={{ width: 120, textAlign: "center" }}
                   >
-                    <p>Add Youtube URL</p>
+                    <p className="upload_element">Add Youtube URL</p>
                   </Label>
 
                   <Form.Field>
@@ -517,7 +520,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     pointing="right"
                     htmlFor="attach-file"
                   >
-                    <p>Add photos</p>
+                    <p className="upload_element">Add photos</p>
                   </Label>
 
                   <Input
@@ -560,7 +563,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     pointing="right"
                     htmlFor="attach-file"
                   >
-                    <p>Add videos</p>
+                    <p className="upload_element">Add videos</p>
                   </Label>
 
                   <Input
@@ -601,33 +604,41 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   </div>
                 </div>
               )}
-              <Button
-                onClick={onCheckRealSubmit}
-                icon
-                labelPosition="right"
-                color="teal"
-                style={{ marginTop: 5 }}
-              >
-                보내기
-                <Icon name="paper plane" />
-              </Button>
-              <Button
-                onClick={onSubmitFile}
-                icon
-                labelPosition="right"
-                color="blue"
-                style={{ marginTop: 5 }}
-              >
-                파일 첨부하기
-                <Icon name="file" />
-              </Button>
+              <div style={{ marginTop: 10 }}>
+                <Button
+                  onClick={onCheckRealSubmit}
+                  icon
+                  labelPosition="right"
+                  color="teal"
+                  style={{ marginTop: 5 }}
+                >
+                  보내기
+                  <Icon name="paper plane" />
+                </Button>
+                <Button
+                  onClick={onSubmitFile}
+                  icon
+                  labelPosition="right"
+                  color="blue"
+                  style={{ marginTop: 5 }}
+                >
+                  파일 첨부하기
+                  <Icon name="file" />
+                </Button>
+              </div>
             </Form>
           </>
         )}
       </div>
       <style jsx>{`
-        p {
+        .genre_chat {
+          font-size: 11px;
+          color: grey;
+        }
+
+        .upload_element {
           font-size: 12px;
+          text-align: center;
         }
       `}</style>
     </>
