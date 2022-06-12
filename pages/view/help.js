@@ -132,7 +132,7 @@ const Help = () => {
                   </Popup>
                 </Grid.Column>
               </Link>
-              <Link href="./helps/help_suggestion">
+              <Link href="./helps/help_share">
                 <Grid.Column>
                   <Popup
                     trigger={
@@ -140,17 +140,17 @@ const Help = () => {
                         <Image src="/bookstamp.png" />
                         <Card.Content>
                           <Card.Header>
-                            <p className="guide_name">BOOK SUGGESTION</p>
+                            <p className="guide_name">SHARE EXPERIENCE</p>
                           </Card.Header>
                           <Card.Description>
-                            <p className="guide_text"> 책 추천</p>
+                            <p className="guide_text">경험 공유</p>
                           </Card.Description>
                         </Card.Content>
                       </Card>
                     }
                   >
                     <Popup.Header style={{ width: 300 }}>
-                      책 추천 시스템에 대한 내용을 안내합니다.
+                      다른 사용자의 책 관련 정보를 확인할 수 있어요!
                     </Popup.Header>
                     <Popup.Content>
                       <Icon name="hand point right" />

@@ -48,7 +48,8 @@ const Help_SearchBook = () => {
           <Header.Content>
             <Header.Subheader>
               <p
-                style={{ fontSize: 11, color: "red", marginTop: 30 }}
+               className="develop_msg"
+               style={{ marginTop: 30 }}
               >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
             </Header.Subheader>
           </Header.Content>
@@ -106,6 +107,13 @@ const Help_SearchBook = () => {
 
         strong {
           cursor: pointer;
+        }
+
+        
+        .develop_msg {
+          font-size: 11px;
+          color: red;
+          font-family: GothicA1-Medium;
         }
       `}</style>
     </>

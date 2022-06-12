@@ -54,7 +54,9 @@ const Help_Profile = () => {
             marginBottom: 15,
             marginLeft: 50,
           }}
-        >현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.</p>
+        >
+          현재 개발중인 내용으로, 이미지와 설명은 변경될 수 있습니다.
+        </p>
         <Image src={helpProfile} width={700} height={290} />
       </Container>
 
@@ -87,7 +89,9 @@ const Help_Profile = () => {
                 </div>
               </Grid.Column>
             </Grid.Row>
-            <Divider style={{ marginTop: -5,  border: "2px solid grey"}} />
+            <Divider
+              style={{ marginTop: -5, border: "2px solid grey", height: 5 }}
+            />
             <Grid.Row style={{ marginTop: -20, border: "2px solid grey" }}>
               <Grid.Column style={{ width: "25%" }}>
                 <div className="help_Profile_Div">
@@ -146,6 +150,9 @@ const Help_Profile = () => {
           align-items: center;
         }
 
+        p {
+          font-family: GothicA1-Medium;
+        }
       `}</style>
     </>
   );
