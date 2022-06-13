@@ -255,8 +255,8 @@ function Explorer() {
             {subLens ? (
               <>
                 <Popup
-                  content="페이지 조작 시에는, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
-                  trigger={<Icon name="question circle" size="large" loading />}
+                  content="페이지 첫 로드 시, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
+                  trigger={<Icon name="question circle" size="large" loading color ="violet" style={{marginBottom :3}}/>}
                 />
                 <span style={{ marginLeft: "-0.2em" }}>
                   {displayName
@@ -278,6 +278,7 @@ function Explorer() {
                   {subscribers && subscribers[randomUser].myBooks ? (
                     subscribers[randomUser].myBooks.map(
                       (subscriberBooks) => (
+
                         (subscriberBooks = subscriberBooks.substr(24)),
                         (
                           <>

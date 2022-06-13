@@ -55,7 +55,7 @@ const Help_Share = () => {
       <Container
         textAlign="left"
         fluid
-        style={{ width: "90%", marginTop: "1.8em" }}
+        style={{ width: "90%", marginTop: "3.8em" }}
       >
         <Header as="h2">
           <Icon name="book" size="big" />
