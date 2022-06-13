@@ -88,7 +88,6 @@ function Explorer() {
       console.log("실행3-else");
       setSubscribers([]);
     }
-
   };
 
   const updateUserDoc = (newData) => {
@@ -106,22 +105,22 @@ function Explorer() {
     setRecentBooks([]);
   };
 
-  const otherSubscribersOnMode = () => {
-    setExecuteOtherSubscribers(true);
-    if (executeOtherSubscribers == true) {
-      const otherSubscribers = () => {
-        const tempRandomUser = Math.floor(Math.random() * subLens);
-        if (randomUser == tempRandomUser) {
-          otherSubscribers();
-        } else {
-          setRandomUser(tempRandomUser);
-          setDisplayName(subscribers[tempRandomUser].displayName);
+  const otherSubscribers = () => {
+    // 밑에 세 줄은 쓰지 않는 코드
+    //if (executeOtherSubscribers == true) {
+      //setExecuteOtherSubscribers(true);
+      //setExecuteOtherSubscribers(false);
+      const tempRandomUser = Math.floor(Math.random() * subLens);
+      if (randomUser == tempRandomUser) {
+        otherSubscribers();
+      } else {
+        
+        
+        setRandomUser(tempRandomUser);
+        setDisplayName(subscribers[tempRandomUser].displayName);
         }
-        setExecuteOtherSubscribers(false);
-      };
-    }
+      
   };
-
   //테스트용 버튼 (console)
   // const onStatusCheck = () => {
   //   console.log("구독자 display", subscribers[randomUser].displayName);
@@ -239,7 +238,7 @@ function Explorer() {
               trigger={
                 <Icon
                   name="random"
-                  onClick={otherSubscribersOnMode}
+                  onClick={otherSubscribers}
                   color={"red"}
                   size="mini"
                   style={{ cursor: "pointer", marginLeft: 5, marginTop: -2 }}
