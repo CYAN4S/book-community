@@ -231,22 +231,6 @@ function Explorer() {
           style={{ marginTop: "3em", display: "flex" }}
         >
           내 구독자가 관심있어하는 책
-          {subLens >= 2 ? (
-            <Popup
-              content="버튼을 누르면 다른 구독자들을 랜덤으로 검색합니다."
-              trigger={
-                <Icon
-                  name="random"
-                  onClick={otherSubscribers}
-                  color={"red"}
-                  size="mini"
-                  style={{ cursor: "pointer", marginLeft: 5, marginTop: -2 }}
-                />
-              }
-            />
-          ) : (
-            <></>
-          )}
         </Header>
 
         <Header style={{ marginTop: 10, display: "flex" }} as="h5" color="grey">
@@ -254,10 +238,10 @@ function Explorer() {
             {subLens ? (
               <>
                 <Popup
-                  content="페이지 조작 시에는, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
-                  trigger={<Icon name="question circle" size="large" loading />}
+                  content="가장 오래된 구독자의 등록한 책을 불러옵니다."
+                  trigger={<Icon name="question circle" size="large" loading style={{marginBottom:3}}/>}
                 />
-                <span style={{ marginLeft: "-0.2em" }}>
+                <span>
                   {displayName
                     ? `구독자 [${displayName}]님의 관심있는 책`
                     : "구독자 [guest]님의 관심있는 책"}{" "}
