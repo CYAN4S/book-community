@@ -100,7 +100,7 @@ const Help_Share = () => {
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <Image src={help2} width={1000} height={270} />
+        <Image src={help2} width={1000} height={220} />
       </Container>
 
       <Container style={{ marginTop: 5, width: "90%" }}>
@@ -120,9 +120,8 @@ const Help_Share = () => {
           <Icon name="angle double right" color="purple" />
           <span className="num_span">3.</span>
           <span>
-            {" "}
             버튼을 누르면, 내 구독자 목록을 랜덤으로 검색하여 한 명의 책 등록
-            목록을 표시합니다.{" "}
+            목록을 표시합니다.
           </span>
         </span>
       </Container>

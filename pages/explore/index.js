@@ -278,9 +278,6 @@ function Explorer() {
                   {subscribers && subscribers[randomUser].myBooks ? (
                     subscribers[randomUser].myBooks.map(
                       (subscriberBooks) => (
-                        (subscribers[randomUser].myBooks = [
-                          ...subscribers[randomUser].myBooks,
-                        ].reverse()),
                         (subscriberBooks = subscriberBooks.substr(24)),
                         (
                           <>
