@@ -428,13 +428,37 @@ export default function Title({ books, recommended }) {
                       height: 290,
                           overflow: "auto",
                           maxHeight: 300,
+                          
                     }}
-                    className="ui orange segment"
+                    // style ={{display: "flex",
+                    //           justifyContent: "center",}}
+                    className="ui orange segment center aligned"
                   >
                       <>
+                      <Header
+                                as="h3"
+                                style={{ height: 50, textAlign: "center", marginBottom:-50}}
+                                color="blue"
+                              >
+                                함께 알아보면 좋은 책들
+                              </Header>
                         <Item.Group>
+                        <Grid columns={4} >
+                        <Grid.Row>
+                                
                           {mlBooks.map((book) => (
+                              <Grid.Column >
+                                <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          marginBottom:20,
+                                      height: 215,
+                                        }}
+                                        className="ui segment"
+                                      >
                             <Item key={book.isbn}>
+                              
                               <Link
                                 href={`./${book.title
                                   .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
@@ -443,9 +467,14 @@ export default function Title({ books, recommended }) {
                                 <a>
                                   <Item.Image
                                     style={{
+                                      
                                       width: 80,
                                       height: 120,
-                                      marginRight:15
+                                      marginRight:15,
+                                      marginBottom:10,
+                                      display : "block",
+
+                    margin : "auto",
                                     }}
                                     //size = "medium"
                                     src={book.image}
@@ -463,9 +492,9 @@ export default function Title({ books, recommended }) {
                                   .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
                               >
                                 
-                                <Item.Header as="a">{book.title.length < 51
+                                <Item.Header as="a">{book.title.length < 37
                                                 ? book.title
-                                                : book.title.slice(0, 50) +
+                                                : book.title.slice(0, 38) +
                                                   "..."}</Item.Header>
                               </Link>
                                 <Item.Description>
@@ -474,8 +503,14 @@ export default function Title({ books, recommended }) {
                                   </p>
                                 </Item.Description>
                               </Item.Content>
+                              
                             </Item>
+                            </div>
+                            </Grid.Column>
                           ))} 
+                         
+                            </Grid.Row>
+                           </Grid>
                         </Item.Group>
                       </>
                     </div>
