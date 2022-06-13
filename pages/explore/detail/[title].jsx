@@ -1,4 +1,6 @@
 import {
+  Item,
+  Table,
   Button,
   Container,
   Dimmer,
@@ -29,19 +31,31 @@ import {
 } from "firebase/firestore";
 import Chats from "../../../Components/Chats";
 
-export default function Title({ books }) {
-
+export default function Title({ books, recommended }) {
   const router = useRouter();
-  const { title, image, author, price, publisher, pubdate, isbn, description } = 
-     books.items[0];
+
+  const { title, image, author, price, publisher, pubdate, isbn, description } =
+    books.items[0];
+
   const [titleError, setTitleError] = useState(false);
-  useEffect(()=>{
-    if(title === "error"){
+
+  useEffect(() => {
+    if (title === "error") {
       setTitleError(true);
       alert("책 정보를 받아올 수 없습니다.");
       router.back();
+    } else {
+      console.log(recommended);
     }
-  },[]);
+  }, []);
+
+  // 06132123 추가
+  const [lens, setLens] = useState(0);
+
+  const [filter, setFilter] = useState(true);
+
+  const mlBooks = [...recommended];
+  mlBooks.sort((a, b) => b.pubdate - a.pubdate);
 
   // 로딩을 위한 state
   const [loading, setLoading] = useState(false);
@@ -93,9 +107,15 @@ export default function Title({ books }) {
     }
   });
 
+  // 06132125
+
+  useEffect(() => {
+    setLoading(true);
+    setLens(recommended.length);
+    console.log(lens);
+  }, []);
   // DB Real-time change check
   useEffect(() => {
-
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -118,13 +138,13 @@ export default function Title({ books }) {
     const doc = await getUserDoc(currentUid);
     //const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
     // if (!searchedMybook) {
-      if(!titleError){
-    updateUserDoc({
-      mySearchBooks: doc.mySearchBooks
-        ? [...doc.mySearchBooks, `${isbn}${title}`]
-        : [`${isbn}${title}`],
-    });
-  }
+    if (!titleError) {
+      updateUserDoc({
+        mySearchBooks: doc.mySearchBooks
+          ? [...doc.mySearchBooks, `${isbn}${title}`]
+          : [`${isbn}${title}`],
+      });
+    }
     // }
   };
   // 0523_0923 책 검색 History 저장 code END
@@ -245,10 +265,7 @@ export default function Title({ books }) {
                         className="ui orange segment"
                       >
                         <img
-                          style={{
-                            width: 110,
-                            height: 160,
-                          }}
+                          style={{ width: 110, height: 160 }}
                           src={image}
                           alt="DON'T HAVE IMAGE"
                           className="img_book"
@@ -399,6 +416,129 @@ export default function Title({ books }) {
                 </Grid.Row>
               </Grid>
             </div>
+            <Container>
+              <div>
+                {lens ? (
+                  <>
+                    <div
+                    style={{
+                      marginBottom: 20,
+                      marginLeft: 20,
+                      width: 1160,
+                      height: 290,
+                          overflow: "auto",
+                          maxHeight: 300,
+                          
+                    }}
+                    // style ={{display: "flex",
+                    //           justifyContent: "center",}}
+                    className="ui orange segment center aligned"
+                  >
+                      <>
+                      <Header
+                                as="h3"
+                                style={{ height: 50, textAlign: "center", marginBottom:-50}}
+                                color="blue"
+                              >
+                                함께 알아보면 좋은 책들
+                              </Header>
+                        <Item.Group>
+                        <Grid columns={4} >
+                        <Grid.Row>
+                                
+                          {mlBooks.map((book) => (
+                              <Grid.Column >
+                                <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          marginBottom:20,
+                                      height: 215,
+                                        }}
+                                        className="ui segment"
+                                      >
+                            <Item key={book.isbn}>
+                              
+                              <Link
+                                href={`./${book.title
+                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                              >
+                                <a>
+                                  <Item.Image
+                                    style={{
+                                      
+                                      width: 80,
+                                      height: 120,
+                                      marginRight:15,
+                                      marginBottom:10,
+                                      display : "block",
+
+                    margin : "auto",
+                                    }}
+                                    //size = "medium"
+                                    src={book.image}
+                                    alt="DON'T HAVE IMAGE"
+                                    className="img_book"
+                                  />
+                                </a>
+                              </Link>
+                            
+
+                              <Item.Content>
+                              <Link
+                                href={`./${book.title
+                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                              >
+                                
+                                <Item.Header as="a">{book.title.length < 37
+                                                ? book.title
+                                                : book.title.slice(0, 38) +
+                                                  "..."}</Item.Header>
+                              </Link>
+                                <Item.Description>
+                                  <p>
+                                  출판일: {book.pubdate}
+                                  </p>
+                                </Item.Description>
+                              </Item.Content>
+                              
+                            </Item>
+                            </div>
+                            </Grid.Column>
+                          ))} 
+                         
+                            </Grid.Row>
+                           </Grid>
+                        </Item.Group>
+                      </>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      style={{
+                        padding: "200px 0",
+                        textAlign: "center",
+                        fontSize: "35px",
+                      }}
+                    >
+                      <p
+                        style={{ fontSize: 23, fontFamily: "GothicA1-Medium" }}
+                      >
+                        <Icon name="warning circle" color="red" />
+                        검색결과가 존재하지 않습니다.
+                      </p>
+
+                      <Link href={`/explore`}>
+                        <Button color="black">돌아가기</Button>
+                      </Link>
+                    </div>
+                  </>
+                )}
+              </div>
+            </Container>
             <div className="ui aligned container" style={{ marginTop: -10 }}>
               <Grid style={{ marginTop: -10, marginLeft: -20 }} columns={3}>
                 <Grid.Row>
@@ -413,10 +553,7 @@ export default function Title({ books }) {
                   >
                     <Grid.Column>
                       <div
-                        style={{
-                          width: 565,
-                          height: 290,
-                        }}
+                        style={{ width: 565, height: 290 }}
                         className="ui red segment"
                       >
                         <div>
@@ -534,13 +671,14 @@ export default function Title({ books }) {
               </Grid>
             </div>
           </Container>
+
           {/* <Divider inverted style={{ marginTop: 40 }} /> */}
           <div
             style={{ marginTop: -70 }}
             className="ui center aligned container"
           >
             <Divider horizontal>
-              <Header style={{}} as="h3" color="blue">
+              <Header as="h3" color="blue">
                 <Icon name="clipboard outline" />이 책에 대한 다른 사용자의 의견
               </Header>
             </Divider>
@@ -615,13 +753,47 @@ export async function getServerSideProps(props) {
     );
   });
 
-  if(books.items[0] === undefined){
-    books.items[0] = {title :  "error", description:"error",  author:"error", publisher : "error"}
+  if (books.items[0] === undefined) {
+    books.items[0] = {
+      title: "error",
+      description: "error",
+      author: "error",
+      publisher: "error",
+    };
   }
+
+  const isbn = books.items[0].isbn.split(" ")?.[1];
+
+  const recommend = await fetch(
+    `https://asia-northeast2-book-community-e9755.cloudfunctions.net/recommeders-book-to-books`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isbn: isbn }),
+    }
+  );
+
+  const recommendResult = await recommend.json();
+
+  const resList = (
+    await Promise.all(
+      recommendResult.result.map((x) =>
+        fetch(`https://openapi.naver.com/v1/search/book_adv?d_isbn=${x}`, {
+          headers: {
+            "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+            "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
+          },
+        })
+          .then((x) => x.json())
+          .then((x) => x?.items?.[0])
+      )
+    )
+  ).filter((x) => x);
 
   return {
     props: {
       books,
+      recommended: resList,
     },
   };
 }
