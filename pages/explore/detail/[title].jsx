@@ -1,4 +1,5 @@
 import {
+  Table,
   Button,
   Container,
   Dimmer,
@@ -46,6 +47,16 @@ export default function Title({ books, recommended }) {
       console.log(recommended);
     }
   }, []);
+
+  // 06132123 추가
+  const [lens, setLens] = useState(0);
+  
+  const [filter, setFilter] = useState(true);
+
+  const mlBooks = [...recommended];
+  mlBooks.sort((a, b) => b.pubdate - a.pubdate);
+
+
 
   // 로딩을 위한 state
   const [loading, setLoading] = useState(false);
@@ -97,6 +108,13 @@ export default function Title({ books, recommended }) {
     }
   });
 
+  // 06132125
+  
+  useEffect(() => {
+    setLoading(true);
+    setLens(recommended.length);
+    console.log(lens)
+  }, []);
   // DB Real-time change check
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
@@ -229,6 +247,8 @@ export default function Title({ books, recommended }) {
         </>
       ) : (
         <>
+
+         
           <Container textAlign="centered">
             <div className="ui center aligned container">
               <Grid columns={3}>
@@ -399,6 +419,114 @@ export default function Title({ books, recommended }) {
                 </Grid.Row>
               </Grid>
             </div>
+            <Container>
+               <div>
+            {lens ? (
+              <>
+                <div className="wrap">
+                
+                  <>
+                      <Grid style={{ margin: 2 }} columns={4}>
+                        <Grid.Row>
+                          {mlBooks.map((book) => (
+                            <Grid.Column key={book.isbn}>
+                              <div>
+                                <div
+                                  style={{ marginBottom: 20 }}
+                                  className="ui two column grid ui center aligned segments"
+                                >
+                                  <div className="columnImage">
+                                    <div
+                                      style={{ width: 110, height: 145 }}
+                                      className="ui orange segment"
+                                    >
+                                      <Link
+                                        href={`./detail/${book.title
+                                          .replace(
+                                            /%(?![0-9][0-9a-fA-F]+)/g,
+                                            "%25"
+                                          )
+                                          .replace(
+                                            /\/(?![0-9][0-9a-fA-F]+)/g,
+                                            "%2F"
+                                          )}`}
+                                      >
+                                        <a>
+                                          <img
+                                            style={{
+                                              width: 80,
+                                              height: 120,
+                                            }}
+                                            src={book.image}
+                                            alt="DON'T HAVE IMAGE"
+                                            className="img_book"
+                                          />
+                                        </a>
+                                      </Link>
+                                    </div>
+                                  </div>
+                                  <div
+                                    style={{
+                                      width: 300,
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                    className="ui yellow segment"
+                                  >
+                                    <Table.Header>
+                                      <Table.Row>
+                                        <Table.HeaderCell
+                                          style={{
+                                            fontSize: 16,
+                                          }}
+                                        >
+                                          <div>
+                                            {book.title.length < 17
+                                              ? book.title
+                                              : book.title.slice(0, 15) + "..."}
+                                          </div>
+                                        </Table.HeaderCell>
+                                      </Table.Row>
+                                      <Table.Row>
+                                        <Table.HeaderCell
+                                          style={{ fontSize: 14 }}
+                                        >
+                                          출판일: {book.pubdate}
+                                        </Table.HeaderCell>
+                                      </Table.Row>
+                                    </Table.Header>
+                                  </div>
+                                </div>
+                              </div>
+                            </Grid.Column>
+                          ))}
+                        </Grid.Row>
+                      </Grid>
+                    </>
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    padding: "200px 0",
+                    textAlign: "center",
+                    fontSize: "35px",
+                  }}
+                >
+                  
+                  <p style={{fontSize : 23, fontFamily:"GothicA1-Medium"}}>
+                    <Icon name="warning circle" color="red" />검색결과가 존재하지 않습니다.
+                  </p>
+                
+                  <Link href={`/explore`}>
+                    <Button color="black">돌아가기</Button>
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
+            </Container>
             <div className="ui aligned container" style={{ marginTop: -10 }}>
               <Grid style={{ marginTop: -10, marginLeft: -20 }} columns={3}>
                 <Grid.Row>
@@ -530,7 +658,9 @@ export default function Title({ books, recommended }) {
                 </Grid.Row>
               </Grid>
             </div>
+            
           </Container>
+
           {/* <Divider inverted style={{ marginTop: 40 }} /> */}
           <div
             style={{ marginTop: -70 }}
