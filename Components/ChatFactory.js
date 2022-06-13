@@ -249,7 +249,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       color="red"
                       pointing="right"
                       htmlFor="attach-file"
-                      style={{ width: 120, textAlign: "center" }}
+                      style={{ width: 130, textAlign: "center" }}
                     >
                       <p className="upload_element">Add Youtube URL</p>
                     </Label>
@@ -453,7 +453,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     color="red"
                     pointing="right"
                     htmlFor="attach-file"
-                    style={{ width: 120, textAlign: "center" }}
+                    style={{ width: 130, textAlign: "center" }}
                   >
                     <p className="upload_element">Add Youtube URL</p>
                   </Label>
