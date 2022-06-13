@@ -29,19 +29,23 @@ import {
 } from "firebase/firestore";
 import Chats from "../../../Components/Chats";
 
-export default function Title({ books }) {
-
+export default function Title({ books, recommended }) {
   const router = useRouter();
-  const { title, image, author, price, publisher, pubdate, isbn, description } = 
-     books.items[0];
+
+  const { title, image, author, price, publisher, pubdate, isbn, description } =
+    books.items[0];
+
   const [titleError, setTitleError] = useState(false);
-  useEffect(()=>{
-    if(title === "error"){
+
+  useEffect(() => {
+    if (title === "error") {
       setTitleError(true);
       alert("책 정보를 받아올 수 없습니다.");
       router.back();
+    } else {
+      console.log(recommended);
     }
-  },[]);
+  }, []);
 
   // 로딩을 위한 state
   const [loading, setLoading] = useState(false);
@@ -95,7 +99,6 @@ export default function Title({ books }) {
 
   // DB Real-time change check
   useEffect(() => {
-
     onSnapshot(q, (snapshot) => {
       const chatArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -118,13 +121,13 @@ export default function Title({ books }) {
     const doc = await getUserDoc(currentUid);
     //const searchedMybook = !!doc.mySearchBooks?.includes(`${isbn}${title}`);
     // if (!searchedMybook) {
-      if(!titleError){
-    updateUserDoc({
-      mySearchBooks: doc.mySearchBooks
-        ? [...doc.mySearchBooks, `${isbn}${title}`]
-        : [`${isbn}${title}`],
-    });
-  }
+    if (!titleError) {
+      updateUserDoc({
+        mySearchBooks: doc.mySearchBooks
+          ? [...doc.mySearchBooks, `${isbn}${title}`]
+          : [`${isbn}${title}`],
+      });
+    }
     // }
   };
   // 0523_0923 책 검색 History 저장 code END
@@ -245,10 +248,7 @@ export default function Title({ books }) {
                         className="ui orange segment"
                       >
                         <img
-                          style={{
-                            width: 110,
-                            height: 160,
-                          }}
+                          style={{ width: 110, height: 160 }}
                           src={image}
                           alt="DON'T HAVE IMAGE"
                           className="img_book"
@@ -413,10 +413,7 @@ export default function Title({ books }) {
                   >
                     <Grid.Column>
                       <div
-                        style={{
-                          width: 565,
-                          height: 290,
-                        }}
+                        style={{ width: 565, height: 290 }}
                         className="ui red segment"
                       >
                         <div>
@@ -540,7 +537,7 @@ export default function Title({ books }) {
             className="ui center aligned container"
           >
             <Divider horizontal>
-              <Header style={{}} as="h3" color="blue">
+              <Header as="h3" color="blue">
                 <Icon name="clipboard outline" />이 책에 대한 다른 사용자의 의견
               </Header>
             </Divider>
@@ -615,13 +612,47 @@ export async function getServerSideProps(props) {
     );
   });
 
-  if(books.items[0] === undefined){
-    books.items[0] = {title :  "error", description:"error",  author:"error", publisher : "error"}
+  if (books.items[0] === undefined) {
+    books.items[0] = {
+      title: "error",
+      description: "error",
+      author: "error",
+      publisher: "error",
+    };
   }
+
+  const isbn = books.items[0].isbn.split(" ")?.[1];
+
+  const recommend = await fetch(
+    `https://asia-northeast2-book-community-e9755.cloudfunctions.net/recommeders-book-to-books`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isbn: isbn }),
+    }
+  );
+
+  const recommendResult = await recommend.json();
+
+  const resList = (
+    await Promise.all(
+      recommendResult.result.map((x) =>
+        fetch(`https://openapi.naver.com/v1/search/book_adv?d_isbn=${x}`, {
+          headers: {
+            "X-Naver-Client-Id": process.env.NEXT_PUBLIC_NAVER_ID,
+            "X-Naver-Client-Secret": process.env.NEXT_PUBLIC_NAVER_SECRET,
+          },
+        })
+          .then((x) => x.json())
+          .then((x) => x?.items?.[0])
+      )
+    )
+  ).filter((x) => x);
 
   return {
     props: {
       books,
+      recommended: resList,
     },
   };
 }
