@@ -275,7 +275,7 @@ function Explorer() {
             {subLens ? (
               <Grid columns={4} divided>
                 <Grid.Row>
-                  {subscribers[randomUser].myBooks ? (
+                  {subscribers && subscribers[randomUser].myBooks ? (
                     subscribers[randomUser].myBooks.map(
                       (subscriberBooks) => (
                         (subscribers[randomUser].myBooks = [
