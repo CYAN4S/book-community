@@ -45,7 +45,6 @@ const Inquire = () => {
     });
   }, []);
 
-
   // submit form data (inquire)
   const onNewInquireSubmit = async (e) => {
     e.preventDefault();
@@ -124,104 +123,111 @@ const Inquire = () => {
   }
 
   return (
-    <div>
-      <Container textAlign="center">
-        <Header as="h2" icon>
-          <Icon name="envelope outline" />
-          Inquire
-        </Header>
-      </Container>
-      <Container textAlign="justified">
-        <b>when to inquire?</b>
-        <Divider />
-        <Accordion defaultActiveIndex={0} panels={panels} />
-        <Divider />
-      </Container>
-      <Container textAlign="right">
-        <Icon
-          name="caret left"
-          style={{ cursor: "pointer" }}
-          onClick={returnClick}
-        ></Icon>
-        <strong style={{ cursor: "pointer" }} onClick={returnClick}>
-          뒤로가기
-        </strong>
-      </Container>
+    <>
+      <div className="wrap">
+        <Container textAlign="center">
+          <Header as="h2" icon>
+            <Icon name="envelope outline" />
+            Inquire
+          </Header>
+        </Container>
+        <Container textAlign="justified">
+          <b>when to inquire?</b>
+          <Divider />
+          <Accordion defaultActiveIndex={0} panels={panels} />
+          <Divider />
+        </Container>
+        <Container textAlign="right">
+          <Icon
+            name="caret left"
+            style={{ cursor: "pointer" }}
+            onClick={returnClick}
+          ></Icon>
+          <strong style={{ cursor: "pointer" }} onClick={returnClick}>
+            뒤로가기
+          </strong>
+        </Container>
 
-      <Container textAlign="center" style={{ marginTop: 50 }}>
-        <Header as="h2" icon>
-          <Icon name="edit" />
-          <Header.Subheader>
-            <p style={{ marginTop: 20 }}>
-              아래 화살표 버튼을 눌러 양식에 따라 내용을 작성해주세요.
-            </p>
-          </Header.Subheader>
-        </Header>
-        <div>
-          {formOpen ? (
-            <>
-              <Icon
-                name="caret up"
-                onClick={onToggleForm}
-                size="big"
-                style={{ cursor: "pointer" }}
-              ></Icon>
-              <Segment>
-                <Form onSubmit={onNewInquireSubmit}>
-                  <Form.Group widths="equal">
+        <Container textAlign="center" style={{ marginTop: 50 }}>
+          <Header as="h2" icon>
+            <Icon name="edit" />
+            <Header.Subheader>
+              <p style={{ marginTop: 20 }}>
+                아래 화살표 버튼을 눌러 양식에 따라 내용을 작성해주세요.
+              </p>
+            </Header.Subheader>
+          </Header>
+          <div>
+            {formOpen ? (
+              <>
+                <Icon
+                  name="caret up"
+                  onClick={onToggleForm}
+                  size="big"
+                  style={{ cursor: "pointer" }}
+                ></Icon>
+                <Segment>
+                  <Form onSubmit={onNewInquireSubmit}>
+                    <Form.Group widths="equal">
+                      <Form.Field
+                        id="form-input-control-report-name"
+                        control={Input}
+                        label="문의자 닉네임"
+                        placeholder="문의자 닉네임"
+                        value={inquireUserName}
+                        onChange={(e) => setInquireUserName(e.target.value)}
+                        required
+                      />
+
+                      <Form.Field
+                        id="form-input-control-target-name"
+                        label="카테고리"
+                        placeholder="카테고리"
+                        style={{ marginBottom: 20 }}
+                        control={Select}
+                        options={categories}
+                        value={category}
+                        onChange={(e, data) => setCategory(data.value)}
+                        required
+                      />
+                    </Form.Group>
                     <Form.Field
-                      id="form-input-control-report-name"
-                      control={Input}
-                      label="문의자 닉네임"
-                      placeholder="문의자 닉네임"
-                      value={inquireUserName}
-                      onChange={(e) => setInquireUserName(e.target.value)}
+                      id="form-textarea-control-opinion"
+                      control={TextArea}
+                      label="문의 내용"
+                      placeholder="문의 내용"
+                      value={userContext}
+                      onChange={(e) => setUserContext(e.target.value)}
                       required
                     />
-
                     <Form.Field
-                      id="form-input-control-target-name"
-                      label="카테고리"
-                      placeholder="카테고리"
-                      style={{ marginBottom: 20 }}
-                      control={Select}
-                      options={categories}
-                      value={category}
-                      onChange={(e, data) => setCategory(data.value)}
-                      required
+                      id="form-button-control-public"
+                      control={Button}
+                      content="Confirm"
+                      color="red"
                     />
-                  </Form.Group>
-                  <Form.Field
-                    id="form-textarea-control-opinion"
-                    control={TextArea}
-                    label="문의 내용"
-                    placeholder="문의 내용"
-                    value={userContext}
-                    onChange={(e) => setUserContext(e.target.value)}
-                    required
-                  />
-                  <Form.Field
-                    id="form-button-control-public"
-                    control={Button}
-                    content="Confirm"
-                    color="red"
-                  />
-                </Form>
-              </Segment>
-            </>
-          ) : (
-            <>
-              <Icon
-                name="caret down"
-                onClick={onToggleForm}
-                size="big"
-                style={{ cursor: "pointer" }}
-              ></Icon>
-            </>
-          )}
-        </div>
-      </Container>
-    </div>
+                  </Form>
+                </Segment>
+              </>
+            ) : (
+              <>
+                <Icon
+                  name="caret down"
+                  onClick={onToggleForm}
+                  size="big"
+                  style={{ cursor: "pointer" }}
+                ></Icon>
+              </>
+            )}
+          </div>
+        </Container>
+      </div>
+      <style jsx>{`
+        .wrap {
+          height: 100vh;
+        }
+      `}</style>
+    </>
   );
 };
 

@@ -182,7 +182,7 @@ const Report = () => {
 
   return (
     <>
-      <div>
+      <div className="wrap">
         <Container textAlign="center">
           <Header as="h2" icon>
             <Icon name="meh outline" />
@@ -332,6 +332,10 @@ const Report = () => {
         `
         .panel_p{
           font-size : 13px;
+        }
+
+        .wrap{
+          height : 100vh;
         }
 
         .panel_div{

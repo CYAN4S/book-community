@@ -21,7 +21,7 @@ const Help_Profile = () => {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div>
         <Container fluid textAlign="center" style={{ width: "95%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="comment alternate" circular />
@@ -131,6 +131,10 @@ const Help_Profile = () => {
         div {
           margin-top: 0.3em;
           text-align: right;
+        }
+        
+        .wrap{
+          height : 100vh;
         }
 
         span {

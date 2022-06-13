@@ -16,7 +16,7 @@ const Help_SearchBook = () => {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div className="wrap">
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="search" circular />
@@ -102,6 +102,10 @@ const Help_SearchBook = () => {
         div {
           margin-top: 30px;
           text-align: right;
+        }
+
+        .wrap{
+          height : 100vh;
         }
 
         .help_searchbook_text {

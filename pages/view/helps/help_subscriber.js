@@ -16,7 +16,7 @@ const Help_Subscriber = () => {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div className="wrap">
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="users" circular />
@@ -114,6 +114,10 @@ const Help_Subscriber = () => {
         div {
           margin-top: 30px;
           text-align: right;
+        }
+
+        .wrap{
+          height : 100vh;
         }
 
         p {

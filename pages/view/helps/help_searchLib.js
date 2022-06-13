@@ -18,7 +18,7 @@ const Help_Search = () => {
 
   return (
     <>
-      <div style={{ height: "100vh" }}>
+      <div className="wrap">
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="database" circular />
@@ -152,6 +152,10 @@ const Help_Search = () => {
           text-align: right;
         }
 
+        .wrap{
+          height : 100vh;
+        }
+        
         .help_searchLib_text {
           font-size: 15px;
           font-family: GothicA1-Medium;

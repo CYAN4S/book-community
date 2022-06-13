@@ -23,7 +23,7 @@ const Help = () => {
 
   return (
     <>
-      <div>
+      <div className = "wrap">
         <Container fluid textAlign="center" style={{ width: "95%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="question circle" circular />
@@ -260,6 +260,9 @@ const Help = () => {
           text-align: right;
         }
 
+        .wrap{
+          height : 100vh;
+        }
         .guide_name {
           font-size: 18px;
           text-align: center;

@@ -22,7 +22,7 @@ const Help_Community = () => {
 
   return (
     <>
-    <div style={{height : "100vh"}}>
+    <div className="wrap">
     <Container fluid textAlign="center" style={{ width: "90%" }}>
         <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
           <Icon name="comment alternate" circular />
@@ -148,7 +148,11 @@ const Help_Community = () => {
           margin-top: 30px;
           text-align: right;
         }
-
+        
+        .wrap{
+          height : 100vh;
+        }
+        
         p {
           font-family: FredokaOne-Regular;
           font-size: 18px;
