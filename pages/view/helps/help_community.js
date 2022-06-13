@@ -22,7 +22,8 @@ const Help_Community = () => {
 
   return (
     <>
-      <Container fluid textAlign="center" style={{ width: "90%" }}>
+    <div style={{height : "100vh"}}>
+    <Container fluid textAlign="center" style={{ width: "90%" }}>
         <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
           <Icon name="comment alternate" circular />
           <Header.Content> COMMUNITY </Header.Content>
@@ -103,40 +104,44 @@ const Help_Community = () => {
               </Link>
             </Grid.Column>
           </Grid>
-         
-          <div style={{display:"flex", justifyContent : "center"}}>
-          <Grid columns={1} relaxed="very" style={{ textAlign: "center", marginTop : "5em", width:"35%"}}>
-            <Grid.Column>
-              <p> third space for you!</p>
-              <Icon
-                name="hand point down"
-                size="big"
-                style={{ marginBottom: 15 }}
-              ></Icon>
-              <Link href="../../we">
-                <a>
-                  <Popup
-                    trigger={
-                      <Card
-                        header="이야기 3"
-                        meta="모두의 공간에 집중하기"
-                        description="모든 사람이 있는 공간에서 이야기해봐요"
-                        centered
-                      />
-                    }
-                  >
-                    <Popup.Header>MOVE WE</Popup.Header>
-                    <Popup.Content>클릭하여 이동하기</Popup.Content>
-                  </Popup>
-                </a>
-              </Link>
-            </Grid.Column>
+
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Grid
+              columns={1}
+              relaxed="very"
+              style={{ textAlign: "center", marginTop: "5em", width: "35%" }}
+            >
+              <Grid.Column>
+                <p> third space for you!</p>
+                <Icon
+                  name="hand point down"
+                  size="big"
+                  style={{ marginBottom: 15 }}
+                ></Icon>
+                <Link href="../../we">
+                  <a>
+                    <Popup
+                      trigger={
+                        <Card
+                          header="이야기 3"
+                          meta="모두의 공간에 집중하기"
+                          description="모든 사람이 있는 공간에서 이야기해봐요"
+                          centered
+                        />
+                      }
+                    >
+                      <Popup.Header>MOVE WE</Popup.Header>
+                      <Popup.Content>클릭하여 이동하기</Popup.Content>
+                    </Popup>
+                  </a>
+                </Link>
+              </Grid.Column>
             </Grid>
           </div>
-          
         </Segment>
-          
       </Container>
+    </div>
+     
 
       <style jsx>{`
         div {

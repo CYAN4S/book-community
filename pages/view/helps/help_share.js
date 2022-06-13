@@ -22,6 +22,7 @@ const Help_Share = () => {
 
   return (
     <>
+    <div style={{ height: "100vh" }}>
       <Container fluid textAlign="center" style={{ width: "90%" }}>
         <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
           <Icon name="magic" circular />
@@ -125,6 +126,7 @@ const Help_Share = () => {
           </span>
         </span>
       </Container>
+      </div>
       <style jsx>{`
         div {
           margin-top: 30px;
