@@ -103,8 +103,39 @@ const Help_Community = () => {
               </Link>
             </Grid.Column>
           </Grid>
-          <Divider vertical>And</Divider>
+         
+          <div style={{display:"flex", justifyContent : "center"}}>
+          <Grid columns={1} relaxed="very" style={{ textAlign: "center", marginTop : "5em", width:"35%"}}>
+            <Grid.Column>
+              <p> third space for you!</p>
+              <Icon
+                name="hand point down"
+                size="big"
+                style={{ marginBottom: 15 }}
+              ></Icon>
+              <Link href="../../we">
+                <a>
+                  <Popup
+                    trigger={
+                      <Card
+                        header="이야기 3"
+                        meta="모두의 공간에 집중하기"
+                        description="모든 사람이 있는 공간에서 이야기해봐요"
+                        centered
+                      />
+                    }
+                  >
+                    <Popup.Header>MOVE WE</Popup.Header>
+                    <Popup.Content>클릭하여 이동하기</Popup.Content>
+                  </Popup>
+                </a>
+              </Link>
+            </Grid.Column>
+            </Grid>
+          </div>
+          
         </Segment>
+          
       </Container>
 
       <style jsx>{`
