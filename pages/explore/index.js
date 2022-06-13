@@ -25,31 +25,19 @@ function Explorer() {
   const [recentBooks, setRecentBooks] = useState([]);
   const [testData, setTestData] = useState([]);
   const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부
-  const [trigger, setTrigger] = useState(false);
-  //const [similarBookLens, setSimilarBookLens] = useState(0); // 비슷한 책 데이터 여부
+  const [executeOtherSubscribers, setExecuteOtherSubscribers] = useState(false);
 
   useEffect(() => {
-    // useEffect 1호
-    console.log("useEffect 1호 발동");
     setKeyword("");
     setLens(0);
     setCheckInitNaming(true);
-    //setSimilarBookLens(0);
   }, []);
-
-  // useEffect(() => {
-  //   //useEffect 2호 // 문제 있음 / 파라미터 수정 필요
-  //   console.log("useEffect 2호 발동");
-
-  // }, [subscribers.length]);
 
   // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
   const [checkInitNaming, setCheckInitNaming] = useState(false);
   const [checkTest, setCheckTest] = useState(false);
   useEffect(() => {
-    // useEffect 3호 / 이건 Explore 탭 처음 접속 시 최초 1회만 실행되어야 함 / 정확한 값 확인 필요
-    console.log("useEffect 3호 발동");
     authService.onAuthStateChanged((user) => {
       if (user) {
         setCurrentUid(user.uid);
@@ -58,18 +46,14 @@ function Explorer() {
   }, []);
 
   useEffect(() => {
-    // useEffect 4호 // 이것도 문제 있음, currentUid 바뀌면 안 됨,
     onUserDocSnapshot(currentUid, onUser);
-    console.log("useEffect 4호 발동");
   }, [currentUid]);
-  useEffect(()=>{
+  useEffect(() => {
     setDisplayName(testData);
-  },[testData]);
+  }, [testData]);
 
   const onUser = async (data) => {
-    //setTestData();
     if (data?.mySearchBooks) {
-      console.log("실행0");
       const listMySearchBook = await Promise.all(
         data.mySearchBooks.map(async (x) => await x.substr(24))
       );
@@ -87,10 +71,7 @@ function Explorer() {
       setRecentBooks([]);
     }
     // 06061429 추가
-
-    console.log("실행1");
     if (data?.users) {
-      console.log("실행2");
       const x = await Promise.all(
         data.users.map(async (uid) => await getUserDoc(uid))
       );
@@ -101,8 +82,6 @@ function Explorer() {
         setTestData(x[0].displayName);
         if (checkTest == true) {
           setDisplayName(x[0].displayName);
-          //setCheckTest(false);
-         
         }
       }
     } else {
@@ -110,8 +89,6 @@ function Explorer() {
       setSubscribers([]);
     }
 
-    //setCheckInitSubscribers(true);
-    //setCheckClickButtonRandom(false);
   };
 
   const updateUserDoc = (newData) => {
@@ -129,28 +106,32 @@ function Explorer() {
     setRecentBooks([]);
   };
 
-  // const otherSecondTest = () => {
-  //   setDisplayName(subscribers[0].displayName);
-  // };
-  const otherSubscribers = () => {
-    const tempRandomUser = Math.floor(Math.random() * subLens);
-    if (randomUser == tempRandomUser) {
-      otherSubscribers();
-    } else {
-      setRandomUser(tempRandomUser);
-      setDisplayName(subscribers[tempRandomUser].displayName);
+  const otherSubscribersOnMode = () => {
+    setExecuteOtherSubscribers(true);
+    if (executeOtherSubscribers == true) {
+      const otherSubscribers = () => {
+        const tempRandomUser = Math.floor(Math.random() * subLens);
+        if (randomUser == tempRandomUser) {
+          otherSubscribers();
+        } else {
+          setRandomUser(tempRandomUser);
+          setDisplayName(subscribers[tempRandomUser].displayName);
+        }
+        setExecuteOtherSubscribers(false);
+      };
     }
   };
+
   //테스트용 버튼 (console)
-  const onStatusCheck = () => {
-    console.log("구독자 display", subscribers[randomUser].displayName);
-    //console.log(subscribers);
-    console.log("currentUid", currentUid);
-    console.log("checkTest", checkTest);
-    console.log("subLens", subLens);
-    console.log("testdata", testData);
-    console.log("displayName",displayName);
-  };
+  // const onStatusCheck = () => {
+  //   console.log("구독자 display", subscribers[randomUser].displayName);
+  //   //console.log(subscribers);
+  //   console.log("currentUid", currentUid);
+  //   console.log("checkTest", checkTest);
+  //   console.log("subLens", subLens);
+  //   console.log("testdata", testData);
+  //   console.log("displayName", displayName);
+  // };
 
   return (
     <>
@@ -173,14 +154,14 @@ function Explorer() {
           </Link>
         </div>
         {/* 테스트용 버튼 (console 확인용) */}
-        <Button
+        {/* <Button
           onClick={onStatusCheck}
           inverted
           color="blue"
           style={{ marginLeft: 5 }}
         >
           확인
-        </Button>
+        </Button> */}
         {/* 0523_1105 내용 추가 시작 */}
         <Header as="h3" color="black">
           최근 검색한 책
@@ -258,7 +239,7 @@ function Explorer() {
               trigger={
                 <Icon
                   name="random"
-                  onClick={otherSubscribers}
+                  onClick={otherSubscribersOnMode}
                   color={"red"}
                   size="mini"
                   style={{ cursor: "pointer", marginLeft: 5, marginTop: -2 }}
