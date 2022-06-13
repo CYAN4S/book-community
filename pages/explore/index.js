@@ -76,7 +76,6 @@ function Explorer() {
         data.users.map(async (uid) => await getUserDoc(uid))
       );
       setSubscribers(x);
-
       setSubLens(x.length);
       if (x.length) {
         setTestData(x[0].displayName);
@@ -278,9 +277,9 @@ function Explorer() {
                   {subscribers[randomUser].myBooks ? (
                     subscribers[randomUser].myBooks.map(
                       (subscriberBooks) => (
-                        (subscribers[randomUser].myBooks = [
-                          ...subscribers[randomUser].myBooks,
-                        ].reverse()),
+                        // (subscribers[randomUser].myBooks = [
+                        //   ...subscribers[randomUser].myBooks,
+                        // ].reverse()),
                         (subscriberBooks = subscriberBooks.substr(24)),
                         (
                           <>
