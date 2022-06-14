@@ -52,8 +52,6 @@ export default function Title({ books, recommended }) {
   // 06132123 추가
   const [lens, setLens] = useState(0);
 
-  const [filter, setFilter] = useState(true);
-
   const mlBooks = [...recommended];
   mlBooks.sort((a, b) => b.pubdate - a.pubdate);
 
@@ -127,6 +125,9 @@ export default function Title({ books, recommended }) {
     setLoading(true);
   }, []);
 
+  useEffect(()=>{
+    
+  },[books])
   // Detail book page chatting query
   const q = query(
     collection(dbService, `chat${isbn}`),
@@ -352,8 +353,8 @@ export default function Title({ books, recommended }) {
                               }}
                             >
                               <strong>작가</strong>{" "}
-                              {author?.length > 50
-                                ? `${author.substring(0, 50)}...`
+                              {author?.length > 24
+                                ? `${author.substring(0, 24)}...`
                                 : author}
                             </List.Item>
                             <List.Item
@@ -470,6 +471,7 @@ export default function Title({ books, recommended }) {
                                             /\/(?![0-9][0-9a-fA-F]+)/g,
                                             "%2F"
                                           )}`}
+                                          
                                       >
                                         <a>
                                           <Item.Image
