@@ -37,7 +37,7 @@ const Help_Help = () => {
         <Container fluid textAlign="center" style={{ width: "90%" }}>
           <Header as="h2" icon textAlign="center" style={{ marginBottom: 10 }}>
             <Icon name="bullhorn" circular />
-            <Header.Content> HELP </Header.Content>
+            <Header.Content> {`INQUIRE/REPORT`} </Header.Content>
           </Header>
           <div>
             <Icon
