@@ -110,7 +110,6 @@ export default function Title({ books, recommended }) {
   useEffect(() => {
     setLoading(true);
     setLens(recommended.length);
-    console.log(lens);
   }, []);
   // DB Real-time change check
   useEffect(() => {
@@ -125,9 +124,6 @@ export default function Title({ books, recommended }) {
     setLoading(true);
   }, []);
 
-  useEffect(() => {
-    getDocAndCheck();
-  }, [books]);
   // Detail book page chatting query
   const q = query(
     collection(dbService, `chat${isbn}`),
@@ -149,6 +145,11 @@ export default function Title({ books, recommended }) {
     // }
   };
   // 0523_0923 책 검색 History 저장 code END
+
+  // 추천 책 이동 시마다 발생한 오류 해결 : books데이터 변경 시 마다, 새로 데이터 받아옴 
+  useEffect(() => {
+    getDocAndCheck();
+  }, [books]);
 
   // 내 책으로 등록하기 기능 코드 시작 부분
   const [isSignedIn, setIsSignedIn] = useState(false);
