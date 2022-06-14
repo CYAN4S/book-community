@@ -125,9 +125,9 @@ export default function Title({ books, recommended }) {
     setLoading(true);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     getDocAndCheck();
-  },[books])
+  }, [books]);
   // Detail book page chatting query
   const q = query(
     collection(dbService, `chat${isbn}`),
@@ -471,7 +471,6 @@ export default function Title({ books, recommended }) {
                                             /\/(?![0-9][0-9a-fA-F]+)/g,
                                             "%2F"
                                           )}`}
-                                          
                                       >
                                         <a>
                                           <Item.Image
