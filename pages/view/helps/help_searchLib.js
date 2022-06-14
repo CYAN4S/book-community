@@ -66,7 +66,7 @@ const Help_Search = () => {
           <Grid celled verticalAlign="middle" centered>
             <Grid.Row style={{ border: "2px solid grey" }}>
               <Grid.Column width={8}>
-                <Image src={help1} width={900} height={450} />
+                <Image src={help1} width={900} height={650} />
               </Grid.Column>
               <Grid.Column centered width={7}>
                 <p className="help_searchLib_text">
@@ -76,7 +76,7 @@ const Help_Search = () => {
             </Grid.Row>
             <Grid.Row style={{ border: "2px solid grey" }}>
               <Grid.Column width={8}>
-                <Image src={help2} width={900} height={450} />
+                <Image src={help2} width={900} height={650} />
               </Grid.Column>
               <Grid.Column centered width={7}>
                 <p className="help_searchLib_text">

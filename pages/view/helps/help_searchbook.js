@@ -74,7 +74,7 @@ const Help_SearchBook = () => {
             </Grid.Row>
             <Grid.Row style={{ border: "2px solid grey" }}>
               <Grid.Column width={9}>
-                <Image src={help2} width={900} height={130} />
+                <Image src={help2} width={900} height={180} />
               </Grid.Column>
               <Grid.Column centered width={7}>
                 <p className="help_searchbook_text">

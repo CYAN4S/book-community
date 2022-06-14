@@ -108,18 +108,15 @@ function Explorer() {
   const otherSubscribers = () => {
     // 밑에 세 줄은 쓰지 않는 코드
     //if (executeOtherSubscribers == true) {
-      //setExecuteOtherSubscribers(true);
-      //setExecuteOtherSubscribers(false);
-      const tempRandomUser = Math.floor(Math.random() * subLens);
-      if (randomUser == tempRandomUser) {
-        otherSubscribers();
-      } else {
-        
-        
-        setRandomUser(tempRandomUser);
-        setDisplayName(subscribers[tempRandomUser].displayName);
-        }
-      
+    //setExecuteOtherSubscribers(true);
+    //setExecuteOtherSubscribers(false);
+    const tempRandomUser = Math.floor(Math.random() * subLens);
+    if (randomUser == tempRandomUser) {
+      otherSubscribers();
+    } else {
+      setRandomUser(tempRandomUser);
+      setDisplayName(subscribers[tempRandomUser].displayName);
+    }
   };
   //테스트용 버튼 (console)
   // const onStatusCheck = () => {
@@ -135,7 +132,24 @@ function Explorer() {
   return (
     <>
       <>
-        <div style={{ marginTop: -20 }} className="ui fluid action input">
+        <div style={{ display: "flex", justifyContent: "left" }}>
+          <Header as="h3" color="black">
+            검색하기
+          </Header>
+          <Popup
+            content="특수문자를 제외한 키워드를 입력해주세요."
+            trigger={
+              <Icon
+                name="question"
+                color={"blue"}
+                size="large"
+                style={{ marginLeft: 3, marginBottom: 5 }}
+              />
+            }
+          />
+        </div>
+
+        <div style={{ marginTop: 5 }} className="ui fluid action input">
           <input
             type="text"
             placeholder="책 이름, 글쓴이, 출판사 등.."
@@ -172,6 +186,7 @@ function Explorer() {
             style={{ cursor: "pointer", marginLeft: 3, marginBottom: 5 }}
           />
         </Header>
+
         <Segment style={{ overflow: "hidden", maxHeight: 120 }}>
           <div>
             {lens ? (
@@ -256,7 +271,15 @@ function Explorer() {
               <>
                 <Popup
                   content="페이지 첫 로드 시, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
-                  trigger={<Icon name="question circle" size="large" loading color ="violet" style={{marginBottom :3}}/>}
+                  trigger={
+                    <Icon
+                      name="question circle"
+                      size="large"
+                      loading
+                      color="violet"
+                      style={{ marginBottom: 3 }}
+                    />
+                  }
                 />
                 <span style={{ marginLeft: "-0.2em" }}>
                   {displayName
@@ -278,7 +301,6 @@ function Explorer() {
                   {subscribers && subscribers[randomUser].myBooks ? (
                     subscribers[randomUser].myBooks.map(
                       (subscriberBooks) => (
-
                         (subscriberBooks = subscriberBooks.substr(24)),
                         (
                           <>
