@@ -126,7 +126,7 @@ export default function Title({ books, recommended }) {
   }, []);
 
   useEffect(()=>{
-    
+    getDocAndCheck();
   },[books])
   // Detail book page chatting query
   const q = query(
