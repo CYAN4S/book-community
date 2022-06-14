@@ -421,96 +421,103 @@ export default function Title({ books, recommended }) {
                 {lens ? (
                   <>
                     <div
-                    style={{
-                      marginBottom: 20,
-                      marginLeft: 20,
-                      width: 1160,
-                      height: 290,
-                          overflow: "auto",
-                          maxHeight: 300,
-                          
-                    }}
-                    // style ={{display: "flex",
-                    //           justifyContent: "center",}}
-                    className="ui orange segment center aligned"
-                  >
+                      style={{
+                        marginBottom: 20,
+                        marginLeft: 20,
+                        width: 1160,
+                        height: 290,
+                        overflow: "auto",
+                        maxHeight: 300,
+                      }}
+                      // style ={{display: "flex",
+                      //           justifyContent: "center",}}
+                      className="ui orange segment center aligned"
+                    >
                       <>
-                      <Header
-                                as="h3"
-                                style={{ height: 50, textAlign: "center", marginBottom:-50}}
-                                color="blue"
-                              >
-                                함께 알아보면 좋은 책들
-                              </Header>
+                        <Header
+                          as="h3"
+                          style={{
+                            height: 50,
+                            textAlign: "center",
+                            marginBottom: -50,
+                          }}
+                          color="blue"
+                        >
+                          함께 알아보면 좋은 책들
+                        </Header>
                         <Item.Group>
-                        <Grid columns={4} >
-                        <Grid.Row>
-                                
-                          {mlBooks.map((book) => (
-                              <Grid.Column >
-                                <div
-                                        style={{
-                                          display: "flex",
-                                          justifyContent: "center",
-                                          marginBottom:20,
-                                      height: 215,
-                                        }}
-                                        className="ui segment"
-                                      >
-                            <Item key={book.isbn}>
-                              
-                              <Link
-                                href={`./${book.title
-                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
-                              >
-                                <a>
-                                  <Item.Image
+                          <Grid columns={4}>
+                            <Grid.Row>
+                              {mlBooks.map((book) => (
+                                <Grid.Column key={book.title}>
+                                  <div
                                     style={{
-                                      
-                                      width: 80,
-                                      height: 120,
-                                      marginRight:15,
-                                      marginBottom:10,
-                                      display : "block",
-
-                    margin : "auto",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      marginBottom: 20,
+                                      height: 215,
                                     }}
-                                    //size = "medium"
-                                    src={book.image}
-                                    alt="DON'T HAVE IMAGE"
-                                    className="img_book"
-                                  />
-                                </a>
-                              </Link>
-                            
+                                    className="ui segment"
+                                  >
+                                    <Item key={book.isbn}>
+                                      <Link
+                                        href={`./${book.title
+                                          .replace(
+                                            /%(?![0-9][0-9a-fA-F]+)/g,
+                                            "%25"
+                                          )
+                                          .replace(
+                                            /\/(?![0-9][0-9a-fA-F]+)/g,
+                                            "%2F"
+                                          )}`}
+                                      >
+                                        <a>
+                                          <Item.Image
+                                            style={{
+                                              width: 80,
+                                              height: 120,
+                                              marginRight: 15,
+                                              marginBottom: 10,
+                                              display: "block",
 
-                              <Item.Content>
-                              <Link
-                                href={`./${book.title
-                                  .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                                  .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
-                              >
-                                
-                                <Item.Header as="a">{book.title.length < 37
-                                                ? book.title
-                                                : book.title.slice(0, 38) +
-                                                  "..."}</Item.Header>
-                              </Link>
-                                <Item.Description>
-                                  <p>
-                                  출판일: {book.pubdate}
-                                  </p>
-                                </Item.Description>
-                              </Item.Content>
-                              
-                            </Item>
-                            </div>
-                            </Grid.Column>
-                          ))} 
-                         
+                                              margin: "auto",
+                                            }}
+                                            //size = "medium"
+                                            src={book.image}
+                                            alt="DON'T HAVE IMAGE"
+                                            className="img_book"
+                                          />
+                                        </a>
+                                      </Link>
+
+                                      <Item.Content>
+                                        <Link
+                                          href={`./${book.title
+                                            .replace(
+                                              /%(?![0-9][0-9a-fA-F]+)/g,
+                                              "%25"
+                                            )
+                                            .replace(
+                                              /\/(?![0-9][0-9a-fA-F]+)/g,
+                                              "%2F"
+                                            )}`}
+                                        >
+                                          <Item.Header as="a">
+                                            {book.title.length < 37
+                                              ? book.title
+                                              : book.title.slice(0, 38) + "..."}
+                                          </Item.Header>
+                                        </Link>
+                                        <Item.Description>
+                                          <p>출판일: {book.pubdate}</p>
+                                        </Item.Description>
+                                      </Item.Content>
+                                    </Item>
+                                  </div>
+                                </Grid.Column>
+                              ))}
                             </Grid.Row>
-                           </Grid>
+                          </Grid>
                         </Item.Group>
                       </>
                     </div>
