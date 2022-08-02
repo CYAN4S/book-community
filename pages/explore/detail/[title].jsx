@@ -783,6 +783,7 @@ export async function getServerSideProps(props) {
   );
 
   const recommendResult = await recommend.json();
+  console.log(recommend.json())
 
   const resList = (
     await Promise.all(
