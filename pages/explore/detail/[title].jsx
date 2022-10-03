@@ -733,7 +733,7 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
-
+  console.log(res);
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
@@ -783,7 +783,6 @@ export async function getServerSideProps(props) {
   );
 
   const recommendResult = await recommend.json();
-  console.log(recommend.json())
 
   const resList = (
     await Promise.all(
