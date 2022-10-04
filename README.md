@@ -4,7 +4,7 @@
 
 [**BookStamp**](https://github.com/CYAN4S/book-community) : 독서는 모든 공부의 시작이며, 모든 학습의 토대는 읽기를 통한 이해로부터 비롯되기 때문에, 이러한 습관이 사라지고 있다는 것은 굉장히 안타까운 문제라 생각합니다. 또 기존에 존재하는 커뮤니티들은 게시 양식의 한계 및 표현 방식에 제한 요소가 있었습니다.
 
-저희 팀은 책에 대한 많은 사용자의 관심을 확대하고, 기존 책 커뮤니티 소통방식의 아쉬웠던 점을 개선하기 위한 방법에 대해 고민하였습니다. 고민 결과, 소통이 활발한 커뮤니티를 만들어 볼 필요성을 느끼게 되었고, 그를 구현하기 위해 팀 프로젝트를 진행하였습니다.
+저희 팀은 책에 대한 많은 사용자의 관심을 확대하고, 기존 책 커뮤니티 소통방식의 아쉬웠던 점을 개선하기 위한 방법에 대해 고민하였습니다. 고민 결과, 소통이 활발한 커뮤니티를 만들어 볼 필요성을 느끼게 되었고, 이를 구현하기 위해 팀 프로젝트를 진행하였습니다.
 
 저희의 목표는 사용자 편의를 맞춘 독서 커뮤니티를 제공하는 것, 그리고 이에 더해 차별화된 부가서비스를 제공하는 것입니다.
 
@@ -156,15 +156,15 @@ yarn add framer-motion
 
          1) Study Reponse Web
             - [**github**](https://github.com/Lee-Sang-Beom/study_responive_css)
-            - [**site**](https://lee-sang-beom.github.io/study_responive_css/)
+            - [**Deploy**](https://lee-sang-beom.github.io/study_responive_css/)
 
          2) Upgrade Simulator
             - [**github**](https://github.com/Lee-Sang-Beom/Upgrade_Simulation)
-            - [**site**](https://lee-sang-beom.github.io/Upgrade_Simulation//)
+            - [**Deploy**](https://lee-sang-beom.github.io/Upgrade_Simulation//)
 
          3) Introduce Game Site : Ori
             - [**github**](https://github.com/Lee-Sang-Beom/Ori-Fan-Site)
-            - [**site**](https://ori-fan-site.vercel.app/)
+            - [**Deploy**](https://ori-fan-site.vercel.app/)
 
 ### 4.2. 책 검색 및 책 상세 페이지
 * 오류페이지가 발생하는 부분에 대해, 예외가 발생할 경우 특정 안내 페이지로 이동하게끔 설정합니다.
