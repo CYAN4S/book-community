@@ -34,6 +34,7 @@ export const onUserDocSnapshot = (uid, callback) => {
   );
 };
 
+
 // TODO: Extract function
 export const useUserDisplayName = (targetUid) => {
   const [users, setUsers] = useRecoilState(usersDisplayNameState);
