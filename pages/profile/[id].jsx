@@ -96,7 +96,8 @@ function Profile() {
 
     if (data?.myBooks) {
       const listMyBook = await Promise.all(
-        data.myBooks.map(async (x) => await x.substr(24))
+        // 20221007 substr : 24->13
+        data.myBooks.map(async (x) => await x.substr(13))
       );
       setMyBooks(listMyBook);
     } else {

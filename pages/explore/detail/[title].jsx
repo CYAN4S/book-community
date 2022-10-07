@@ -52,8 +52,9 @@ export default function Title({ books, recommended }) {
   // 06132123 추가
   const [lens, setLens] = useState(0);
 
-  const mlBooks = [...recommended];
-  mlBooks.sort((a, b) => b.pubdate - a.pubdate);
+  // 20221007: error 
+  // const mlBooks = [...recommended];
+  // mlBooks.sort((a, b) => b.pubdate - a.pubdate);
 
   // 로딩을 위한 state
   const [loading, setLoading] = useState(false);
@@ -109,7 +110,9 @@ export default function Title({ books, recommended }) {
 
   useEffect(() => {
     setLoading(true);
-    setLens(recommended.length);
+
+    // 20221007: error 
+    // setLens(recommended.length);
   }, []);
   // DB Real-time change check
   useEffect(() => {
@@ -733,7 +736,6 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
-  console.log(res);
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
@@ -773,6 +775,8 @@ export async function getServerSideProps(props) {
 
   const isbn = books.items[0].isbn.split(" ")?.[1];
 
+  // 20221007 error 
+  /*
   const recommend = await fetch(
     `https://asia-northeast2-book-community-e9755.cloudfunctions.net/recommeders-book-to-books`,
     {
@@ -798,11 +802,11 @@ export async function getServerSideProps(props) {
       )
     )
   ).filter((x) => x);
-
+  */
   return {
     props: {
       books,
-      recommended: resList,
+      // recommended: resList,
     },
   };
 }

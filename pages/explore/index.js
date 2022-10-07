@@ -55,7 +55,8 @@ function Explorer() {
   const onUser = async (data) => {
     if (data?.mySearchBooks) {
       const listMySearchBook = await Promise.all(
-        data.mySearchBooks.map(async (x) => await x.substr(24))
+        // 20221007: substr 24->13 (isbn)
+        data.mySearchBooks.map(async (x) => await x.substr(13))
       );
       const reverseMySearchBook = [...listMySearchBook].reverse();
       const uniqueArr = reverseMySearchBook.filter((element, index) => {
