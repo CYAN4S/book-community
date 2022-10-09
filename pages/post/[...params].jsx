@@ -147,8 +147,7 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
                     letterSpacing: "1.2px",
                   }}
                 >
-                  {" "}
-                  {`This board contains the thoughts of other users.`}{" "}
+                  {`This board contains the thoughts of other users.`}
                 </p>
               </Segment>
 

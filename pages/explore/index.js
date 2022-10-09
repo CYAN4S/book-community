@@ -8,6 +8,7 @@ import {
   Table,
   Divider,
   Popup,
+  RatingIcon,
 } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -195,11 +196,12 @@ function Explorer() {
                 <Grid columns={4} key={``} divided>
                   <Grid.Row>
                     {recentBooks.map((recentBooks) => (
-                      <>
+                      <React.Fragment key={recentBooks}>
                         <Link
                           href={`explore/detail/${recentBooks
                             .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
                             .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                          
                         >
                           <Grid.Column
                             style={{
@@ -221,7 +223,7 @@ function Explorer() {
                           </Grid.Column>
                         </Link>
                         <Divider />
-                      </>
+                      </React.Fragment>
                     ))}
                   </Grid.Row>
                 </Grid>
@@ -304,7 +306,7 @@ function Explorer() {
                       (subscriberBooks) => (
                         (subscriberBooks = subscriberBooks.substr(24)),
                         (
-                          <>
+                          <React.Fragment key={subscriberBooks}>
                             <Link
                               href={`explore/detail/${subscriberBooks
                                 .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
@@ -330,7 +332,7 @@ function Explorer() {
                               </Grid.Column>
                             </Link>
                             <Divider />
-                          </>
+                          </React.Fragment>
                         )
                       )
                     )
