@@ -268,14 +268,17 @@ export default function Lib({ infoData }) {
 
 export async function getServerSideProps({ params: { params } }) {
   const [book_isbn, id] = params;
-  const isbn = book_isbn.split(" ")[1];
+
+  // 20221013 isbn 코드 변경 처리에 따른, book_isbn 가공없이 사용
+  // const isbn = book_isbn.split(" ")[1];
+  // console.log(book_isbn);
   const region = id;
   const infoData = [];
 
   const res = await fetch(
     `http://data4library.kr/api/libSrchByBook?authKey=${process.env.NEXT_PUBLIC_NARU_AUTHKEY}` +
       "&isbn=" +
-      isbn +
+      book_isbn +
       `&region=${region}` +
       "&format=json"
   ); // 보유도서관 검색
@@ -287,7 +290,7 @@ export async function getServerSideProps({ params: { params } }) {
     for (let i = 0; i < libCode.length; i = i + 1) {
       const res = await fetch(
         `http://data4library.kr/api/bookExist?authKey=${process.env.NEXT_PUBLIC_NARU_AUTHKEY}&libCode=${libCode[i]}
-          &isbn13=${isbn}&format=json`
+          &isbn13=${book_isbn}&format=json`
       );
 
       let saveBook = await res.json();
