@@ -271,7 +271,6 @@ export async function getServerSideProps({ params: { params } }) {
 
   // 20221013 isbn 코드 변경 처리에 따른, book_isbn 가공없이 사용
   // const isbn = book_isbn.split(" ")[1];
-  // console.log(book_isbn);
   const region = id;
   const infoData = [];
 
