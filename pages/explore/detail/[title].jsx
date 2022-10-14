@@ -34,9 +34,9 @@ import Chats from "../../../Components/Chats";
 export default function Title({ books, recommended }) {
   const router = useRouter();
 
-  const { title, image, author, price, publisher, pubdate, isbn, description } =
-    books.items[0];
-
+  // 네이버 책 API에서 price(정가)정보 삭제됨
+  const { title, image, author,  discount, publisher, pubdate, isbn, description } = books.items[0];
+  
   const [titleError, setTitleError] = useState(false);
 
   useEffect(() => {
@@ -372,7 +372,8 @@ export default function Title({ books, recommended }) {
                                 {new Intl.NumberFormat("ko", {
                                   style: "currency",
                                   currency: "KRW",
-                                }).format(price)}
+                                }).format(discount)}
+                                
                               </strong>
                             </List.Item>
                           </List>
@@ -736,6 +737,7 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
+  console.log(books)
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
