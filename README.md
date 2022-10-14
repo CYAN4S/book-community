@@ -158,13 +158,21 @@ yarn add framer-motion
             - [**github**](https://github.com/Lee-Sang-Beom/study_responive_css)
             - [**Deploy**](https://lee-sang-beom.github.io/study_responive_css/)
 
-         2) Upgrade Simulator
+         2) 카카오톡 채팅 레이아웃 구현(SCSS)
+            - [**github**](https://github.com/Lee-Sang-Beom/study_saas)
+            - [**Deploy**](https://lee-sang-beom.github.io/study_saas/)
+
+         3) Upgrade Simulator
             - [**github**](https://github.com/Lee-Sang-Beom/Upgrade_Simulation)
             - [**Deploy**](https://lee-sang-beom.github.io/Upgrade_Simulation//)
 
-         3) Introduce Game Site : Ori
+         4) Introduce Game Site : Ori
             - [**github**](https://github.com/Lee-Sang-Beom/Ori-Fan-Site)
             - [**Deploy**](https://ori-fan-site.vercel.app/)
+
+         5) Hydn : 진행예정
+            - [**github**](https://github.com/CYAN4S/hydn.git)
+            - [**Deploy**](https://rubygems.org/gems/hydn)
 
 ### 4.2. 책 검색 및 책 상세 페이지
 * 오류페이지가 발생하는 부분에 대해, 예외가 발생할 경우 특정 안내 페이지로 이동하게끔 설정합니다.
