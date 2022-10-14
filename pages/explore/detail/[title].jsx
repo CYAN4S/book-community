@@ -53,8 +53,8 @@ export default function Title({ books, recommended }) {
   const [lens, setLens] = useState(0);
 
   // 20221007: error 
-  // const mlBooks = [...recommended];
-  // mlBooks.sort((a, b) => b.pubdate - a.pubdate);
+  const mlBooks = [...recommended];
+  mlBooks.sort((a, b) => b.pubdate - a.pubdate);
 
   // 로딩을 위한 state
   const [loading, setLoading] = useState(false);
@@ -112,7 +112,7 @@ export default function Title({ books, recommended }) {
     setLoading(true);
 
     // 20221007: error 
-    // setLens(recommended.length);
+    setLens(recommended.length);
   }, []);
   // DB Real-time change check
   useEffect(() => {
@@ -373,7 +373,6 @@ export default function Title({ books, recommended }) {
                                   style: "currency",
                                   currency: "KRW",
                                 }).format(discount)}
-                                
                               </strong>
                             </List.Item>
                           </List>
@@ -465,7 +464,10 @@ export default function Title({ books, recommended }) {
                                     }}
                                     className="ui segment"
                                   >
-                                    <Item key={book.isbn}>
+                                    <Item
+                                      key={book.isbn}
+                                      className="recommend_items"
+                                    >
                                       <Link
                                         href={`./${book.title
                                           .replace(
@@ -478,45 +480,37 @@ export default function Title({ books, recommended }) {
                                           )}`}
                                       >
                                         <a>
-                                          <Item.Image
-                                            style={{
-                                              width: 80,
-                                              height: 120,
-                                              marginRight: 15,
-                                              marginBottom: 10,
-                                              display: "block",
-
-                                              margin: "auto",
-                                            }}
-                                            //size = "medium"
+                                          <img
                                             src={book.image}
-                                            alt="DON'T HAVE IMAGE"
-                                            className="img_book"
+                                            className="recommend_img_book"
                                           />
                                         </a>
                                       </Link>
 
-                                      <Item.Content>
-                                        <Link
-                                          href={`./${book.title
-                                            .replace(
-                                              /%(?![0-9][0-9a-fA-F]+)/g,
-                                              "%25"
-                                            )
-                                            .replace(
-                                              /\/(?![0-9][0-9a-fA-F]+)/g,
-                                              "%2F"
-                                            )}`}
-                                        >
-                                          <Item.Header as="a">
-                                            {book.title.length < 37
-                                              ? book.title
-                                              : book.title.slice(0, 38) + "..."}
-                                          </Item.Header>
-                                        </Link>
-                                        <Item.Description>
-                                          <p>출판일: {book.pubdate}</p>
-                                        </Item.Description>
+                                      <Item.Content className="recommend_book_desc">
+                                        <div className="recommend_book_desc_title">
+                                          <Link
+                                            href={`./${book.title
+                                              .replace(
+                                                /%(?![0-9][0-9a-fA-F]+)/g,
+                                                "%25"
+                                              )
+                                              .replace(
+                                                /\/(?![0-9][0-9a-fA-F]+)/g,
+                                                "%2F"
+                                              )}`}
+                                          >
+                                            <Item.Header as="a">
+                                              {book.title.length < 37
+                                                ? book.title
+                                                : book.title.slice(0, 38) +
+                                                  "..."}
+                                            </Item.Header>
+                                          </Link>
+                                          <Item.Description>
+                                            <p>출판일: {book.pubdate}</p>
+                                          </Item.Description>
+                                        </div>
                                       </Item.Content>
                                     </Item>
                                   </div>
@@ -720,6 +714,27 @@ export default function Title({ books, recommended }) {
           </div>
         </>
       )}
+      <style jsx>{`
+        .recommend_img_book {
+          display: flex-column;
+          justify-content: center;
+          align-items: center;
+          width: calc(35%);
+        }
+
+        .recommend_book_desc {
+          // recommend_book_desc_title를 포함하는 box
+        }
+
+        .recommend_book_desc_title{
+          padding-top: 0.8rem;
+
+        }
+
+        img {
+          size: auto;
+        }
+      `}</style>
     </>
   );
 }
@@ -737,7 +752,6 @@ export async function getServerSideProps(props) {
   );
 
   const books = await res.json();
-  console.log(books)
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
@@ -775,10 +789,11 @@ export async function getServerSideProps(props) {
     };
   }
 
-  const isbn = books.items[0].isbn.split(" ")?.[1];
+  const isbn = books.items[0].isbn;
+  console.log(isbn)
 
   // 20221007 error 
-  /*
+
   const recommend = await fetch(
     `https://asia-northeast2-book-community-e9755.cloudfunctions.net/recommeders-book-to-books`,
     {
@@ -804,11 +819,11 @@ export async function getServerSideProps(props) {
       )
     )
   ).filter((x) => x);
-  */
+
   return {
     props: {
       books,
-      // recommended: resList,
+      recommended: resList,
     },
   };
 }
