@@ -33,38 +33,25 @@ export default function Navigation() {
     }
   }
 
-
   return (
     <>
-      {isSignedIn ? (
-        <> {
-          router.pathname === "/main"? <></> : <>
-            <Menu color ={'violet'} inverted widths={5} attached='top' tabular style={{fontSize: 18, fontFamily : "Gugi-Regular"}}>
-            <Menu.Item
-              name="WE"
-              onClick={goLink}
-            />
-            <Menu.Item
-              name="EXPLORE"
-              onClick={goLink}
-            />
-            <Menu.Item
-              name="POST"
-              onClick={goLink}
-            />
-            <Menu.Item
-              name="PROFILE"
-              onClick={goLink}
-            />
-            <Menu.Item
-              name="VIEW MORE"
-              onClick={goLink}
-            />
+      {isSignedIn && router.pathname !== "/main" ? (
+        <>
+          <Menu
+            color={"violet"}
+            inverted
+            widths={5}
+            attached="top"
+            tabular
+            style={{ fontSize: 18, fontFamily: "Gugi-Regular" }}
+            stackable
+          >
+            <Menu.Item name="WE" onClick={goLink} />
+            <Menu.Item name="EXPLORE" onClick={goLink} />
+            <Menu.Item name="POST" onClick={goLink} />
+            <Menu.Item name="PROFILE" onClick={goLink} />
+            <Menu.Item name="VIEW MORE" onClick={goLink} />
           </Menu>
-          </>
-
-        }
-          
         </>
       ) : (
         <></>
