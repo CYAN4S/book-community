@@ -332,7 +332,7 @@ function Profile() {
                               htmlFor="attach-file"
                               style={{ marginTop: 10 }}
                             >
-                              <p>Add photos</p>
+                              <p>Photos</p>
                             </Label>
 
                             <Input

@@ -422,7 +422,6 @@ export default function PostEditor({
                     style={{marginRight:"0.5rem",padding:"0.7rem",height:"2.5rem"}}
                     basic
                     color="red"
-                    //pointing="right"
                     htmlFor="attach-file"
                   >
                     Youtube
@@ -456,7 +455,6 @@ export default function PostEditor({
                   style={{marginRight:"0.5rem",padding:"0.7rem",height:"2.5rem"}}
                   basic
                   color="red"
-                  //pointing="right"
                   htmlFor="attach-file"
                 >
                   Youtube
@@ -522,11 +520,10 @@ export default function PostEditor({
                   <Label
                     basic
                     color="orange"
-                    //pointing="right"
                     htmlFor="attach-file"
                     style = {{marginRight:"0.5rem"}}
                   >
-                    <p>photos</p>
+                    <p>Photos</p>
                   </Label>
                   <Input
                     type="file"
@@ -546,11 +543,10 @@ export default function PostEditor({
                   <Label
                     basic
                     color="orange"
-                    //pointing="right"
                     htmlFor="attach-file"
                     style = {{marginRight:"0.5rem"}}
                   >
-                    <p>photos</p>
+                    <p>Photos</p>
                   </Label>
                   <Input
                     type="file"
@@ -594,11 +590,10 @@ export default function PostEditor({
                   <Label
                     basic
                     color="yellow"
-                    //pointing="right"
                     htmlFor="attach-file"
                     style = {{marginRight:"0.5rem"}}
                   >
-                    <p>videos</p>
+                    <p>Videos</p>
                   </Label>
                   <Input
                     type="file"
@@ -618,11 +613,10 @@ export default function PostEditor({
                   <Label
                     basic
                     color="yellow"
-                    //pointing="right"
                     htmlFor="attach-file"
                     style = {{marginRight:"0.5rem"}}
                   >
-                    <p>videos</p>
+                    <p>Videos</p>
                   </Label>
                   <Input
                     type="file"
