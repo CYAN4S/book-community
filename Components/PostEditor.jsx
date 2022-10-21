@@ -417,20 +417,20 @@ export default function PostEditor({
           {purpose != "reply" ? (
             <>
               {!chat?.youtubeUrl && submitFile && (
-                <div style={{ height: 35 }} className="ui fluid action input">
+                <div className="ui fluid action input" style={{height:"2rem"}}>
                   <Label
+                    style={{marginRight:"0.5rem",padding:"0.7rem",height:"2.5rem"}}
                     basic
                     color="red"
-                    pointing="right"
+                    //pointing="right"
                     htmlFor="attach-file"
-                    style={{ width: 145 }}
                   >
-                    <p>Add/Edit Youtube URL</p>
+                    Youtube
                   </Label>
 
                   <Form.Field>
                     <Form.Input
-                      style={{ height: 35, width: 210 }}
+                      style={{ width:"15rem", height:"2.8rem" }}
                       focus
                       placeholder="Youtube URL을 입력해주세요"
                       value={youtubeString}
@@ -438,7 +438,7 @@ export default function PostEditor({
                     />
                   </Form.Field>
                   <Icon
-                    style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
+                    style={{ marginTop: 10, marginLeft: 10, cursor: "pointer" }}
                     size="large"
                     name="search"
                     color="violet"
@@ -450,26 +450,27 @@ export default function PostEditor({
           ) : (
             <>
               {submitFile && (
-                <div style={{ height: 35 }} className="ui fluid action input">
-                  <Label
-                    basic
-                    color="red"
-                    pointing="right"
-                    htmlFor="attach-file"
-                    style={{ width: 145 }}
-                  >
-                    <p>Add/Edit Youtube URL</p>
-                  </Label>
+                // 댓글 - 파일 첨부하기
+                <div className="ui fluid action input" style={{height:"2.8rem"}}>
+                <Label
+                  style={{marginRight:"0.5rem",padding:"0.7rem",height:"2.5rem"}}
+                  basic
+                  color="red"
+                  //pointing="right"
+                  htmlFor="attach-file"
+                >
+                  Youtube
+                </Label>
 
-                  <Form.Field>
-                    <Form.Input
-                      style={{ height: 35, width: 210 }}
-                      focus
-                      placeholder="Youtube URL을 입력해주세요"
-                      value={youtubeString}
-                      onChange={(e) => setYoutubeString(e.target.value)}
-                    />
-                  </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    style={{ width:"15rem", height:"2.8rem" }}
+                    focus
+                    placeholder="Youtube URL을 입력해주세요"
+                    value={youtubeString}
+                    onChange={(e) => setYoutubeString(e.target.value)}
+                  />
+                </Form.Field>
                   <Icon
                     style={{ marginTop: 5, marginLeft: 10, cursor: "pointer" }}
                     size="large"
@@ -517,14 +518,15 @@ export default function PostEditor({
           {purpose != "reply" ? (
             <>
               {!chat?.fileUrl && submitFile && (
-                <div style={{ marginTop: 10 }}>
+                <div style={{ marginTop: 20 }}>
                   <Label
                     basic
                     color="orange"
-                    pointing="right"
+                    //pointing="right"
                     htmlFor="attach-file"
+                    style = {{marginRight:"0.5rem"}}
                   >
-                    <p>Add/Edit photos</p>
+                    <p>photos</p>
                   </Label>
                   <Input
                     type="file"
@@ -544,10 +546,11 @@ export default function PostEditor({
                   <Label
                     basic
                     color="orange"
-                    pointing="right"
+                    //pointing="right"
                     htmlFor="attach-file"
+                    style = {{marginRight:"0.5rem"}}
                   >
-                    <p>Add/Edit photos</p>
+                    <p>photos</p>
                   </Label>
                   <Input
                     type="file"
@@ -591,10 +594,11 @@ export default function PostEditor({
                   <Label
                     basic
                     color="yellow"
-                    pointing="right"
+                    //pointing="right"
                     htmlFor="attach-file"
+                    style = {{marginRight:"0.5rem"}}
                   >
-                    <p>Add/Edit videos</p>
+                    <p>videos</p>
                   </Label>
                   <Input
                     type="file"
@@ -614,10 +618,11 @@ export default function PostEditor({
                   <Label
                     basic
                     color="yellow"
-                    pointing="right"
+                    //pointing="right"
                     htmlFor="attach-file"
+                    style = {{marginRight:"0.5rem"}}
                   >
-                    <p>Add/Edit videos</p>
+                    <p>videos</p>
                   </Label>
                   <Input
                     type="file"
