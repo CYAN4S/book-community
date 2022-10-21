@@ -35,7 +35,7 @@ export default function Title({ books, recommended }) {
   const router = useRouter();
 
   // 네이버 책 API에서 price(정가)정보 삭제됨
-  const { title, image, author,  discount, publisher, pubdate, isbn, description } = books.items[0];
+  const { title, image, author, discount, publisher, pubdate, isbn, description } = books.items[0];
   
   const [titleError, setTitleError] = useState(false);
 
@@ -790,7 +790,7 @@ export async function getServerSideProps(props) {
   }
 
   const isbn = books.items[0].isbn;
-  console.log(isbn)
+  console.log(isbn);
 
   // 20221007 error 
 
