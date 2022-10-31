@@ -239,34 +239,27 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     required
                   />
                 </Form.Field>
+                {/* POST - 글 쓰기 - 파일 첨부파트 1 */}
                 {submitFile && (
-                  <div
-                    style={{ height: 35, marginBottom: 10 }}
-                    className="ui fluid action input"
+                  <div className="ui fluid action input" style={{height:"3.5rem"}}>
+                  <Label
+                    style={{marginRight:"0.5rem",padding:"0.7rem",height:"2.5rem"}}
+                    basic
+                    color="red"
+                    htmlFor="attach-file"
                   >
-                    <Label
-                      basic
-                      color="red"
-                      pointing="right"
-                      htmlFor="attach-file"
-                      style={{ width: 130, textAlign: "center" }}
-                    >
-                      <p className="upload_element">Add Youtube URL</p>
-                    </Label>
-
-                    <Form.Field>
-                      <Form.Input
-                        style={{
-                          height: 35,
-                          width: 215,
-                          marginLeft: 10,
-                        }}
-                        focus
-                        placeholder="Youtube URL을 입력해주세요"
-                        value={youtubeString}
-                        onChange={(e) => setYoutubeString(e.target.value)}
-                      />
-                    </Form.Field>
+                    Youtube
+                  </Label>
+  
+                  <Form.Field>
+                    <Form.Input
+                      style={{ width:"15rem", height:"2.8rem" }}
+                      focus
+                      placeholder="Youtube URL을 입력해주세요"
+                      value={youtubeString}
+                      onChange={(e) => setYoutubeString(e.target.value)}
+                    />
+                  </Form.Field>
                     <Icon
                       name="search"
                       style={{
@@ -312,15 +305,15 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     </div>
                   </div>
                 )}
+                {/* POST - 글 쓰기 - 파일 첨부파트 2 */}
                 {submitFile && (
                   <div>
                     <Label
                       basic
                       color="orange"
-                      pointing="right"
                       htmlFor="attach-file"
                     >
-                      <p className="upload_element">Add photos</p>
+                      <p className="upload_element">Photos</p>
                     </Label>
 
                     <Input
@@ -329,7 +322,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       onChange={onFileChange}
                       id="attach-file"
                       icon="file image"
-                      style={{ marginLeft: 10, marginBottom: 10 }}
+                      style={{ marginLeft: 10, marginBottom: 10, width: "20rem" }}
                     />
                   </div>
                 )}
@@ -355,15 +348,15 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     />
                   </div>
                 )}
+                {/* POST - 글 쓰기 - 파일 첨부파트 3 */}
                 {submitFile && (
                   <div>
                     <Label
                       basic
                       color="yellow"
-                      pointing="right"
                       htmlFor="attach-file"
                     >
-                      <p className="upload_element">Add videos</p>
+                      <p className="upload_element">Videos</p>
                     </Label>
 
                     <Input
@@ -372,7 +365,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                       onChange={onFileChangeVideo}
                       id="attach-file"
                       icon="video image"
-                      style={{ marginLeft: 10 }}
+                      style={{ marginLeft: 10, width: "20rem" }}
                     />
                   </div>
                 )}
@@ -443,34 +436,27 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   required
                 />
               </Form.Field>
+              {/* 의견남기기 - 사용자가 글을 게시 할 때 - 파일 첨부파트 1 */}
               {submitFile && (
-                <div
-                  style={{ height: 35, marginBottom: 10 }}
-                  className="ui fluid action input"
-                >
-                  <Label
-                    basic
-                    color="red"
-                    pointing="right"
-                    htmlFor="attach-file"
-                    style={{ width: 130, textAlign: "center" }}
-                  >
-                    <p className="upload_element">Add Youtube URL</p>
-                  </Label>
+                 <div className="ui fluid action input" style={{height:"3.5rem"}}>
+                 <Label
+                   style={{marginRight:"0.5rem",padding:"0.7rem",height:"2.5rem"}}
+                   basic
+                   color="red"
+                   htmlFor="attach-file"
+                 >
+                   Youtube
+                 </Label>
 
-                  <Form.Field>
-                    <Form.Input
-                      style={{
-                        height: 35,
-                        width: 215,
-                        marginLeft: 10,
-                      }}
-                      focus
-                      placeholder="Youtube URL을 입력해주세요"
-                      value={youtubeString}
-                      onChange={(e) => setYoutubeString(e.target.value)}
-                    />
-                  </Form.Field>
+                 <Form.Field>
+                   <Form.Input
+                     style={{ width:"15rem", height:"2.8rem" }}
+                     focus
+                     placeholder="Youtube URL을 입력해주세요"
+                     value={youtubeString}
+                     onChange={(e) => setYoutubeString(e.target.value)}
+                   />
+                 </Form.Field>
                   <Icon
                     name="search"
                     style={{ marginLeft: 10, marginTop: 6, cursor: "pointer" }}
@@ -512,15 +498,16 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   </div>
                 </div>
               )}
+              {/* 의견남기기 - 사용자가 글을 게시 할 때 - 파일 첨부파트 2 */}
               {submitFile && (
                 <div>
                   <Label
                     basic
                     color="orange"
-                    pointing="right"
                     htmlFor="attach-file"
+                    style = {{marginRight:"0.2rem"}}
                   >
-                    <p className="upload_element">Add photos</p>
+                    <p className="upload_element">Photos</p>
                   </Label>
 
                   <Input
@@ -529,7 +516,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     onChange={onFileChange}
                     id="attach-file"
                     icon="file image"
-                    style={{ marginLeft: 10, marginBottom: 10 }}
+                    style={{ marginLeft: 10, marginBottom: 10, width: "20rem"}}
                   />
                 </div>
               )}
@@ -555,15 +542,16 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                   />
                 </div>
               )}
+              {/* 의견남기기 - 사용자가 글을 게시 할 때 - 파일 첨부파트 3 */}
               {submitFile && (
                 <div>
                   <Label
                     basic
                     color="yellow"
-                    pointing="right"
                     htmlFor="attach-file"
+                    style = {{marginRight:"0.3rem"}}
                   >
-                    <p className="upload_element">Add videos</p>
+                    <p className="upload_element">Videos</p>
                   </Label>
 
                   <Input
@@ -572,7 +560,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
                     onChange={onFileChangeVideo}
                     id="attach-file"
                     icon="video image"
-                    style={{ marginLeft: 10 }}
+                    style={{ marginLeft: 10 , width: "20rem"}}
                   />
                 </div>
               )}
