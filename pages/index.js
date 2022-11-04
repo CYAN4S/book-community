@@ -14,6 +14,8 @@ export default function Home() {
       if (user) {
         // 로그인 되어 있다면
         setIsSigned(true);
+        
+        // push를 사용하지 않음 : https://sunny921.github.io/posts/vuejs-router-03/
         router.replace("/main");
       } else {
         // 로그인 되어있지 않다면

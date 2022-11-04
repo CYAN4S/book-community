@@ -40,6 +40,7 @@ export default function AuthForm() {
 
   const getErrorText = (error) => {
     const { code } = error;
+    // 오류 처리
     if (code == "auth/invalid-email")
       return ["이메일 오류!", "올바른 이메일 형식이 아닙니다."];
     if (code == "auth/wrong-password")
@@ -118,7 +119,6 @@ export default function AuthForm() {
         <Form onSubmit={onSubmit}>
           <Form.Field>
             <label>
-              {" "}
               <Icon name="mail" style={{ marginRight: 5 }} />
               이메일
             </label>
@@ -132,7 +132,6 @@ export default function AuthForm() {
 
           <Form.Field style={showPasswordForm() ? {} : { display: "none" }}>
             <label>
-              {" "}
               <Icon name="user secret" style={{ marginRight: 5 }} />
               비밀번호
             </label>
@@ -145,7 +144,6 @@ export default function AuthForm() {
 
           {progress == "signup" && (
             <p style={{ marginLeft: 10, fontFamily: "GothicA1-Regular" }}>
-              {" "}
               - 회원가입을 진행하게 되면, 이용약관에 동의하게 됩니다.
             </p>
           )}
