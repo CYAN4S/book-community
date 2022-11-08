@@ -343,12 +343,14 @@ function Explorer() {
           color: sky;
         }
 
-        .similar_book {
-          font-size: 12px;
-          margin-top: 0.2em;
+        // 검색 영역
+
+        .search_wrap{
+          display: flex;
+          align-items: center;
         }
 
-        // 최근 검색한 책
+        // 최근 검색한 책 영역
         .recentBook_wrap{
           display:flex;
           cursor:pointer;
@@ -390,6 +392,11 @@ function Explorer() {
           }
         }
 
+        // 구독자가 관심있어 하는 책 영역
+        .similar_book {
+          font-size: 12px;
+          margin-top: 0.2em;
+        }
 
         .no_books_of_interest {
           margin-left: 1em;
