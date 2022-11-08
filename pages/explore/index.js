@@ -34,7 +34,6 @@ function Explorer() {
     setCheckInitNaming(true);
   }, []);
 
-  // 0523_1103 추가 시작
   const [currentUid, setCurrentUid] = useState(null);
   const [checkInitNaming, setCheckInitNaming] = useState(false);
   const [checkTest, setCheckTest] = useState(false);
@@ -72,7 +71,7 @@ function Explorer() {
     } else {
       setRecentBooks([]);
     }
-    // 06061429 추가
+
     if (data?.users) {
       const x = await Promise.all(
         data.users.map(async (uid) => await getUserDoc(uid))
@@ -108,10 +107,6 @@ function Explorer() {
   };
 
   const otherSubscribers = () => {
-    // 밑에 세 줄은 쓰지 않는 코드
-    //if (executeOtherSubscribers == true) {
-    //setExecuteOtherSubscribers(true);
-    //setExecuteOtherSubscribers(false);
     const tempRandomUser = Math.floor(Math.random() * subLens);
     if (randomUser == tempRandomUser) {
       otherSubscribers();
@@ -120,24 +115,18 @@ function Explorer() {
       setDisplayName(subscribers[tempRandomUser].displayName);
     }
   };
-  //테스트용 버튼 (console)
-  // const onStatusCheck = () => {
-  //   console.log("구독자 display", subscribers[randomUser].displayName);
-  //   //console.log(subscribers);
-  //   console.log("currentUid", currentUid);
-  //   console.log("checkTest", checkTest);
-  //   console.log("subLens", subLens);
-  //   console.log("testdata", testData);
-  //   console.log("displayName", displayName);
-  // };
 
+ 
   return (
     <>
       <>
-        <div style={{ display: "flex", justifyContent: "left" }}>
-          <Header as="h3" color="black">
-            검색하기
-          </Header>
+        <div className="search_wrap">
+          <div className="search_header">
+            <Header as="h3" color="black">
+              검색하기
+            </Header>
+          </div>
+          <div className="search_icon">
           <Popup
             content="특수문자를 제외한 키워드를 입력해주세요."
             trigger={
@@ -149,6 +138,9 @@ function Explorer() {
               />
             }
           />
+          </div>
+
+          
         </div>
 
         <div style={{ marginTop: 5 }} className="ui fluid action input">
@@ -168,16 +160,7 @@ function Explorer() {
             </a>
           </Link>
         </div>
-        {/* 테스트용 버튼 (console 확인용) */}
-        {/* <Button
-          onClick={onStatusCheck}
-          inverted
-          color="blue"
-          style={{ marginLeft: 5 }}
-        >
-          확인
-        </Button> */}
-        {/* 0523_1105 내용 추가 시작 */}
+
         <Header as="h3" color="black">
           최근 검색한 책
           <Icon
@@ -189,45 +172,40 @@ function Explorer() {
           />
         </Header>
 
-        <Segment style={{ overflow: "hidden", maxHeight: 120 }}>
+        <Segment>
           <div>
             {lens ? (
-              <>
-                <Grid columns={4} key={``} divided>
-                  <Grid.Row>
-                    {recentBooks.map((recentBooks) => (
-                      <React.Fragment key={recentBooks}>
-                        <Link
-                          href={`explore/detail/${recentBooks
-                            .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
-                            .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+              <Grid columns={4} key={``} divided>
+                <Grid.Row>
+                  {recentBooks.map((recentBooks) => (
+                    <React.Fragment key={recentBooks}>
+                      <Link
+                        href={`explore/detail/${recentBooks
+                          .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                          .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
+                      >
+                        <Grid.Column
                           
                         >
-                          <Grid.Column
-                            style={{
-                              display: "flex",
-                              justifyContent: "left",
-                              cursor: "pointer",
-                              marginTop: 10,
-                              marginBottom: 10,
-                            }}
-                          >
+                          <div className="recentBook_wrap">
                             <a title="상세페이지로 이동하기">
                               <Icon name="book" size="huge" />
                             </a>
-                            <p className="print_book">
-                              {recentBooks.length < 50
+                            
+                            <p className="print_book pr">
+                              {recentBooks.length < 15
                                 ? recentBooks
-                                : recentBooks.slice(0, 50) + "..."}
+                                : recentBooks.slice(0, 15) + "..."}
                             </p>
-                          </Grid.Column>
-                        </Link>
-                        <Divider />
-                      </React.Fragment>
-                    ))}
-                  </Grid.Row>
-                </Grid>
-              </>
+                          </div>
+                          
+                        </Grid.Column>
+                      </Link>
+                      <Divider />
+                    </React.Fragment>
+                  ))}
+                </Grid.Row>
+              </Grid>
             ) : (
               <>
                 <div
@@ -324,6 +302,7 @@ function Explorer() {
                                 <a title="상세페이지로 이동하기">
                                   <Icon name="book" size="huge" />
                                 </a>
+                                
                                 <p className="print_book">
                                   {subscriberBooks.length < 50
                                     ? subscriberBooks
@@ -361,7 +340,7 @@ function Explorer() {
       </>
       <style jsx>{`
         a {
-          color: black;
+          color: sky;
         }
 
         .similar_book {
@@ -369,12 +348,48 @@ function Explorer() {
           margin-top: 0.2em;
         }
 
-        .print_book {
-          margin-left: 10;
-          margin-right: 10;
-          font-family: "Gugi-Regular";
-          font-size: 11px;
+        // 최근 검색한 책
+        .recentBook_wrap{
+          display:flex;
+          cursor:pointer;
+          margin: 0.5rem 0;
         }
+
+        .print_book {
+          margin-left: 0.3rem;
+          font-family: "Gugi-Regular";
+          font-size: 0.7rem;
+        }
+
+        @media screen and (max-width:768px){
+          a{
+            text-align: center;
+          }
+
+          .recentBook_wrap{
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 0;
+          }
+
+          .print_book {
+            padding-top:1rem;
+            text-align: center;
+          }
+        }
+
+        @media screen and (max-width:480px){
+          a{
+            font-size:0.8rem;
+          }
+
+          .print_book {
+            font-size:0.4rem;
+            line-height:0.8rem;
+          }
+        }
+
 
         .no_books_of_interest {
           margin-left: 1em;
@@ -383,6 +398,9 @@ function Explorer() {
           font-weight: bold;
           color: grey;
         }
+
+
+
       `}</style>
     </>
   );
