@@ -251,7 +251,6 @@ yarn add framer-motion
     - 최근 검색한 책 영역의 반응형 미설계
     
 - 개선된 페이지에서는 위에서 언급한 문제를 해결할 수 있도록 하였습니다.
-
    > **데스크탑 화면 고려 (width>768px)**
 
    ![Before](./public/readmeImg/exploreDesktop.jpg)
