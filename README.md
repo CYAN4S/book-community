@@ -146,9 +146,8 @@ yarn add framer-motion
 
 ### 4.1. HTML/CSS
 * 문제가 발생하는 페이지에 대해, HTML/CSS을 구체적으로 재설계합니다.
-* css 작성능력을 키워나감과 함께 sass/scss를 사용함으로써 가독성있게 파일을 작성하여, UI/UX 설계를 재진행하는 방법을 사용하고자 합니다.
 
-   ---
+* css 작성능력을 키워나감과 함께 sass/scss를 사용함으로써 가독성있게 파일을 작성하여, UI/UX 설계를 재진행하는 방법을 사용하고자 합니다.
    * **개선노력: 팀원 이상범**
    
       - 해당 부분을 개선하기 위해, 기존에 정말 기초부분만 알고 있었던 css를 다시 공부하고, sass/scss 사용방법을 익히는 과정이 필요하다고 생각했습니다.
@@ -174,7 +173,7 @@ yarn add framer-motion
          5) Hydn : 진행예정
             - [**github**](https://github.com/CYAN4S/hydn.git)
             - [**Deploy**](https://rubygems.org/gems/hydn)
-   ---
+
 
 ### 4.2. 도서관 검색지역 세분화
 * 도서관 정보나루 API에서 세부지역코드를 이용하여, API를 추가적으로 가공합니다.
@@ -227,15 +226,37 @@ yarn add framer-motion
 
 ---
 
-### 4. **북스탬프 메인화면 변경 (2022-10-21) (수행 팀원 : 이상범)** 
+### 4. CSS 보완
 
-> **수정 전**
-
-![Before](./public/readmeImg/logoBefore.jpg)
-
-> **수정 후**
-
-![After](./public/readmeImg/logoAfter.jpg)
+#### **4-1)** 북스탬프 메인화면 변경 (2022-10-21) (수행 팀원 : 이상범) 
 
 - 기존에 **반응형**을 고려하지 않았던 메인 화면은, 모바일 환경에서 UI/UX에 불편한 경험을 주었습니다.
     - 애니메이션이 적용된 텍스트와 버튼 배치의 어색함을 수정하였습니다.
+      > **수정 전**
+
+      ![Before](./public/readmeImg/logoBefore.jpg)
+
+      > **수정 후**
+
+      ![After](./public/readmeImg/logoAfter.jpg)
+
+
+
+---
+
+#### **4-2)** EXPLORE 화면 수정 (2022-11-08) (수행 팀원 : 이상범) 
+
+- 기존 Explore 페이지에서는 아래의 문제가 있었습니다.
+    - 검색 영역의 세로축 미정렬
+    - 최근 검색한 책 영역의 반응형 미설계
+    
+- 개선된 페이지에서는 위에서 언급한 문제를 해결할 수 있도록 하였습니다.
+
+   > **데스크탑 화면 고려 (width>768px)**
+
+   ![Before](./public/readmeImg/exploreDesktop.jpg)
+
+   > **모바일 화면 고려 (width<480px)**
+
+   ![After](./public/readmeImg/exploreMobile.jpg)
+
