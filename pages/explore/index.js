@@ -130,13 +130,7 @@ function Explorer() {
           <div className="search_icon">
             <Popup
               content="특수문자를 제외한 키워드를 입력해주세요."
-              trigger={
-                <Icon
-                  name="question"
-                  color={"blue"}
-                  size="large"
-                />
-              }
+              trigger={<Icon name="question" color={"blue"} size="large" />}
             />
           </div>
         </div>
@@ -195,9 +189,9 @@ function Explorer() {
                             </a>
 
                             <p className="print_book">
-                              {recentBooks.length < 15
+                              {recentBooks.length < 20
                                 ? recentBooks
-                                : recentBooks.slice(0, 15) + "..."}
+                                : recentBooks.slice(0, 20) + "..."}
                             </p>
                           </div>
                         </Grid.Column>
@@ -225,53 +219,50 @@ function Explorer() {
 
         {/* 내 구독자가 관심있어하는 책 */}
         <div className="subscribeBook_wrap">
-        <Header
-          as="h3"
-          color="black"
-        >
-          내 구독자가 관심있어하는 책
-          {subLens >= 2 ? (
-            <Popup
-              content="버튼을 누르면 다른 구독자들을 랜덤으로 검색합니다."
-              trigger={
-                <Icon
-                  name="random"
-                  onClick={otherSubscribers}
-                  color={"red"}
-                  size="mini"
-                  style={{ cursor: "pointer", marginLeft: 5, marginTop: -2 }}
-                />
-              }
-            />
-          ) : (
-            <></>
-          )}
-        </Header>
+          <Header as="h3" color="black">
+            내 구독자가 관심있어하는 책
+            {subLens >= 2 ? (
+              <Popup
+                content="버튼을 누르면 다른 구독자들을 랜덤으로 검색합니다."
+                trigger={
+                  <Icon
+                    name="random"
+                    onClick={otherSubscribers}
+                    color={"red"}
+                    size="mini"
+                    style={{ cursor: "pointer", marginLeft: 5, marginTop: -2 }}
+                  />
+                }
+              />
+            ) : (
+              <></>
+            )}
+          </Header>
         </div>
-        
 
         <Header style={{ marginTop: 10, display: "flex" }} as="h5" color="grey">
           <span className="similar_book">
             {subLens ? (
-              <>
-                <Popup
-                  content="페이지 첫 로드 시, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
-                  trigger={
-                    <Icon
-                      name="question circle"
-                      size="large"
-                      loading
-                      color="violet"
-                      style={{ marginBottom: 3 }}
-                    />
-                  }
-                />
-                <span style={{ marginLeft: "-0.2em" }}>
+              <div className="popup_title">
+                <div className="popup">
+                  <Popup
+                    content="페이지 첫 로드 시, 자동으로 가장 오래된 구독자의 등록된 책을 불러옵니다."
+                    trigger={
+                      <Icon
+                        name="question circle"
+                        size="large"
+                        loading
+                        color="violet"
+                      />
+                    }
+                  />
+                </div>
+                <div className="show_subscriber">
                   {displayName
                     ? `구독자 [${displayName}]님의 관심있는 책`
                     : "구독자 [guest]님의 관심있는 책"}{" "}
-                </span>
-              </>
+                </div>
+              </div>
             ) : (
               <></>
             )}
@@ -303,15 +294,18 @@ function Explorer() {
                                   marginBottom: 10,
                                 }}
                               >
-                                <a title="상세페이지로 이동하기">
-                                  <Icon name="book" size="huge" />
-                                </a>
+                                <div className="subscriberBook_info">
+                                    <a title="상세페이지로 이동하기">
+                                      <Icon name="book" size="huge" />
+                                    </a>
 
-                                <p className="print_book">
-                                  {subscriberBooks.length < 50
-                                    ? subscriberBooks
-                                    : subscriberBooks.slice(0, 50) + "..."}
-                                </p>
+                                    <p className="print_book">
+                                      {subscriberBooks.length < 20
+                                        ? subscriberBooks
+                                        : subscriberBooks.slice(0, 20) + "..."}
+                                    </p>
+                              </div>
+                                
                               </Grid.Column>
                             </Link>
                             <Divider />
@@ -355,30 +349,30 @@ function Explorer() {
         // Explore page header, icon에 공통 적용
         .search_wrap,
         .recentBooks_wrap,
-        .subscribeBook_wrap {
+        .subscribeBook_wrap,
+        .popup_title {
           display: flex;
           align-items: center;
         }
 
-        .recentBooks_wrap, 
+        .recentBooks_wrap,
         .subscribeBook_wrap {
           margin-top: 35px;
         }
 
         .search_icon,
-        .recentBooks_icon{
-          cursor:pointer;
-          padding-bottom : 4px;
-
+        .recentBooks_icon {
+          cursor: pointer;
+          padding-bottom: 4px;
         }
 
         // 최근 검색한 책
 
-        .recentBooks_icon{
-          margin-left:0.3rem;
+        .recentBooks_icon {
+          margin-left: 0.3rem;
         }
 
-        .recentBook_info {
+        .recentBook_info, .subscriberBook_info{
           display: flex;
           cursor: pointer;
           margin: 0.5rem 0;
@@ -395,7 +389,7 @@ function Explorer() {
             text-align: center;
           }
 
-          .recentBook_wrap {
+          .recentBook_info, .subscriberBook_info {
             height: 100%;
             flex-direction: column;
             justify-content: space-around;
@@ -418,6 +412,18 @@ function Explorer() {
             line-height: 0.8rem;
           }
         }
+
+        // 내 구독자가 관심있어하는 책 영역
+        .popup {
+          width: 1.4rem;
+          padding-bottom: 4px;
+
+        }
+
+        .show_subscriber{
+          margin-left:0.3rem;
+        }
+        
 
         .no_books_of_interest {
           margin-left: 1em;
