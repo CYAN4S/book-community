@@ -120,6 +120,7 @@ function Explorer() {
   return (
     <>
       <>
+        {/* 검색하기 */}
         <div className="search_wrap">
           <div className="search_header">
             <Header as="h3" color="black">
@@ -127,20 +128,17 @@ function Explorer() {
             </Header>
           </div>
           <div className="search_icon">
-          <Popup
-            content="특수문자를 제외한 키워드를 입력해주세요."
-            trigger={
-              <Icon
-                name="question"
-                color={"blue"}
-                size="large"
-                style={{ marginLeft: 3, marginBottom: 5 }}
-              />
-            }
-          />
+            <Popup
+              content="특수문자를 제외한 키워드를 입력해주세요."
+              trigger={
+                <Icon
+                  name="question"
+                  color={"blue"}
+                  size="large"
+                />
+              }
+            />
           </div>
-
-          
         </div>
 
         <div style={{ marginTop: 5 }} className="ui fluid action input">
@@ -161,16 +159,22 @@ function Explorer() {
           </Link>
         </div>
 
-        <Header as="h3" color="black">
-          최근 검색한 책
-          <Icon
-            name="eraser"
-            onClick={clearRecentlyBook}
-            color={"red"}
-            size="mini"
-            style={{ cursor: "pointer", marginLeft: 3, marginBottom: 5 }}
-          />
-        </Header>
+        {/* 사용자가 최근 검색한 책 */}
+        <div className="recentBooks_wrap">
+          <div className="recentBooks_header">
+            <Header as="h3" color="black">
+              최근 검색한 책
+            </Header>
+          </div>
+          <div className="recentBooks_icon">
+            <Icon
+              name="eraser"
+              onClick={clearRecentlyBook}
+              color={"red"}
+              size="large"
+            />
+          </div>
+        </div>
 
         <Segment>
           <div>
@@ -184,21 +188,18 @@ function Explorer() {
                           .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
                           .replace(/\/(?![0-9][0-9a-fA-F]+)/g, "%2F")}`}
                       >
-                        <Grid.Column
-                          
-                        >
-                          <div className="recentBook_wrap">
+                        <Grid.Column>
+                          <div className="recentBook_info">
                             <a title="상세페이지로 이동하기">
                               <Icon name="book" size="huge" />
                             </a>
-                            
-                            <p className="print_book pr">
+
+                            <p className="print_book">
                               {recentBooks.length < 15
                                 ? recentBooks
                                 : recentBooks.slice(0, 15) + "..."}
                             </p>
                           </div>
-                          
                         </Grid.Column>
                       </Link>
                       <Divider />
@@ -222,10 +223,11 @@ function Explorer() {
           </div>
         </Segment>
 
+        {/* 내 구독자가 관심있어하는 책 */}
+        <div className="subscribeBook_wrap">
         <Header
           as="h3"
           color="black"
-          style={{ marginTop: "3em", display: "flex" }}
         >
           내 구독자가 관심있어하는 책
           {subLens >= 2 ? (
@@ -245,6 +247,8 @@ function Explorer() {
             <></>
           )}
         </Header>
+        </div>
+        
 
         <Header style={{ marginTop: 10, display: "flex" }} as="h5" color="grey">
           <span className="similar_book">
@@ -302,7 +306,7 @@ function Explorer() {
                                 <a title="상세페이지로 이동하기">
                                   <Icon name="book" size="huge" />
                                 </a>
-                                
+
                                 <p className="print_book">
                                   {subscriberBooks.length < 50
                                     ? subscriberBooks
@@ -348,15 +352,35 @@ function Explorer() {
           margin-top: 0.2em;
         }
 
-        .search_wrap{
+        // Explore page header, icon에 공통 적용
+        .search_wrap,
+        .recentBooks_wrap,
+        .subscribeBook_wrap {
           display: flex;
-          align-items:center;
+          align-items: center;
+        }
+
+        .recentBooks_wrap, 
+        .subscribeBook_wrap {
+          margin-top: 35px;
+        }
+
+        .search_icon,
+        .recentBooks_icon{
+          cursor:pointer;
+          padding-bottom : 4px;
+
         }
 
         // 최근 검색한 책
-        .recentBook_wrap{
-          display:flex;
-          cursor:pointer;
+
+        .recentBooks_icon{
+          margin-left:0.3rem;
+        }
+
+        .recentBook_info {
+          display: flex;
+          cursor: pointer;
           margin: 0.5rem 0;
         }
 
@@ -366,12 +390,12 @@ function Explorer() {
           font-size: 0.7rem;
         }
 
-        @media screen and (max-width:768px){
-          a{
+        @media screen and (max-width: 768px) {
+          a {
             text-align: center;
           }
 
-          .recentBook_wrap{
+          .recentBook_wrap {
             height: 100%;
             flex-direction: column;
             justify-content: space-around;
@@ -379,22 +403,21 @@ function Explorer() {
           }
 
           .print_book {
-            padding-top:1rem;
+            padding-top: 1rem;
             text-align: center;
           }
         }
 
-        @media screen and (max-width:480px){
-          a{
-            font-size:0.8rem;
+        @media screen and (max-width: 480px) {
+          a {
+            font-size: 0.8rem;
           }
 
           .print_book {
-            font-size:0.4rem;
-            line-height:0.8rem;
+            font-size: 0.4rem;
+            line-height: 0.8rem;
           }
         }
-
 
         .no_books_of_interest {
           margin-left: 1em;
@@ -403,9 +426,6 @@ function Explorer() {
           font-weight: bold;
           color: grey;
         }
-
-
-
       `}</style>
     </>
   );
