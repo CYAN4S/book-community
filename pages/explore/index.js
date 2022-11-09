@@ -348,6 +348,11 @@ function Explorer() {
           margin-top: 0.2em;
         }
 
+        .search_wrap{
+          display: flex;
+          align-items:center;
+        }
+
         // 최근 검색한 책
         .recentBook_wrap{
           display:flex;
