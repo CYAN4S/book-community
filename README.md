@@ -240,22 +240,20 @@ yarn add framer-motion
 
       ![After](./public/readmeImg/logoAfter.jpg)
 
-
-
 ---
 
-#### **4-2)** EXPLORE 화면 수정 (2022-11-08) (수행 팀원 : 이상범) 
+#### **4-2)** EXPLORE 화면 수정 (2022-11-08 ~ 2022-11-09) (수행 팀원 : 이상범) 
 
 - 기존 Explore 페이지에서는 아래의 문제가 있었습니다.
     - 검색 영역의 세로축 미정렬
-    - 최근 검색한 책 영역의 반응형 미설계
+    - **최근 검색한 책, 구독자가 관심있어 하는 최근 책 영역**의 반응형 미설계
     
 - 개선된 페이지에서는 위에서 언급한 문제를 해결할 수 있도록 하였습니다.
-   > **데스크탑 화면 고려 (width>768px)**
+   > **데스크탑 화면 고려 (width > 768px)**
 
    ![Before](./public/readmeImg/exploreDesktop.jpg)
 
-   > **모바일 화면 고려 (width<480px)**
+   > **모바일 화면 고려 (width < 480px)**
 
    ![After](./public/readmeImg/exploreMobile.jpg)
 
