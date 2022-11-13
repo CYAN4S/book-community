@@ -816,7 +816,6 @@ export default function Title({ books, recommended }) {
         }
 
         .recommend_book_desc {
-          // recommend_book_desc_title를 포함하는 box
         }
 
         .recommend_book_desc_title {
