@@ -12,7 +12,8 @@ import { onUserDocSnapshot, getUserDoc } from "../utils/functions";
 function Book_home() {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState("");
-  // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 start
+
+  // 전체 글 / 나의 글 / 구독자 글 필터링 
   const [entire, setEntire] = useState(true);
   const [mine, setMine] = useState(false);
   const [subscriber, setSubscriber] = useState(false);
@@ -31,11 +32,12 @@ function Book_home() {
       setSubscribers([]);
     }
   };
+
   useEffect(() => {
     const unsub = onUserDocSnapshot(userId, onUser);
     return () => unsub?.();
   }, [userId]);
-  // 0527_1845 전체 글 / 나의 글 / 구독자 글 필터링 버튼 관련 코드 end
+
   onAuthStateChanged(authService, (user) => {
     if (user) {
       setUserId(user.uid);
