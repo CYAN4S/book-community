@@ -35,22 +35,31 @@ export default function Chats({
   extractTitle,
   replyCheck
 }) {
+  // 사용자 채팅 관련
   const [chats, setChats] = useState("");
   const [detailChats, setDetailChats] = useState("");
   const [editing, setEditing] = useState(false);
   const [replying, setReplying] = useState(false);
+
+  // 사용자 Uid 설정
   const [currentUid, setCurrentUid] = useState(null);
 
+  // 게시글 좋아요 버튼 설정
   const [isMe, setIsMe] = useState(false);
   const [doLike, setDoLike] = useState(false);
 
+  // 게시글에 대한 답글 
   const [extractText, setExtractText] = useState("답글");
   const [newExtractTitle, setNewExtractTitle] = useState(extractTitle);
-  // syncUserPhoto
+
+  // 사용자의 프로필 사진 및 닉네임 동기화
   const userPhoto = useUserPhoto(chat.createrId);
   const displayName = useUserDisplayName(chat.createrId);
 
+  // 게시글 구분 (책 상세페이지/ 세부 장르 페이지 / WE 페이지)
   const collectionName = detailbook_chat ?? genre_chat ?? "chat";
+
+  // 기타 
   const router = useRouter();
 
   function returnClick(e) {
@@ -68,6 +77,7 @@ export default function Chats({
     });
   }, []);
 
+  // 채팅 삭제
   const onDeleteClick = async () => {
     const ok = window.confirm("채팅을 삭제하시겠습니까?");
     if (ok) {
@@ -122,7 +132,7 @@ export default function Chats({
     setEditing(false);
   };
 
-  // query for CheckReply(generalChat)
+  // query for CheckReply (generalChat)
   const q = query(collection(dbService, `chat`), orderBy("createdAt", "desc"));
   useEffect(() => {
     onSnapshot(q, (snapshot) => {
@@ -134,6 +144,7 @@ export default function Chats({
     });
   }, []);
 
+  // query for CheckReply (detailChat)
   const qForDetailChat = query(
     collection(dbService, `${detailbook_chat}`),
     orderBy("createdAt", "desc")
@@ -166,6 +177,7 @@ export default function Chats({
     }
   };
 
+  // 게시글에 대한 "답글" 버튼 설정
   const onMouseEnter = () => {
     if (collectionName != "chat") {
       //(id) => id != `${isbn}${title}`

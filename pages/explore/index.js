@@ -13,20 +13,19 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { authService, dbService } from "../../firebaseConfig";
-// getUserDoc 추가 06061427
 import { onUserDocSnapshot, getUserDoc } from "../../utils/functions";
 import { doc, setDoc } from "firebase/firestore";
 
 function Explorer() {
+  // 내 구독자가 관심있어 하는 책 code START
   const [randomUser, setRandomUser] = useState(0);
   const [displayName, setDisplayName] = useState([]);
   const [subLens, setSubLens] = useState(0);
-  const [subscribers, setSubscribers] = useState([]); // 구독자 목록 가져오기
+  const [subscribers, setSubscribers] = useState([]); 
   const [keyword, setKeyword] = useState("");
   const [recentBooks, setRecentBooks] = useState([]);
   const [testData, setTestData] = useState([]);
-  const [lens, setLens] = useState(0); // 최근 검색한 책 기록 여부
-  const [executeOtherSubscribers, setExecuteOtherSubscribers] = useState(false);
+  const [lens, setLens] = useState(0); 
 
   useEffect(() => {
     setKeyword("");
@@ -37,6 +36,8 @@ function Explorer() {
   const [currentUid, setCurrentUid] = useState(null);
   const [checkInitNaming, setCheckInitNaming] = useState(false);
   const [checkTest, setCheckTest] = useState(false);
+  // 내 구독자가 관심있어 하는 책 code END
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -48,6 +49,7 @@ function Explorer() {
   useEffect(() => {
     onUserDocSnapshot(currentUid, onUser);
   }, [currentUid]);
+
   useEffect(() => {
     setDisplayName(testData);
   }, [testData]);
@@ -97,6 +99,7 @@ function Explorer() {
     });
   };
 
+  // [action] 최근 검색한 책 기록 비우기
   const clearRecentlyBook = () => {
     updateUserDoc({
       mySearchBooks: [],

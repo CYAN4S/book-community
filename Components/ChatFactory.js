@@ -30,13 +30,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const [input, setInput] = useState(false);
   const [youtubeString, setYoutubeString] = useState("");
   const [id, setId] = useState("");
-  // fix bug when push  YOUTUBE URL SUBMIT button
+  // fix bug when push YOUTUBE URL SUBMIT button
   const [checkRealSubmit, setCheckRealSubmit] = useState(false);
   const router = useRouter();
   function returnClick(e) {
     e.preventDefault();
     router.back();
   }
+  // 책 상세페이지에서 작성한 글과 세부 장르에서 작성한 글 구분 
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
@@ -56,6 +57,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     });
   }, []);
 
+  // 파일 첨부 한 뒤에 글을 등록(보내기)할 때
   const onNewPostSubmit = async (e) => {
     e.preventDefault();
     if (checkRealSubmit == true) {
@@ -76,7 +78,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
         vidFileUrl = await getDownloadURL(response.ref);
       }
 
-      //  (youtube URL) code start
       if (id !== "") {
         youtubeUrl = id;
       }
@@ -120,6 +121,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     setSubmitFile(false);
   };
 
+  // 파일 첨부하기 - Photos - 사진 첨부
   const onFileChange = (event) => {
     const {
       target: { files },
@@ -136,6 +138,7 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     }
   };
 
+  // 파일 첨부하기 - Videos - 동영상 첨부
   const onFileChangeVideo = (event) => {
     const {
       target: { files },
@@ -155,12 +158,10 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
   const onYoutubeSubmit = () => {
     if (youtubeString.includes("watch?v=")) {
       let pos = youtubeString.indexOf("watch?v=");
-      // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
       setInput(true);
     } else if (youtubeString.includes("/shorts/")) {
       let pos = youtubeString.indexOf("/shorts/");
-      // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
       setInput(true);
     } else if (youtubeString.includes("youtu.be/")) {
@@ -171,7 +172,6 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
       setId("");
       setInput(true);
       alert("");
-      // code fix Youtube URL Submit push button when URL empty string
     } else if (youtubeString == "" && checkRealSubmit == false) {
       setId("");
       setYoutubeString("");
@@ -193,12 +193,14 @@ export default function ChatFactory({ detailbook_chat, genre_chat }) {
     setInput(false);
   };
 
-  // submitFile Ontoggle code
+  // submitFile Ontoggle code (파일 첨부하기 - [action] 버튼 클릭 시 첨부 요소 보이기 ON/OFF)
   const onSubmitFile = () => {
     setSubmitFile((prev) => !prev);
   };
 
+  // 파일 첨부하기 버튼 클릭 시 보내기 action까지 활성화 되는 부분 방지
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
+
   return (
     <>
       <div>

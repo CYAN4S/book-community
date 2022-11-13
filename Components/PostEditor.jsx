@@ -32,26 +32,35 @@ export default function PostEditor({
   const [newTitle, setNewTitle] = useState(
     purpose == "reply" ? "" : chat?.title
   );
+  // 편집/댓글 달고 나서 편집/댓글 창 그대로 유지되는 현상 방지 (이전에는 router 이동으로 해결)
   const [submitEnd, setSubmitEnd] = useState(false);
   const [submitFile, setSubmitFile] = useState(false);
+
+  // 파일 첨부하기 - Photos 관련
   const [imgFileString, setImgFileString] = useState("");
   const [imgEdit, setImgEdit] = useState(false);
-  // 0519_1929 비디오 업로드 편집/삭제 관련 버그 해결 코드 시작
+
+  // 파일 첨부하기 - Videos 관련
   const [vidFileString, setVidFileString] = useState("");
   const [vidEdit, setVidEdit] = useState(false);
-  // 0520_1100 편집/댓글 달고 나서 편집/댓글 창 그대로 유지되는 현상 방지
+
+  // 댓글, 답글 작성 시 페이지 이동 - router 관련 삭제 필요 (이에 대한 대처 코드 작성 완료 - submitEnd 구분)
   const router = useRouter();
-  // ChatFactory.js에서 추출 (Youtube Url) code START
+
+  // Youtube URI 
   const [youtubeString, setYoutubeString] = useState("");
   const [youtubeEdit, setYoutubeEdit] = useState(false);
   const [id, setId] = useState("");
+
+  // 파일 첨부하기 버튼 클릭 시 "댓글 달기" 버튼의 action 방지
   const [checkRealSubmit, setCheckRealSubmit] = useState(false);
-  // ChatFactory.js에서 추출 (Youtube Url) code END
+
   const collectionName = detailbook_chat
     ? detailbook_chat
     : genre_chat
     ? genre_chat
     : "chat";
+
   const onEditSubmit = async () => {
     if (imgEdit) {
       const fileRef = ref(storageService, `${uid}/${v4()}`);
@@ -147,11 +156,11 @@ export default function PostEditor({
       const response = await uploadString(fileRef, vidFileString, "data_url");
       vidFileUrl = await getDownloadURL(response.ref);
     }
-    //  (youtube URL) code start
+
     if (id !== "") {
       youtubeUrl = id;
     }
-    //  code end
+
     const chatObj = {
       title: newTitle,
       text: newChat,
@@ -190,7 +199,6 @@ export default function PostEditor({
             alert("수정이 완료되었습니다.");
           }
         } else {
-          // 수정완료 시, router.back() 미수행 => 다시 추가함(수정하면 카톡에 이야기해줘요)(0525)
           if (purpose === "edit") {
             alert("수정이 완료되었습니다.");
             router.back();
@@ -323,16 +331,14 @@ export default function PostEditor({
     }
   };
 
-  // Lee's Youtube URL substring Code Start
+  // Lee's Youtube URL substring Code
   const onYoutubeSubmit = () => {
     setYoutubeEdit(true);
     if (youtubeString.includes("watch?v=")) {
       let pos = youtubeString.indexOf("watch?v=");
-      // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
     } else if (youtubeString.includes("/shorts/")) {
       let pos = youtubeString.indexOf("/shorts/");
-      // console.log(url.substring(pos+8,));
       setId(youtubeString.substring(pos + 8));
     } else if (youtubeString.includes("youtu.be/")) {
       let pos = youtubeString.indexOf("youtu.be/");
@@ -352,13 +358,15 @@ export default function PostEditor({
       alert("인식할 수 없는 URL입니다.");
     }
   };
-  // Lee's Youtube URL substring Code END
+
+  // 파일 첨부하기 버튼 클릭 시 보내기 action까지 활성화 되는 부분 방지
   const onCheckRealSubmit = () => setCheckRealSubmit(true);
-  // submitEnd toggleOff code
-  // submitFile Ontoggle code
+
+  // submitFile Ontoggle code (파일 첨부하기 - [action] 버튼 클릭 시 첨부 요소 보이기 ON/OFF)
   const onSubmitFile = () => {
     setSubmitFile((prev) => !prev);
   };
+
   return (
     <>
       <div>
