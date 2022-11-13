@@ -648,7 +648,7 @@ export default function Title({ books, recommended }) {
         .book_info {
           width: 69%;
           height: 240px;
-          padding-right: 0.5%;
+          padding-right: 1%;
         }
 
         .book_info_box {
@@ -663,8 +663,8 @@ export default function Title({ books, recommended }) {
           flex-direction: column;
           justify-content: space-around;
 
-          height: 100%;
           width: 45%;
+          height: 100%;
         }
 
         .book_desc {
@@ -682,7 +682,7 @@ export default function Title({ books, recommended }) {
 
           .book_info_wrap {
             flex-direction: column;
-            height: 500px;
+            height: 480px;
           }
 
           .book_info_and_img {
@@ -713,6 +713,7 @@ export default function Title({ books, recommended }) {
         }
 
         @media screen and (max-width: 768px) {
+          
           .book_info_wrap {
             height: 100%;
           }
@@ -794,6 +795,9 @@ export default function Title({ books, recommended }) {
           display: flex;
           flex-direction: column;
           justify-content: center;
+
+          margin-top:1rem;
+
         }
 
         .select_lib {
