@@ -511,11 +511,11 @@ export default function SearchKeyword({ books }) {
                     fontSize: "35px",
                   }}
                 >
-                  
-                  <p style={{fontSize : 23, fontFamily:"GothicA1-Medium"}}>
-                    <Icon name="warning circle" color="red" />검색결과가 존재하지 않습니다.
+                  <p style={{ fontSize: 23, fontFamily: "GothicA1-Medium" }}>
+                    <Icon name="warning circle" color="red" />
+                    검색결과가 존재하지 않습니다.
                   </p>
-                
+
                   <Link href={`/explore`}>
                     <Button color="black">돌아가기</Button>
                   </Link>
@@ -523,7 +523,6 @@ export default function SearchKeyword({ books }) {
               </>
             )}
           </div>
-         
         </>
       )}
     </>
@@ -531,10 +530,10 @@ export default function SearchKeyword({ books }) {
 }
 
 export async function getServerSideProps({ query }) {
-  const text = query.keyword; 
+  const text = query.keyword;
   const res = await fetch(
     "https://openapi.naver.com/v1/search/book.json?query=" +
-      text +
+      encodeURIComponent(text) +
       "&display=100",
     {
       headers: {
@@ -544,6 +543,17 @@ export async function getServerSideProps({ query }) {
     }
   );
   const books = await res.json();
+
+  if (books.errorCode) {
+    return {
+      props: {
+        books: {
+          items: [],
+        },
+      },
+    };
+  }
+
   books.items.title = books.items.map((book) => {
     book.title = book.title.replace(
       /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/gi,
