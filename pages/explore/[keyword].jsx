@@ -51,10 +51,10 @@ export default function SearchKeyword({ books }) {
   tempDescDate.sort((a, b) => b.pubdate - a.pubdate);
 
   const tempAscPrice = [...books.items];
-  tempAscPrice.sort((a, b) => a.price - b.price);
+  tempAscPrice.sort((a, b) => a.discount - b.discount);
 
   const tempDescPrice = [...books.items];
-  tempDescPrice.sort((a, b) => b.price - a.price);
+  tempDescPrice.sort((a, b) => b.discount - a.discount);
 
   // 책 검색 결과를 CSS에 맞게 배치
   return (
