@@ -400,7 +400,7 @@ export default function Title({ books, recommended }) {
               <div>
                 {lens ? (
                   <div
-                    className="ui orange segment center aligned container"
+                    className="ui orange segment center aligned"
                   >
                     <div>
                       <header>
@@ -416,7 +416,7 @@ export default function Title({ books, recommended }) {
                         <Grid columns={2}>
                           <Grid.Row>
                             {mlBooks.map((book) => (
-                              <Grid.Column key={book.title}>
+                              <Grid.Column key={book.title} style={{marginTop: "0.5rem"}}>
                                 <div
                                   className="ui segment recommend_wrap"
                                 >
@@ -457,9 +457,12 @@ export default function Title({ books, recommended }) {
                                             )}`}
                                         >
                                           <Item.Header as="a">
+                                            <p>
                                             {book.title.length < 35
                                               ? book.title
                                               : book.title.slice(0, 35) + "..."}
+                                            </p>
+                                            
                                           </Item.Header>
                                         </Link>
                                         
@@ -804,7 +807,6 @@ export default function Title({ books, recommended }) {
           display: flex;
           justify-content: center;
           width: 100%;
-          height: auto;
         }
 
         .recommend_img_book {
@@ -815,14 +817,24 @@ export default function Title({ books, recommended }) {
           height: 200px;
         }
 
-        .recommend_book_desc {
-        }
 
         .recommend_book_desc_title {
           padding-top: 0.8rem;
         }
 
+        .recommend_book_desc_title p{
+          font-size: 0.8rem;
+        }
         
+        @media screen and (max-width: 768px) {
+          .recommend_img_book {  
+            height: 130px;
+          }
+
+          .recommend_book_desc_title p{
+            font-size: 0.6rem;
+          }
+        }
       `}</style>
     </>
   );
