@@ -399,102 +399,81 @@ export default function Title({ books, recommended }) {
             <Container>
               <div>
                 {lens ? (
-                  <>
-                    <div
-                      style={{
-                        marginBottom: 20,
-                        marginLeft: 20,
-                        width: 1160,
-                        height: 290,
-                        overflow: "auto",
-                        maxHeight: 300,
-                      }}
-                      className="ui orange segment center aligned"
-                    >
-                      <>
+                  <div
+                    className="ui orange segment center aligned container"
+                  >
+                    <div>
+                      <header>
                         <Header
                           as="h3"
-                          style={{
-                            height: 50,
-                            textAlign: "center",
-                            marginBottom: -50,
-                          }}
                           color="blue"
                         >
                           함께 알아보면 좋은 책들
                         </Header>
-                        <Item.Group>
-                          <Grid columns={4}>
-                            <Grid.Row>
-                              {mlBooks.map((book) => (
-                                <Grid.Column key={book.title}>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      marginBottom: 20,
-                                      height: 215,
-                                    }}
-                                    className="ui segment"
+                      </header>
+                      
+                      <Item.Group>
+                        <Grid columns={2}>
+                          <Grid.Row>
+                            {mlBooks.map((book) => (
+                              <Grid.Column key={book.title}>
+                                <div
+                                  className="ui segment recommend_wrap"
+                                >
+                                  <Item
+                                    key={book.isbn}
+                                    className="recommend_items"
                                   >
-                                    <Item
-                                      key={book.isbn}
-                                      className="recommend_items"
+                                    <Link
+                                      href={`./${book.title
+                                        .replace(
+                                          /%(?![0-9][0-9a-fA-F]+)/g,
+                                          "%25"
+                                        )
+                                        .replace(
+                                          /\/(?![0-9][0-9a-fA-F]+)/g,
+                                          "%2F"
+                                        )}`}
                                     >
-                                      <Link
-                                        href={`./${book.title
-                                          .replace(
-                                            /%(?![0-9][0-9a-fA-F]+)/g,
-                                            "%25"
-                                          )
-                                          .replace(
-                                            /\/(?![0-9][0-9a-fA-F]+)/g,
-                                            "%2F"
-                                          )}`}
-                                      >
-                                        <a>
-                                          <img
-                                            src={book.image}
-                                            className="recommend_img_book"
-                                          />
-                                        </a>
-                                      </Link>
+                                      <a>
+                                        <img
+                                          src={book.image}
+                                          className="recommend_img_book"
+                                        />
+                                      </a>
+                                    </Link>
 
-                                      <Item.Content className="recommend_book_desc">
-                                        <div className="recommend_book_desc_title">
-                                          <Link
-                                            href={`./${book.title
-                                              .replace(
-                                                /%(?![0-9][0-9a-fA-F]+)/g,
-                                                "%25"
-                                              )
-                                              .replace(
-                                                /\/(?![0-9][0-9a-fA-F]+)/g,
-                                                "%2F"
-                                              )}`}
-                                          >
-                                            <Item.Header as="a">
-                                              {book.title.length < 35
-                                                ? book.title
-                                                : book.title.slice(0, 35) +
-                                                  "..."}
-                                            </Item.Header>
-                                          </Link>
-                                          <Item.Description>
-                                            <p>출판일: {book.pubdate}</p>
-                                          </Item.Description>
-                                        </div>
-                                      </Item.Content>
-                                    </Item>
-                                  </div>
-                                </Grid.Column>
-                              ))}
-                            </Grid.Row>
-                          </Grid>
-                        </Item.Group>
-                      </>
+                                    <Item.Content className="recommend_book_desc">
+                                      <div className="recommend_book_desc_title">
+                                        <Link
+                                          href={`./${book.title
+                                            .replace(
+                                              /%(?![0-9][0-9a-fA-F]+)/g,
+                                              "%25"
+                                            )
+                                            .replace(
+                                              /\/(?![0-9][0-9a-fA-F]+)/g,
+                                              "%2F"
+                                            )}`}
+                                        >
+                                          <Item.Header as="a">
+                                            {book.title.length < 35
+                                              ? book.title
+                                              : book.title.slice(0, 35) + "..."}
+                                          </Item.Header>
+                                        </Link>
+                                        
+                                      </div>
+                                    </Item.Content>
+                                  </Item>
+                                </div>
+                              </Grid.Column>
+                            ))}
+                          </Grid.Row>
+                        </Grid>
+                      </Item.Group>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <>
                     <div
@@ -693,6 +672,10 @@ export default function Title({ books, recommended }) {
           box-sizing: border-box;
         }
 
+        header{
+          margin: 1em 0;
+        }
+
         // 책 정보 출력을 위한 영역
         .book_info_wrap {
           display: flex;
@@ -704,7 +687,7 @@ export default function Title({ books, recommended }) {
 
         .book_info_and_img {
           display: flex;
-          justify-content: space-around;
+          justify-content: space-between;
           align-items: center;
           width: 55%;
           height: 240px;
@@ -719,13 +702,14 @@ export default function Title({ books, recommended }) {
           height: 150px;
         }
 
-        .select_register_and_back{
-          margin-top:5px;
+        .select_register_and_back {
+          margin-top: 5px;
         }
 
         .book_info {
-          width: 60%;
+          width: 69%;
           height: 240px;
+          padding-right: 0.5%;
         }
 
         .book_info_box {
@@ -772,6 +756,7 @@ export default function Title({ books, recommended }) {
 
           .book_info {
             width: 70%;
+            padding-right: 0;
           }
 
           .book_desc_wrap {
@@ -783,7 +768,6 @@ export default function Title({ books, recommended }) {
             height: auto;
           }
 
-          .book_desc > header,
           .book_desc > p {
             padding: 1rem 0;
           }
@@ -792,12 +776,11 @@ export default function Title({ books, recommended }) {
         @media screen and (max-width: 768px) {
           .book_info_wrap {
             height: 100%;
-            
           }
 
           .book_info_and_img {
             flex-direction: column;
-            height:100%;
+            height: 100%;
           }
 
           .book_img {
@@ -810,17 +793,26 @@ export default function Title({ books, recommended }) {
             margin: 1rem 0;
           }
 
-          .book_desc_wrap{
+          .book_desc_wrap {
             margin: 1rem 0;
           }
         }
 
         // 함께 알아보면 좋은 책들의 css
+
+        .recommend_wrap{
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: auto;
+        }
+
         .recommend_img_book {
           display: flex-column;
           justify-content: center;
           align-items: center;
-          width: calc(35%);
+          width: auto;
+          height: 200px;
         }
 
         .recommend_book_desc {
@@ -831,9 +823,7 @@ export default function Title({ books, recommended }) {
           padding-top: 0.8rem;
         }
 
-        img {
-          size: auto;
-        }
+        
       `}</style>
     </>
   );
