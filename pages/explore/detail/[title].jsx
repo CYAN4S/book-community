@@ -478,15 +478,14 @@ export default function Title({ books, recommended }) {
             {/* 도서관 찾기 및 채팅 쓰기 */}
             <div className="selectLib_and_chat_wrap">
               <div className="select_lib_wrap">
-                <Grid.Column>
                   <div className="ui red segment select_lib">
                     <div>
                       {checkItems.size ? (
                         <div className="complete_select_region">
                           <div className="select_region_name_wrap">
                             <Step>
-                              <Icon name="location arrow" size="large" />
-                              <Step.Content>
+                              <Icon name="location arrow" size="big" />
+                              <Step.Content style={{marginTop:"0.5rem"}}>
                                 <Step.Title>선택하신 지역</Step.Title>
                                 <strong className="select_region_name">
                                   <Step.Description>
@@ -514,7 +513,7 @@ export default function Title({ books, recommended }) {
                           </div>
                         </div>
                       ) : (
-                        <>
+                        <div className="no_complete_select_region">
                           <header>
                             <Header as="h3" color="blue">
                               어디에 있을까?
@@ -554,27 +553,22 @@ export default function Title({ books, recommended }) {
                               </Grid.Row>
                             </Grid>
                           </div>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>
-                </Grid.Column>
               </div>
               <div className="write_chat_wrap">
-                <Grid.Column>
-                  <div className="ui basic segment">
-                    <div className="ui red segment">
-                      <header>
-                        <Header as="h3" color="blue">
-                          생각 공유하기
-                        </Header>
-                      </header>
-                      <div>
-                        <ChatFactory detailbook_chat={collectionName} />
-                      </div>
+                  <div className="ui red segment write_chat">
+                    <header>
+                      <Header as="h3" color="blue">
+                        생각 공유하기
+                      </Header>
+                    </header>
+                    <div>
+                      <ChatFactory detailbook_chat={collectionName} />
                     </div>
                   </div>
-                </Grid.Column>
               </div>
             </div>
           </Container>
@@ -781,14 +775,20 @@ export default function Title({ books, recommended }) {
         .selectLib_and_chat_wrap {
           width: 100%;
           display: flex;
+          justify-content: space-between;
         }
 
-        .select_lib_wrap {
-          width: 50%;
+        .select_lib_wrap, .write_chat_wrap {
+          width: 49%;
           height: 300px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .select_lib {
+          text-align: center;
+          height: auto;
         }
 
         .select_region {
@@ -799,23 +799,25 @@ export default function Title({ books, recommended }) {
           margin-left: 0.7rem;
         }
 
-        .complete_select_region {
+        .complete_select_region, .no_complete_select_region {
           text-align: center;
           height: 240px;
+          display:flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .select_region_name_wrap {
           display: flex;
           height: 100%;
-          align-items: center;
           justify-content: space-around;
-
+          align-items: center;
         }
 
         .select_region_name{
           display :block;
           font-size: 1.5rem;
-          margin-top:0.5rem;
+          margin-top:1rem;
         }
 
         .select_move{
@@ -832,16 +834,22 @@ export default function Title({ books, recommended }) {
           margin-top:0.5rem;
         }
 
-        .write_chat_wrap {
-          width: 50%;
-          height: 300px;
-        }
-
-        .write_chat {
-          height: 240px;
-        }
-
         // 채팅 작성 영역
+
+        .write_chat{
+          height: 270px;
+        }
+
+        @media screen and (max-width: 768px) {
+          .selectLib_and_chat_wrap {
+            flex-direction: column;
+          }
+  
+          .select_lib_wrap, .write_chat_wrap {
+            width: 100%;
+          }
+        }
+
       `}</style>
     </>
   );
