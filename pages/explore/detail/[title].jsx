@@ -464,7 +464,7 @@ export default function Title({ books, recommended }) {
                   fontSize: "35px",
                 }}
               >
-                <p style={{ fontSize: 23, fontFamily: "GothicA1-Medium" }}>
+                <p style={{ fontSize: "1rem", fontFamily: "GothicA1-Medium" }}>
                   <Icon name="warning circle" color="red" />
                   검색결과가 존재하지 않습니다.
                 </p>
@@ -573,7 +573,7 @@ export default function Title({ books, recommended }) {
             </div>
           </Container>
 
-          <div className="ui center aligned container">
+          <div className="ui center aligned container show_chat_wrap">
             <Divider horizontal>
               <Header as="h3" color="blue">
                 <Icon name="clipboard outline" />이 책에 대한 다른 사용자의 의견
@@ -775,12 +775,22 @@ export default function Title({ books, recommended }) {
         .selectLib_and_chat_wrap {
           width: 100%;
           display: flex;
+          flex-direction: column;
           justify-content: space-between;
         }
 
-        .select_lib_wrap, .write_chat_wrap {
-          width: 49%;
+        .select_lib_wrap {
+          width: 100%;
           height: 300px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .write_chat_wrap{
+          width: 100%;
+          height: auto;
+
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -837,18 +847,14 @@ export default function Title({ books, recommended }) {
         // 채팅 작성 영역
 
         .write_chat{
-          height: 270px;
+          height: transparent;
         }
 
-        @media screen and (max-width: 768px) {
-          .selectLib_and_chat_wrap {
-            flex-direction: column;
-          }
-  
-          .select_lib_wrap, .write_chat_wrap {
-            width: 100%;
-          }
+        // 채팅 확인영역
+        .show_chat_wrap{
+          margin-top: 5rem;
         }
+        
 
       `}</style>
     </>
@@ -906,10 +912,8 @@ export async function getServerSideProps(props) {
   }
 
   const isbn = books.items[0].isbn;
-  console.log(isbn);
 
   // 20221007 error
-
   const recommend = await fetch(
     `https://asia-northeast2-book-community-e9755.cloudfunctions.net/recommeders-book-to-books`,
     {
