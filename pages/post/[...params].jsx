@@ -109,9 +109,9 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
             </Header>
           </Divider>
 
-          <Button.Group basic size="small" right>
+          {/* <Button.Group basic size="small" right> */}
             <Link href={`./${collectionName}`}>
-              <Button icon="pencil alternate" content="글 작성하기" />
+              <Button icon="pencil alternate" content="글 작성하기" style={{marginBottom: "0.5rem"}}/>
             </Link>
             <Button icon="redo" content="새로고침" onClick={refreshPage} />
             <Link href={`../view/inquire`}>
@@ -123,7 +123,7 @@ function PostArea({ representative_KDC_Name, detail_KDC_Name }) {
             <Link href={`../view/help`}>
               <Button icon="question" content="도움말" />
             </Link>
-          </Button.Group>
+          {/* </Button.Group> */}
 
           {/* 게시글 */}
 

@@ -147,7 +147,7 @@ function Explorer() {
               setKeyword(e.target.value);
             }}
           ></input>
-          <Link href={`/explore/${keyword}`}>
+          <Link href={`/explore/${encodeURIComponent(keyword)}`}>
             <a>
               <Button inverted color="blue" style={{ marginLeft: 5 }}>
                 검색

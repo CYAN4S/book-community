@@ -4,6 +4,7 @@ import Navigation from "../Components/Navigation";
 import Script from "next/script";
 import { Header } from "semantic-ui-react";
 import "../public/static/fonts/style.css";
+
 // React
 import React from "react";
 import { useEffect } from "react";
@@ -20,6 +21,7 @@ import { currentUserState } from "../utils/hooks";
 
 import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
+
 function MyApp({ Component, pageProps }) {
   const key = process.env.NEXT_PUBLIC_KAKAO_AUTHKEY;
   const router = useRouter();
