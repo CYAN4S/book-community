@@ -245,182 +245,157 @@ export default function Title({ books, recommended }) {
         <>
           <Segment style={{ height: "100vh" }}>
             <Dimmer active>
-              <Loader size="massive">Loading</Loader>
+              <Loader size="massive">Loading...</Loader>
             </Dimmer>
           </Segment>
         </>
       ) : (
-        <>
+        <div className="container_wrap">
           <Container textAlign="centered">
             <div className="ui center aligned container">
-              <Grid columns={3}>
+              <Grid>
                 <Grid.Row>
-                  <div
-                    style={{
-                      marginBottom: 20,
-                      marginLeft: 5,
-                      width: 600,
-                      height: 270,
-                    }}
-                    className="ui two column grid ui center aligned basicsegments"
-                  >
-                    <Grid.Column>
-                      <div
-                        style={{ width: 210, height: 240 }}
-                        className="ui orange segment"
-                      >
-                        <img
-                          style={{ width: 110, height: 160 }}
-                          src={image}
-                          alt="DON'T HAVE IMAGE"
-                          className="img_book"
-                        />
+                  <div className="book_info_wrap">
+                    <div className="book_info_and_img">
+                      <div className="book_img">
+                        <Grid.Column>
+                          <div className="ui orange segment">
+                            <img
+                              style={{ width: 105, height: 150 }}
+                              src={image}
+                              alt="DON'T HAVE IMAGE"
+                            />
 
-                        {!isMe() && (
-                          <span>
-                            <Button
-                              size="mini"
-                              basic
-                              color="orange"
-                              onClick={onRegisterClick}
-                            >
-                              {wasRegisterBookCheck
-                                ? "등록 해제"
-                                : "내 책으로 등록하기"}
-                            </Button>
-                            <p
-                              onClick={returnClick}
-                              style={{
-                                marginTop: 6,
-                                fontSize: 11,
-                                cursor: "pointer",
-                              }}
-                            >
-                              <Icon name="undo" /> 돌아가기
-                            </p>
-                          </span>
-                        )}
-                      </div>
-                    </Grid.Column>
-
-                    <Grid.Column>
-                      <div
-                        style={{ width: 330, height: 240, marginLeft: -50 }}
-                        className="ui orange segment"
-                      >
-                        <Header
-                          as="h3"
-                          color="blue"
-                          style={{ marginTop: 5, marginBottom: 5 }}
-                        >
-                          책 정보
-                        </Header>
-
-                        <div>
-                          <List divided vertical>
-                            <List.Item>
-                              <div style={{ fontSize: 13, margin: "5px 0px" }}>
-                                <strong className="book_item">
-                                  {title?.length > 140
-                                    ? `${title.substring(0, 140)}...`
-                                    : title}{" "}
-                                </strong>
+                            {!isMe() && (
+                              <div style={{ marginTop: 5 }}>
+                                <Button
+                                  size="mini"
+                                  basic
+                                  color="orange"
+                                  onClick={onRegisterClick}
+                                >
+                                  {wasRegisterBookCheck
+                                    ? "등록 해제"
+                                    : "내 책으로 등록하기"}
+                                </Button>
+                                <p
+                                  onClick={returnClick}
+                                  style={{
+                                    marginTop: 5,
+                                    fontSize: 11,
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  <Icon name="undo" /> 돌아가기
+                                </p>
                               </div>
-                            </List.Item>
-
-                            <List.Item
-                              style={{
-                                height: 30,
-                                lineHeight: "25px",
-                                fontSize: 12,
-                              }}
-                            >
-                              <strong>출판사</strong>{" "}
-                              {publisher?.length > 60
-                                ? `${publisher.substring(0, 60)}...`
-                                : publisher}
-                            </List.Item>
-                            <List.Item
-                              style={{
-                                height: 30,
-                                lineHeight: "25px",
-                                fontSize: 12,
-                              }}
-                            >
-                              <strong>출간일</strong> {pubdate}
-                            </List.Item>
-                            <List.Item
-                              style={{
-                                height: 30,
-                                lineHeight: "25px",
-                                fontSize: 12,
-                              }}
-                            >
-                              <strong>작가</strong>{" "}
-                              {author?.length > 24
-                                ? `${author.substring(0, 24)}...`
-                                : author}
-                            </List.Item>
-                            <List.Item
-                              style={{
-                                height: 30,
-                                lineHeight: "25px",
-                                fontSize: 12,
-                              }}
-                            >
-                              <strong className="num_price">
-                                {new Intl.NumberFormat("ko", {
-                                  style: "currency",
-                                  currency: "KRW",
-                                }).format(discount)}
-                              </strong>
-                            </List.Item>
-                          </List>
-                        </div>
+                            )}
+                          </div>
+                        </Grid.Column>
                       </div>
-                    </Grid.Column>
-                  </div>
 
-                  <Grid.Column>
-                    <div
-                      style={{
-                        width: 587,
-                        height: 270,
-                        marginLeft: 10,
-                        marginRight: 20,
-                      }}
-                      className="ui basic segment"
-                    >
-                      <div
-                        style={{ height: 240, marginLeft: -5 }}
-                        className="ui orange segment"
-                      >
-                        <Header
-                          style={{ textAlign: "center" }}
-                          as="h2"
-                          color="blue"
-                        >
-                          Description
-                        </Header>
+                      <div className="book_info">
+                        <Grid.Column>
+                          <div className="ui orange segment book_info_box">
+                            <Header
+                              as="h3"
+                              color="blue"
+                              style={{ marginTop: 5, marginBottom: 5 }}
+                            >
+                              책 정보
+                            </Header>
 
-                        <p
-                          style={{
-                            marginTop: 25,
-                            paddingBottom: 20,
-                            fontSize: 15,
-                            lineHeight: 1.9,
-                          }}
-                        >
-                          {decode(description).length > 200
-                            ? `${decode(description).substring(0, 200)}...`
-                            : decode(description)}
-                        </p>
+                            <div>
+                              <List divided vertical>
+                                <List.Item>
+                                  <div
+                                    style={{ fontSize: 13, margin: "5px 0px" }}
+                                  >
+                                    <strong className="book_item">
+                                      {title?.length > 140
+                                        ? `${title.substring(0, 140)}...`
+                                        : title}{" "}
+                                    </strong>
+                                  </div>
+                                </List.Item>
+
+                                <List.Item
+                                  style={{
+                                    height: 30,
+                                    lineHeight: "25px",
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  <strong>출판사</strong>{" "}
+                                  {publisher?.length > 60
+                                    ? `${publisher.substring(0, 60)}...`
+                                    : publisher}
+                                </List.Item>
+                                <List.Item
+                                  style={{
+                                    height: 30,
+                                    lineHeight: "25px",
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  <strong>출간일</strong> {pubdate}
+                                </List.Item>
+                                <List.Item
+                                  style={{
+                                    height: 30,
+                                    lineHeight: "25px",
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  <strong>작가</strong>{" "}
+                                  {author?.length > 24
+                                    ? `${author.substring(0, 24)}...`
+                                    : author}
+                                </List.Item>
+                                <List.Item
+                                  style={{
+                                    height: 30,
+                                    lineHeight: "25px",
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  <strong className="num_price">
+                                    {new Intl.NumberFormat("ko", {
+                                      style: "currency",
+                                      currency: "KRW",
+                                    }).format(discount)}
+                                  </strong>
+                                </List.Item>
+                              </List>
+                            </div>
+                          </div>
+                        </Grid.Column>
                       </div>
                     </div>
-                  </Grid.Column>
+                    <div className="book_desc_wrap">
+                      <Grid.Column>
+                        <div className="ui orange segment book_desc">
+                          <Header
+                            style={{ textAlign: "center" }}
+                            as="h2"
+                            color="blue"
+                          >
+                            Description
+                          </Header>
+
+                          <p>
+                            {decode(description).length > 200
+                              ? `${decode(description).substring(0, 200)}...`
+                              : decode(description)}
+                          </p>
+                        </div>
+                      </Grid.Column>
+                    </div>
+                  </div>
                 </Grid.Row>
               </Grid>
             </div>
+
             <Container>
               <div>
                 {lens ? (
@@ -434,8 +409,6 @@ export default function Title({ books, recommended }) {
                         overflow: "auto",
                         maxHeight: 300,
                       }}
-                      // style ={{display: "flex",
-                      //           justifyContent: "center",}}
                       className="ui orange segment center aligned"
                     >
                       <>
@@ -702,7 +675,6 @@ export default function Title({ books, recommended }) {
                       chat={chat}
                       isOwner={chat.createrId === userId}
                       detailbook_chat={collectionName}
-                      style={{}}
                     />
                   </div>
                 ))
@@ -712,9 +684,93 @@ export default function Title({ books, recommended }) {
             </div>
             <div className="ui divider"></div>
           </div>
-        </>
+        </div>
       )}
       <style jsx>{`
+        .container_wrap {
+          background-color: #000;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+        }
+
+        // 책 정보 출력을 위한 영역
+        .book_info_wrap {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%;
+          height: 300px;
+        }
+
+        .book_info_and_img {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 55%;
+          height: 240px;
+        }
+
+        .book_img {
+          width: 30%;
+        }
+
+        .book_info {
+          width: 60%;
+          height: 240px;
+        }
+
+        .book_info_box {
+          display:flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 240px;
+        }
+
+        .book_desc_wrap {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          height: 100%;
+          width: 45%;
+        }
+
+        .book_desc {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 240px;
+        }
+
+        @media screen and (max-width: 1200px) {
+          .book_info_and_img {
+            justify-content: flex-start;
+          }
+
+          .book_info_wrap {
+            flex-direction: column;
+            height: 500px;
+          }
+
+          .book_info_and_img {
+            width: 100%;
+          }
+
+          .book_img {
+            width: 50%;
+          }
+
+          .book_info {
+            width: 50%;
+          }
+
+          .book_desc_wrap {
+            width: 100%;
+          }
+        }
+
+        // 함께 알아보면 좋은 책들의 css
         .recommend_img_book {
           display: flex-column;
           justify-content: center;
@@ -726,9 +782,8 @@ export default function Title({ books, recommended }) {
           // recommend_book_desc_title를 포함하는 box
         }
 
-        .recommend_book_desc_title{
+        .recommend_book_desc_title {
           padding-top: 0.8rem;
-
         }
 
         img {
