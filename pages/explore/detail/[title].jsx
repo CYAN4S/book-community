@@ -376,7 +376,7 @@ export default function Title({ books, recommended }) {
                       <Grid.Column>
                         <div className="ui orange segment book_desc">
                           <Header
-                            style={{ textAlign: "center" }}
+                            style={{ textAlign: "center"}}
                             as="h2"
                             color="blue"
                           >
@@ -739,13 +739,14 @@ export default function Title({ books, recommended }) {
         .book_desc {
           display: flex;
           flex-direction: column;
+          justify-content: center;
           width: 100%;
           height: 240px;
         }
 
         @media screen and (max-width: 1200px) {
           .book_info_and_img {
-            justify-content: flex-start;
+            justify-content: space-between;
           }
 
           .book_info_wrap {
@@ -758,16 +759,21 @@ export default function Title({ books, recommended }) {
           }
 
           .book_img {
-            width: 50%;
+            width: 25%;
           }
 
           .book_info {
-            width: 50%;
+            width: 70%;
           }
 
           .book_desc_wrap {
             width: 100%;
           }
+
+          .book_desc p{
+            margin-top : 1rem;
+          }
+          
         }
 
         // 함께 알아보면 좋은 책들의 css
