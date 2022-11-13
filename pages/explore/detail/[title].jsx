@@ -12,6 +12,7 @@ import {
   List,
   Loader,
   Segment,
+  Step,
 } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -251,16 +252,15 @@ export default function Title({ books, recommended }) {
   return (
     <>
       {!loading ? (
-        <>
-          <Segment style={{ height: "100vh" }}>
-            <Dimmer active>
-              <Loader size="massive">Loading...</Loader>
-            </Dimmer>
-          </Segment>
-        </>
+        <Segment style={{ height: "100vh" }}>
+          <Dimmer active>
+            <Loader size="massive">Loading...</Loader>
+          </Dimmer>
+        </Segment>
       ) : (
         <div className="container_wrap">
           <Container textAlign="centered">
+            {/* 책 정보 */}
             <div className="ui center aligned container">
               <div className="book_info_wrap">
                 <div className="book_info_and_img">
@@ -302,11 +302,7 @@ export default function Title({ books, recommended }) {
                   <div className="book_info">
                     <div className="ui orange segment book_info_box">
                       <header>
-                        <Header
-                          as="h3"
-                          color="blue"
-                          style={{ marginTop: 5, marginBottom: 5 }}
-                        >
+                        <Header as="h3" color="blue">
                           책 정보
                         </Header>
                       </header>
@@ -377,11 +373,7 @@ export default function Title({ books, recommended }) {
                 <div className="book_desc_wrap">
                   <div className="ui orange segment book_desc">
                     <header>
-                      <Header
-                        style={{ textAlign: "center" }}
-                        as="h2"
-                        color="blue"
-                      >
+                      <Header as="h2" color="blue">
                         Description
                       </Header>
                     </header>
@@ -396,267 +388,192 @@ export default function Title({ books, recommended }) {
               </div>
             </div>
 
-            <Container>
-              <div>
-                {lens ? (
-                  <>
-                    <div
-                      style={{
-                        marginBottom: 20,
-                        marginLeft: 20,
-                        width: 1160,
-                        height: 290,
-                        overflow: "auto",
-                        maxHeight: 300,
-                      }}
-                      className="ui orange segment center aligned"
-                    >
-                      <>
-                        <Header
-                          as="h3"
-                          style={{
-                            height: 50,
-                            textAlign: "center",
-                            marginBottom: -50,
-                          }}
-                          color="blue"
-                        >
-                          함께 알아보면 좋은 책들
-                        </Header>
-                        <Item.Group>
-                          <Grid columns={4}>
-                            <Grid.Row>
-                              {mlBooks.map((book) => (
-                                <Grid.Column key={book.title}>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      marginBottom: 20,
-                                      height: 215,
-                                    }}
-                                    className="ui segment"
-                                  >
-                                    <Item
-                                      key={book.isbn}
-                                      className="recommend_items"
+            {/* 추천 책 목록 */}
+            {lens ? (
+              <div className="ui orange segment center aligned">
+                <div>
+                  <header>
+                    <Header as="h3" color="blue">
+                      함께 알아보면 좋은 책들
+                    </Header>
+                  </header>
+
+                  <Item.Group>
+                    <Grid columns={2}>
+                      <Grid.Row>
+                        {mlBooks.map((book) => (
+                          <Grid.Column
+                            key={book.title}
+                            style={{ marginTop: "0.5rem" }}
+                          >
+                            <div className="ui segment recommend_wrap">
+                              <Item key={book.isbn} className="recommend_items">
+                                <Link
+                                  href={`./${book.title
+                                    .replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+                                    .replace(
+                                      /\/(?![0-9][0-9a-fA-F]+)/g,
+                                      "%2F"
+                                    )}`}
+                                >
+                                  <a>
+                                    <img
+                                      src={book.image}
+                                      className="recommend_img_book"
+                                    />
+                                  </a>
+                                </Link>
+
+                                <Item.Content className="recommend_book_desc">
+                                  <div className="recommend_book_desc_title">
+                                    <Link
+                                      href={`./${book.title
+                                        .replace(
+                                          /%(?![0-9][0-9a-fA-F]+)/g,
+                                          "%25"
+                                        )
+                                        .replace(
+                                          /\/(?![0-9][0-9a-fA-F]+)/g,
+                                          "%2F"
+                                        )}`}
                                     >
-                                      <Link
-                                        href={`./${book.title
-                                          .replace(
-                                            /%(?![0-9][0-9a-fA-F]+)/g,
-                                            "%25"
-                                          )
-                                          .replace(
-                                            /\/(?![0-9][0-9a-fA-F]+)/g,
-                                            "%2F"
-                                          )}`}
-                                      >
-                                        <a>
-                                          <img
-                                            src={book.image}
-                                            className="recommend_img_book"
-                                          />
-                                        </a>
-                                      </Link>
-
-                                      <Item.Content className="recommend_book_desc">
-                                        <div className="recommend_book_desc_title">
-                                          <Link
-                                            href={`./${book.title
-                                              .replace(
-                                                /%(?![0-9][0-9a-fA-F]+)/g,
-                                                "%25"
-                                              )
-                                              .replace(
-                                                /\/(?![0-9][0-9a-fA-F]+)/g,
-                                                "%2F"
-                                              )}`}
-                                          >
-                                            <Item.Header as="a">
-                                              {book.title.length < 35
-                                                ? book.title
-                                                : book.title.slice(0, 35) +
-                                                  "..."}
-                                            </Item.Header>
-                                          </Link>
-                                          <Item.Description>
-                                            <p>출판일: {book.pubdate}</p>
-                                          </Item.Description>
-                                        </div>
-                                      </Item.Content>
-                                    </Item>
+                                      <Item.Header as="a">
+                                        <p>
+                                          {book.title.length < 35
+                                            ? book.title
+                                            : book.title.slice(0, 35) + "..."}
+                                        </p>
+                                      </Item.Header>
+                                    </Link>
                                   </div>
-                                </Grid.Column>
-                              ))}
-                            </Grid.Row>
-                          </Grid>
-                        </Item.Group>
-                      </>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div
-                      style={{
-                        padding: "200px 0",
-                        textAlign: "center",
-                        fontSize: "35px",
-                      }}
-                    >
-                      <p
-                        style={{ fontSize: 23, fontFamily: "GothicA1-Medium" }}
-                      >
-                        <Icon name="warning circle" color="red" />
-                        검색결과가 존재하지 않습니다.
-                      </p>
-
-                      <Link href={`/explore`}>
-                        <Button color="black">돌아가기</Button>
-                      </Link>
-                    </div>
-                  </>
-                )}
-              </div>
-            </Container>
-            <div className="ui aligned container" style={{ marginTop: -10 }}>
-              <Grid style={{ marginTop: -10, marginLeft: -20 }} columns={3}>
-                <Grid.Row>
-                  <div
-                    style={{
-                      width: 590,
-                      height: 380,
-                      marginLeft: 25,
-                      marginRight: -20,
-                    }}
-                    className="ui basic segment"
-                  >
-                    <Grid.Column>
-                      <div
-                        style={{ width: 565, height: 290 }}
-                        className="ui red segment"
-                      >
-                        <div>
-                          {checkItems.size ? (
-                            <div
-                              style={{
-                                textAlign: "center",
-                                marginBottom: 10,
-                                marginTop: 70,
-                              }}
-                            >
-                              <strong style={{ marginRight: 10 }}>
-                                {`"${name}"`} 선택되었습니다.
-                              </strong>
-                              <Icon
-                                name="undo"
-                                onClick={changeRegion}
-                                color="red"
-                                style={{ cursor: "pointer" }}
-                              ></Icon>
-
-                              <Link href={`../naru/${isbn}/${id}`}>
-                                <a>
-                                  <Header
-                                    as="h3"
-                                    style={{ paddingTop: 20, marginBottom: 0 }}
-                                    color="blue"
-                                  >
-                                    <Button color="teal">
-                                      소장도서관 확인하기
-                                    </Button>
-                                  </Header>
-                                </a>
-                              </Link>
+                                </Item.Content>
+                              </Item>
                             </div>
-                          ) : (
-                            <>
-                              <Header
-                                as="h3"
-                                style={{ height: 50, textAlign: "center" }}
-                                color="blue"
-                              >
-                                어디에 있을까?
-                              </Header>
-                              <Grid columns={3} style={{ textAlign: "center" }}>
-                                <Grid.Row>
-                                  {regionData.map((item) => {
-                                    return (
-                                      <Grid.Column
-                                        key={item.id}
-                                        style={{ marginBottom: 12 }}
-                                      >
-                                        <div>
-                                          <label
-                                            key={item.id}
-                                            style={{ fontSize: 17 }}
-                                          >
-                                            <Input
-                                              type="checkbox"
-                                              value={item.name}
-                                              onChange={(e) =>
-                                                checkHandler(
-                                                  e,
-                                                  item.id,
-                                                  item.name
-                                                )
-                                              }
-                                            />
-                                            <strong style={{ marginLeft: 5 }}>
-                                              {item.name}
-                                            </strong>
-                                          </label>
-                                        </div>
-                                      </Grid.Column>
-                                    );
-                                  })}
-                                </Grid.Row>
-                              </Grid>
-                            </>
-                          )}
+                          </Grid.Column>
+                        ))}
+                      </Grid.Row>
+                    </Grid>
+                  </Item.Group>
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  padding: "200px 0",
+                  textAlign: "center",
+                  fontSize: "35px",
+                }}
+              >
+                <p style={{ fontSize: 23, fontFamily: "GothicA1-Medium" }}>
+                  <Icon name="warning circle" color="red" />
+                  검색결과가 존재하지 않습니다.
+                </p>
+
+                <Link href={`/explore`}>
+                  <Button color="black">돌아가기</Button>
+                </Link>
+              </div>
+            )}
+
+            {/* 도서관 찾기 및 채팅 쓰기 */}
+            <div className="selectLib_and_chat_wrap">
+              <div className="select_lib_wrap">
+                  <div className="ui red segment select_lib">
+                    <div>
+                      {checkItems.size ? (
+                        <div className="complete_select_region">
+                          <div className="select_region_name_wrap">
+                            <Step>
+                              <Icon name="location arrow" size="big" />
+                              <Step.Content style={{marginTop:"0.5rem"}}>
+                                <Step.Title>선택하신 지역</Step.Title>
+                                <strong className="select_region_name">
+                                  <Step.Description>
+                                    {`"${name}"`}
+                                  </Step.Description>
+                                </strong>
+                              </Step.Content>
+                            </Step>
+
+                            <div className="select_move">
+                              <div className="reselect">
+                                <Button color="red" onClick={changeRegion}>
+                                  다시 선택하기
+                                </Button>
+                              </div>
+
+                              <div className="movepage">
+                                <Link href={`../naru/${isbn}/${id}`}>
+                                  <Button color="blue">
+                                    소장도서관 확인하기
+                                  </Button>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </Grid.Column>
-                  </div>
-                  <Grid.Column style={{ marginLeft: 10 }}>
-                    <div
-                      style={{
-                        width: 590,
-                        height: 380,
-                      }}
-                      className="ui basic segment"
-                    >
-                      <div
-                        style={{
-                          height: 290,
-                          overflow: "auto",
-                          maxHeight: 300,
-                        }}
-                        className="ui red segment"
-                      >
-                        <Header
-                          as="h3"
-                          style={{ textAlign: "center" }}
-                          color="blue"
-                        >
-                          생각 공유하기
-                        </Header>
-                        <div>
-                          <ChatFactory detailbook_chat={collectionName} />
+                      ) : (
+                        <div className="no_complete_select_region">
+                          <header>
+                            <Header as="h3" color="blue">
+                              어디에 있을까?
+                            </Header>
+                          </header>
+
+                          <div className="select_region">
+                            <Grid columns={3}>
+                              <Grid.Row>
+                                {regionData.map((item) => {
+                                  return (
+                                    <Grid.Column
+                                      key={item.id}
+                                      style={{ margin: "0.3rem 0" }}
+                                    >
+                                      <div>
+                                        <label key={item.id}>
+                                          <Input
+                                            type="checkbox"
+                                            value={item.name}
+                                            onChange={(e) =>
+                                              checkHandler(
+                                                e,
+                                                item.id,
+                                                item.name
+                                              )
+                                            }
+                                          />
+                                          <strong className="region_name">
+                                            {item.name}
+                                          </strong>
+                                        </label>
+                                      </div>
+                                    </Grid.Column>
+                                  );
+                                })}
+                              </Grid.Row>
+                            </Grid>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+                  </div>
+              </div>
+              <div className="write_chat_wrap">
+                  <div className="ui red segment write_chat">
+                    <header>
+                      <Header as="h3" color="blue">
+                        생각 공유하기
+                      </Header>
+                    </header>
+                    <div>
+                      <ChatFactory detailbook_chat={collectionName} />
+                    </div>
+                  </div>
+              </div>
             </div>
           </Container>
 
-          {/* <Divider inverted style={{ marginTop: 40 }} /> */}
-          <div
-            style={{ marginTop: -70 }}
-            className="ui center aligned container"
-          >
+          <div className="ui center aligned container">
             <Divider horizontal>
               <Header as="h3" color="blue">
                 <Icon name="clipboard outline" />이 책에 대한 다른 사용자의 의견
@@ -693,6 +610,11 @@ export default function Title({ books, recommended }) {
           box-sizing: border-box;
         }
 
+        header {
+          margin: 1em 0;
+          text-align: center;
+        }
+
         // 책 정보 출력을 위한 영역
         .book_info_wrap {
           display: flex;
@@ -704,7 +626,7 @@ export default function Title({ books, recommended }) {
 
         .book_info_and_img {
           display: flex;
-          justify-content: space-around;
+          justify-content: space-between;
           align-items: center;
           width: 55%;
           height: 240px;
@@ -719,13 +641,14 @@ export default function Title({ books, recommended }) {
           height: 150px;
         }
 
-        .select_register_and_back{
-          margin-top:5px;
+        .select_register_and_back {
+          margin-top: 5px;
         }
 
         .book_info {
-          width: 60%;
+          width: 69%;
           height: 240px;
+          padding-right: 0.5%;
         }
 
         .book_info_box {
@@ -772,6 +695,7 @@ export default function Title({ books, recommended }) {
 
           .book_info {
             width: 70%;
+            padding-right: 0;
           }
 
           .book_desc_wrap {
@@ -783,7 +707,6 @@ export default function Title({ books, recommended }) {
             height: auto;
           }
 
-          .book_desc > header,
           .book_desc > p {
             padding: 1rem 0;
           }
@@ -792,12 +715,11 @@ export default function Title({ books, recommended }) {
         @media screen and (max-width: 768px) {
           .book_info_wrap {
             height: 100%;
-            
           }
 
           .book_info_and_img {
             flex-direction: column;
-            height:100%;
+            height: 100%;
           }
 
           .book_img {
@@ -810,30 +732,124 @@ export default function Title({ books, recommended }) {
             margin: 1rem 0;
           }
 
-          .book_desc_wrap{
+          .book_desc_wrap {
             margin: 1rem 0;
           }
         }
 
-        // 함께 알아보면 좋은 책들의 css
+        // 함께 알아보면 좋은 책들 영역
+
+        .recommend_wrap {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+        }
+
         .recommend_img_book {
           display: flex-column;
           justify-content: center;
           align-items: center;
-          width: calc(35%);
-        }
-
-        .recommend_book_desc {
-          // recommend_book_desc_title를 포함하는 box
+          width: auto;
+          height: 200px;
         }
 
         .recommend_book_desc_title {
           padding-top: 0.8rem;
         }
 
-        img {
-          size: auto;
+        .recommend_book_desc_title p {
+          font-size: 0.8rem;
         }
+
+        @media screen and (max-width: 768px) {
+          .recommend_img_book {
+            height: 130px;
+          }
+
+          .recommend_book_desc_title p {
+            font-size: 0.6rem;
+          }
+        }
+
+        // 도서관
+        .selectLib_and_chat_wrap {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .select_lib_wrap, .write_chat_wrap {
+          width: 49%;
+          height: 300px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .select_lib {
+          text-align: center;
+          height: auto;
+        }
+
+        .select_region {
+          text-align: center;
+        }
+
+        .region_name {
+          margin-left: 0.7rem;
+        }
+
+        .complete_select_region, .no_complete_select_region {
+          text-align: center;
+          height: 240px;
+          display:flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .select_region_name_wrap {
+          display: flex;
+          height: 100%;
+          justify-content: space-around;
+          align-items: center;
+        }
+
+        .select_region_name{
+          display :block;
+          font-size: 1.5rem;
+          margin-top:1rem;
+        }
+
+        .select_move{
+          display:flex;
+          flex-direction: column;
+          align-items:flex-start;
+        }
+
+        .reselect{
+          margin-bottom:0.5rem;
+        }
+
+        .movepage{
+          margin-top:0.5rem;
+        }
+
+        // 채팅 작성 영역
+
+        .write_chat{
+          height: 270px;
+        }
+
+        @media screen and (max-width: 768px) {
+          .selectLib_and_chat_wrap {
+            flex-direction: column;
+          }
+  
+          .select_lib_wrap, .write_chat_wrap {
+            width: 100%;
+          }
+        }
+
       `}</style>
     </>
   );
