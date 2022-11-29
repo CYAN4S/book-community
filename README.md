@@ -249,11 +249,11 @@ yarn add framer-motion
     - **최근 검색한 책, 구독자가 관심있어 하는 최근 책 영역**의 반응형 미설계
     
 - 개선된 페이지에서는 위에서 언급한 문제를 해결할 수 있도록 하였습니다.
-   > **데스크탑 화면 고려 (width > 768px)**
+   > **데스크탑 화면 고려**
 
    ![Before](./public/readmeImg/exploreDesktop.jpg)
 
-   > **모바일 화면 고려 (width < 480px)**
+   > **모바일 화면 고려**
 
    ![After](./public/readmeImg/exploreMobile.jpg)
 
