@@ -52,6 +52,7 @@ export default function LibMap({ MapData }) {
 }
 
 export async function getServerSideProps({ params: { params } }) {
+  console.log(params)
   let [latitude, longitude, name] = params;
   latitude = Number(latitude);
   longitude = Number(longitude);
