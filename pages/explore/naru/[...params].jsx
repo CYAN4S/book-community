@@ -23,7 +23,7 @@ export default function Lib({ infoData }) {
     router.back();
   }
 
-  // 특정 도서관과 현재 내 위치 dict 확인
+  // 특정 도서관과 현재 내 위치 dist 확인
   function getDistanceFromLatLonInKm(lat1, lng1, lat2, lng2) {
     function deg2rad(deg) {
       return deg * (Math.PI / 180);

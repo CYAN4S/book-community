@@ -6,9 +6,12 @@ import { useRouter } from "next/router";
 
 function View_more() {
   const router = useRouter();
+
+  // 메인화면으로 이동하기
   const onClick = () => {
     router.push("/main");
   };
+
   return (
     <>
       <div style={{ width: 300 }}>

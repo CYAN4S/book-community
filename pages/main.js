@@ -7,8 +7,6 @@ import withTransition from "../public/HOC/withTransition";
 import HomepageHead from "../Components/HomepageHead";
 
 function Main() {
-
-
   return (
     <>
       <Segment

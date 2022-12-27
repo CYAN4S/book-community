@@ -178,6 +178,7 @@ const Post = () => {
     { id: 900, name: "역사", track: kdc_history },
   ];
 
+
   const handleItemClick = (e) => {
     const target = kdc.filter((item) => {
       return item.name === e.target.outerText;
@@ -186,6 +187,7 @@ const Post = () => {
     setRepresentative_KDC_Track(target[0].track);
     setRepresentative_KDC((prev) => !prev);
 
+    // 사용자가 선택한 분류 탐색
     if (target[0].name === "총류") {
       setKdc_Arr(kdc_general);
     } else if (target[0].name === "철학") {
@@ -207,7 +209,7 @@ const Post = () => {
     } else if (target[0].name === "역사") {
       setKdc_Arr(kdc_history);
     } else {
-      alert("치명적인 오류");
+      alert("오류 발생");
     }
   };
 
@@ -216,6 +218,7 @@ const Post = () => {
     setDetail_KDC(true);
   };
 
+  // 총류 다시선택
   const retrySelect = () => {
     setRepresentative_KDC(false);
     setDetail_KDC(false);
